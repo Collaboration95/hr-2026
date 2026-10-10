@@ -40,7 +40,7 @@ For implementation, read both the selected printed brief and its spoken guidance
 ## Working conventions
 
 - Focus on a small, complete project slice that can be demonstrated within the week. Record the selected track, agreed scope, data access, and important decisions in `README.md` as they become known.
-- Maintain the current references in place. Use clear headings and ordinary bullets. Preserve meaningful qualifications when editing.
+- Maintain the current references in place. Group points under a single category heading with ordinary bullets. Do not repeat category labels on individual points. Preserve meaningful qualifications when editing.
 - Choose implementation tools for the confirmed problem. No runtime, package manager, build, or test commands exist yet; document the actual commands once introduced. Verify changes using the checks appropriate to the resulting implementation.
 - When delegating user-authorized grunt work, prefer GPT-6 Luna when available. The main agent reviews and integrates the result.
 - For all GitHub access, use the authenticated `gh` CLI exclusively; do not use GitHub connectors, APIs, or browser access. Local Git operations use `git`.

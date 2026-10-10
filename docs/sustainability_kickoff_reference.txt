@@ -1,56 +1,109 @@
 Hack & Hire Sustainability Edition — compact reference
 
 PARTICIPATION
-DATE: Kickoff: 10 October 2026.
-DATE: Build period: 10–17 October.
-DATE: Finals: 17 October.
-RULE: Work solo or in a team of two or three.
-OPTION: Speak with company representatives before ranking tracks.
-RULE: Rank preferred tracks in the Google Form.
-RULE: Pitch the work to company teams at finals.
-DATE: Carbon workshop: 13 October, 6–8 PM.
-OPTION: Attend the workshop.
-Workshop attendees receive priority for testimonials.
-Attendance does not guarantee a testimonial.
-LINK: docs/event_rules_and_open_questions.txt — registration, form link, latest allocation timing, and open source differences.
+
+Rule
+
+- Work solo or in a team of two or three.
+- Rank preferred tracks in the Google Form.
+- Pitch the work to company teams at finals.
+
+Options
+
+- Speak with company representatives before ranking tracks.
+- Attend the workshop.
+
+Dates
+
+- Kickoff: 10 October 2026.
+- Build period: 10–17 October.
+- Finals: 17 October.
+- Carbon workshop: 13 October, 6–8 PM.
+
+Links
+
+- docs/event_rules_and_open_questions.txt — registration, form link, latest allocation timing, and open source differences.
+
+Notes
+
+- Workshop attendees receive priority for testimonials.
+- Attendance does not guarantee a testimonial.
 
 TRACKS
 
 BlueNexus — water treatment and impact reporting (PDF p. 18)
 Data Analytics / AI/ML / Engineering — Improving Water Treatment Efficiency Through Operational Data Analytics
-RULE: Use operational data to identify inefficient or abnormal plant operation.
-RULE: Provide early insights that help reduce energy use.
-RULE: Provide early insights that help reduce chemical use.
-RULE: Provide early insights that help reduce water use.
-CONSTRAINT: Maintain treatment performance.
+
+Rule
+
+- Use operational data to identify inefficient or abnormal plant operation.
+- Provide early insights that help reduce energy use.
+- Provide early insights that help reduce chemical use.
+- Provide early insights that help reduce water use.
+
+Constraint
+
+- Maintain treatment performance.
+
 ESG / Data Analytics — Measuring and Communicating the Sustainability Impact of Autonomous Water Systems
-RULE: Measure system sustainability impact.
-CONSTRAINT: Present the impact credibly for clients' ESG reporting.
+
+Rule
+
+- Measure system sustainability impact.
+
+Constraint
+
+- Present the impact credibly for clients' ESG reporting.
 
 Bizsu — lead generation and brand content (PDF p. 19)
 Business Development / AI Engineering — Build a Scalable Lead-Generation and Sales Engine
-CONSTRAINT: The printed brief targets homeowners.
-RULE: Develop a scalable way to generate qualified leads.
-RULE: Drive sales among homeowners.
-CONFLICT: The spoken brief differs on the target audience. See the linked event rules.
+
+Rule
+
+- Develop a scalable way to generate qualified leads.
+- Drive sales among homeowners.
+
+Constraint
+
+- The printed brief targets homeowners.
+
+Points to confirm
+
+- The spoken brief differs on the target audience. See the linked event rules.
+
 Marketing & Comms — Build Brand Awareness Through High-Impact Content
-RULE: Increase brand awareness through high-impact content.
-RULE: Motivate potential customers to act through engaging content.
-LINK: See docs/event_rules_and_open_questions.txt for spoken-brief differences.
+
+Rule
+
+- Increase brand awareness through high-impact content.
+- Motivate potential customers to act through engaging content.
+
+Links
+
+- See docs/event_rules_and_open_questions.txt for spoken-brief differences.
 
 beez-fm — building energy visualisation (PDF p. 20)
 Data Visualisation — Visualising Technology Fit to Help Building Owners Choose the Right Efficiency Solution
-RULE: Show the building's energy profile.
-RULE: Show the matched efficiency technology.
-CONSTRAINT: Help owners understand why the recommendation fits before a zero-CAPEX pilot.
-CONSTRAINT: Help owners trust the recommendation before a zero-CAPEX pilot.
+
+Rule
+
+- Show the building's energy profile.
+- Show the matched efficiency technology.
+
+Constraint
+
+- Help owners understand why the recommendation fits before a zero-CAPEX pilot.
+- Help owners trust the recommendation before a zero-CAPEX pilot.
 
 SystemEarth — multi-layer geospatial data (PDF pp. 21–25)
 Geospatial / Data Engineering — Building Multi-Layer, Multi-Year Geospatial Data
-RULE: Present a specific use case.
-RULE: Represent multiple geospatial layers across time and space compactly.
-RULE: Support efficient queries.
-RULE: Preserve information needed to reproduce plot-level compliance decisions.
+
+Rule
+
+- Present a specific use case.
+- Represent multiple geospatial layers across time and space compactly.
+- Support efficient queries.
+- Preserve information needed to reproduce plot-level compliance decisions.
 
 Decision context
 For EUDR, assess forest presence at the 31 December 2020 cut-off.
@@ -84,10 +137,15 @@ Measure decision fidelity as the percentage of plots whose compliance outputs al
 Assess pixel fidelity where relevant.
 Estimating infrastructure and processing costs is a bonus.
 
-UNKNOWN: The slides give no numeric performance benchmark.
-UNKNOWN: The slides do not mandate a programming language or dataset.
-UNKNOWN: The slides do not name a sample region.
-UNKNOWN: The slides do not provide regulatory definitions for a chosen use case.
-CONFLICT: The printed guidance requests a working prototype.
-CONFLICT: Spoken guidance treats a prototype less firmly.
-UNKNOWN: Confirm the prototype requirement. See event_rules_and_open_questions.txt.
+Points to confirm
+
+- The printed guidance requests a working prototype.
+- Spoken guidance treats a prototype less firmly.
+
+Open questions
+
+- The slides give no numeric performance benchmark.
+- The slides do not mandate a programming language or dataset.
+- The slides do not name a sample region.
+- The slides do not provide regulatory definitions for a chosen use case.
+- Confirm the prototype requirement. See event_rules_and_open_questions.txt.

@@ -8,22 +8,41 @@ BLUENEXUS — WATER TREATMENT
 01. Improving Water Treatment Efficiency Through Operational Data Analytics
 Role fit: Data Analytics / AI/ML / Engineering.
 Plants record flow, pressure, energy use, chemical dosing, equipment status, and water quality.
-RULE: Use operational data to identify inefficient or abnormal plant operation.
-RULE: Provide early insights that help reduce energy, chemical, and water use.
-CONSTRAINT: Maintain treatment performance.
-UNKNOWN: Is operational data available to teams?
-UNKNOWN: Which operational data fields are available?
+
+Rule
+
+- Use operational data to identify inefficient or abnormal plant operation.
+- Provide early insights that help reduce energy, chemical, and water use.
+
+Constraint
+
+- Maintain treatment performance.
+
+Open questions
+
+- Is operational data available to teams?
+- Which operational data fields are available?
 
 02. Measuring and Communicating the Sustainability Impact of Autonomous Water Systems
 Role fit: ESG / Data Analytics.
 BlueNexus systems aim to improve water reuse and reduce energy and chemical use.
-RULE: Measure system sustainability impact.
-RULE: Present the impact for clients' ESG reporting.
-CONSTRAINT: Make the information credible.
-CONSTRAINT: Make the information useful to clients.
-UNKNOWN: Which impact metrics should the project use?
-UNKNOWN: Which baseline should the project use?
-UNKNOWN: Is operational data available for impact reporting?
+
+Rule
+
+- Measure system sustainability impact.
+- Present the impact for clients' ESG reporting.
+
+Constraint
+
+- Make the information credible.
+- Make the information useful to clients.
+
+Open questions
+
+- Which impact metrics should the project use?
+- Which baseline should the project use?
+- Is operational data available for impact reporting?
+
 Source: Booklet p. 3.
 
 BIZSU — AIR CONDITIONING EFFICIENCY
@@ -33,29 +52,51 @@ Bizsu's ceramic net helps air conditioners cool faster and use less electricity 
 03. Build a Scalable Lead-Generation and Sales Engine
 Role fit: Business Development / AI Engineering.
 The printed brief targets homeowners.
-RULE: Develop a scalable sales strategy.
-RULE: Generate qualified homeowner leads.
-RULE: Drive homeowner sales.
-CONSTRAINT: Give homeowners a simple, convincing reason to try the product.
-OPTION: Teams may cold-email relevant contacts using AI tools and free resources.
-OPTION: Teams may build a conversion-focused website with or without AI.
-OPTION: Website copy may be direct, concise, and story-driven.
-UNKNOWN: Is customer or market data available to teams?
+
+Rule
+
+- Develop a scalable sales strategy.
+- Generate qualified homeowner leads.
+- Drive homeowner sales.
+
+Constraint
+
+- Give homeowners a simple, convincing reason to try the product.
+
+Options
+
+- Teams may cold-email relevant contacts using AI tools and free resources.
+- Teams may build a conversion-focused website with or without AI.
+- Website copy may be direct, concise, and story-driven.
+
+Open questions
+
+- Is customer or market data available to teams?
 
 04. Build Brand Awareness Through High-Impact Content
 Role fit: Marketing & Comms.
 The product is inside the air conditioner. Customers see its benefit later on the electricity bill.
-RULE: Create engaging content.
-RULE: Increase brand awareness.
-RULE: Motivate potential customers to act.
-RULE: Explain the product clearly.
-RULE: Introduce the team.
-OPTION: Teams may host a professional webinar for a solid audience.
-OPTION: Teams may make creative videos about the business, people, or products.
-OPTION: Teams may use innovative, fun, or unconventional formats.
-OPTION: The CEO, Brice, may appear in selected videos where useful.
-UNKNOWN: Is audience or performance data available to teams?
-UNKNOWN: What audience size does “solid audience” mean?
+
+Rule
+
+- Create engaging content.
+- Increase brand awareness.
+- Motivate potential customers to act.
+- Explain the product clearly.
+- Introduce the team.
+
+Options
+
+- Teams may host a professional webinar for a solid audience.
+- Teams may make creative videos about the business, people, or products.
+- Teams may use innovative, fun, or unconventional formats.
+- The CEO, Brice, may appear in selected videos where useful.
+
+Open questions
+
+- Is audience or performance data available to teams?
+- What audience size does “solid audience” mean?
+
 Source: Booklet pp. 4-5.
 
 BEEZ-FM — BUILDING ENERGY EFFICIENCY
@@ -64,11 +105,21 @@ BEEZ-FM — BUILDING ENERGY EFFICIENCY
 Role fit: Data Visualisation.
 RizaOne matches a building's energy profile to efficiency technologies.
 Owners review the recommendation before agreeing to a zero-CAPEX pilot.
-RULE: Visualise the building's energy profile.
-RULE: Show the technology match.
-RULE: Explain why the specific technology fits.
-CONSTRAINT: Help owners trust the recommendation.
-UNKNOWN: How can teams access building energy data?
+
+Rule
+
+- Visualise the building's energy profile.
+- Show the technology match.
+- Explain why the specific technology fits.
+
+Constraint
+
+- Help owners trust the recommendation.
+
+Open questions
+
+- How can teams access building energy data?
+
 Source: Booklet p. 7.
 
 SYSTEMEARTH — GEOSPATIAL DATA
@@ -78,18 +129,36 @@ Role fit: Geospatial / Data Engineering.
 Farm-plot risk analysis combines layers such as tree-cover loss, natural-forest baselines, and restricted-use areas.
 Relevant decisions may need forest presence at a regulatory cut-off date.
 Relevant decisions may need changes over time, overlapping geometry, and ESG risks.
-RULE: Present a specific use case.
-RULE: Demonstrate multiple geospatial layers across time and space.
-CONSTRAINT: Keep the representation compact.
-CONSTRAINT: Support efficient queries.
-CONSTRAINT: Preserve the information needed to reproduce plot-level compliance decisions.
-UNKNOWN: The booklet does not specify a dataset.
-UNKNOWN: The booklet does not specify a resolution or time span.
+
+Rule
+
+- Present a specific use case.
+- Demonstrate multiple geospatial layers across time and space.
+
+Constraint
+
+- Keep the representation compact.
+- Support efficient queries.
+- Preserve the information needed to reproduce plot-level compliance decisions.
+
+Open questions
+
+- The booklet does not specify a dataset.
+- The booklet does not specify a resolution or time span.
+
 Source: Booklet p. 9.
 
 GLOBAL OPEN QUESTIONS
 
-CONFLICT: Printed Bizsu lead audience: homeowners.
-CONFLICT: Spoken Bizsu lead audience: Singapore SMEs.
-UNKNOWN: Which Bizsu audience applies?
-See event_rules_and_open_questions.txt for spoken targets and source differences.
+Points to confirm
+
+- Printed Bizsu lead audience: homeowners.
+- Spoken Bizsu lead audience: Singapore SMEs.
+
+Open questions
+
+- Which Bizsu audience applies?
+
+Notes
+
+- See event_rules_and_open_questions.txt for spoken targets and source differences.
