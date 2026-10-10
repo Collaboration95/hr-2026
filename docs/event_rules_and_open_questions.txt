@@ -1,0 +1,113 @@
+HACK & HIRE SUSTAINABILITY EDITION
+Event rules and open questions
+
+PARTICIPATION
+
+RULE: Register as a solo participant or as a team of two or three using the form.
+RULE: Submit one form per team.
+CONSTRAINT: Include teammate details on the team form.
+CONSTRAINT: The form asks for the participant's name.
+CONSTRAINT: The form asks for the participant's email.
+CONSTRAINT: The form asks for the participant's WhatsApp number.
+CONSTRAINT: The form asks whether the participant is solo or in a team.
+CONSTRAINT: The form asks for three preferred problem statements, ranked.
+CONSTRAINT: The form asks for finals attendance mode.
+CONSTRAINT: The form asks about workshop attendance.
+RULE: Create a Projet profile with full name and email.
+CONSTRAINT: CV completion is not required.
+OPTION: Add a LinkedIn URL to the profile.
+Organizers plan to create WhatsApp groups with company teams after allocation for questions during the build.
+
+DATES AND LINKS
+
+DATE: Kickoff took place on 10 October 2026 in Singapore.
+DATE: Build period is 10–17 October 2026.
+DATE: Finals take place on 17 October 2026.
+RULE: Pitch directly to the company teams at finals.
+OPTION: Pitch online if you cannot attend in person.
+DATE: The latest post says track and team allocation will happen “tomorrow morning.”
+DATE: In the 10 October event context, “tomorrow morning” means 11 October morning.
+UNKNOWN: The allocation hour is not stated.
+CONFLICT: Earlier posts and the kickoff deck expected track confirmation by the end of 10 October.
+UNKNOWN: Sources do not say whether the allocation announcements describe separate stages.
+DATE: The Carbon Footprint Calculator Workshop takes place on 13 October 2026.
+DATE: The workshop runs from 18:00 to 20:00.
+The workshop time is interpreted as Singapore time from the event context.
+OPTION: Workshop attendance is optional.
+DATE: Workshop sign-ups close on 11 October 2026.
+UNKNOWN: No workshop sign-up closing hour is given.
+LINK: Registration form: https://docs.google.com/forms/d/1_p2L_uVT5l1VYt2GF4uKZtq7-GUyUukDcZDLt3vDVow/viewform
+LINK: Workshop sign-up: https://au.cglink.me/2sg/r384042
+LINK: Problem statements: https://myprojet.co/challenges
+LINK: Projet website printed on kickoff cover: myprojet.co
+
+TRACK QUESTIONS
+
+Bizsu — lead generation
+CONFLICT: The booklet targets homeowners.
+CONFLICT: The spoken brief targets Singapore SMEs.
+TARGET: Email 100 relevant people (spoken brief).
+TARGET: Seek a 20% positive response rate (spoken brief).
+CONFLICT: The speaker says Bizsu is not currently focused on homeowners.
+UNKNOWN: Confirm the intended audience.
+UNKNOWN: Confirm whether the spoken targets apply.
+
+Bizsu — brand content
+OPTION: Use a webinar or videos (printed brief).
+RULE: Produce actual content for the spoken brief.
+CONSTRAINT: A plan alone does not meet the spoken request.
+TARGET: Reach 30,000 views (spoken brief).
+UNKNOWN: Confirm which formats apply.
+UNKNOWN: Confirm the view-measurement period.
+
+BlueNexus — operations and impact reporting
+CONSTRAINT: A complete industrial AI platform is not expected within the build week.
+OPTION: For impact reporting, a measurement method and usable reporting format may be shown without exact impact figures.
+OPTION: GRI is a possible reference.
+UNKNOWN: BlueNexus dataset access details are not given.
+UNKNOWN: The method for adjusting baselines for seasonal conditions is not given.
+UNKNOWN: Confirm the name of the unclear suggested reporting standard.
+
+beez-fm — building technology fit
+OFFER: beez-fm offers building data and technology matches for exploration.
+UNKNOWN: Confirm the data location.
+UNKNOWN: Confirm the data schema.
+UNKNOWN: Confirm the data access permissions.
+UNKNOWN: Confirm when the data will be available.
+
+SystemEarth — geospatial data
+CONFLICT: The printed deck asks teams to build a working prototype.
+CONFLICT: The spoken brief treats a working prototype as less firm.
+RULE: Analyze essential layers and attributes (printed deck).
+RULE: Describe an encoding strategy (printed deck).
+RULE: Evaluate storage efficiency (printed deck).
+RULE: Evaluate query performance (printed deck).
+RULE: Evaluate result fidelity (printed deck).
+UNKNOWN: Confirm whether a working prototype is required.
+UNKNOWN: Confirm any passing thresholds.
+
+RECOGNITION
+
+Workshop attendees receive priority for testimonials.
+Workshop attendance does not guarantee a testimonial.
+CONFLICT: Telegram says effort earns recognition and testimonials.
+CONFLICT: The deck says outstanding work earns a signed written testimonial.
+UNKNOWN: Sources do not define the testimonial conditions.
+UNKNOWN: Sources do not explain how the testimonial conditions relate.
+
+OPEN LOGISTICS
+
+UNKNOWN: When does the registration form close?
+UNKNOWN: What is the finals venue?
+UNKNOWN: What is the finals schedule?
+UNKNOWN: How long is each pitch?
+UNKNOWN: What is the submission format?
+UNKNOWN: Where must teams submit their work?
+UNKNOWN: What is the submission deadline?
+UNKNOWN: What evaluation criteria and scoring weights apply?
+UNKNOWN: What are the allocation criteria?
+UNKNOWN: What happens if ranked preferences cannot be met?
+UNKNOWN: When will organizers create the WhatsApp groups?
+UNKNOWN: How will participants contact company representatives?
+
+Source: Telegram messages | Sustainability Kickoff PDF, pp. 1, 6, 19, 24–26 | Problem Statement Booklet PDF, p. 5.

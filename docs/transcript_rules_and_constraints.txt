@@ -1,0 +1,259 @@
+Hack & Hire Sustainability Edition
+
+Event
+
+Rule
+
+- Create a platform account.
+- Enter your full name in the profile.
+- Enter your email in the profile.
+- Rank three preferred problem statements in the participation form.
+
+Options
+
+- Add a LinkedIn URL to the profile.
+
+Constraint
+
+- CV completion is not required.
+- Work alone or in a team of two or three.
+
+Links
+
+- myprojet.co
+
+Dates
+
+- Build on a selected company problem from 10 to 17 October 2026.
+- Pitch work to company teams at finals on 17 October 2026.
+- The latest Telegram post schedules track and team allocation for the morning of 11 October.
+
+Open questions
+
+- The latest Telegram post gives no allocation hour.
+- The sources do not say whether 10 October confirmation and 11 October allocation are separate stages.
+- The pitch length is not stated.
+- The judging rubric is not stated.
+- The submission method is not stated.
+
+Points to confirm
+
+- The kickoff deck expected track confirmation by the end of 10 October.
+
+Source: Event rules and open questions | Sustainability Kickoff, pp. 1, 6, 26 | Telegram.
+
+BlueNexus — Operational Data Analytics
+
+Rule
+
+- Identify inefficient or abnormal water-plant operation from operational data.
+- Provide early insights into plant operation.
+- Provide insights that help reduce energy use.
+- Provide insights that help reduce chemical use.
+- Provide insights that help reduce water use.
+
+Constraint
+
+- Maintain treatment performance.
+- A complete industrial AI platform is not expected within the build week.
+
+Options
+
+- Provide an operator-readable status view.
+- Use machine learning.
+- Build a practical, small prototype.
+
+Data and support
+
+- BlueNexus said it has data for the challenge.
+
+Open questions
+
+- Data access arrangements are not stated.
+- Company support arrangements are not stated.
+
+Source: Problem Statement Booklet, p. 3 | event transcript.
+
+BlueNexus — ESG Impact Reporting
+
+Rule
+
+- Measure the impact of autonomous water systems.
+- Present the impact credibly for client ESG reporting.
+- Explain a usable measurement approach.
+
+Constraint
+
+- Exact impact figures are not essential if the measurement method is explained and the reporting format is usable by clients.
+
+Options
+
+- Use a dashboard.
+- Use a scorecard.
+- Use a reporting framework.
+- GRI was named as a possible reference.
+
+Open questions
+
+- The name of another suggested sustainability standard is unclear.
+- How should seasonal conditions affect the energy baseline?
+- The question about a one-time sale versus a share-of-savings business model was unanswered.
+
+Source: Problem Statement Booklet, p. 3 | event transcript.
+
+Bizsu — Lead Generation and Sales
+
+Rule
+
+- Develop a scalable strategy.
+- Generate qualified leads.
+- Drive sales.
+
+Points to confirm
+
+- The spoken brief targets Singapore SMEs.
+- The printed brief targets homeowners.
+- The speaker said Bizsu is not currently focused on B2C homeowners.
+
+Targets
+
+- Email 100 relevant people (spoken brief).
+- Seek a 20% positive response rate (spoken brief).
+
+Options
+
+- Use AI.
+- Try cold email (printed brief).
+- Create a conversion-focused website (printed brief).
+
+Open questions
+
+- Confirm the intended lead-generation audience.
+- Confirm how a positive response is counted.
+
+Source: Problem Statement Booklet, p. 5 | event transcript.
+
+Bizsu — Brand Awareness Through Content
+
+Rule
+
+- Explain the product clearly.
+- Introduce the team.
+- Increase brand awareness.
+- Motivate potential customers to act.
+- Produce actual content.
+
+Constraint
+
+- A strategy alone does not satisfy the spoken brief.
+- The printed brief does not require a specific content format.
+
+Targets
+
+- Reach 30,000 views (spoken brief).
+
+Options
+
+- Create a webinar.
+- Create videos.
+- Use other engaging formats.
+- Videos can build awareness. Webinars can explain the problem and possible solutions.
+- Bizsu's speaker offered to appear in a video if useful.
+
+Open questions
+
+- How are views counted?
+- Confirm the view-measurement period.
+
+Source: Problem Statement Booklet, p. 5 | event transcript.
+
+beez-fm — Building Technology Fit
+
+Rule
+
+- Visualise a building's energy profile.
+- Show the technology match.
+- Explain why the recommendation fits the building.
+
+Constraint
+
+- Help owners trust the recommendation before a zero-CAPEX pilot.
+- The brief does not specify an interface.
+
+Options
+
+- Address procurement and finance stakeholders as well as sustainability advocates.
+- Consider costs for procurement and finance stakeholders.
+- Consider return on investment for procurement and finance stakeholders.
+- Use an email.
+- Use a dashboard.
+- Use an AI assistant.
+- Help decision-makers move from interest to action.
+- Consider other measurable benefits, such as noise reduction, where relevant.
+- The organizer emphasized executing the plan rather than only proposing one.
+
+Data and support
+
+- beez-fm offered building and technology-match data for exploration.
+
+Open questions
+
+- The location of the data is not stated.
+- The data schema is not stated.
+- Access permissions are not stated.
+- The data delivery time is not stated.
+
+Source: Problem Statement Booklet, p. 7 | event transcript.
+
+SystemEarth — Multi-Layer, Multi-Year Geospatial Data
+
+Rule
+
+- Present a specific use case.
+- Demonstrate a compact representation of multiple geospatial layers across time and space.
+- Identify essential layers and attributes for the use case.
+- State which layers or attributes can be simplified, summarized, or dropped.
+- Select relevant time periods for the use case.
+- Choose an encoding method.
+- Combine selected layers and time steps in a dataset or architecture.
+- Encode a sample set for one region and query the encoded data.
+- Evaluate accuracy.
+- Evaluate information loss.
+- Explain why the selected data matters to the use case.
+- Explain pipeline choices.
+- Explain any AI output used.
+- Compare storage requirements with the original layers.
+- Compare query speed with the original layers.
+- Compare resource requirements with the original layers.
+- Measure plot-level decision fidelity against the original layers.
+- Compare pixel-level fidelity where relevant.
+- For compliance use cases, ground layer choices in relevant definitions and cut-off dates.
+- Explain engineering and product decisions as well as pipeline choices.
+
+Options
+
+- Choose a use case.
+- Choose a dataset.
+- Use existing algorithms.
+- Use existing models.
+- Use existing formulas.
+- Use existing encoding methods.
+- Prioritize a smaller, complete project slice within the week.
+- As a bonus, estimate infrastructure and processing costs for storage, updates, and queries.
+
+Constraint
+
+- Make the representation query-efficient.
+- Preserve the information needed to reproduce plot-level compliance decisions.
+- A new compression algorithm is not required.
+
+Points to confirm
+
+- The kickoff requests a working prototype.
+- Spoken guidance treats a working prototype less firmly.
+
+Open questions
+
+- Confirm whether a working prototype is required.
+
+Source: Problem Statement Booklet, p. 9 | Sustainability Kickoff, pp. 21, 24–25 | event transcript.

@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor and tooling state
+.vscode/
+.idea/
+*.swp
+*.swo

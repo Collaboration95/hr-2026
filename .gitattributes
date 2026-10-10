@@ -1,0 +1,2 @@
+# Preserve source PDFs as binary files in Git.
+*.pdf binary
