@@ -2,15 +2,16 @@
 
 A week-long project for Hack & Hire, organized by Projet with NUS CAT. Participants work on a real company challenge, build something useful, and present directly to company teams. The build period is **10–17 October 2026**, with finals on **17 October**. Participation is solo or in a team of two or three.
 
-This repository holds the project context and will hold the implementation once a track is selected. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
+This repository holds the project context for the selected SystemEarth track and will hold its implementation. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
 
 ## Current status
 
-- **Selected track:** Not selected.
-- **Team and allocation:** Not recorded.
-- **Project scope and technology stack:** Not selected.
+- **Selected track:** SystemEarth — Multi-Layer, Multi-Year Geospatial Data, selected on 10 October 2026. See [track brief](SystemEarth-track.md) for constraints, evaluation, and proposed scope.
+- **Team and allocation:** Team not recorded; organizer allocation not yet confirmed.
+- **Project scope and technology stack:** Proposed small-region encoding and query prototype with an interactive visual comparison; final scope and stack not selected.
+- **Data access:** No dataset selected or company data access confirmed.
 - **Implementation:** Not started. No application dependencies, build commands, or test suite exist yet.
-- **Next decision:** Rank the preferred problem statements and confirm the allocated track.
+- **Next decision:** Confirm allocation and select the use case, sample region, datasets, and decision rules.
 
 Update this section when a decision is made so subsequent work starts from the current project state.
 
