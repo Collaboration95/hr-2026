@@ -1,5 +1,7 @@
 # SystemEarth public data and project options
 
+> **Planning update — 13 October 2026:** The Brazil-first recommendation below is historical research from 11 October. The current recommendation is **Plotline**, starting with the locally acquired 17-plot company sample labelled Surat Thani/Chai Buri (around 99° E), with original-versus-compact query and fidelity proof. The sample joins 17 CSV records to 17 polygons one-to-one. Songkhla/rubber remains a teammate proposal; final team scope and stack are undecided. Three Hansen v1.13 sample chips are acquired; JRC v3 remains missing after HTTP 500 and WDPA use is conditional. See the final [layer report](research/layer-acquisition.md). See the [current status](../README.md#current-status), [product direction](planning/systemearth-product-direction.md), and [sample audit](research/company-sample-audit.md). The source catalog and historical access evidence below are preserved.
+
 Research date: **11 October 2026**.
 
 We can start without company data. The strongest proposed direction is a forest-risk
