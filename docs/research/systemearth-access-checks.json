@@ -1,0 +1,366 @@
+{
+  "purpose": "Unauthenticated public-data access checks, not performance benchmarks or data-quality validation.",
+  "checks": [
+    {
+      "name": "Dutch crop-parcel sample",
+      "check_kind": "geojson",
+      "url": "https://api.pdok.nl/rvo/gewaspercelen/ogc/v1/collections/brpgewas/items?f=json&limit=3",
+      "checked_at_utc": "2026-10-11T04:50:04.240988+00:00",
+      "http_status": 200,
+      "bytes_read": 9403,
+      "content_type": "application/geo+json",
+      "response_sha256": "54c3e786d8a69ade7d7836263ba852d7411ff360db41306cf9718d8d3ba3a75f",
+      "feature_count": 3,
+      "features": [
+        {
+          "id": "8341a731-afcf-5102-a87b-c7df1dccbe8e",
+          "geometry_type": "Polygon",
+          "property_names": [
+            "category",
+            "gewas",
+            "gewascode",
+            "jaar",
+            "status"
+          ]
+        },
+        {
+          "id": "b0c715e3-f0bd-5e9e-9a95-0ed66e984dd5",
+          "geometry_type": "Polygon",
+          "property_names": [
+            "category",
+            "gewas",
+            "gewascode",
+            "jaar",
+            "status"
+          ]
+        },
+        {
+          "id": "9d36fb37-21f6-57d3-90ba-3db7555fbe6f",
+          "geometry_type": "Polygon",
+          "property_names": [
+            "category",
+            "gewas",
+            "gewascode",
+            "jaar",
+            "status"
+          ]
+        }
+      ],
+      "scope": "Small query response only; not a full dataset validation."
+    },
+    {
+      "name": "Dutch parcel licence",
+      "check_kind": "metadata",
+      "url": "https://api.pdok.nl/rvo/gewaspercelen/ogc/v1?f=json",
+      "checked_at_utc": "2026-10-11T04:50:04.241263+00:00",
+      "http_status": 200,
+      "bytes_read": 3350,
+      "content_type": "application/json",
+      "response_sha256": "78c3e14f42caa9237bac86f480236de777ddf1a82c480ad3108d8c5a9ad94acc",
+      "title": "Basisregistratie Gewaspercelen (BRP)",
+      "license_links": [
+        {
+          "rel": "license",
+          "type": "text/html",
+          "title": "Public Domain Mark 1.0",
+          "href": "https://creativecommons.org/publicdomain/mark/1.0/deed.nl"
+        }
+      ],
+      "scope": "Catalog metadata only."
+    },
+    {
+      "name": "INPE DETER sample",
+      "check_kind": "geojson",
+      "url": "https://terrabrasilis.dpi.inpe.br/geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=deter-amz:deter_amz&count=3&outputFormat=application/json",
+      "checked_at_utc": "2026-10-11T04:50:04.241356+00:00",
+      "http_status": 200,
+      "bytes_read": 3580,
+      "content_type": "application/json;charset=UTF-8",
+      "response_sha256": "31dbb43e8ee031e009c2c97aff2d806d939e670580861864e3b2f30e51b922dd",
+      "feature_count": 3,
+      "features": [
+        {
+          "id": "deter_amz.100003_hist",
+          "geometry_type": "MultiPolygon",
+          "property_names": [
+            "gid",
+            "classname",
+            "quadrant",
+            "path_row",
+            "view_date",
+            "sensor",
+            "satellite",
+            "areauckm",
+            "uc",
+            "areamunkm",
+            "municipality",
+            "mun_geocod",
+            "uf",
+            "publish_month"
+          ]
+        },
+        {
+          "id": "deter_amz.100004_hist",
+          "geometry_type": "MultiPolygon",
+          "property_names": [
+            "gid",
+            "classname",
+            "quadrant",
+            "path_row",
+            "view_date",
+            "sensor",
+            "satellite",
+            "areauckm",
+            "uc",
+            "areamunkm",
+            "municipality",
+            "mun_geocod",
+            "uf",
+            "publish_month"
+          ]
+        },
+        {
+          "id": "deter_amz.100005_hist",
+          "geometry_type": "MultiPolygon",
+          "property_names": [
+            "gid",
+            "classname",
+            "quadrant",
+            "path_row",
+            "view_date",
+            "sensor",
+            "satellite",
+            "areauckm",
+            "uc",
+            "areamunkm",
+            "municipality",
+            "mun_geocod",
+            "uf",
+            "publish_month"
+          ]
+        }
+      ],
+      "scope": "Small query response only; not a full dataset validation."
+    },
+    {
+      "name": "Sentinel-2 scene over Mato Grosso",
+      "check_kind": "stac",
+      "url": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a/items?limit=1&bbox=-55.5,-12.5,-55.0,-12.0&datetime=2024-01-01T00:00:00Z/2024-12-31T23:59:59Z",
+      "checked_at_utc": "2026-10-11T04:50:04.241416+00:00",
+      "http_status": 200,
+      "bytes_read": 18575,
+      "content_type": "application/geo+json; charset=utf-8",
+      "response_sha256": "1c1dd268f7d21ea485737663441a4908ef5cc3357165a4f7ec64667afaf9a809",
+      "feature_count": 1,
+      "features": [
+        {
+          "id": "S2B_T21LXG_20241231T140340_L2A",
+          "geometry_type": "Polygon",
+          "property_names": [
+            "created",
+            "platform",
+            "constellation",
+            "instruments",
+            "eo:cloud_cover",
+            "proj:epsg",
+            "proj:centroid",
+            "mgrs:utm_zone",
+            "mgrs:latitude_band",
+            "mgrs:grid_square",
+            "grid:code",
+            "view:azimuth",
+            "view:incidence_angle",
+            "view:sun_azimuth",
+            "view:sun_elevation",
+            "s2:tile_id",
+            "s2:degraded_msi_data_percentage",
+            "s2:nodata_pixel_percentage",
+            "s2:saturated_defective_pixel_percentage",
+            "s2:cloud_shadow_percentage",
+            "s2:vegetation_percentage",
+            "s2:not_vegetated_percentage",
+            "s2:water_percentage",
+            "s2:unclassified_percentage",
+            "s2:medium_proba_clouds_percentage",
+            "s2:high_proba_clouds_percentage",
+            "s2:thin_cirrus_percentage",
+            "s2:snow_ice_percentage",
+            "s2:product_type",
+            "s2:processing_baseline",
+            "s2:product_uri",
+            "s2:generation_time",
+            "s2:datatake_id",
+            "s2:datatake_type",
+            "s2:datastrip_id",
+            "s2:reflectance_conversion_factor",
+            "datetime",
+            "earthsearch:payload_id",
+            "storage:platform",
+            "storage:region",
+            "storage:requester_pays",
+            "processing:software",
+            "updated"
+          ]
+        }
+      ],
+      "scope": "Small query response only; not a full dataset validation."
+    },
+    {
+      "name": "MapBiomas annual raster header",
+      "check_kind": "raster_header",
+      "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/brasil/collection11/lulc/coverage/brazil_coverage/brazil_coverage-col11_2025.tif",
+      "checked_at_utc": "2026-10-11T04:50:04.241468+00:00",
+      "http_status": 206,
+      "bytes_read": 32,
+      "content_type": "image/tiff",
+      "response_sha256": "40f636b3790467f72cfcf94a368aba2d65609b7fec4d9496f1f782f4f3879bab",
+      "content_range": "bytes 0-31/763286575",
+      "first_4_bytes_hex": "49492b00",
+      "scope": "Header only; pixels/records not decoded."
+    },
+    {
+      "name": "Ghana reference dataset metadata",
+      "check_kind": "zenodo",
+      "url": "https://zenodo.org/api/records/16579443",
+      "checked_at_utc": "2026-10-11T04:50:04.779099+00:00",
+      "http_status": 200,
+      "bytes_read": 8644,
+      "content_type": "application/json",
+      "response_sha256": "dc82b1d95393eab676965040cdbdd59d622464070ebeb7a1e328adde86a597e7",
+      "title": "Reference Dataset for Land Use Change Mapping in Ghana's Cocoa Landscape (2024–2025)",
+      "license": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "Reference_Dataset_Ghana_Cocoa_2024_2025.zip",
+          "bytes": 30810529,
+          "url": "https://zenodo.org/api/records/16579443/files/Reference_Dataset_Ghana_Cocoa_2024_2025.zip/content"
+        }
+      ],
+      "scope": "Record metadata only; archives not downloaded."
+    },
+    {
+      "name": "Global Mangrove Watch v4 metadata",
+      "check_kind": "zenodo",
+      "url": "https://zenodo.org/api/records/21346456",
+      "checked_at_utc": "2026-10-11T04:50:04.886622+00:00",
+      "http_status": 200,
+      "bytes_read": 24251,
+      "content_type": "application/json",
+      "response_sha256": "a66876bd3992acd5987e42c91fccc45a9eb1518632a2796e312e61e7b7d94ff0",
+      "title": "Global Mangrove Watch: Timeseries of Mangrove Extent",
+      "license": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "gmw_v4112_2008_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 151714894,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_2008_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_2015_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 159491186,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_2015_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_2021_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 168500502,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_2021_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_1987_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 157056155,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1987_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_1994_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 157100148,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1994_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4_timeseries_4112_gmw_country_stats_corr_area_formatted.xlsx",
+          "bytes": 243193,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4_timeseries_4112_gmw_country_stats_corr_area_formatted.xlsx/content"
+        },
+        {
+          "name": "gmw_v4112_1990_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 157800546,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1990_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_mng_ext_v4112_stack.tar.gz",
+          "bytes": 1396716026,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_mng_ext_v4112_stack.tar.gz/content"
+        },
+        {
+          "name": "gmw_v4112_1986_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 157888690,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1986_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_1989_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 157990407,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1989_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_2007_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 152384119,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_2007_mng_ext_cntry_info_vec.gpkg.gz/content"
+        },
+        {
+          "name": "gmw_v4112_1988_mng_ext_cntry_info_vec.gpkg.gz",
+          "bytes": 155940722,
+          "url": "https://zenodo.org/api/records/21346457/files/gmw_v4112_1988_mng_ext_cntry_info_vec.gpkg.gz/content"
+        }
+      ],
+      "scope": "Record metadata only; archives not downloaded."
+    },
+    {
+      "name": "FTW root catalog",
+      "check_kind": "catalog",
+      "url": "https://data.source.coop/ftw/global-data/catalog.json",
+      "checked_at_utc": "2026-10-11T04:50:04.886913+00:00",
+      "http_status": 200,
+      "bytes_read": 4042,
+      "content_type": "application/json",
+      "response_sha256": "fc4c1e477f0146f42d94c223e8dd8bbe261f62435960aa50a3c8ac3a6094cbe5",
+      "title": "Fields of the World — Global",
+      "license_links": [],
+      "scope": "Catalog metadata only."
+    },
+    {
+      "name": "FTW vector catalog",
+      "check_kind": "catalog",
+      "url": "https://data.source.coop/ftw/global-data/predictions/vectors/collection.json",
+      "checked_at_utc": "2026-10-11T04:50:05.419290+00:00",
+      "http_status": 200,
+      "bytes_read": 54008,
+      "content_type": "application/json",
+      "response_sha256": "214785e9900e2490b1f6fd228ea2618df547b5e04ca7457a2a2ffc462b6ba1bd",
+      "title": "FTW Global — Field Boundary Predictions (GeoParquet)",
+      "license_links": [
+        {
+          "rel": "license",
+          "href": "https://creativecommons.org/licenses/by/4.0/",
+          "type": "text/html"
+        }
+      ],
+      "scope": "Catalog metadata only."
+    },
+    {
+      "name": "FTW documented France file header",
+      "check_kind": "parquet_header",
+      "url": "https://data.source.coop/ftw/global-data/predictions/vectors/alpha/results-by-admin-conf/admin:country_code=FR/France.parquet",
+      "checked_at_utc": "2026-10-11T04:50:05.693324+00:00",
+      "http_status": 206,
+      "bytes_read": 32,
+      "content_type": "binary/octet-stream",
+      "response_sha256": "ee26305cec481f16823c4f635e31e3af54f8e459f606165578c34aa948721972",
+      "content_range": "bytes 0-31/2373430029",
+      "first_4_bytes_hex": "50415231",
+      "scope": "Header only; pixels/records not decoded."
+    }
+  ]
+}
