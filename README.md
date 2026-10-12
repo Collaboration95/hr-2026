@@ -7,11 +7,12 @@ This repository holds the project context for the selected SystemEarth track and
 ## Current status
 
 - **Selected track:** SystemEarth — Multi-Layer, Multi-Year Geospatial Data, selected on 10 October 2026. See [track brief](SystemEarth-track.md) for constraints, evaluation, and proposed scope.
-- **Team and allocation:** Team not recorded; organizer allocation not yet confirmed.
-- **Project scope and technology stack:** Proposed small-region encoding and query prototype with an interactive visual comparison; final scope and stack not selected.
-- **Data access:** No dataset selected or company data access confirmed.
+- **Team and allocation:** User reports acceptance into the SystemEarth track on 11 October 2026; team composition not recorded.
+- **Project scope and technology stack:** Recommended public-data forest-risk history prototype for a small Brazilian region, with encoding benchmarks and an interactive comparison. See [public data and project options](docs/systemearth-open-data-options.md); final scope and stack not selected.
+- **Data access:** Public-source research and small access checks completed. Parcel records, deforestation alerts, and imagery metadata were retrieved; selected raster and field-boundary file headers were accessible without credentials. No benchmark sample is frozen and no company data access is confirmed.
 - **Implementation:** Not started. No application dependencies, build commands, or test suite exist yet.
-- **Next decision:** Confirm allocation and select the use case, sample region, datasets, and decision rules.
+- **Next decision:** Select a public-data bundle, sample region, and documented provisional decision rules. The user has asked us to progress without waiting for company answers; those answers can refine the prototype later.
+- **Deadline clarification:** The challenge-page screenshot provided on 11 October shows an end time of 17 October at 00:00 SGT. Confirm whether this is the application closing time or project submission deadline; finals remain recorded as 17 October.
 
 Update this section when a decision is made so subsequent work starts from the current project state.
 
