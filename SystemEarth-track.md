@@ -31,7 +31,8 @@ reproduce the original layers' plot-level compliance decisions.
 - Existing algorithms, models, and encoding methods are allowed. A new compression
   algorithm is not required. No dataset, language, region, resolution, or time span
   is mandated in the recorded guidance.
-- Company data access is not established. Label sample or synthetic data and
+- A company CSV/GeoJSON sample is acquired locally; original analytical layers
+  and reference rules are separate inputs. Label supplied and synthetic data and
   assumptions clearly. Agreement with original layers does not establish their
   real-world accuracy or independently prove legal compliance.
 
@@ -44,41 +45,85 @@ reproduce the original layers' plot-level compliance decisions.
 - Explain accuracy and information-loss tradeoffs. No numeric passing thresholds
   are specified; infrastructure and processing cost estimates are a bonus.
 
-## Proposed project slice
+## Recommended project slice
 
-- The user requested an independent public-data route on 11 October. See
-  [public data and project options](docs/systemearth-open-data-options.md) for
-  sources, access evidence, ranked ideas, and the recommended Brazilian example.
-  Company replies are not a prerequisite for starting a documented prototype.
-- Propose forest-risk screening for farm plots in one small region, using a
-  forest baseline, annual forest-change observations, and restricted-use areas
-  where relevant to the agreed decision. Dataset, region, rules, and stack remain
-  open; this is a recommendation for discussion with SystemEarth.
-- Use several years and a representative set of plot polygons. For each plot,
-  return the agreed forest-at-cut-off result, subsequent change by year,
-  restricted-area overlap if in scope, missing-data status, and supporting
-  evidence. Confirm exact outputs before choosing what information to discard.
-- Build an interactive map with a time selector, plot inspection, and original
-  versus encoded results. Highlight disagreements and show measured storage,
-  query performance, and fidelity alongside the visual comparison.
-- Aim for one complete, reproducible demonstration. This direction combines our
-  interests in measurable engineering, explainable decisions, and visualisation;
-  it is a proposed scope, not an additional company requirement.
+- **Plotline** is the recommended working name and product direction: an analyst
+  reviews supplier declarations alongside mapped evidence, then inspects proof
+  that a compact multi-layer, multi-year representation preserves the same query
+  outputs as the original layers. See [product direction](docs/planning/systemearth-product-direction.md)
+  and [Claude UX handoff](docs/planning/claude-ux-handoff.md). This is a recommendation,
+  not a final team selection or an additional company requirement.
+- Start with the locally acquired company sample: **17 CSV records and 17 polygons
+  matched one-to-one**, with no duplicate or unmatched IDs. The CSV labels all
+  records Surat Thani, Chai Buri, Thailand. Bounds are **98.772429–99.080292° E,
+  8.431179–8.581888° N**. These are audited labels and coordinates, not independent
+  verification of administrative location. See the [sample audit](docs/research/company-sample-audit.md).
+- Five records (P-0003, P-0005, P-0008, P-0010, P-0013) declare a deforestation
+  indication, on-site verification with evidence, and a final deforestation-free/
+  compliant status. Use them as declaration-backed evidence-review leads. Their
+  referenced mitigation evidence is not inspectable in the supplied fixture;
+  these records do not establish violations or independently validate compliance.
+- Recommend the Surat Thani-labelled sample as the initial region. Songkhla/rubber
+  remains a teammate proposal; the earlier Brazil direction is historical research
+  in [public data and project options](docs/systemearth-open-data-options.md).
+  Final team geography, commodity, scope, and stack remain undecided.
+- First complete **one real plot, a reviewable evidence receipt, and identical
+  declared outputs from original and compact query paths**. Then expand to all
+  17 plots. A receipt should identify the exact plot, source versions, observation
+  period, rule/query, grid and geometry method, coverage/unknowns, result, and
+  evidence needed to reproduce it. Keep supplier declarations distinct from
+  mapped observations, source uncertainty, and encoding mismatches.
+- Compare storage, query time, resource use, and fidelity on the same inputs and
+  rules. The interface should make the evidence and measured comparison easy to
+  inspect. Change replay and a separately labelled synthetic edge/scale cohort
+  follow the real sample comparison if time permits.
+- No application has been built; stack and application build/test commands are
+  undecided. The existing sample audit uses Python's standard library:
+  `python3 scripts/inspect_company_sample.py` regenerates
+  `docs/research/company-sample-audit.json` from the two local sample files.
+
+## Public-layer acquisition status
+
+The final [layer report](docs/research/layer-acquisition.md) and
+[provenance](data/public/provenance.json) document acquired Hansen GFC 2025
+**v1.13** `treecover2000`, `lossyear`, and `datamask` from `10N_090E`.
+The three chips total **576,999 bytes**, share an aligned **1233 × 604** native
+EPSG:4326 grid, contain the full 17-plot bounding box using outward floor/ceil
+bounds, and equal the source windows pixel-for-pixel on readback. Full source
+tiles total **224,170,336 bytes** in the ignored raw cache. Acquisition of these
+inputs is complete; no plot query, compact representation, or benchmark is yet
+claimed. Apply the datamask before interpreting loss-year zero as observed
+no loss. Bounding-rectangle pixel counts are not plot-overlap results.
+
+The sample lies around 99° E; the teammate's Songkhla tile `10N_100E` does not
+cover it. The source-acquisition setup and command are recorded in the final
+layer report; the application stack remains undecided.
+
+The official JRC Global Forest Cover 2020 v3 tile request returned HTTP 500 on retry;
+that baseline remains missing. WDPA is conditional on applicable use and
+redistribution terms. Do not reconstruct a claimed 2020 forest baseline merely
+by subtracting Hansen loss from 2000 canopy cover. Keep the supplier's stated
+2021–2023 Hansen interval separate from a newer source release and any new
+observation window. Acquisition does not establish a query benchmark or an
+independent compliance result.
 
 ## Questions for SystemEarth
 
-Keep these questions for when company contact is possible. Meanwhile, choose a
-public sample and explicitly document provisional rules and outputs. Implement
-those rules against the originals before evaluating an encoding; company answers
-can revise that contract later.
+Confirm these questions in parallel with the first plot demonstration. Use the
+acquired sample and explicitly documented provisional rules/outputs to progress;
+company answers can refine the contract. Compute results against original layers
+before evaluating an encoding. Unknown field meanings or missing evidence must
+remain visible rather than becoming assumed approvals.
 
 1. **Use case and rules:** Which country, commodity, regulation or risk-screening
    workflow should we demonstrate? Is a narrow forest-risk screen acceptable?
    Which outputs must match, and what definitions, cut-off dates, thresholds,
    overlap rules, and missing-data behavior produce those outputs?
-2. **Small data sample:** Can you provide download access to original layers for
-   one region and several years, farm-plot polygons, and documentation? If company
-   data is unavailable, is our proposed public-data sample suitable?
+2. **Sample and field meanings:** For the supplied CSV/GeoJSON pair, what do the
+   processing/harvest dates and opaque evidence-reference keys mean? What evidence
+   and rules support the five indication-to-final-status transitions? Can you
+   identify original layer versions for the reported 2021–2023 analysis and
+   provide supporting documentation? Is the proposed public-layer supplement suitable?
 3. **Reference answers:** Can you provide a few plots with expected outputs and
    explanations, or the existing query/rule logic? Include an unflagged plot, a
    flagged plot, a boundary case, and a plot with missing or uncertain data. Who
@@ -102,52 +147,52 @@ can revise that contract later.
 
 ## Minimum data package
 
-No company dataset or working company download access is currently confirmed.
-Assemble the following from public sources now, and request company equivalents
-when available:
+The supplier CSV and plot GeoJSON are acquired and audited locally. A complete
+benchmark package still needs the following, assembled from inspected public
+sources while company clarification proceeds:
 
-- Plot polygons with stable identifiers and a coordinate reference system.
-- Original decision-relevant layers covering the same region and relevant dates.
-  Examples are a forest baseline, annual changes, and restricted-use boundaries;
-  the chosen rules determine the final selection.
-- Layer definitions, class codes, units, spatial resolution, coordinate reference
-  systems, grid alignment, missing-value codes, observation dates, and versions.
-  For boundaries that change over time, request the dates when each version applies.
-- Quality or confidence information, known limitations, and permission to use
-  and show the sample.
-- Reference outputs and decision logic, if available. Without supplied answers,
-  implement a documented original-layer baseline and ask the company to review it.
+- Preserve the 17 exact plot geometries, stable join IDs, supplied declarations,
+  and source checksums. The audit's complete join does not validate declarations.
+- Freeze the decision-relevant subset and dates from the acquired three Hansen
+  bands. The JRC 2020 baseline remains missing and any
+  restriction layer remains conditional. The chosen query determines which
+  layers are essential and which can be left outside the first slice.
+- Record layer definitions, class codes, units, resolution, CRS, grid alignment,
+  masks/nodata, observation dates, release versions, and coverage. Preserve
+  source differences; a current release may revise historical values.
+- Record quality limits and permitted sample uses. Local possession does not
+  establish permission for external publication, public pitches, or redistribution.
+- Compute a documented original-layer reference answer and retain its evidence
+  receipt. Supplier final statuses are declarations, not reference answers for
+  assessing encoding fidelity or independent legal compliance.
 
-Public fallback checked on 11 October 2026: the European Commission JRC provides
-[Tropical Moist Forest data](https://forobs.jrc.ec.europa.eu/TMF/data), including
-annual changes for 1990–2025, degradation and deforestation years, and downloadable
-GeoTIFF tiles. It is a candidate for a tropical forest example, subject to checking
-coverage and definitions against the chosen use case. The site lists free use
-with acknowledgement; review the full terms when acquiring the data. Its map-image
-service is for visualisation, not analytical input. Plot boundaries and any
-restricted-use layer still need separate selection. Data has not been downloaded
-or validated locally. Synthetic plot polygons can exercise the pipeline if needed,
-but must be labelled and do not establish performance on real farm plots.
+The [October 11 public-source catalog](docs/systemearth-open-data-options.md)
+remains historical research, including JRC Tropical Moist Forest as an alternative
+candidate. Its earlier access checks are not evidence that those products are
+acquired for this sample. The [layer acquisition report](docs/research/layer-acquisition.md)
+records current acquisition; keep failed or conditional inputs explicitly missing.
 
 ## Proposed work sequence
 
-- **11 October:** Choose a public-data use case and region, verify that sample
-  files actually open, and write provisional inputs, rules, and expected outputs.
-  Keep the company questions ready for later; progress does not depend on a reply.
-- **12 October:** Implement queries against the original layers first. Check known
-  examples, boundaries, and missing data; freeze a reproducible comparison set.
-- **13–14 October:** Implement one compact representation and run the same queries.
-  Candidate techniques include compact class codes and storing temporal changes;
-  choose after inspecting the data. Preserve unknown values and all history needed
-  by the agreed rules. Keep source and rule versions available for each result.
-- **15 October:** Measure storage, query time, resource use, decision agreement,
-  and relevant pixel agreement. Compare the same region, layers, dates, plots,
-  and rules on the same hardware, using a reasonably configured original-layer
-  baseline. Count indexes and metadata in encoded storage; report preprocessing
-  cost separately and state caching conditions. Investigate every mismatch.
-- **16 October:** Complete the map comparison, reproducible run instructions,
-  benchmark results, and pitch. Record remaining limitations and prepare a demo
-  recording in case the live demonstration fails.
+This is a conservative project plan, not an organizer-published schedule. Target
+readiness on 16 October while confirming the actual deadline separately.
+
+- **13 October:** Reconcile the audited fixture and layer acquisition, freeze the
+  first plot and provisional query contract, and keep company questions moving
+  in parallel. Pin masks, versions, dates, and coverage before declaring inputs ready.
+- **14 October:** Produce one real plot's original-layer result and reviewable
+  receipt, then compare one compact representation against exactly that query.
+  Preserve unknown values and necessary history; investigate every mismatch.
+- **15 October:** Expand to all 17 real plots. Measure storage, query time, resource
+  use, plot fidelity, and relevant pixel fidelity on identical inputs and hardware.
+  Compare with a reasonably configured compressed-original baseline, include
+  indexes/metadata in compact storage, and report preprocessing and caching
+  separately. Only then consider a separate synthetic edge/scale cohort.
+- **16 October:** Freeze the demonstrable slice, run instructions, evidence and
+  benchmark results, and pitch. Complete the planned interface work through the
+  design handoff and subsequent implementation task. Record limitations and
+  prepare a fallback recording. Use the [mock judge review](docs/planning/hackathon-judge-review.md),
+  to prioritize remaining gaps; it is not an official rubric.
 - **17 October:** Present at the organizer-confirmed time.
 
 Aim for every agreed output to match on every test plot; this is our proposed
@@ -166,3 +211,4 @@ independent legal compliance. Optional cost estimates follow the working compari
   "Building Multi-Layer, Multi-Year Geospatial Data". Confirms the prototype and
   evaluation deliverables and supplies the page dates; it provides no dataset links
   or decision rules.
+- [Company sample audit](docs/research/company-sample-audit.md), [layer acquisition report](docs/research/layer-acquisition.md), and [thread recovery](docs/research/prior-thread-context.md) — current local evidence and active/prior-session distinctions.

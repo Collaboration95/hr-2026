@@ -17,6 +17,10 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.venv-data/
+
+# Reproducible data acquisition cache (derived sample chips remain tracked)
+data/public/raw/
 
 # Editor and tooling state
 .vscode/
