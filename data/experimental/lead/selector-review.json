@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "split_counts": {
+    "train": 36,
+    "holdout": 18,
+    "dev": 18
+  },
+  "no_patch_overlap": true,
+  "company_aoi_excluded": true,
+  "frozen_before_recorded_holdout_reads": true,
+  "development_hashes_checked": 54,
+  "candidate_control_measurements_checked": 1872,
+  "complete_packages_recounted": [
+    {
+      "family": "all_levels",
+      "kind": "fixed",
+      "total_bytes": 810764
+    },
+    {
+      "family": "all_levels",
+      "kind": "oracle",
+      "total_bytes": 806244
+    },
+    {
+      "family": "all_levels",
+      "kind": "selected",
+      "total_bytes": 811164
+    },
+    {
+      "family": "level19_chunks",
+      "kind": "fixed",
+      "total_bytes": 810764
+    },
+    {
+      "family": "level19_chunks",
+      "kind": "oracle",
+      "total_bytes": 810764
+    },
+    {
+      "family": "level19_chunks",
+      "kind": "selected",
+      "total_bytes": 811038
+    },
+    {
+      "family": "level3",
+      "kind": "fixed",
+      "total_bytes": 894134
+    },
+    {
+      "family": "level3",
+      "kind": "oracle",
+      "total_bytes": 881243
+    },
+    {
+      "family": "level3",
+      "kind": "selected",
+      "total_bytes": 883717
+    }
+  ],
+  "decision": "Do not integrate selector; no advantage over strong fixed control after total package/model accounting. Strong seen-AOI GeoTIFF control gets a separate fair query/proof study.",
+  "limits": [
+    "Audit reads existing timestamps/hash evidence; it is not a cryptographic proof of historical non-access.",
+    "No second satellite ground truth or legal labels; no new generalization cohort.",
+    "No independent replay of all1872encodes in this lead audit; worker full replay and source readbacks are separately recorded."
+  ]
+}

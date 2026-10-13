@@ -47,3 +47,18 @@ At minimum measure repeatedpreprocess/decode/query timings with explicit scopes/
 Independent query reduction/membership on17plots: use W2scalar raycasting helpers or implement scalaroracle independentlyfrom productionselection. SharedGEOSvaliditycheck isallowedbutreportthatlimit. Testsvalid0vsunknown, code1positive, missingmask/band, tiny/no-centers, holes/multipart, partial/outside, exactdecimalboundaries, allrawvalues/masks. Include source-windowpixelANDmaskreadback, notonlyW4's pixelassertion.
 
 Final report names actual artifact/storepaths, bytes/timing/resource methods,17results, class-label evidence, data/codehashes, missingmetadata caveats, and reproduciblecommands. Do NOT modify mainartifact orfrontend. Lead reviews before integration; engine-jrcreport ismasterrelayhandoff.
+
+## Lead source check / proof-gate addition
+
+Lead checked source-window pixels ANDmasks against the chip; both exact. Source-only perplot counts are in data/experimental/lead/jrc-source-check.json. P0001has554forestclass1of1083selected; otherplotscurrentlyclass0only (P0003selected793). Treat these as reviewcross-checks, not an oracle to hardcode. Independently recompute all17.
+
+Please include `verify_jrc_artifact(path)->dict` or equivalent CLI gate beforehandoff: re-open pinnedsource and selectedcompact store; fullraw/mask equality overentirechip; exactperplot geometryhash/result/evidence/receipt/summary; measuredstorefiles and benchmarkidentity; rehashedfalseoffplotpixel/mask/summary/receipt controls rejected. Include a freshpositivecontrol, notonlynegative tests. AcceptedHansen V1–V3lessons are in validator-report.md. Keep allnewJRCverificationcode under yourownedjrc*.py/tests. No edits to lead proof.py/verify.py or mainartifact.
+
+## Lead early review: finish two operational gates before final acceptance
+
+Currentcode/sourcequery/oracle work read bylead; source results match leadindependentreadback. Before finalhandoff:
+
+1. Guard measurement source/input/code/store identity atstart/end and in coldchildren so a concurrent filechange or mixedimplementationrun isrejected, notarchived asvalidtimings. Includeevery timedanswerhash (orcheckeachsample) ratherthanonlylastsample. Statep95method; currentnp.percentile interpolation differsfrom Hansen nearest-rank and should belabelled.
+2. Normalexport/reverification from aminimalretainedbundle must not require the197MBfullsourcecache or silentlyremeasure/newtimestamp on everyexport. Prefer explicitmeasurementcommand fornewexperiments, and reusea verifiedexistingbenchmark/selectedstore forordinaryartifactregeneration. Fullsourcecache isoptional forverify; archivedreadbackclaimmustremainfullyboundtoinputhash/grid. Demonstratepositive verify→export→verify in a project-localcopy containingonlynecessarychip/provenance/QML/XML/store/archive/code/plotfiles, nofulltile. Metric-freeexportmayremainexplicit.
+
+Do not change acceptedHansenfiles. Also report a conservative TIFF-only/symmetriccommon-metadata comparison alongside actualJRCloaderrequirements, so class-semantic/QML/XMLprovenance costs do notcreate a misleading apparentcompressiongain.

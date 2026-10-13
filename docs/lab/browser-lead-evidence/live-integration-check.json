@@ -1,0 +1,10 @@
+[
+  {
+    "queryStatus": "Original and compact answers match. Complete selected-cell evidence received.",
+    "success": 1
+  },
+  {
+    "emptyInputRejected": true,
+    "reversedBoundsRejected": true
+  }
+]

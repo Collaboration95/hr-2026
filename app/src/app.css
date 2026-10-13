@@ -2546,3 +2546,191 @@ button.year-stat strong {
     width: 16px;
   }
 }
+.map-title.overview-context {
+  position: static;
+  padding: 14px 20px;
+  background: #edf2e3;
+  border-bottom: 1px solid #cbd7bf;
+  pointer-events: auto;
+}
+.map-title.overview-context strong {
+  font-size: 20px;
+}
+.map-title.overview-context > span:last-child {
+  font-size: 11px;
+}
+.is-overview .map-canvas {
+  height: 370px;
+}
+@media (max-width: 650px) {
+  .map-title.overview-context {
+    padding: 12px 14px;
+  }
+  .map-title.overview-context strong {
+    font-size: 19px;
+  }
+  .map-title.overview-context > span:last-child {
+    font-size: 11px;
+  }
+  .is-overview .map-canvas {
+    height: 310px;
+  }
+}
+/* Keep navigation available during long evidence inspection. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.queue {
+  top: 76px;
+}
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: 10px;
+  z-index: 100;
+  transform: translateY(-180%);
+  background: var(--pl-accent);
+  border: 1px solid var(--pl-ink);
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+#main,
+#proof-heading,
+#proof-selected-year,
+#supplier-declaration,
+#annual-proof-trigger,
+#plot-proof-trigger {
+  scroll-margin-top: 100px;
+}
+@media (max-width: 650px) {
+  .queue {
+    top: auto;
+  }
+  #main,
+  #proof-heading,
+  #proof-selected-year,
+  #supplier-declaration,
+  #annual-proof-trigger,
+  #plot-proof-trigger {
+    scroll-margin-top: 86px;
+  }
+}
+.index-scope {
+  font-size: 11px;
+  color: var(--pl-muted);
+  line-height: 1.6;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--pl-line);
+  margin: 0 0 22px;
+}
+.cohort-heading h2,
+#plot-review-heading {
+  scroll-margin-top: 100px;
+}
+@media (max-width: 650px) {
+  .topbar {
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 50px 50px;
+    gap: 0 12px;
+    padding: 0 16px;
+  }
+  .topbar .brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .topbar .command-trigger {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+  .topbar nav {
+    grid-row: 2;
+    grid-column: 1/-1;
+    margin: 0;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  .topbar nav button {
+    font-size: 12px;
+    padding: 0 1px;
+  }
+  .workspace {
+    min-height: calc(100vh - 100px);
+  }
+  .cohort-heading h2,
+  #main,
+  #proof-heading,
+  #proof-selected-year,
+  #supplier-declaration,
+  #annual-proof-trigger,
+  #plot-proof-trigger,
+  #plot-review-heading {
+    scroll-margin-top: 122px;
+  }
+  .index-scope {
+    font-size: 11px;
+  }
+}
+.receipt-body > .pl-receipt {
+  margin-top: 24px;
+}
+.benchmark-scope {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--pl-muted);
+  border-left: 2px solid #a5b993;
+  padding-left: 12px;
+  max-width: 760px;
+}
+
+.companion-panel {
+  margin-top: 26px;
+  border: 1px solid var(--pl-line);
+  background: var(--pl-surface);
+}
+.companion-panel > summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.companion-panel > summary span {
+  margin-right: 18px;
+  color: var(--pl-muted);
+}
+.companion-panel > summary strong {
+  margin-right: 18px;
+}
+.companion-body {
+  padding: 0 22px 22px;
+  min-width: 0;
+}
+.companion-body > .jrc-baseline {
+  margin: 0;
+}
+.companion-study {
+  font-size: 13px;
+  line-height: 1.65;
+  border-top: 1px solid var(--pl-line);
+  padding-top: 18px;
+}
+@media (max-width: 650px) {
+  .companion-panel > summary {
+    padding: 16px;
+  }
+  .companion-panel > summary strong {
+    display: block;
+    margin: 7px 0;
+  }
+  .companion-body {
+    padding: 0 12px 18px;
+  }
+}

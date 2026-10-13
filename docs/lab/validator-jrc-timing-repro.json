@@ -1,0 +1,18 @@
+{
+  "scope": "synthetic negative control; scratch-only archive; cold samples replayed, not new measurements",
+  "injected_wrong_measured_answer": [
+    {
+      "call": 5,
+      "plot": "P-0001",
+      "selected_cell_count": 1084
+    }
+  ],
+  "benchmark_runner_accepted": true,
+  "benchmark_proof_accepted": true,
+  "error": null,
+  "expected": "runner must reject a wrong intermediate timed query answer",
+  "actual_archive": {
+    "path": "artifacts/jrc-stores/exp-b5ab7c4c4db8cf855d03ce3744ffc5ec905ab287b66097f5fb7e2f6ffa8886d4/run-f00cef221427cdfbb9bf68c030610961cb28a595d9f2e783e34e98e83e006c89.json",
+    "run_id": "run-f00cef221427cdfbb9bf68c030610961cb28a595d9f2e783e34e98e83e006c89"
+  }
+}

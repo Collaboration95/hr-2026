@@ -105,7 +105,7 @@ layer report; current application commands are in README.
 
 The official JRC Global Forest Cover 2020 v3 tile request returned HTTP 500 on retry.
 The lab subsequently acquired an official **v4** native-grid chip and provenance;
-its separate companion is under independent review, as recorded in
+its separate companion is independently verified and mounted, as recorded in
 [the JRC report](docs/lab/engine-jrc-report.md). This does not retroactively supply v3
 or change the retained Hansen benchmark. WDPA is conditional on applicable use and
 redistribution terms. Do not reconstruct a claimed 2020 forest baseline merely
@@ -161,7 +161,7 @@ them separately while company clarification proceeds:
 - Preserve the 17 exact plot geometries, stable join IDs, supplied declarations,
   and source checksums. The audit's complete join does not validate declarations.
 - Freeze the decision-relevant subset and dates from the acquired three Hansen
-  bands. A separately versioned JRC2020v4 companion is under review; any
+  bands. A separately versioned JRC2020v4 companion is verified; any
   restriction layer remains conditional. The chosen query determines which
   layers are essential and which can be left outside the first slice.
 - Record layer definitions, class codes, units, resolution, CRS, grid alignment,

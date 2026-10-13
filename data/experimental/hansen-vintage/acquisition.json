@@ -1,0 +1,419 @@
+{
+  "status": "complete",
+  "finished_at_utc": "2026-10-13T04:14:24.478045+00:00",
+  "preregistration_sha256": "ff6a66fe2af764a01370649bba5c288a380135831df33cc7975adbd8c7fc065b",
+  "product": "Hansen GFC 2023 v1.11",
+  "observation_end_year": 2023,
+  "company_source_vintage": "unknown",
+  "official_archive_page": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/download.html",
+  "official_catalog": "https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2023_v1_11",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Hansen/UMD/Google/USGS/NASA",
+  "citation_doi": "10.1126/science.1244693",
+  "changes": "Native-grid bbox extraction and lossless recompression; no resampling or recoding.",
+  "total_new_download_body_bytes": 220960424,
+  "all_three_historical_bands": true,
+  "same_grid_across_historical_bands": true,
+  "bbox": [
+    98.772429,
+    8.431179,
+    99.080292,
+    8.581888
+  ],
+  "layers": [
+    {
+      "band": "treecover2000",
+      "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_10N_090E.tif",
+      "http_headers": {
+        "Content-Type": "application/octet-stream",
+        "X-GUploader-UploadID": "AP6rU80CcdOV14qc240A7b9ga_6Xv22KAVc5hUjJC5hqQcM4WjsSGcVR8uqoeDqzu3FeCewnADYjHn0",
+        "Expires": "Tue, 13 Oct 2026 05:14:07 GMT",
+        "Date": "Tue, 13 Oct 2026 04:14:07 GMT",
+        "Cache-Control": "public, max-age=3600",
+        "Last-Modified": "Mon, 01 Apr 2024 17:57:26 GMT",
+        "ETag": "\"896cb0d7cd3178b4b4ab938a89de8f4a\"",
+        "x-goog-generation": "1711994246522607",
+        "x-goog-metageneration": "1",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "150575735",
+        "x-goog-hash": "crc32c=POiUSw==",
+        "x-goog-storage-class": "STANDARD",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "150575735",
+        "Vary": "Origin",
+        "Server": "UploadServer",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Connection": "close"
+      },
+      "source_path": "raw/Hansen_GFC-2023-v1.11_treecover2000_10N_090E.tif",
+      "source_bytes": 150575735,
+      "source_sha256": "56cdc0cda4ccb07ad1513593b4bd13b0dc8577ab1510c986c98fc89aaa807366",
+      "chip_path": "hansen_2023_v1_11_treecover2000_sample.tif",
+      "chip_bytes": 414142,
+      "chip_sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc",
+      "grid": {
+        "source_shape": [
+          40000,
+          40000
+        ],
+        "source_transform": [
+          0.00025,
+          0.0,
+          90.0,
+          0.0,
+          -0.00025,
+          10.0
+        ],
+        "shape": [
+          604,
+          1233
+        ],
+        "transform": [
+          0.00025,
+          0.0,
+          98.77225,
+          0.0,
+          -0.00025,
+          8.582
+        ],
+        "crs": "EPSG:4326",
+        "window_col_row_width_height": [
+          35089,
+          5672,
+          1233,
+          604
+        ]
+      },
+      "bounds": [
+        98.77225,
+        8.431000000000001,
+        99.0805,
+        8.582
+      ],
+      "nodata": null,
+      "source_block_shapes": [
+        [
+          1,
+          40000
+        ]
+      ],
+      "source_mask_flags": [
+        "1"
+      ],
+      "source_window_raw_readback_equal": true,
+      "source_window_masks_readback_equal": true,
+      "mask_valid_cells": 744732,
+      "raw_value_counts": {
+        "0": 76692,
+        "1": 137,
+        "2": 120,
+        "3": 107,
+        "4": 783,
+        "5": 362,
+        "6": 338,
+        "7": 97,
+        "8": 98,
+        "9": 865,
+        "10": 171,
+        "11": 345,
+        "12": 1082,
+        "13": 879,
+        "14": 1306,
+        "15": 546,
+        "16": 363,
+        "17": 599,
+        "18": 512,
+        "19": 429,
+        "20": 1527,
+        "21": 351,
+        "22": 412,
+        "23": 56,
+        "24": 243,
+        "25": 379,
+        "26": 1090,
+        "27": 801,
+        "28": 1313,
+        "29": 1902,
+        "30": 2450,
+        "31": 1201,
+        "32": 824,
+        "33": 413,
+        "34": 184,
+        "35": 110,
+        "36": 249,
+        "37": 878,
+        "38": 104,
+        "39": 387,
+        "40": 426,
+        "41": 569,
+        "42": 700,
+        "43": 2007,
+        "44": 1996,
+        "45": 2549,
+        "46": 213,
+        "47": 1388,
+        "48": 1172,
+        "49": 1377,
+        "50": 175,
+        "51": 6349,
+        "52": 3175,
+        "53": 1295,
+        "54": 3840,
+        "55": 4167,
+        "56": 2474,
+        "57": 1502,
+        "58": 5173,
+        "59": 4158,
+        "60": 2390,
+        "61": 646,
+        "62": 2683,
+        "63": 2410,
+        "64": 4022,
+        "65": 349,
+        "66": 1207,
+        "67": 1555,
+        "68": 2617,
+        "69": 143,
+        "70": 2657,
+        "71": 4849,
+        "72": 8765,
+        "73": 839,
+        "74": 14485,
+        "75": 15303,
+        "76": 38140,
+        "77": 3209,
+        "78": 21776,
+        "79": 8046,
+        "80": 1127,
+        "81": 6504,
+        "82": 35893,
+        "83": 19451,
+        "84": 1643,
+        "85": 37981,
+        "86": 13317,
+        "87": 30331,
+        "88": 2371,
+        "89": 63473,
+        "90": 57043,
+        "91": 9617,
+        "92": 4901,
+        "93": 5000,
+        "94": 12575,
+        "95": 43974,
+        "96": 10521,
+        "97": 30482,
+        "98": 9417,
+        "99": 11778,
+        "100": 55832
+      },
+      "raw_array_sha256": "cc234960ddac8892f749ab5b9ba89d856b6eee2f05e9400e184c262426de836e",
+      "mask_array_sha256": "692c47eb9ac207f6d5a2bc1dec8acaa11c48dcfdc7085e34b2dd30b19452357d"
+    },
+    {
+      "band": "lossyear",
+      "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_lossyear_10N_090E.tif",
+      "http_headers": {
+        "Content-Type": "image/tiff",
+        "X-GUploader-UploadID": "AP6rU83odgkKsDr5YGipggw1YUpcfNW9jHrKoK62VQcNogQNhk1VVHkV5wVn1TS4FIOBdTJuzzV2Xg4",
+        "Expires": "Tue, 13 Oct 2026 05:14:08 GMT",
+        "Date": "Tue, 13 Oct 2026 04:14:08 GMT",
+        "Cache-Control": "public, max-age=3600",
+        "Last-Modified": "Mon, 26 Feb 2024 14:28:31 GMT",
+        "ETag": "\"7725a3ac355b680313f80752d503564b\"",
+        "x-goog-generation": "1708957711862948",
+        "x-goog-metageneration": "1",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "44854034",
+        "Content-Language": "en",
+        "x-goog-hash": "crc32c=BEBcQw==",
+        "x-goog-storage-class": "STANDARD",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "44854034",
+        "Vary": "Origin",
+        "Server": "UploadServer",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Connection": "close"
+      },
+      "source_path": "raw/Hansen_GFC-2023-v1.11_lossyear_10N_090E.tif",
+      "source_bytes": 44854034,
+      "source_sha256": "a0561b8ae938b5ca18ebed5b4bc24e2701b2a83028e5c2b44121b916e201da1b",
+      "chip_path": "hansen_2023_v1_11_lossyear_sample.tif",
+      "chip_bytes": 147384,
+      "chip_sha256": "12c3c1ed9ca108b6ba837887b1d538ec1fe4d3e9c8e298466509d711798ec14f",
+      "grid": {
+        "source_shape": [
+          40000,
+          40000
+        ],
+        "source_transform": [
+          0.00025,
+          0.0,
+          90.0,
+          0.0,
+          -0.00025,
+          10.0
+        ],
+        "shape": [
+          604,
+          1233
+        ],
+        "transform": [
+          0.00025,
+          0.0,
+          98.77225,
+          0.0,
+          -0.00025,
+          8.582
+        ],
+        "crs": "EPSG:4326",
+        "window_col_row_width_height": [
+          35089,
+          5672,
+          1233,
+          604
+        ]
+      },
+      "bounds": [
+        98.77225,
+        8.431000000000001,
+        99.0805,
+        8.582
+      ],
+      "nodata": null,
+      "source_block_shapes": [
+        [
+          1,
+          40000
+        ]
+      ],
+      "source_mask_flags": [
+        "1"
+      ],
+      "source_window_raw_readback_equal": true,
+      "source_window_masks_readback_equal": true,
+      "mask_valid_cells": 744732,
+      "raw_value_counts": {
+        "0": 462590,
+        "1": 5752,
+        "2": 6813,
+        "3": 4977,
+        "4": 9384,
+        "5": 6761,
+        "6": 10849,
+        "7": 10909,
+        "8": 3996,
+        "9": 24634,
+        "10": 15741,
+        "11": 7335,
+        "12": 9560,
+        "13": 11859,
+        "14": 16985,
+        "15": 10985,
+        "16": 16006,
+        "17": 29090,
+        "18": 14806,
+        "19": 11982,
+        "20": 10159,
+        "21": 15522,
+        "22": 11126,
+        "23": 16911
+      },
+      "raw_array_sha256": "11d08eb8d259774c6156415ed479527339c6f60d4b31de5015c885eb5cc1ebc5",
+      "mask_array_sha256": "692c47eb9ac207f6d5a2bc1dec8acaa11c48dcfdc7085e34b2dd30b19452357d"
+    },
+    {
+      "band": "datamask",
+      "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_datamask_10N_090E.tif",
+      "http_headers": {
+        "Content-Type": "application/octet-stream",
+        "X-GUploader-UploadID": "AP6rU808M0ai1ZLPh19Rmzfcp60snbBbwGZhkuaU_FLiYOWOggV0p4_ipXvRUbLQQyD5rY56mR-T9Cs",
+        "Expires": "Tue, 13 Oct 2026 05:14:09 GMT",
+        "Date": "Tue, 13 Oct 2026 04:14:09 GMT",
+        "Cache-Control": "public, max-age=3600",
+        "Last-Modified": "Mon, 01 Apr 2024 17:57:28 GMT",
+        "ETag": "\"47cc296846c1d9f166c017aa58ec73d0\"",
+        "x-goog-generation": "1711994248311288",
+        "x-goog-metageneration": "1",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "25351231",
+        "x-goog-hash": "crc32c=IDvmSg==",
+        "x-goog-storage-class": "STANDARD",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "25351231",
+        "Vary": "Origin",
+        "Server": "UploadServer",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Connection": "close"
+      },
+      "source_path": "raw/Hansen_GFC-2023-v1.11_datamask_10N_090E.tif",
+      "source_bytes": 25351231,
+      "source_sha256": "94b909dad3069ed5afe3f4b7c252dff7766382758a1a11f768293b053e6fcb7a",
+      "chip_path": "hansen_2023_v1_11_datamask_sample.tif",
+      "chip_bytes": 2994,
+      "chip_sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458",
+      "grid": {
+        "source_shape": [
+          40000,
+          40000
+        ],
+        "source_transform": [
+          0.00025,
+          0.0,
+          90.0,
+          0.0,
+          -0.00025,
+          10.0
+        ],
+        "shape": [
+          604,
+          1233
+        ],
+        "transform": [
+          0.00025,
+          0.0,
+          98.77225,
+          0.0,
+          -0.00025,
+          8.582
+        ],
+        "crs": "EPSG:4326",
+        "window_col_row_width_height": [
+          35089,
+          5672,
+          1233,
+          604
+        ]
+      },
+      "bounds": [
+        98.77225,
+        8.431000000000001,
+        99.0805,
+        8.582
+      ],
+      "nodata": null,
+      "source_block_shapes": [
+        [
+          1,
+          40000
+        ]
+      ],
+      "source_mask_flags": [
+        "1"
+      ],
+      "source_window_raw_readback_equal": true,
+      "source_window_masks_readback_equal": true,
+      "mask_valid_cells": 744732,
+      "raw_value_counts": {
+        "1": 743418,
+        "2": 1314
+      },
+      "raw_array_sha256": "15d8e7af4c03f56e31154d2518f1274c54bfaf9610c53b011288adfa850eced0",
+      "mask_array_sha256": "692c47eb9ac207f6d5a2bc1dec8acaa11c48dcfdc7085e34b2dd30b19452357d"
+    }
+  ],
+  "documentation_discrepancies": [
+    "Archive prose says lossyear 1\u201320 while naming 2001\u20132023; official catalog explicitly confirms 1\u201323.",
+    "Nominal resolution wording differs; use measured native affine grid, never infer spacing from prose."
+  ]
+}

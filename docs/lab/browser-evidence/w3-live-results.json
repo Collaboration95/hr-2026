@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-10-13T02:19:47.674Z",
+  "timestamp": "2026-10-13T03:04:55.010Z",
   "tool": "existing Playwright 1.63.0 + cached Chromium",
   "endpoint": "http://127.0.0.1:5173",
-  "canonicalContentSha256": "2ebd6ba54bda30558fd97978b4ed5a1a013e55fe22df8c9e525eff5e0ed18158",
+  "canonicalContentSha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
   "checks": [
     {
       "name": "served artifact equals canonical",
       "status": "PASS",
       "detail": {
         "plots": 17,
-        "content_sha256": "2ebd6ba54bda30558fd97978b4ed5a1a013e55fe22df8c9e525eff5e0ed18158"
+        "content_sha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2"
       }
     },
     {
@@ -32,18 +32,18 @@
       "name": "proof table and cohort agree with JSON",
       "status": "PASS",
       "detail": {
-        "overall_storage_choice": "source_geotiff",
-        "source_bytes": 586241,
-        "best_candidate_bytes": 786400
+        "overall_storage_choice": "separate_zstd_l19",
+        "source_bytes": 585293,
+        "best_candidate_bytes": 535012
       }
     },
     {
       "name": "benchmark storage choice, units and timing match JSON",
       "status": "PASS",
       "detail": {
-        "sourceTotalBytes": 586241,
-        "sourceHotMs": 1.449166,
-        "sourceFreshProcessMs": 11.331415999999999
+        "sourceTotalBytes": 585293,
+        "sourceHotMs": 1.418167,
+        "sourceFreshProcessMs": 11.182333
       }
     },
     {
@@ -51,7 +51,7 @@
       "status": "PASS",
       "detail": {
         "filename": "P-0005-receipt.json",
-        "receipt_sha256": "219df58960517641c37f72c83a1a093f2899aea9f2c03c83459d02f406c64af2"
+        "receipt_sha256": "45a9bcae041da9bdcd855e5687a0be898b0cc9b384828b6402f0ef018a590a68"
       }
     },
     {
@@ -189,9 +189,9 @@
           "width": 172.541259765625
         },
         ".map-legend": {
-          "left": 234.40625,
+          "left": 203.375,
           "right": 363,
-          "width": 128.59375
+          "width": 159.625
         }
       }
     },
@@ -209,62 +209,62 @@
           {
             "tag": "BUTTON",
             "class": "queue-row ",
-            "right": 554
+            "right": 556
           },
           {
             "tag": "DIV",
             "class": "",
-            "right": 543
+            "right": 545
           },
           {
             "tag": "STRONG",
             "class": "",
-            "right": 438.53125
+            "right": 440.46875
           },
           {
             "tag": "SPAN",
             "class": "",
-            "right": 543
+            "right": 545
           },
           {
             "tag": "SMALL",
             "class": "",
-            "right": 532.546875
+            "right": 460.703125
           },
           {
             "tag": "SPAN",
             "class": "queue-row-bottom",
-            "right": 543
+            "right": 545
           },
           {
             "tag": "I",
-            "class": "lead-dot",
-            "right": 395
+            "class": "record-dot",
+            "right": 397
           },
           {
             "tag": "svg",
             "class": {},
-            "right": 543
+            "right": 545
           },
           {
             "tag": "path",
             "class": {},
-            "right": 538.3333129882812
+            "right": 540.3333129882812
           },
           {
             "tag": "BUTTON",
             "class": "queue-row ",
-            "right": 736
+            "right": 738
           },
           {
             "tag": "DIV",
             "class": "",
-            "right": 725
+            "right": 727
           },
           {
             "tag": "STRONG",
             "class": "",
-            "right": 618.359375
+            "right": 622.421875
           }
         ]
       }

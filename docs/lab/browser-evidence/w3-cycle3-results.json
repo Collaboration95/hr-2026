@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-13T02:39:20.040Z",
+  "timestamp": "2026-10-13T03:04:58.256Z",
   "scope": "02:32 cycle3 changed UI, not V5/V7 malformed fixtures",
   "artifact": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
   "checks": [
@@ -18,11 +18,11 @@
       "detail": {
         "arrival": {
           "id": "proof-selected-year",
-          "top": 490.640625,
-          "bottom": 534.140625,
+          "top": 528.640625,
+          "bottom": 572.140625,
           "viewport": 1000,
           "text": "2025 observed loss cells1111",
-          "scrollY": 125
+          "scrollY": 87
         },
         "returned": {
           "id": "annual-proof-trigger",
@@ -75,10 +75,7 @@
         "latitude": "8.58189",
         "longitude": "98.77243",
         "plotScopedTable": "P-0005 · 262 selected",
-        "markersOverlappingTitle": [
-          "Select P-0003 on map",
-          "Select P-0001 on map"
-        ]
+        "markersOverlappingTitle": []
       }
     },
     {
@@ -180,19 +177,19 @@
       "detail": {
         "arrival": {
           "id": "proof-selected-year",
-          "top": 415.671875,
-          "bottom": 452.171875,
+          "top": 464.671875,
+          "bottom": 501.171875,
           "viewport": 844,
           "text": "2025 observed loss cells1111",
-          "scrollY": 413
+          "scrollY": 401
         },
         "returned": {
           "id": "annual-proof-trigger",
-          "top": 23.78125,
-          "bottom": 76.28125,
+          "top": 121.78125,
+          "bottom": 174.28125,
           "viewport": 844,
           "text": "11observed loss cells ",
-          "scrollY": 1121
+          "scrollY": 1106
         }
       }
     },

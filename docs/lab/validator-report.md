@@ -106,3 +106,13 @@ The original reproducer now supports alternate output/report paths so its first-
 Evidence files: `validator-fix-engine.json` (fresh positives and individual rejection reasons), `validator-fix-original-repros.json` (original attacks), `validator-fix-independent.json` (independent source/codec/query/accounting), `validator-fix-loader.json` (paired loader/helper controls), `validator-fix-ui.json` (live negative/unknown states), `validator-fix-ui-positive.json` (restored real proof and current benchmark).
 
 No remaining V1–V7 waiting condition or concrete unresolved defect was found in this focused pass. Scope is these fixes/current retained cohort, not an exhaustive new application audit. Frontend hashes still do not authenticate sources or prove archive correctness; those bindings were checked against actual local engine evidence. First-pass limits on broader data, arbitrary geometries and application-wide accessibility remain unchanged.
+
+## Separate JRC companion audit — 03:39 UTC
+
+Hansen V1–V7 remain resolved. The new, separately owned JRC2020v4 companion has an independent report in [validator-jrc-report.md](validator-jrc-report.md). Source/window/codec/query and20rehashed proof controls pass with fresh positives, but JRC acceptance needs two fixes: a wrong intermediate timed answer is accepted by runner and benchmark proof (J1), and ordinary export reruns measurement/requires the optional fulltile despite a valid minimal retained bundle (J2). JRC UI is not assessed or assumed integrated. This finding does not alter accepted Hansen results.
+
+## Latest independent checkpoint — 04:15 UTC
+
+JRC J1/J2 above are now **resolved** against fresh companion `c13127c9…`: original transient-answer attack rejects at sample2, five rebuilt sample/guard/child forgeries reject, and46-file verify→ordinary export→verify preserves every byte without the full tile or remeasurement. Canonical package inventory needs refresh for the edited JRC interface document; owned current inventory passes. See the appended fix evidence in `validator-jrc-report.md`.
+
+Independent strong-control/source/masks/storage and exact-rational spatial sensitivity checks pass. Allfive changedflags and15witnesses are reproduced; productioncenterquery remains unchanged. Strong-control actual measured-answer checks reject transient failures acrossallfourrepresentations/full+indexed, but its **known pending Volta/W3 verifier revision** is independently confirmed with six rehashed type/count/bounds/settings inconsistencies accepted. See `validator-strong-spatial-report.md`. No new tuning or production mutation was performed; focused fresh-W3 verification awaits that revision.

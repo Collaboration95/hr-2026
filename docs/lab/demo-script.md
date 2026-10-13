@@ -24,7 +24,7 @@ Use the review summary/declaration jump rather than scrolling past the entire ev
 
 ## 0:35–1:10 — Link year, cells and exact values
 
-Select P-0005, then 2025. Its actual source query selects 262 native cells; 11 loss events in 2025 and 7 in 2024 sum to 18 in 2024–25. Show the matching orange cell footprints and the native-cell table’s 2025 filter. Inspect one actual row/cell; canopy is 2000 context, and a raw loss code becomes a year only on valid supported land.
+Open Evidence index, keep the 2024–2025 view, and click the 11-cell observation for P-0005 in 2025. The app returns directly to that plot and year. Its actual source query selects 262 native cells; 11 loss events in 2025 and 7 in 2024 sum to 18 in 2024–25. Show the matching orange cell footprints and the native-cell table’s 2025 filter. Inspect one actual row/cell; canopy is 2000 context, and a raw loss code becomes a year only on valid supported land.
 
 “Each square is a native source cell whose center is covered by this exact supplied boundary. Footprints can extend across the boundary. These are observed cell counts, not hectares or a legal land-use conclusion.”
 
@@ -32,7 +32,7 @@ Select P-0005, then 2025. Its actual source query selects 262 native cells; 11 l
 
 Click the observed-cell count. The selected-year comparison is the focus destination. Original and compact 2025 counts agree; full query outputs, histograms, masks, unknowns and both periods are compared. The current real cohort has 17 exact matches, but the final retained export/verifier remains the source for that claim.
 
-Open the named receipt. Show the exact supplier fields, source product/version, native grid, cell-center rule, input/geometry/supplier hashes and store provenance. Download the receipt JSON locally if useful. A hash is an integrity identifier, not a source-accuracy or compliance certificate.
+Open the named receipt. Use its readable disclosures to show the exact supplier fields, source product/version, native grid, cell-center rule, input/geometry/supplier hashes and store provenance. Raw JSON remains available below. Download the receipt JSON locally if useful. A hash is an integrity identifier, not a source-accuracy or compliance certificate.
 
 ## 1:50–2:35 — Explain the measured tradeoff honestly
 
@@ -54,3 +54,17 @@ Close: “The useful result is an inspectable answer with its limits, and a meas
 - If runtime validation rejects an artifact, show the error, keep the last accepted data, and rerun the engine-approved export/sync. Do not bypass the validator for the pitch.
 - If a source/compact mismatch exists, show the actual differing fields; do not invent a witness pixel or present agreement.
 - If browser automation fails, the app can be reviewed manually at loopback. Record that automated check as unavailable rather than passed.
+
+## Longer analyst walkthrough
+
+The evidence index is useful when a reviewer asks for the whole cohort rather than one example. Its three period views expose actual source counts, and its declaration column remains separate. In the current fixture, the five supplier-declared indication/mitigation records and the five plots with mapped 2024–25 loss are different sets; equal group sizes do not establish correspondence. Positive counts open their exact plot/year. Export displayed counts only as a local CSV, with source/query context and explicit unknowns.
+
+The accepted JRC companion is available in the separate disclosure below Hansen review. P-0003 has 793 mapped class-0 cells; P-0001 has 529 class-0 and 554 class-1 cells on the separate JRC grid. Explain its 2020 reference year, v4 source classes and separate proof. Non-forest does not mean no tree canopy. Never compare JRC and Hansen cell counts as common-area quantities or extend the Hansen compression percentage to the companion.
+
+## Optional live-query extension (integrated acceptance passed)
+
+Start the verified local API and app with `cd app && npm run dev:local`. Open Query lab from P-0003 and run the exact supplied polygon. Compare its real original/compact output with the frozen review, inspect the complete native-cell evidence and download the bound live receipt. Explain that this is a temporary read-only query on one immutable source/store snapshot, not an edit to supplier records.
+
+Choose Temporary rectangle and explicitly use the plot bounds. Run again to see the actual changed selection; do not predict a loss result before computing it. The form is fully usable without drawing. Editing the bounds clears the prior answer. Demonstrate Cancel only while a request is active; if the request is already complete, do not pretend cancellation happened.
+
+If the optional API is unavailable or receipt binding fails, show that state and return to the frozen Review desk. Single-request preloaded timings are not a benchmark or speedup claim. The live production rule remains cell-center inclusion; the separate overlap study is not a production toggle.

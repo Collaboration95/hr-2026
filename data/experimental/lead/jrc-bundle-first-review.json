@@ -1,0 +1,18 @@
+{
+  "full_source_cache_present": false,
+  "manifest_experiment": "exp-b5ab7c4c4db8cf855d03ce3744ffc5ec905ab287b66097f5fb7e2f6ffa8886d4",
+  "results": [
+    {
+      "step": "verify",
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"failures\": [],\n  \"plot_count\": 17,\n  \"full_pixel_count\": 6684255,\n  \"source_and_compact_raw_masks_equal\": true,\n  \"independent_plot_checks\": 17,\n  \"benchmark_bound\": true,\n  \"full_source_cache_present\": false,\n  \"note\": \"Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "ordinary_export",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "\n    result = export_jrc(output=args.output)\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/engine/jrc.py\", line 178, in export_jrc\n    return export(*args, **kwargs)\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/engine/jrc_proof.py\", line 200, in export_jrc\n    if benchmark is None: benchmark = run_jrc_benchmark(root)\n                                      ~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/engine/jrc_benchmark.py\", line 126, in run_jrc_benchmark\n    readback = check_source_readback(root, source)\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/engine/jrc.py\", line 126, in check_source_readback\n    record = file_record(SOURCE, root)\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/engine/jrc.py\", line 75, in file_record\n    return {'path': str(relative), 'bytes': path.stat().st_size, 'sha256': sha256_file(path)}\n                                            ~~~~~~~~~^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 654, in stat\n    return os.stat(self, follow_symlinks=follow_symlinks)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/jrc-bundle-review-t95r19uk/data/experimental/jrc/JRC_GFC2020_V4_N10_E90.tif'\n"
+    }
+  ]
+}

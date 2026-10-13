@@ -1,0 +1,114 @@
+{
+  "fresh_positive": {
+    "valid": true,
+    "failures": [],
+    "plot_count": 17,
+    "full_pixel_count": 6684255,
+    "source_and_compact_raw_masks_equal": true,
+    "independent_plot_checks": 17,
+    "benchmark_bound": true,
+    "full_source_cache_present": true,
+    "note": "Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims."
+  },
+  "fresh_byte_identical": true,
+  "current_content": "c13127c9f6d8654a1dae0d66945c981bfc340b20467124dd2e55829d79d754a3",
+  "current_experiment": "exp-bfd3067040ae3fb83331667fba2ece195e9372893c81ac1930edbdfc68444f3a",
+  "canonical_manifest_stale_files": [
+    "docs/lab/engine-jrc-interface.md"
+  ],
+  "minimal": {
+    "file_count": 46,
+    "full_tile_absent": true,
+    "commands": [
+      {
+        "argv": [
+          "--verify",
+          "artifacts/jrc-baseline-v1.json"
+        ],
+        "exit": 0,
+        "stdout": "{\n  \"valid\": true,\n  \"failures\": [],\n  \"plot_count\": 17,\n  \"full_pixel_count\": 6684255,\n  \"source_and_compact_raw_masks_equal\": true,\n  \"independent_plot_checks\": 17,\n  \"benchmark_bound\": true,\n  \"full_source_cache_present\": false,\n  \"note\": \"Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims.\"\n}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [],
+        "exit": 0,
+        "stdout": "{\n  \"artifact\": \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/validation/jrc-fix/minimal-46/artifacts/jrc-baseline-v1.json\",\n  \"summary\": {\n    \"plot_count\": 17,\n    \"exact_match_count\": 17,\n    \"independent_match_count\": 17,\n    \"selected_cell_count_sum\": 9511,\n    \"class_counts_sum\": {\n      \"0\": 8957,\n      \"1\": 554\n    },\n    \"mapped_forest_plot_counts\": {\n      \"true\": 1,\n      \"false\": 16,\n      \"unknown\": 0\n    },\n    \"count_note\": \"Sum over plots; overlapping geometries may count a native cell more than once.\"\n  },\n  \"storage_choice\": \"binary_packed_zstd19\"\n}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "--verify",
+          "artifacts/jrc-baseline-v1.json"
+        ],
+        "exit": 0,
+        "stdout": "{\n  \"valid\": true,\n  \"failures\": [],\n  \"plot_count\": 17,\n  \"full_pixel_count\": 6684255,\n  \"source_and_compact_raw_masks_equal\": true,\n  \"independent_plot_checks\": 17,\n  \"benchmark_bound\": true,\n  \"full_source_cache_present\": false,\n  \"note\": \"Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims.\"\n}\n",
+        "stderr": ""
+      }
+    ],
+    "all_bytes_identical": true,
+    "new_files": []
+  },
+  "negative_samples": [
+    {
+      "label": "warmup-result",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC intermediate timing result/guard mismatch"
+        ]
+      }
+    },
+    {
+      "label": "intermediate-result",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC intermediate timing result/guard mismatch"
+        ]
+      }
+    },
+    {
+      "label": "intermediate-guard",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC intermediate timing result/guard mismatch"
+        ]
+      }
+    },
+    {
+      "label": "cold-child",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC child answer/RSS mismatch"
+        ]
+      }
+    },
+    {
+      "label": "cold-warmup-guard",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC child answer/RSS mismatch"
+        ]
+      }
+    }
+  ],
+  "original_j1_repro": {
+    "scope": "synthetic negative control; scratch-only archive; cold samples replayed, not new measurements",
+    "injected_wrong_measured_answer": [
+      {
+        "call": 5,
+        "plot": "P-0001",
+        "selected_cell_count": 1084
+      }
+    ],
+    "benchmark_runner_accepted": false,
+    "benchmark_proof_accepted": false,
+    "error": "JRC timed result mismatch at sample 2",
+    "expected": "runner must reject a wrong intermediate timed query answer",
+    "actual_archive": null
+  },
+  "pass": true
+}

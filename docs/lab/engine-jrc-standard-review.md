@@ -1,0 +1,13 @@
+# Lead review: accept additive JRC standard storage comparison
+
+The fixedone-bit GeoTIFFZstd19/block1024 control requires19901bytes (15705TIFF+4196necessarymanifest), versus21459custom. Accept the1558byte/7.26%advantage as a same-chip additivecomparison. Retain the currentcustomstore/companion for verifiedsourceview; no newproductionadapter orchoicechange is required. Noformatoptimality/universalclaim follows fromone sparsechip.
+
+Lead reran21tests:pass0.574s, and currentretainedstudyverifier:pass all4representations/17plots/6684255pixels. Lead directlyread bothstandardTIFFs via rasterio andcompared everypixel/mask/nativegrid/exactreconstructionmetadata with pinnedsource, independently recounting actualstorefiles. Evidence data/experimental/lead/jrc-standard-storage-review.json. SharedGDAL remains a limitation; real masks areallvalid, whileworker testscovermaskedraw1 andindependentmasksidecars.
+
+Retainedstudy pointer data/experimental/jrc-standard/retained.json bindsrun51a4f4afa9c2ff1e525948cc194b94192ed56dac62f638909dcf55bc59e0008c, experimentc11ef38c77f2bc3b77cde17183d2967dd0d99f24b07e7779897f7f29b9f2b288 andthecurrentJRCcompanionfilehash933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71. Earlier mixedW1artifacthandoffwasproperly rejected andnotretained. NewW1core/artifactchanges wouldrequirefreshstudybinding, notsilentreuse.
+
+Actualnecessaryloaderbytes: source57653/custom21459/standardlevel3 23782/standardlevel19 19901. Withsameexternalprovenanceandexactplotinputs:76918/52139/54462/50581. No197MBtilecropgain. Preliminarylead19791was supersededby110additionalrequiredmanifestbytes.
+
+Separate-study medians load+17queries: source17.241ms/custom10.281ms/standard19 14.203ms. Hotqueries around5.1–5.3ms useidenticalarrays/querycode; noformathotqueryadvantage. CustomcoldpeakRSS87.13MB versusstandard99.75MB. Repeatedencode medianscustom218.088ms/standard19 211.130ms; standard3only3.842ms butlarger. Sevenreps/twowarmups, OScachenotevicted, hashguardsprereadfiles. WholechildRSSincludesimports/checks; encodingpeaksincludeallnineattempts. Noindexedtimingclaimed. These aredistinctfromthecanonicalcustom-versus-provided-DEFLATEbenchmark.
+
+Scientificcomparisonaccepted; thisresearchverifier isnotpromoted toproductiontrustgate. Code reviewnotes some researchproofstructures usePython ==, whichcanconflatebooleans/integers, unlike thecurrentproductionJRCcanonicalcomparisons. Beforeusingthisresearchartifactasaproductproofverifier, applythesame stricttype/schema hardeningrequestedforHansenstrongcontrol. Actualdirectlyreadcanonicaldata/bytecounts remainvalid. No furtherbroadcodecsearch recommended in this session; prioritizeintegratedlive/native-sourceQA.

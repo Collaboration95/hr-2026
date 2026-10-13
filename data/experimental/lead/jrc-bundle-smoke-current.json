@@ -1,0 +1,49 @@
+{
+  "component": "jrc",
+  "manifest_sha256": "b2f61bf6334dcb775fa33895be11f1cc5fa287f9c9b6ea057b7c16e27ba53489",
+  "experiment_id": "exp-bfd3067040ae3fb83331667fba2ece195e9372893c81ac1930edbdfc68444f3a",
+  "run_id": "run-5b318b210c244c60458942f67281a8abc6f8ebcc2b3949effc12feb3013cd261",
+  "file_count": 46,
+  "bundle_bytes": 1329996,
+  "only_manifest_files_copied": true,
+  "reexport_byte_identical": true,
+  "passed": true,
+  "steps": [
+    {
+      "step": "verify_before",
+      "args": [
+        "-m",
+        "engine.jrc",
+        "--verify",
+        "artifacts/jrc-baseline-v1.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"failures\": [],\n  \"plot_count\": 17,\n  \"full_pixel_count\": 6684255,\n  \"source_and_compact_raw_masks_equal\": true,\n  \"independent_plot_checks\": 17,\n  \"benchmark_bound\": true,\n  \"full_source_cache_present\": false,\n  \"note\": \"Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "ordinary_export",
+      "args": [
+        "-m",
+        "engine.jrc",
+        "--output",
+        "artifacts/bundle-smoke-rebuilt.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"artifact\": \"artifacts/bundle-smoke-rebuilt.json\",\n  \"summary\": {\n    \"plot_count\": 17,\n    \"exact_match_count\": 17,\n    \"independent_match_count\": 17,\n    \"selected_cell_count_sum\": 9511,\n    \"class_counts_sum\": {\n      \"0\": 8957,\n      \"1\": 554\n    },\n    \"mapped_forest_plot_counts\": {\n      \"true\": 1,\n      \"false\": 16,\n      \"unknown\": 0\n    },\n    \"count_note\": \"Sum over plots; overlapping geometries may count a native cell more than once.\"\n  },\n  \"storage_choice\": \"binary_packed_zstd19\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "verify_after",
+      "args": [
+        "-m",
+        "engine.jrc",
+        "--verify",
+        "artifacts/bundle-smoke-rebuilt.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"failures\": [],\n  \"plot_count\": 17,\n  \"full_pixel_count\": 6684255,\n  \"source_and_compact_raw_masks_equal\": true,\n  \"independent_plot_checks\": 17,\n  \"benchmark_bound\": true,\n  \"full_source_cache_present\": false,\n  \"note\": \"Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims.\"\n}\n",
+      "stderr": ""
+    }
+  ]
+}
