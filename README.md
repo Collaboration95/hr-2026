@@ -4,7 +4,7 @@ A week-long project for Hack & Hire, organized by Projet with NUS CAT. Participa
 
 This repository holds the project context and working local implementation for the selected SystemEarth track. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
 
-**Start here:** [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [Final verification](docs/lab/final-verification.json)
+**Start here:** [Agent-swarm methodology](docs/lab/research-methodology.md) · [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [Final verification](docs/lab/final-verification.json)
 
 ## Current status
 
@@ -76,6 +76,10 @@ These are the current references. Read the documents relevant to the task.
 Some instructions need confirmation. Bizsu's printed lead-generation brief targets homeowners, while the spoken brief targets Singapore SMEs. SystemEarth's printed prototype request is firmer than the spoken guidance. Company sample access is now established locally; public-layer coverage and reuse terms, general scoring weights, and detailed submission logistics still need clarification.
 
 The two original PDFs in [docs/sources](docs/sources/) are available for checking exact printed wording. The source manifest records their provenance. Use the current references for ordinary project work.
+
+## Repository publication
+
+After the local checkpoint, the user explicitly authorized pushing the tracked project, research evidence and documentation to the existing public GitHub repository on `guru/plotline-research-lab`. Raw acquisition caches, dependencies and disposable test bundles retain their existing exclusions. This records the user’s repository publication instruction; it does not invent additional company data-use terms or alter the sources’ licenses.
 
 ## Working with an agent
 
