@@ -1,0 +1,9 @@
+{
+  "manifest_snapshot_id": "84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06",
+  "file_count": 37,
+  "bundle_bytes": 4086868,
+  "returncode": 0,
+  "stdout": "{\"snapshot_id\": \"84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06\", \"real_http_exact_plots\": 17, \"canonical_binding_fields_checked\": true}\n",
+  "stderr": "",
+  "only_manifest_files_copied": true
+}

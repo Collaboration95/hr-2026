@@ -13,6 +13,11 @@ import {
 import { comparisonState } from "./comparison-state";
 import { loadDemo } from "./data";
 import AnalystNotes from "./AnalystNotes";
+import CohortIndex from "./CohortIndex";
+import ReceiptDetails from "./ReceiptDetails";
+import LiveQueryLab from "./LiveQueryLab";
+import JrcBaseline from "./JrcBaseline";
+import { loadJrc, type JrcArtifact } from "./jrc-data";
 import type { Demo, Plot, Geometry, Cell, Result } from "./types";
 
 const fmt = (n: number | null | undefined) =>
@@ -111,7 +116,7 @@ function MapPanel({
           : [plot.geometry, ...cells.map((c) => c.geometry)],
         800,
         470,
-        overview ? 100 : 58,
+        58,
       ),
     [plot, overview, plots],
   );
@@ -119,20 +124,29 @@ function MapPanel({
   const mapBounds = bounds(
     overview ? plots.map((p) => p.geometry) : [plot.geometry],
   );
-  const color = (c: Cell) =>
-    !c.properties.valid_land ||
-    availableBand(c, layer === "canopy" ? 0 : layer === "loss" ? 1 : 2) == null
-      ? "#b7c2c2"
-      : layer === "canopy"
-        ? `hsl(146 24% ${88 - (availableBand(c, 0) ?? 0) * 0.48}%)`
-        : layer === "mask"
-          ? "#9caf8e"
-          : isYearEvent(c, year)
-            ? "#df743f"
-            : "#d8e2cd";
+  const color = (c: Cell) => {
+    if (layer === "mask") {
+      const mask = availableBand(c, 2);
+      return mask == null || mask === 0
+        ? "url(#unknown-cell-hatch)"
+        : mask === 2
+          ? "#9fbecb"
+          : "#9caf8e";
+    }
+    if (
+      !c.properties.valid_land ||
+      availableBand(c, layer === "canopy" ? 0 : 1) == null
+    )
+      return "url(#unknown-cell-hatch)";
+    return layer === "canopy"
+      ? `hsl(146 24% ${88 - (availableBand(c, 0) ?? 0) * 0.48}%)`
+      : isYearEvent(c, year)
+        ? "#df743f"
+        : "#d8e2cd";
+  };
   return (
     <section
-      className="map-panel"
+      className={`map-panel ${overview ? "is-overview" : ""}`}
       aria-label="Plot geometry and native-grid evidence"
     >
       <div className="map-toolbar">
@@ -157,6 +171,16 @@ function MapPanel({
           {overview ? "Focus plot" : "All 17 plots"}
         </button>
       </div>
+      {overview && (
+        <div className="map-title overview-context">
+          <span className="eyebrow">Supplier sample / spatial index</span>
+          <strong>Chai Buri, Thailand</strong>
+          <span>
+            {plots.length} plot locations · Select a marker to focus its exact
+            boundary
+          </span>
+        </div>
+      )}
       <div className="map-canvas">
         <svg
           className="spatial-map"
@@ -168,6 +192,19 @@ function MapPanel({
           }
         >
           <defs>
+            <pattern
+              id="unknown-cell-hatch"
+              width="7"
+              height="7"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect width="7" height="7" fill="#dce1d8" />
+              <path
+                d="M-1 1L1 -1M0 7L7 0M6 8L8 6"
+                stroke="#829283"
+                strokeWidth="1"
+              />
+            </pattern>
             <pattern
               id="coordinate-grid"
               width="40"
@@ -204,10 +241,18 @@ function MapPanel({
               role={overview ? "button" : undefined}
               tabIndex={overview ? 0 : undefined}
               aria-label={overview ? `Select ${p.plot_id} on map` : undefined}
-              onClick={() => overview && onSelect(p.plot_id)}
+              onClick={() => {
+                if (overview) {
+                  setOverview(false);
+                  setCell(null);
+                  onSelect(p.plot_id);
+                }
+              }}
               onKeyDown={(e) => {
                 if (overview && (e.key === "Enter" || e.key === " ")) {
                   e.preventDefault();
+                  setOverview(false);
+                  setCell(null);
                   onSelect(p.plot_id);
                 }
               }}
@@ -262,19 +307,13 @@ function MapPanel({
             </text>
           </g>
         </svg>
-        <div className="map-title">
-          <span className="eyebrow">
-            {overview
-              ? "Supplier sample / spatial index"
-              : "Exact supplied boundary"}
-          </span>
-          <strong>{overview ? "Chai Buri, Thailand" : plot.plot_id}</strong>
-          <span>
-            {overview
-              ? "17 plot locations · Select a marker"
-              : `${plot.supplier.a7_size_of_plot_ha} ha declared · ${plot.source_result ? `${fmt(plot.source_result.selected_cell_count)} selected cells` : "Selected support unavailable"}`}
-          </span>
-        </div>
+        {!overview && (
+          <div className="map-title">
+            <span className="eyebrow">Exact supplied boundary</span>
+            <strong>{plot.plot_id}</strong>
+            <span>{`${plot.supplier.a7_size_of_plot_ha} ha declared · ${plot.source_result ? `${fmt(plot.source_result.selected_cell_count)} selected cells` : "Selected support unavailable"}`}</span>
+          </div>
+        )}
         {!overview && (
           <div className="map-legend">
             <span className={`legend-chip ${layer}`} />
@@ -285,11 +324,11 @@ function MapPanel({
                   : `${year} mapped loss · ${fmt(count)} cells`
                 : layer === "canopy"
                   ? "2000 canopy closure · light 0% → dark 100%"
-                  : "Valid land / unknown or water"}{" "}
+                  : `Datamask · land ${fmt(plot.source_result?.datamask_counts["1"])} / water ${fmt(plot.source_result?.datamask_counts["2"])} / no data ${fmt(plot.source_result?.datamask_counts["0"])}`}{" "}
             </span>
           </div>
         )}
-        {cell && (
+        {cell && !overview && (
           <div className="cell-inspector">
             <button
               aria-label="Close cell details"
@@ -314,8 +353,9 @@ function MapPanel({
       <div className="map-footnote">
         <Icon name="info" size={14} />
         <span>
-          Source grid, not satellite imagery. Whole native cells are selected
-          when their centers fall within the plot. Cell counts are not hectares.
+          {overview
+            ? `Spatial index only; no raster layer is drawn. Native-cell evidence below belongs to ${plot.plot_id}.`
+            : "Source grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares."}
         </span>
       </div>
       <CellTable
@@ -323,7 +363,10 @@ function MapPanel({
         available={plot.evidence !== null}
         cells={cells}
         year={year}
-        onInspect={setCell}
+        onInspect={(c) => {
+          setOverview(false);
+          setCell(c);
+        }}
       />
     </section>
   );
@@ -716,13 +759,48 @@ export default function App() {
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState<"all" | "leads">("all"),
     [year, setYear] = useState(2023),
-    [view, setView] = useState<"review" | "proof">("review"),
+    [view, setView] = useState<"review" | "proof" | "index" | "lab">("review"),
     [dialog, setDialog] = useState<"receipt" | "commands" | null>(null);
+  const [jrc, setJrc] = useState<JrcArtifact | null>(null);
+  const [jrcError, setJrcError] = useState("");
+  const [jrcLoading, setJrcLoading] = useState(false);
+  const jrcRequest = useRef<AbortController | null>(null);
+  useEffect(() => {
+    jrcRequest.current?.abort();
+    setJrc(null);
+    setJrcError("");
+    setJrcLoading(false);
+    return () => jrcRequest.current?.abort();
+  }, [data]);
+  function loadCompanion() {
+    if (!data) return;
+    jrcRequest.current?.abort();
+    const controller = new AbortController();
+    jrcRequest.current = controller;
+    setJrcLoading(true);
+    setJrcError("");
+    loadJrc(data, controller.signal)
+      .then((value) => {
+        if (!controller.signal.aborted) setJrc(value);
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted)
+          setJrcError(
+            error instanceof Error
+              ? error.message
+              : "JRC companion unavailable.",
+          );
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setJrcLoading(false);
+      });
+  }
   const search = useRef<HTMLInputElement>(null),
+    queueList = useRef<HTMLDivElement>(null),
     modal = useRef<HTMLDialogElement>(null),
     pendingSearchFocus = useRef(false),
     request = useRef<AbortController | null>(null),
-    proofOrigin = useRef<"header" | "count">("header"),
+    proofOrigin = useRef<"header" | "count" | "index">("header"),
     previousView = useRef(view);
   function load() {
     request.current?.abort();
@@ -750,6 +828,19 @@ export default function App() {
     proofOrigin.current = origin;
     setView("proof");
   }
+  function reviewFromIndex(plotId: string, selectedYear: number) {
+    proofOrigin.current = "index";
+    setSelected(plotId);
+    setYear(selectedYear);
+    setView("review");
+  }
+  function selectPlot(plotId: string) {
+    setSelected(plotId);
+    if (view === "index" || view === "lab") {
+      proofOrigin.current = "index";
+      setView("review");
+    }
+  }
   useLayoutEffect(() => {
     if (previousView.current === view) return;
     previousView.current = view;
@@ -761,8 +852,17 @@ export default function App() {
           : "proof-heading"
         : proofOrigin.current === "count"
           ? "annual-proof-trigger"
-          : "plot-proof-trigger";
-    const target = document.getElementById(id);
+          : proofOrigin.current === "index"
+            ? "plot-review-heading"
+            : "plot-proof-trigger";
+    const target =
+      view === "lab"
+        ? document.getElementById("live-heading")
+        : view === "index"
+          ? document.querySelector<HTMLElement>(".cohort-heading h2")
+          : document.getElementById(id);
+    if (target && !target.hasAttribute("tabindex"))
+      target.setAttribute("tabindex", "-1");
     target?.focus({ preventScroll: true });
     target?.scrollIntoView({
       block:
@@ -789,6 +889,18 @@ export default function App() {
         .includes(query.toLowerCase()),
   );
   const plot = plots.find((p) => p.plot_id === selected) || plots[0];
+  useEffect(() => {
+    const list = queueList.current;
+    const active = list?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!list || !active) return;
+    const box = list.getBoundingClientRect(),
+      row = active.getBoundingClientRect();
+    if (row.top < box.top) list.scrollTop -= box.top - row.top;
+    else if (row.bottom > box.bottom) list.scrollTop += row.bottom - box.bottom;
+    if (row.left < box.left) list.scrollLeft -= box.left - row.left;
+    else if (row.right > box.right) list.scrollLeft += row.right - box.right;
+  }, [selected, query, filter, data]);
+
   const selectionFiltered = !filtered.some((p) => p.plot_id === plot.plot_id);
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -800,6 +912,8 @@ export default function App() {
       if (
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLSelectElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable) ||
         dialog
       )
         return;
@@ -810,7 +924,7 @@ export default function App() {
       if ((e.key === "j" || e.key === "k") && filtered.length) {
         e.preventDefault();
         const i = filtered.findIndex((p) => p.plot_id === selected);
-        setSelected(
+        selectPlot(
           filtered[
             (i + (e.key === "j" ? 1 : -1) + filtered.length) % filtered.length
           ].plot_id,
@@ -819,7 +933,7 @@ export default function App() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [filtered, selected, dialog]);
+  }, [filtered, selected, dialog, view]);
   useEffect(() => {
     if (dialog) {
       if (!modal.current?.open) modal.current?.showModal();
@@ -849,6 +963,9 @@ export default function App() {
     );
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main">
+        Skip to evidence workspace
+      </a>
       <header className="topbar">
         <a className="brand" href="#main">
           plotline<span>↗</span>
@@ -864,6 +981,15 @@ export default function App() {
           >
             Review desk
           </button>
+          <button
+            aria-pressed={view === "index"}
+            onClick={() => setView("index")}
+          >
+            Evidence index
+          </button>
+          <button aria-pressed={view === "lab"} onClick={() => setView("lab")}>
+            Query lab
+          </button>
           <button aria-pressed={view === "proof"} onClick={() => showProof()}>
             Encoding proof
           </button>
@@ -877,9 +1003,16 @@ export default function App() {
           <span>Commands</span>
           <kbd>⌘ K</kbd>
         </button>
-        <span className="local-status">
-          <i />
-          Local sample
+        <span
+          className="local-status"
+          title={
+            view === "lab"
+              ? "Temporary queries use the identified local service snapshot; the frozen supplier export stays unchanged."
+              : `Frozen local export: ${data.content_sha256 || "declaration-only inputs"}`
+          }
+        >
+          <Icon name="layers" size={14} />
+          {view === "lab" ? "Local query lab" : "Frozen local export"}
         </span>
       </header>
       <div className="workspace">
@@ -931,14 +1064,14 @@ export default function App() {
               Review leads <span>{plots.filter(lead).length}</span>
             </button>
           </div>
-          <div className="queue-list">
+          <div ref={queueList} className="queue-list">
             {filtered.length ? (
               filtered.map((p) => (
                 <button
                   key={p.plot_id}
                   className={`queue-row ${p.plot_id === selected ? "active" : ""}`}
                   aria-pressed={p.plot_id === selected}
-                  onClick={() => setSelected(p.plot_id)}
+                  onClick={() => selectPlot(p.plot_id)}
                 >
                   <div>
                     <strong>{p.plot_id}</strong>
@@ -984,46 +1117,49 @@ export default function App() {
             </span>
           </div>
         </aside>
-        <main id="main" className="main-workspace">
+        <main id="main" tabIndex={-1} className="main-workspace">
           {error && (
             <div role="alert" className="selection-notice">
               Latest reload failed: {error}. Showing the last loaded evidence.
               <button onClick={load}>Retry</button>
             </div>
           )}
-          <div className="plot-header">
-            <div>
-              <span className="eyebrow">
-                Supplier {plot.supplier.a6_tier1_supplier_id}{" "}
-                <span className="divider">/</span> Thailand{" "}
-                <span className="divider">/</span>{" "}
-                {view === "review" ? "Plot review" : "Encoding proof"}
-              </span>
-              <h2>
-                {plot.plot_id}
-                <span>
-                  {plot.supplier.a7_size_of_plot_ha} <small>ha declared</small>
+          {view !== "index" && view !== "lab" && (
+            <div className="plot-header">
+              <div>
+                <span className="eyebrow">
+                  Supplier {plot.supplier.a6_tier1_supplier_id}{" "}
+                  <span className="divider">/</span> Thailand{" "}
+                  <span className="divider">/</span>{" "}
+                  {view === "review" ? "Plot review" : "Encoding proof"}
                 </span>
-              </h2>
+                <h2 id="plot-review-heading" tabIndex={-1}>
+                  {plot.plot_id}
+                  <span>
+                    {plot.supplier.a7_size_of_plot_ha}{" "}
+                    <small>ha declared</small>
+                  </span>
+                </h2>
+              </div>
+              <div className="plot-actions">
+                <button onClick={() => setDialog("receipt")}>
+                  <Icon name="proof" />
+                  Receipt
+                </button>
+                <button
+                  className="pl-button--accent"
+                  id="plot-proof-trigger"
+                  onClick={() =>
+                    view === "review" ? showProof() : setView("review")
+                  }
+                >
+                  {view === "review" ? "Show proof" : "Back to review"}
+                  <Icon name="arrow" />
+                </button>
+              </div>
             </div>
-            <div className="plot-actions">
-              <button onClick={() => setDialog("receipt")}>
-                <Icon name="proof" />
-                Receipt
-              </button>
-              <button
-                className="pl-button--accent"
-                id="plot-proof-trigger"
-                onClick={() =>
-                  view === "review" ? showProof() : setView("review")
-                }
-              >
-                {view === "review" ? "Show proof" : "Back to review"}
-                <Icon name="arrow" />
-              </button>
-            </div>
-          </div>
-          {selectionFiltered && (
+          )}
+          {view !== "index" && view !== "lab" && selectionFiltered && (
             <div className="selection-notice">
               {plot.plot_id} remains open but is outside the current queue
               filter.{" "}
@@ -1071,14 +1207,23 @@ export default function App() {
               </button>
             </section>
           )}
-          {view === "review" ? (
+          <div hidden={view !== "index"} className="index-view">
+            <p className="index-scope">
+              This index includes all {data.plots.length} supplied plots.
+              Sidebar filters apply only to the review queue.
+            </p>
+            <CohortIndex data={data} onReview={reviewFromIndex} />
+          </div>
+          {view === "lab" ? (
+            <LiveQueryLab data={data} selectedPlotId={selected} />
+          ) : view === "index" ? null : view === "review" ? (
             <div className="review-layout">
               <div className="spatial-column">
                 <MapPanel
                   plot={plot}
                   plots={plots}
                   year={year}
-                  onSelect={setSelected}
+                  onSelect={selectPlot}
                 />
                 <Timeline
                   plot={plot}
@@ -1097,6 +1242,71 @@ export default function App() {
               year={year}
               onReceipt={() => setDialog("receipt")}
             />
+          )}
+          {view === "review" && (
+            <details
+              className="companion-panel"
+              onToggle={(event) => {
+                if (
+                  event.currentTarget.open &&
+                  !jrc &&
+                  !jrcLoading &&
+                  !jrcError
+                )
+                  loadCompanion();
+              }}
+            >
+              <summary>
+                <span>Separate 2020 baseline</span>
+                <strong>JRC Global Forest Cover · v4</strong>
+                <span>Inspect {plot.plot_id}</span>
+              </summary>
+              <div className="companion-body">
+                {jrcLoading ? (
+                  <p role="status">Loading the separate JRC source…</p>
+                ) : jrcError ? (
+                  <div role="status">
+                    <p>{jrcError}</p>
+                    <p>
+                      JRC is unavailable. Hansen observations above remain
+                      usable; no baseline absence is inferred.
+                    </p>
+                    <button onClick={loadCompanion}>Retry JRC companion</button>
+                  </div>
+                ) : jrc ? (
+                  <>
+                    <JrcBaseline data={jrc} plotId={plot.plot_id} />
+                    <p className="companion-study">
+                      <strong>Separate reviewed storage study:</strong>{" "}
+                      optimized standard GeoTIFF uses 19,901 required bytes
+                      versus 21,459 for the retained JRC custom store. Custom
+                      loading and process memory were better in that study.
+                      These are JRC-only measurements, separate from the
+                      embedded provided-DEFLATE comparison and all Hansen
+                      measurements. No universal format winner is established.
+                    </p>
+                    <button
+                      onClick={() =>
+                        download(`plotline-jrc-${plot.plot_id}.json`, {
+                          schema_version: jrc.schema_version,
+                          content_sha256: jrc.content_sha256,
+                          dataset: jrc.dataset,
+                          native_grid: jrc.native_grid,
+                          plot: jrc.plots.find(
+                            (item) => item.plot_id === plot.plot_id,
+                          ),
+                          limitations: jrc.limitations,
+                        })
+                      }
+                    >
+                      Download separate JRC receipt
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={loadCompanion}>Load JRC companion</button>
+                )}
+              </div>
+            </details>
           )}
           <footer className="workspace-footer">
             <span>Hansen Global Forest Change 2025 v1.13 · CC BY 4.0</span>
@@ -1133,33 +1343,6 @@ export default function App() {
               A reproducibility record, not a certification. Original supplier
               values and source metadata remain inspectable.
             </p>
-            <dl className="receipt-summary">
-              <div>
-                <dt>Source product</dt>
-                <dd>{String(data.dataset.product || "Unavailable")}</dd>
-              </div>
-              <div>
-                <dt>Query contract</dt>
-                <dd>{data.query_version}</dd>
-              </div>
-              <div>
-                <dt>Spatial rule</dt>
-                <dd>Native cell centers covered by exact plot polygon</dd>
-              </div>
-              <div>
-                <dt>Observation / release</dt>
-                <dd>Annual events 2001–2025 / Hansen 2025 v1.13</dd>
-              </div>
-              <div>
-                <dt>Unknowns</dt>
-                <dd>
-                  {plot.source_result
-                    ? plot.source_result.unknown_reasons.join(", ") ||
-                      "None reported under this query"
-                    : "Mapped result unavailable"}
-                </dd>
-              </div>
-            </dl>
             <button
               className="pl-button--accent"
               onClick={() =>
@@ -1175,6 +1358,7 @@ export default function App() {
               <Icon name="download" />
               Download receipt JSON
             </button>
+            <ReceiptDetails data={data} plot={plot} year={year} />
             <JsonDetails
               title="Hashes, grid and source provenance"
               value={plot.receipt}
@@ -1191,6 +1375,26 @@ export default function App() {
           </div>
         ) : (
           <div className="command-list">
+            <button
+              onClick={() => {
+                setView("lab");
+                setDialog(null);
+              }}
+            >
+              <Icon name="layers" />
+              Query a temporary region
+              <Icon name="arrow" />
+            </button>
+            <button
+              onClick={() => {
+                setView("index");
+                setDialog(null);
+              }}
+            >
+              <Icon name="layers" />
+              Browse all plot/year evidence
+              <Icon name="arrow" />
+            </button>
             <button
               onClick={() => {
                 pendingSearchFocus.current = true;

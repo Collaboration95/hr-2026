@@ -1,0 +1,152 @@
+{
+  "scope": "PAYLOAD ONLY exploratory probe. Not a complete indexed store or accepted compression benchmark. Full original AOI, all raw values, no cropping.",
+  "results": [
+    {
+      "filter": "raw",
+      "compressor": "zstd",
+      "level": 3,
+      "payload_bytes": 587534,
+      "encode_ms": 3.468374998192303
+    },
+    {
+      "filter": "raw",
+      "compressor": "zstd",
+      "level": 6,
+      "payload_bytes": 564753,
+      "encode_ms": 11.194417005754076
+    },
+    {
+      "filter": "raw",
+      "compressor": "zstd",
+      "level": 9,
+      "payload_bytes": 560407,
+      "encode_ms": 16.39508400694467
+    },
+    {
+      "filter": "raw",
+      "compressor": "zstd",
+      "level": 15,
+      "payload_bytes": 556889,
+      "encode_ms": 63.5129589936696
+    },
+    {
+      "filter": "raw",
+      "compressor": "zstd",
+      "level": 19,
+      "payload_bytes": 532636,
+      "encode_ms": 191.02004200976808
+    },
+    {
+      "filter": "raw",
+      "compressor": "deflate",
+      "level": 6,
+      "payload_bytes": 577977,
+      "encode_ms": 43.07554099068511
+    },
+    {
+      "filter": "raw",
+      "compressor": "deflate",
+      "level": 9,
+      "payload_bytes": 570409,
+      "encode_ms": 220.583207992604
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "zstd",
+      "level": 3,
+      "payload_bytes": 651835,
+      "encode_ms": 3.3494170056656003
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "zstd",
+      "level": 6,
+      "payload_bytes": 638176,
+      "encode_ms": 10.564458003500476
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "zstd",
+      "level": 9,
+      "payload_bytes": 633230,
+      "encode_ms": 14.787957989028655
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "zstd",
+      "level": 15,
+      "payload_bytes": 629434,
+      "encode_ms": 57.93020899000112
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "zstd",
+      "level": 19,
+      "payload_bytes": 605898,
+      "encode_ms": 185.11333300557453
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "deflate",
+      "level": 6,
+      "payload_bytes": 662280,
+      "encode_ms": 57.965333995525725
+    },
+    {
+      "filter": "horizontal_delta",
+      "compressor": "deflate",
+      "level": 9,
+      "payload_bytes": 653306,
+      "encode_ms": 342.7875409979606
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "zstd",
+      "level": 3,
+      "payload_bytes": 688282,
+      "encode_ms": 3.395958003238775
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "zstd",
+      "level": 6,
+      "payload_bytes": 677404,
+      "encode_ms": 9.940959003870375
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "zstd",
+      "level": 9,
+      "payload_bytes": 672840,
+      "encode_ms": 13.94258400250692
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "zstd",
+      "level": 15,
+      "payload_bytes": 669418,
+      "encode_ms": 53.825458002393134
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "zstd",
+      "level": 19,
+      "payload_bytes": 648588,
+      "encode_ms": 164.34962500352412
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "deflate",
+      "level": 6,
+      "payload_bytes": 694574,
+      "encode_ms": 38.1180420081364
+    },
+    {
+      "filter": "vertical_delta",
+      "compressor": "deflate",
+      "level": 9,
+      "payload_bytes": 685695,
+      "encode_ms": 362.0325419906294
+    }
+  ]
+}

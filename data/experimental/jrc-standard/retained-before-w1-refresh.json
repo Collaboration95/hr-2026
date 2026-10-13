@@ -1,0 +1,6 @@
+{
+  "path": "data/experimental/jrc-standard/exp-bb4d7bf8f584fc65dc94375917872d946cbae1357c34978d352e4a6c68f308bf/20261013T035938416118Z/run-7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb.json",
+  "retention_reason": "Final guarded study with21tests and scientific decision recorded; earlier runs remain historical. Production choice unchanged.",
+  "run_id": "run-7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb",
+  "sha256": "7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb"
+}

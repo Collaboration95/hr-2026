@@ -51,3 +51,68 @@ Own only `app/src/CohortIndex.tsx`, `app/src/styles/cohort.css`, `docs/lab/exper
 Own only `app/src/ReceiptDetails.tsx`, `app/src/styles/receipt.css`, `docs/lab/experience-receipt-report.md`. Defaultexport `ReceiptDetails({data,plot,year}:{data:Demo;plot:Plot;year:number})`. Present an honest compact receipt body fromactualenvelope/receipt: exactsourceproduct/version; selectedyear/periods; supplierrow/geometryhash; nativegridCRS,rows×columns,transform/cellstep; cell-center/boundaryandvalidlandrules; sourcebandfiles/bytes/fullhashes; retainedcompactstorepath/files/fullraw/maskclaim labelledengineclaim; benchmarkexperimentidentity+boundstatusonlywhenpresent. No independentverificationclaim fromselfhashes. Use progressive disclosure and readablelabels ratherthanrequiringJSONdecoding; fullrawJSON remainslead-ownedexistingdisclosure. Preserveunknown/nullasUnavailable. OptionalCopyhashbuttons mustactuallycopyandreportclipboardfailure; no dummyactions/externalcalls. Neverconvertsourcegridsteps tohectares/forest2020. No engine/data/App/types/package/tests edits. Do notreadcanonicalartifacts directlyincomponent; propsarethevalidatedfrozenresponse. Keyboard/readability/narrowwidthchecks through ownT3tabfirst; fallbackonlyactualfailure. Lead integrateswithinexistingnamedreceiptmodalandretainsdownload/rawJSON controls.
 
 Optional Luna supporting audit if free: the prior exactsupplier/sourcecopyassignment remainsopen anduseful. Ownonlyexperience-luna-source-copy.md; no app edits.
+
+# C4 preparation — separate JRC consumer, gated integration
+
+Master may queue two Sol workers when available. W3 is currently finishing C3 integration QA; do not replace that run. Engine JRC export exists but is **not accepted**. These workers may prepare unmounted modules and clearly labelled test fixtures; neither may copy the candidate into app/public/data, import it into App, or claim its counts/metrics as accepted. Lead alone integrates after explicit engine approval and fresh proof verification.
+
+Read `engine-jrc-interface.md`, `engine-jrc-task.md`, `experience-baseline-plan.md`, and the actual candidate envelope. Candidate shape currently uses top-level dataset/native_grid/plots, each evidence `{index_origin,cells:[{row,col,value,valid}]}`, and comparison `{equal,independent_oracle_equal,mismatch_fields}`. Final engine contract takes precedence. Keep Hansen data/proof/benchmark untouched. No extra leads, source edits, Git mutations, publication or uploads.
+
+## C4-A — companion types and runtime gate (Sol high)
+
+Own `app/src/jrc-data.ts`, `app/checks/jrc-ingest-*.mjs`, `docs/lab/experience-jrc-ingest-report.md` only. Export types JrcArtifact/JrcPlot/JrcResult/JrcCell early, then `validateJrc(value:unknown,main:Demo):JrcArtifact` and `loadJrc(main:Demo,signal?:AbortSignal):Promise<JrcArtifact>`. No App/main/types.ts/data.ts/package edits. The optional loader uses only `/data/jrc-baseline-v1.json`, one frozen no-store body and explicit errors; it never mutates/replaces Hansen state or invents a baseline if absent.
+
+Validate exact schema/query/source version/reference year; separate native grid/transform;17unique matching plot IDs and exact geometry/hash association with main accepted plots; class0=Non-forest/class1=Forest with true validity independent of QML alpha; selected/coverage/valid/unknown accounting; tri-state semantics; source/compact full structural agreement versus advertised flags. Check evidence indices/raw values/validity against own grid and result summaries without reimplementing raster processing. Invalid covered masks may retain raw0/1; outside cells require null/invalid. Global missing-band semantics may retain stored raw fixture data but must suppress analytics. Do not use truthiness for0/null. Preserve receipt/hash/benchmark fields without claiming client authentication or actual file verification.
+
+Add meaningful paired tests for valid0, positive1, partial absence/positive, no centers, invalid masks, missing band, mismatched geometry/source identity, false equality and actual accepted envelope when engine approval arrives. Candidate input is preliminary until approval; distinguish shape tests from accepted evidence. Publish type contract first so C4-B can build against it. No new dependencies.
+
+## C4-B — separate native baseline panel (Sol high)
+
+Own `app/src/JrcBaseline.tsx`, `app/src/styles/jrc-baseline.css`, `docs/lab/experience-jrc-view-report.md` only. Default export `JrcBaseline({data,plotId}:{data:JrcArtifact;plotId:string})`, consuming C4-A types once available. It will be mounted below the Hansen observations only after engine acceptance. No App, asset-copy, package, engine or other files.
+
+Design a readable “2020 baseline observation · JRC v4” companion for one plot: source class0/1 counts, mapped-class tri-state signal, selected/valid/unknown support and reasons; its own exact native-grid mini-map or inspectable cell table; separate original/compact equality/provenance disclosure. Draw cells only from its own transform/indices and supplied geometry, never Hansen row/col. Class0 must remain visibly known Non-forest, not transparent unknown. Unknown/invalid differs from valid0; raw invalid values remain excluded from analytical evidence. Use exact declared comparison and actual result equality defensively; no legal/compliance/combined deforestation flag.
+
+Keep the source/reference year/version and differing-grid warning adjacent to counts. Do not add/compare JRC and Hansen counts as area, convert to hectares, or extend Hansen benchmark savings. Do not expose a combined metric. Receipt should preserve citation and metadata-version caveat. Optional JRC-only storage/method details must use actual companion fields and explicit units, with Unavailable when absent; a raw disclosure is sufficient before final metric binding is approved.
+
+No fake interactive controls. Any cell inspection must have a keyboard/table path. Use legible12px+ evidence text, responsive containment and reduced motion. Verify null/valid0/positive/partial/false-equality states in isolated, labelled fixtures, and actual accepted data only after engine approval. T3 first; fallback only after actual failure. Do not ship unaccepted data into the running app.
+
+## C4-C — integrated companion QA, later
+
+Reserve existing W3 ownership for after lead integration/engine approval: real class0 and class1 cases, separate grid/evidence counts, valid unknown controls, source/compact mismatch rejection, main Hansen artifact/proof/benchmark unchanged, mobile/keyboard/receipt flow. Master may resume W3 when lead announces readiness. Independent engine verification remains with engine lead/validator, not a browser assertion.
+
+# C5 — master-selected live local query lab; dispatch now
+
+Read `docs/lab/live-lab-brief.md` and `docs/lab/experience-live-plan.md`. Engine lead is publishing its live contract/task and owns the bounded read-only loopback service. No additional leads. Target first integrated slice in30–45minutes. Preserve frozen17review, source files, exports and benchmarks. No external requests/uploads, Git changes, arbitrary file paths or supplier edits. C4 JRC preparation remains separate and must not delay Hansen live first slice.
+
+## C5-A — accessible region editor and live result component (Sol high)
+
+Own only `app/src/LiveQueryLab.tsx`, `app/src/styles/live-query.css`, `docs/lab/experience-live-view-report.md`. Default export `LiveQueryLab({data,selectedPlotId}:{data:Demo;selectedPlotId:string})`. Lead owns App/config/navigation. Do not edit other components/types/package/assets. Read engine-owned live contract when it appears; use C5-B client types/functions, not guessed fetch routes. Coordinate through C5-B report/types.
+
+Provide exact supplied-plot mode and temporary rectangle mode with labelled West/East/South/North decimal-degree inputs. Explicit Run and Cancel; no automatic query on every edit. Use all17plot choices from validated data. “Use plot bounds” explicitly makes a temporary rectangle, not a corrected farm boundary. Keyboard can complete the workflow. Finite/order validation keeps blanks distinct from0; server remains authoritative on work limits.
+
+Clear/invalidate results whenever region/mode changes; abort outstanding request and increment a sequence so late responses never become answers to new drafts. Preserve a submitted-region snapshot with each result. Show health/source snapshot and honest service-unavailable/retry states; frozen review must remain usable. Render actual original/compact comparison, support/reasons, period/year counts, receipt download and bounded native evidence only with explicit preview completeness. Reuse existing primitives/helpers read-only where useful; do not fake live timing or silently truncate. Per-request timing is not a benchmark. No JRC fusion. No pointer drawing required for first slice. Legible responsive controls; reduced motion; explicit status/alert text.
+
+Verify isolated state transitions if possible; document what remains dependent on service. No app/tests writes (W3 owns them) and no new dependencies. Lead will integrate only after API compatibility and browser review.
+
+## C5-B — typed live transport and response gate (Sol high)
+
+Own only `app/src/live-client.ts`, `app/checks/live-client-*.mjs`, `docs/lab/experience-live-client-report.md`. Publish exported types/functions early: `getLiveHealth(signal?:AbortSignal)`, `runLiveQuery(geometry:Geometry,requestId:string,signal?:AbortSignal)` and response/error types aligned to actual engine contract. Geometry type imported read-only from types.ts. No App/config/package/engine edits. Do not invent routes/fields; inspect engine contract once published, report any missing association/completeness contract immediately. Before contract exists, prepare pure structural validation and clearly labelled fixtures only.
+
+Use same-origin paths only; optional service failure must throw a structured actionable error, never return fabricated empty success. One frozen response per request; cancellation preserved. Validate schema, request ID, exact geometry association, dataset/query/store snapshot, result count/unknown/tri-state structure and actual deep original/compact equality; retain explicit truthful mismatch if contract supports it. Validate evidence count/completeness/limit consistency. Do not reimplement source queries or authenticate hashes client-side. Return source identities/timings as declared and labelled, not independent verification.
+
+Add paired tests for real-compatible responses, false equality, mismatched request/geometry, null support, preview truncation claims, HTTP/unavailable/malformed errors and cancellation. Stale-response sequence ownership remains C5-A; tests can exercise transport abort behavior independently. No network outside loopback/same-origin; no new dependencies. Publish stable API to C5-A quickly.
+
+## C5-C — integrated live QA (resume W3 when endpoint ready)
+
+Existing ownership app/tests/, browser-qa.md and browser-evidence. Do not edit App/client/service. Test known plot vs frozen result, edited rectangle, tiny/outside/invalid/oversized input, deliberate delayed-response race, cancel, unavailable service, source snapshot/receipt binding and truthful evidence preview. Keyboard/mobile completion and existing frozen review while service unavailable are mandatory. Use T3 first, project-local Playwright only after actual failure per policy. Lead announces service/proxy/contract readiness in experience-report.md. Do not infer an endpoint from this assignment.
+
+## C5 binding update — engine contract is now available
+
+Read `docs/lab/engine-live-interface-v1.md` now. Routes are exactly GET `/v1/health` and POST `/v1/query`; engine defaults127.0.0.1:8765. Lead added same-origin Vite dev/preview proxy for `/v1` to that loopback port. Requests require expected_snapshot_id and exact request-byte binding. Health and receipt provide canonical JSON strings so browser SHA-256 can validate bytes without guessing Python float formatting.
+
+Refine C5-B API to `runLiveQuery(geometry:Geometry,requestId:string,health:LiveHealth,signal?:AbortSignal)`. Passing the validated health explicitly binds expected snapshot, native grid and declared limits without mutable module-global state. Return submitted geometry/request context alongside validated response if useful; communicate exact exports in your report to C5-A. `getLiveHealth(signal?)` stays unchanged. Use crypto.subtle SHA-256 over TextEncoder bytes for canonical strings/exact sent body. Verify parsed snapshot/receipt canonical strings structurally match supplied objects. Never recompute engine geometry/object hashes through guessed JS canonicalization.
+
+Limits are4096candidate/selectedcells,512vertices,65536requestbytes. All successful responses contain complete native evidence; no truncation is allowed by v1. C5-A should display that explicit scope and surface QUERY_TOO_LARGE rather than sampling. A stopped service may yield a non-JSON500from the Vite proxy; map this to a truthful unavailable/proxy error, not fabricated empty results. Service errors, snapshot409, and HTTPmalformed bodies need readable handling.
+
+## C5 ownership correction — master dispatch at 03:50 UTC
+Carver retains C5-B only: live-client.ts, live-client checks and client report. Lead Hooke implements C5-A LiveQueryLab.tsx/styles/live-query.css and App/config integration. Do not dispatch overlapping view work. Client canonical-byte binding request is visible in experience-live-client-report.md for engine coordination.

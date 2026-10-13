@@ -1,0 +1,13 @@
+{"utc": "2026-10-13T04:14:07.590644+00:00", "event": "official_archive_access_verified", "band": "treecover2000", "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_treecover2000_10N_090E.tif", "size": 150575735, "status": 200}
+{"utc": "2026-10-13T04:14:08.290522+00:00", "event": "official_archive_access_verified", "band": "lossyear", "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_lossyear_10N_090E.tif", "size": 44854034, "status": 200}
+{"utc": "2026-10-13T04:14:09.054089+00:00", "event": "official_archive_access_verified", "band": "datamask", "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2023-v1.11/Hansen_GFC-2023-v1.11_datamask_10N_090E.tif", "size": 25351231, "status": 200}
+{"utc": "2026-10-13T04:14:09.054463+00:00", "event": "download_started", "band": "treecover2000", "expected_bytes": 150575735}
+{"utc": "2026-10-13T04:14:17.711991+00:00", "event": "download_completed", "band": "treecover2000", "bytes": 150575735, "sha256": "56cdc0cda4ccb07ad1513593b4bd13b0dc8577ab1510c986c98fc89aaa807366"}
+{"utc": "2026-10-13T04:14:17.712792+00:00", "event": "download_started", "band": "lossyear", "expected_bytes": 44854034}
+{"utc": "2026-10-13T04:14:21.150417+00:00", "event": "download_completed", "band": "lossyear", "bytes": 44854034, "sha256": "a0561b8ae938b5ca18ebed5b4bc24e2701b2a83028e5c2b44121b916e201da1b"}
+{"utc": "2026-10-13T04:14:21.150628+00:00", "event": "download_started", "band": "datamask", "expected_bytes": 25351231}
+{"utc": "2026-10-13T04:14:24.277662+00:00", "event": "download_completed", "band": "datamask", "bytes": 25351231, "sha256": "94b909dad3069ed5afe3f4b7c252dff7766382758a1a11f768293b053e6fcb7a"}
+{"utc": "2026-10-13T04:14:24.278040+00:00", "event": "historical_decode_started", "all_three_source_files_acquired": true}
+{"utc": "2026-10-13T04:14:24.478587+00:00", "event": "acquisition_complete", "total_new_download_body_bytes": 220960424}
+{"utc": "2026-10-13T04:16:50.523055+00:00", "event": "comparison_complete", "summary": {"plots": 17, "selected_cell_sum": 1048, "distinct_selected_cells": 1048, "plots_with_raw_loss_changes": ["P-0005", "P-0006", "P-0013", "P-0014", "P-0016"], "plots_with_period_result_changes": [], "plots_with_period_flag_changes": [], "plots_with_2021_2023_year_count_changes": [], "current_canonical_matches": 17}}
+{"utc": "2026-10-13T04:18:17.815894+00:00", "event": "independent_check_complete", "all_34_scalar_queries_equal": true, "direct_original_tile_witnesses": 4}

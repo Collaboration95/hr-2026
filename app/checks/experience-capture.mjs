@@ -1,4 +1,8 @@
-import { chromium } from "/Users/speedpowermac/.npm/_npx/e41f203b7505f1fb/node_modules/playwright/index.mjs";
+import { fileURLToPath } from "node:url";
+process.env.PLAYWRIGHT_BROWSERS_PATH ||= fileURLToPath(
+  new URL("../.cache/playwright", import.meta.url),
+);
+const { chromium } = await import("playwright");
 import { writeFile } from "node:fs/promises";
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({

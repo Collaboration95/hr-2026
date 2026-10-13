@@ -1,0 +1,177 @@
+{
+  "captured_at": "2026-10-13T02:45:45.823Z",
+  "results": [
+    {
+      "width": 1440,
+      "allMarkersClearTitle": true,
+      "samePlotKeyboardSelectionFocusesBoundary": true,
+      "title": {
+        "x": 291,
+        "y": 385.03125,
+        "width": 822,
+        "height": 92.5,
+        "top": 385.03125,
+        "right": 1113,
+        "bottom": 477.53125,
+        "left": 291
+      },
+      "markers": [
+        {
+          "name": "Select P-0003 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0005 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0008 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0010 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0013 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0001 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0004 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0006 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0009 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0011 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0014 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0015 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0016 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0017 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0018 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0019 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0020 on map",
+          "overlapsTitle": false
+        }
+      ],
+      "viewport": 1440
+    },
+    {
+      "width": 390,
+      "allMarkersClearTitle": true,
+      "samePlotKeyboardSelectionFocusesBoundary": true,
+      "title": {
+        "x": 17,
+        "y": 757.15625,
+        "width": 356,
+        "height": 85.5,
+        "top": 757.15625,
+        "right": 373,
+        "bottom": 842.65625,
+        "left": 17
+      },
+      "markers": [
+        {
+          "name": "Select P-0003 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0005 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0008 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0010 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0013 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0001 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0004 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0006 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0009 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0011 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0014 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0015 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0016 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0017 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0018 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0019 on map",
+          "overlapsTitle": false
+        },
+        {
+          "name": "Select P-0020 on map",
+          "overlapsTitle": false
+        }
+      ],
+      "viewport": 390
+    }
+  ]
+}

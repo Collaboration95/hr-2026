@@ -1,0 +1,11 @@
+{
+  "recorded_at": "2026-10-13T04:13:03.863160+00:00",
+  "sha256": {
+    "app/tests/live-service-journey.mjs": "cc8fe009f7de97dabeb68435e3d62dc843058cdc8048b86dffe5a6fb3a8948ba",
+    "app/src/LiveQueryLab.tsx": "76e8e04d158062415e0198dda66b24e0c522a0ba62a48410f0e0112e320d0c54",
+    "app/src/live-client.ts": "3742f5cc8e2720925c2d9a2539a7d753fce2ac9d92aac46c2cbd665d05516255",
+    "app/src/styles/live-query.css": "710a48452add416f55b32a1cf48ef0443d5b8b1f83d6e4d7e98a2bab07c47e0f",
+    "docs/lab/engine-live-interface-v1.md": "ccaedde503b9a958b2dfed9109bdae7f7af5003359d980fbe7ef12272bfe5cc6",
+    "artifacts/demo-v1.json": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555"
+  }
+}
