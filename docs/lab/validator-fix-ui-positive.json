@@ -1,0 +1,17 @@
+{
+  "agreement": "Same query outputs\nExact output equality for this plot. This establishes encoding agreement, not source accuracy or compliance.",
+  "alerts": [],
+  "benchmark": "Storage choice: Separate bands · Zstd level 19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.",
+  "cohort": "Full-cohort evidence\n\n17 / 17 plots with measured matching outputs\n\nInspect cohort summary\n",
+  "compactBytes": 535012,
+  "comparison": "P-0003 · hansen-centers.v1\tOriginal source\tCompact\n2023 observed loss cells\t0\t0\nSelected native cells\t87\t87\nValid land cells\t87\t87\nUnknown cells\t0\t0\nOut-of-coverage cells\t0\t0\nSupport\tcomplete\tcomplete\n2021-2023 loss cells\t0\t0\n2024-2025 loss cells\t0\t0",
+  "content": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "experiment": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+  "sourceBytes": 585293,
+  "storageRows": [
+    "Original GeoTIFF\n571.6 KiB\nCompressed source baseline",
+    "Separate bands\n574.8 KiB\n17/17 plot outputs match",
+    "Separate bands · Zstd level 9\n549.7 KiB\n17/17 plot outputs match",
+    "Separate bands · Zstd level 19\n522.5 KiB\n17/17 plot outputs match · storage choice"
+  ]
+}

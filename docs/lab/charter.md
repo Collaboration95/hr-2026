@@ -11,6 +11,8 @@ The user now authorizes implementation, original UI/UX design, experiments, usef
 - Experience lead Astra (medium): `app/`, `docs/lab/experience-*`, `docs/lab/product-research.md`, `docs/lab/demo-script.md`, `docs/lab/browser-*`. Own visual/interaction design, working frontend, inspiration research, product testing and browser evidence. Read engine outputs; copy them into app assets as needed without editing canonical artifacts.
 - Each lead manages 3–4 Sol workers with disjoint writes, subject to available concurrency. Luna may handle bounded research/data/computer-use work. Leads must close completed children before replacement. Model speed controls are not exposed by the spawning API; do not claim to have changed them.
 
+Observed runtime constraint: the engine lead reports that nested agent spawning and messaging are absent from its tool inventory. Master therefore acts as a dispatch proxy for lead-owned Sol tasks. Leads publish worker assignments and review worker report files; master launches workers and relays completion. This is the actual supported hierarchy, rather than claiming unavailable nested tools were used.
+
 All GitHub access uses authenticated `gh`; local Git uses `git`. Workers do not stage, commit, switch branches or push. Master checkpoints reviewed changes. Avoid modifying outside this repository; use project-local environments. Parent session ID for lead reports: `01a130e9-aaf5-7a53-9cff-96d579f69b35`.
 
 ## Outcome and research loop

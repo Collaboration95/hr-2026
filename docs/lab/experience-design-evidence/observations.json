@@ -1,0 +1,1645 @@
+{
+  "started": "2026-10-13T02:26:15.237Z",
+  "startHashes": {
+    "app/src/App.tsx": "714674041a3b5f710c2652f68cc360e9a4897b9b65e6fb55d04f0ff6d775efdd",
+    "app/src/Benchmark.tsx": "908f107618c61afed7228c7f6afc729adb8eb94773a1dfac41b7ba5862d9fea4",
+    "app/src/CellTable.tsx": "768d473beb62f3b80f03963d0e0386439310112925504308c10433621bf64ad6",
+    "app/src/app.css": "4bf16e9a1e63b80e2db0359d4c01b2d90e6656eb3b600491488885399406b976"
+  },
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "artifact": {
+        "content_sha256": "9186daad50c07579369b3e918da8a7e72f86958806dce925c96f507344741add",
+        "query_version": "hansen-centers.v1",
+        "benchmark_experiment": "exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856",
+        "overall_storage_choice": "separate_zstd_l19",
+        "baseline_storage": {
+          "files": [
+            {
+              "bytes": 414142,
+              "path": "data/public/hansen_treecover2000_sample.tif",
+              "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+            },
+            {
+              "bytes": 159863,
+              "path": "data/public/hansen_lossyear_sample.tif",
+              "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+            },
+            {
+              "bytes": 2994,
+              "path": "data/public/hansen_datamask_sample.tif",
+              "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+            },
+            {
+              "bytes": 8294,
+              "path": "data/public/provenance.json",
+              "sha256": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
+            },
+            {
+              "bytes": 948,
+              "path": "artifacts/stores/exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856/source_geotiff/metadata.json",
+              "sha256": "db06c70ddc751d602e654894fa97bdfe9d164694136a4cb111588ffb122e5d7a"
+            }
+          ],
+          "index_bytes": 0,
+          "metadata_bytes": 9242,
+          "metadata_index_bytes": 9242,
+          "metadata_note": "GeoTIFF embedded grids/masks/index included in payload; required acquisition provenance and external identity manifest counted",
+          "payload_bytes": 576999,
+          "total_bytes": 586241
+        },
+        "winner": {
+          "candidate": "separate_zstd_l19",
+          "criterion": "minimum total stored bytes among fully exact candidates",
+          "hot_batch_median_ms": 1.655292,
+          "process_cold_batch_median_ms": 5.867792,
+          "ratio_to_source_total": 0.9126144367248282,
+          "smaller_than_source": true,
+          "source_hot_batch_median_ms": 1.435292,
+          "source_process_cold_batch_median_ms": 11.373751,
+          "total_bytes": 535012
+        },
+        "plots": [
+          {
+            "plot_id": "P-0003",
+            "selected": 87,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              }
+            },
+            "year2025": 0,
+            "comparison": {
+              "compact_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "status": "computed"
+            }
+          },
+          {
+            "plot_id": "P-0005",
+            "selected": 262,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": true,
+                "observed_loss_cell_count": 18
+              }
+            },
+            "year2025": 11,
+            "comparison": {
+              "compact_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "status": "computed"
+            }
+          }
+        ]
+      },
+      "p3": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0003\n6.72\nha declared\nReceipt\nShow proof",
+          "x": 290,
+          "y": 105,
+          "width": 1122,
+          "height": 72.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-panel": {
+          "text": "Annual loss\nCanopy · 2000\nLand mask\nAll 17 plots\n8.58189° N\n98.77243° E · EPSG:4326\nN\nEXACT SUPPLIED BOUNDARY\nP-0003\n6.72 ha declared · 87 selected cells\n2023 mapped loss · 0 cells\nSource grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.\nInspect native cells as a table\n87 selected",
+          "x": 290,
+          "y": 201.25,
+          "width": 824,
+          "height": 502,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2023 mapped loss · 0 cells",
+          "x": 944.65625,
+          "y": 582.75,
+          "width": 152.34375,
+          "height": 29.5,
+          "fontSize": "9px",
+          "lineHeight": "13.5px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2023 / Hansen 2025 v1.13\n0\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 290,
+          "y": 703.25,
+          "width": 824,
+          "height": 250.75,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supports\nthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 1137,
+          "y": 201.25,
+          "width": 275,
+          "height": 535.015625,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".reference-note": {
+          "text": "EVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.",
+          "x": 1138,
+          "y": 540.34375,
+          "width": 274,
+          "height": 146.921875,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation": {
+          "text": "02 / MAPPED OBSERVATION\n2021–2023\nNo mapped loss under this query\n0 observed loss cells\n2024–2025\nNo mapped loss under this query\n0 observed loss cells\nSelected support\nComplete\nValid land / selected cells\n87 / 87\nUnknown cells\n0\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 290,
+          "y": 954,
+          "width": 824,
+          "height": 270.796875,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation .fineprint": {
+          "text": "Tree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 290,
+          "y": 1189.5,
+          "width": 824,
+          "height": 15.296875,
+          "fontSize": "9px",
+          "lineHeight": "15.3px"
+        },
+        ".time-context": {
+          "text": "2001–2025 · select a year\n Supplier’s declared analysis: 2021–23",
+          "x": 290,
+          "y": 879,
+          "width": 824,
+          "height": 13.5,
+          "fontSize": "9px",
+          "lineHeight": "13.5px"
+        }
+      },
+      "overview": {
+        "title": "SUPPLIER SAMPLE / SPATIAL INDEX\nChai Buri, Thailand\n17 plot locations · Select a marker",
+        "footnote": "Source grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.",
+        "table": "Inspect native cells as a table\n87 selected",
+        "coordinates": [
+          "8.58189° N",
+          "98.77243° E · EPSG:4326",
+          "N"
+        ],
+        "markers": [
+          {
+            "name": "Select P-0003 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0005 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0008 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0010 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0013 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0001 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0004 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0006 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0009 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0011 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0014 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0015 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0016 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0017 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0018 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0019 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0020 on map",
+            "text": ""
+          }
+        ],
+        "legend": null
+      },
+      "p5": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0005\n20.07\nha declared\nReceipt\nShow proof",
+          "x": 290,
+          "y": 105,
+          "width": 1122,
+          "height": 72.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2025 mapped loss · 11 cells",
+          "x": 941.890625,
+          "y": 582.75,
+          "width": 155.109375,
+          "height": 29.5,
+          "fontSize": "9px",
+          "lineHeight": "13.5px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2025 / Hansen 2025 v1.13\n11\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 290,
+          "y": 703.25,
+          "width": 824,
+          "height": 250.75,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supports\nthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 1137,
+          "y": 201.25,
+          "width": 275,
+          "height": 535.015625,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        "visibleLossCells": 11,
+        "tableRows": 11,
+        "inspectFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect cell 557:483",
+          "visible": true,
+          "scrollY": 0,
+          "rect": {
+            "x": 944.234375,
+            "y": 796.25,
+            "width": 72.96875,
+            "height": 27,
+            "top": 796.25,
+            "right": 1017.203125,
+            "bottom": 823.25,
+            "left": 944.234375
+          }
+        },
+        "inspector": {
+          ".cell-inspector": {
+            "text": "Native cell 557:483\nCanopy 2000: 89%\nLoss year: 2025\nDatamask: 1 · valid land",
+            "x": 907,
+            "y": 480.25,
+            "width": 190,
+            "height": 102,
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        }
+      },
+      "beforeProof": {
+        "tag": "BUTTON",
+        "name": "Inspect proof for 2025 observed loss cells",
+        "visible": true,
+        "scrollY": 564,
+        "rect": {
+          "x": 959.875,
+          "y": 480.125,
+          "width": 154.125,
+          "height": 40,
+          "top": 480.125,
+          "right": 1114,
+          "bottom": 520.125,
+          "left": 959.875
+        }
+      },
+      "afterProof": {
+        "tag": "BODY",
+        "name": "plotline↗Evidence workspaceLot 200001Review deskEncoding proofCommands⌘ KLocal sampleSubmission / 200001Follow theevidence.17 supplied plots.Every answer has a trail.05declared ind",
+        "visible": false,
+        "scrollY": 1409,
+        "rect": {
+          "x": 0,
+          "y": -1409,
+          "width": 1440,
+          "height": 2449.8125,
+          "top": -1409,
+          "right": 1440,
+          "bottom": 1040.8125,
+          "left": 0
+        }
+      },
+      "proof": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / ENCODING PROOF\nP-0005\n20.07\nha declared\nReceipt\nBack to review",
+          "x": 290,
+          "y": -1304,
+          "width": 1122,
+          "height": 72.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-heading": {
+          "text": "03 / REPRESENTATION PROOF\nSame question.\nTwo representations.\nP-0005 · selected year 2025\n\nThe same boundary, source grid, validity mask and query contract. Compare outputs without changing the question.",
+          "x": 290,
+          "y": -1200.75,
+          "width": 600,
+          "height": 231.890625,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".agreement": {
+          "text": "Same query outputs\nExact output equality for this plot. This establishes encoding agreement, not source accuracy or compliance.",
+          "x": 290,
+          "y": -942.859375,
+          "width": 1080,
+          "height": 87.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".comparison-table": {
+          "text": "P-0005 · hansen-centers.v1\tOriginal source\tCompact\n2025 observed loss cells\t11\t11\nSelected native cells\t262\t262\nValid land cells\t262\t262\nUnknown cells\t0\t0\nOut-of-coverage cells\t0\t0\nSupport\tcomplete\tcomplete\n2021-2023 loss cells\t0\t0\n2024-2025 loss cells\t18\t18",
+          "x": 290,
+          "y": -837.359375,
+          "width": 1080,
+          "height": 392.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-actions": {
+          "text": "Inspect provenance receipt\nDownload comparison",
+          "x": 290,
+          "y": -426.859375,
+          "width": 1080,
+          "height": 44,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark": {
+          "text": "04 / MEASURED TRADEOFFS\nKeep the answer.\nQuestion the representation.\nFrozen experiment\n\nIdentical regional grid. All required payload, indexes and metadata included. A compact format earns its place through measurements.\n\nStorage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.\n\nComplete stored footprint\nKiB · lower is smaller\nOriginal GeoTIFF\n572.5 KiB\nCompressed source baseline\nSeparate bands\n574.8 KiB\n17/17 plot outputs match\nseparate_zstd_l9\n549.7 KiB\n17/17 plot outputs match\nseparate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice\nPayload\nMetadata + indexes\nSELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.\n\nCohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells\nInspect measurement method, environment and experiment identity\nInspect full selected-candidate evidence",
+          "x": 290,
+          "y": -213.96875,
+          "width": 1080,
+          "height": 1019.28125,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "afterProofNextTab": {
+        "tag": "BUTTON",
+        "name": "Inspect provenance receipt",
+        "visible": true,
+        "scrollY": 504,
+        "rect": {
+          "x": 290,
+          "y": 478.140625,
+          "width": 216.9375,
+          "height": 44,
+          "top": 478.140625,
+          "right": 506.9375,
+          "bottom": 522.140625,
+          "left": 290
+        }
+      },
+      "receipt": {
+        "text": "EVIDENCE RECEIPT\nP-0005 evidence receipt\n\nA reproducibility record, not a certification. Original supplier values and source metadata remain inspectable.\n\nSource product\nHansen Global Forest Change 2025 v1.13\nQuery contract\nhansen-centers.v1\nSpatial rule\nNative cell centers covered by exact plot polygon\nObservation / release\nAnnual events 2001–2025 / Hansen 2025 v1.13\nUnknowns\nNone reported under this query\nDownload receipt JSON\nHashes, grid and source provenance\nExact supplier CSV fields\nDataset metadata\nEvidence limitations",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Close dialog",
+          "visible": true,
+          "scrollY": 504,
+          "rect": {
+            "x": 1019,
+            "y": 190.546875,
+            "width": 34,
+            "height": 35,
+            "top": 190.546875,
+            "right": 1053,
+            "bottom": 225.546875,
+            "left": 1019
+          }
+        },
+        "returnFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect provenance receipt",
+          "visible": true,
+          "scrollY": 504,
+          "rect": {
+            "x": 290,
+            "y": 478.140625,
+            "width": 216.9375,
+            "height": 44,
+            "top": 478.140625,
+            "right": 506.9375,
+            "bottom": 522.140625,
+            "left": 290
+          }
+        }
+      },
+      "benchmarkDefault": {
+        ".benchmark-decision": {
+          "text": "Storage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.",
+          "x": 290,
+          "y": 911.96875,
+          "width": 1080,
+          "height": 69.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 890.90625,
+          "y": 1004.46875,
+          "width": 479.09375,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark-method": {
+          "text": "Cohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells",
+          "x": 290,
+          "y": 1516.3125,
+          "width": 1080,
+          "height": 75,
+          "fontSize": "10px",
+          "lineHeight": "15px"
+        },
+        ".benchmark .json-details summary": {
+          "text": "Inspect measurement method, environment and experiment identity",
+          "x": 290,
+          "y": 1608.3125,
+          "width": 1080,
+          "height": 42.5,
+          "fontSize": "11px",
+          "lineHeight": "16.5px"
+        }
+      },
+      "baseline": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nOriginal GeoTIFF\n572.5 KiB\nOriginal-source baseline\nPayload\n563.5 KiB\nMetadata + indexes\n9.0 KiB\nPreprocessing wall time\nNot measured\nNative chunk width\nSource organization\nLoaded query\nFresh-process load + query\n1.44 ms\nMedian / 17-plot batch\n1.42\n1.60 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 890.90625,
+          "y": 420.46875,
+          "width": 479.09375,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "storageRows": [
+        "Original GeoTIFF\n572.5 KiB\nCompressed source baseline",
+        "Separate bands\n574.8 KiB\n17/17 plot outputs match",
+        "separate_zstd_l9\n549.7 KiB\n17/17 plot outputs match",
+        "separate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice"
+      ],
+      "candidate": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nSeparate bands\n574.8 KiB\n0.4% larger than original\nPayload\n571.7 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n6.80 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.48 ms\nMedian / 17-plot batch\n1.45\n1.61 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 890.90625,
+          "y": 420.46875,
+          "width": 479.09375,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "method": "Inspect measurement method, environment and experiment identity\n{\n  \"experiment_id\": \"exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856\",\n  \"method\": {\n    \"common_inputs\": \"geometry and supplier input bytes reported separately and excluded symmetrically\",\n    \"excluded\": [\n      \"UI\",\n      \"network acquisition\",\n      \"full source tiles\",\n      \"tile-to-chip crop savings\",\n      \"disk-cold claims\",\n      \"legal compliance or satellite ground-truth accuracy\"\n    ],\n    \"execution_order\": [\n      \"source_geotiff\",\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"hot\": \"one isolated child per representation; load full AOI once then warmups and measured batches\",\n    \"load\": \"includes validation and integrity hashing performed by each native loader\",\n    \"os_file_cache\": \"uncontrolled and likely warm after verification/encoding; NOT disk-cold\",\n    \"p95_method\": \"nearest rank; with 7 repetitions p95 equals maximum\",\n    \"parallel_benchmark_children\": false,\n    \"process_cold\": \"fresh Python child per repetition; timed full load+query after imports and geometry read\",\n    \"query_count_per_batch\": 17,\n    \"repetitions\": 7,\n    \"resources\": \"separate child lifetime peak RSS; not incremental operation-only memory\",\n    \"storage\": \"every file needed to load/query full identical AOI; source manifest counted\",\n    \"subprocess_wall\": \"includes startup/imports/common geometry read/JSON output and exit\",\n    \"timing_unit\": \"ms per complete plot batch\",\n    \"warmups_per_hot_child\": 2\n  },\n  \"environment\": {\n    \"child_thread_limits\": 1,\n    \"compression\": \"Python standard-library compression.zstd; codec defines settings\",\n    \"gdal\": \"3.12.2\",\n    \"hardware\": {\n      \"hw.memsize\": \"34359738368\",\n      \"hw.model\": \"Mac17,2\",\n      \"logical_cpu_count\": 10,\n      \"machdep.cpu.brand_string\": \"Apple M5\",\n      \"machine\": \"arm64\",\n      \"processor\": \"arm\"\n    },\n    \"numpy\": \"2.5.4\",\n    \"platform\": \"macOS-26.6.2-arm64-arm-64bit-Mach-O\",\n    \"python\": \"3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]\",\n    \"rasterio\": \"1.5.2\",\n    \"shapely\": \"2.1.2\"\n  },\n  \"settings\": {\n    \"candidates\": [\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"chunk_size\": 1024,\n    \"repetitions\": 7,\n    \"warmups\": 2\n  }\n}"
+    },
+    {
+      "name": "tablet",
+      "width": 834,
+      "height": 1112,
+      "artifact": {
+        "content_sha256": "9186daad50c07579369b3e918da8a7e72f86958806dce925c96f507344741add",
+        "query_version": "hansen-centers.v1",
+        "benchmark_experiment": "exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856",
+        "overall_storage_choice": "separate_zstd_l19",
+        "baseline_storage": {
+          "files": [
+            {
+              "bytes": 414142,
+              "path": "data/public/hansen_treecover2000_sample.tif",
+              "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+            },
+            {
+              "bytes": 159863,
+              "path": "data/public/hansen_lossyear_sample.tif",
+              "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+            },
+            {
+              "bytes": 2994,
+              "path": "data/public/hansen_datamask_sample.tif",
+              "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+            },
+            {
+              "bytes": 8294,
+              "path": "data/public/provenance.json",
+              "sha256": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
+            },
+            {
+              "bytes": 948,
+              "path": "artifacts/stores/exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856/source_geotiff/metadata.json",
+              "sha256": "db06c70ddc751d602e654894fa97bdfe9d164694136a4cb111588ffb122e5d7a"
+            }
+          ],
+          "index_bytes": 0,
+          "metadata_bytes": 9242,
+          "metadata_index_bytes": 9242,
+          "metadata_note": "GeoTIFF embedded grids/masks/index included in payload; required acquisition provenance and external identity manifest counted",
+          "payload_bytes": 576999,
+          "total_bytes": 586241
+        },
+        "winner": {
+          "candidate": "separate_zstd_l19",
+          "criterion": "minimum total stored bytes among fully exact candidates",
+          "hot_batch_median_ms": 1.655292,
+          "process_cold_batch_median_ms": 5.867792,
+          "ratio_to_source_total": 0.9126144367248282,
+          "smaller_than_source": true,
+          "source_hot_batch_median_ms": 1.435292,
+          "source_process_cold_batch_median_ms": 11.373751,
+          "total_bytes": 535012
+        },
+        "plots": [
+          {
+            "plot_id": "P-0003",
+            "selected": 87,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              }
+            },
+            "year2025": 0,
+            "comparison": {
+              "compact_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "status": "computed"
+            }
+          },
+          {
+            "plot_id": "P-0005",
+            "selected": 262,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": true,
+                "observed_loss_cell_count": 18
+              }
+            },
+            "year2025": 11,
+            "comparison": {
+              "compact_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "status": "computed"
+            }
+          }
+        ]
+      },
+      "p3": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0003\n6.72\nha declared\nReceipt\nShow proof",
+          "x": 245,
+          "y": 100,
+          "width": 569,
+          "height": 77,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-panel": {
+          "text": "Annual loss\nCanopy · 2000\nLand mask\nAll 17 plots\n8.58189° N\n98.77243° E · EPSG:4326\nN\nEXACT SUPPLIED BOUNDARY\nP-0003\n6.72 ha declared · 87 selected cells\n2023 mapped loss · 0 cells\nSource grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.\nInspect native cells as a table\n87 selected",
+          "x": 245,
+          "y": 201,
+          "width": 569,
+          "height": 484,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2023 mapped loss · 0 cells",
+          "x": 662.3125,
+          "y": 558,
+          "width": 140.6875,
+          "height": 28,
+          "fontSize": "8px",
+          "lineHeight": "12px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2023 / Hansen 2025 v1.13\n0\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 245,
+          "y": 685,
+          "width": 569,
+          "height": 252.75,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supportsthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 245,
+          "y": 1241.84375,
+          "width": 569,
+          "height": 347.484375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".reference-note": {
+          "text": "EVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.",
+          "x": 539.5,
+          "y": 1344.03125,
+          "width": 274.5,
+          "height": 195,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation": {
+          "text": "02 / MAPPED OBSERVATION\n2021–2023\nNo mapped loss under this query\n0 observed loss cells\n2024–2025\nNo mapped loss under this query\n0 observed loss cells\nSelected support\nComplete\nValid land / selected cells\n87 / 87\nUnknown cells\n0\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 245,
+          "y": 937.75,
+          "width": 569,
+          "height": 286.09375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation .fineprint": {
+          "text": "Tree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 245,
+          "y": 1173.25,
+          "width": 569,
+          "height": 30.59375,
+          "fontSize": "9px",
+          "lineHeight": "15.3px"
+        },
+        ".time-context": {
+          "text": "2001–2025 · select a year\n Supplier’s declared analysis: 2021–23",
+          "x": 245,
+          "y": 865.75,
+          "width": 569,
+          "height": 12,
+          "fontSize": "8px",
+          "lineHeight": "12px"
+        }
+      },
+      "overview": {
+        "title": "SUPPLIER SAMPLE / SPATIAL INDEX\nChai Buri, Thailand\n17 plot locations · Select a marker",
+        "footnote": "Source grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.",
+        "table": "Inspect native cells as a table\n87 selected",
+        "coordinates": [
+          "8.58189° N",
+          "98.77243° E · EPSG:4326",
+          "N"
+        ],
+        "markers": [
+          {
+            "name": "Select P-0003 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0005 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0008 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0010 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0013 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0001 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0004 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0006 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0009 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0011 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0014 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0015 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0016 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0017 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0018 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0019 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0020 on map",
+            "text": ""
+          }
+        ],
+        "legend": null
+      },
+      "p5": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0005\n20.07\nha declared\nReceipt\nShow proof",
+          "x": 245,
+          "y": 100,
+          "width": 569,
+          "height": 77,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2025 mapped loss · 11 cells",
+          "x": 659.796875,
+          "y": 558,
+          "width": 143.203125,
+          "height": 28,
+          "fontSize": "8px",
+          "lineHeight": "12px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2025 / Hansen 2025 v1.13\n11\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 245,
+          "y": 685,
+          "width": 569,
+          "height": 252.75,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supportsthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 245,
+          "y": 1241.84375,
+          "width": 569,
+          "height": 347.484375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        "visibleLossCells": 11,
+        "tableRows": 11,
+        "inspectFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect cell 557:483",
+          "visible": true,
+          "scrollY": 0,
+          "rect": {
+            "x": 696.9375,
+            "y": 794,
+            "width": 72.96875,
+            "height": 27,
+            "top": 794,
+            "right": 769.90625,
+            "bottom": 821,
+            "left": 696.9375
+          }
+        },
+        "inspector": {
+          ".cell-inspector": {
+            "text": "Native cell 557:483\nCanopy 2000: 89%\nLoss year: 2025\nDatamask: 1 · valid land",
+            "x": 607,
+            "y": 450,
+            "width": 190,
+            "height": 102,
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        }
+      },
+      "beforeProof": {
+        "tag": "BUTTON",
+        "name": "Inspect proof for 2025 observed loss cells",
+        "visible": true,
+        "scrollY": 0,
+        "rect": {
+          "x": 705.109375,
+          "y": 1040.875,
+          "width": 108.890625,
+          "height": 52,
+          "top": 1040.875,
+          "right": 814,
+          "bottom": 1092.875,
+          "left": 705.109375
+        }
+      },
+      "afterProof": {
+        "tag": "BODY",
+        "name": "plotline↗Evidence workspaceLot 200001Review deskEncoding proofCommands⌘ KLocal sampleSubmission / 200001Follow theevidence.17 supplied plots.Every answer has a trail.05declared ind",
+        "visible": false,
+        "scrollY": 0,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 834,
+          "height": 3001.921875,
+          "top": 0,
+          "right": 834,
+          "bottom": 3001.921875,
+          "left": 0
+        }
+      },
+      "proof": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / ENCODING PROOF\nP-0005\n20.07\nha declared\nReceipt\nBack to review",
+          "x": 245,
+          "y": 100,
+          "width": 569,
+          "height": 77,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-heading": {
+          "text": "03 / REPRESENTATION PROOF\nSame question.\nTwo representations.\nP-0005 · selected year 2025\n\nThe same boundary, source grid, validity mask and query contract. Compare outputs without changing the question.",
+          "x": 245,
+          "y": 208,
+          "width": 569,
+          "height": 214.078125,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".agreement": {
+          "text": "Same query outputs\nExact output equality for this plot. This establishes encoding agreement, not source accuracy or compliance.",
+          "x": 245,
+          "y": 448.078125,
+          "width": 569,
+          "height": 104,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".comparison-table": {
+          "text": "P-0005 · hansen-centers.v1\tOriginal source\tCompact\n2025 observed loss cells\t11\t11\nSelected native cells\t262\t262\nValid land cells\t262\t262\nUnknown cells\t0\t0\nOut-of-coverage cells\t0\t0\nSupport\tcomplete\tcomplete\n2021-2023 loss cells\t0\t0\n2024-2025 loss cells\t18\t18",
+          "x": 245,
+          "y": 570.078125,
+          "width": 569,
+          "height": 392.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-actions": {
+          "text": "Inspect provenance receipt\nDownload comparison",
+          "x": 245,
+          "y": 980.578125,
+          "width": 569,
+          "height": 44,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark": {
+          "text": "04 / MEASURED TRADEOFFS\nKeep the answer.\nQuestion the representation.\nFrozen experiment\n\nIdentical regional grid. All required payload, indexes and metadata included. A compact format earns its place through measurements.\n\nStorage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.\n\nComplete stored footprint\nKiB · lower is smaller\nOriginal GeoTIFF\n572.5 KiB\nCompressed source baseline\nSeparate bands\n574.8 KiB\n17/17 plot outputs match\nseparate_zstd_l9\n549.7 KiB\n17/17 plot outputs match\nseparate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice\nPayload\nMetadata + indexes\nSELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.\n\nCohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells\nInspect measurement method, environment and experiment identity\nInspect full selected-candidate evidence",
+          "x": 245,
+          "y": 1322.359375,
+          "width": 569,
+          "height": 1444.0625,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "afterProofNextTab": {
+        "tag": "BUTTON",
+        "name": "Inspect provenance receipt",
+        "visible": true,
+        "scrollY": 0,
+        "rect": {
+          "x": 245,
+          "y": 980.578125,
+          "width": 216.9375,
+          "height": 44,
+          "top": 980.578125,
+          "right": 461.9375,
+          "bottom": 1024.578125,
+          "left": 245
+        }
+      },
+      "receipt": {
+        "text": "EVIDENCE RECEIPT\nP-0005 evidence receipt\n\nA reproducibility record, not a certification. Original supplier values and source metadata remain inspectable.\n\nSource product\nHansen Global Forest Change 2025 v1.13\nQuery contract\nhansen-centers.v1\nSpatial rule\nNative cell centers covered by exact plot polygon\nObservation / release\nAnnual events 2001–2025 / Hansen 2025 v1.13\nUnknowns\nNone reported under this query\nDownload receipt JSON\nHashes, grid and source provenance\nExact supplier CSV fields\nDataset metadata\nEvidence limitations",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Close dialog",
+          "visible": true,
+          "scrollY": 0,
+          "rect": {
+            "x": 716,
+            "y": 246.546875,
+            "width": 34,
+            "height": 35,
+            "top": 246.546875,
+            "right": 750,
+            "bottom": 281.546875,
+            "left": 716
+          }
+        },
+        "returnFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect provenance receipt",
+          "visible": true,
+          "scrollY": 0,
+          "rect": {
+            "x": 245,
+            "y": 980.578125,
+            "width": 216.9375,
+            "height": 44,
+            "top": 980.578125,
+            "right": 461.9375,
+            "bottom": 1024.578125,
+            "left": 245
+          }
+        }
+      },
+      "benchmarkDefault": {
+        ".benchmark-decision": {
+          "text": "Storage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.",
+          "x": 245,
+          "y": 1532.078125,
+          "width": 569,
+          "height": 86,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 245,
+          "y": 2060.578125,
+          "width": 569,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark-method": {
+          "text": "Cohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells",
+          "x": 245,
+          "y": 2572.421875,
+          "width": 569,
+          "height": 75,
+          "fontSize": "10px",
+          "lineHeight": "15px"
+        },
+        ".benchmark .json-details summary": {
+          "text": "Inspect measurement method, environment and experiment identity",
+          "x": 245,
+          "y": 2664.421875,
+          "width": 569,
+          "height": 42.5,
+          "fontSize": "11px",
+          "lineHeight": "16.5px"
+        }
+      },
+      "baseline": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nOriginal GeoTIFF\n572.5 KiB\nOriginal-source baseline\nPayload\n563.5 KiB\nMetadata + indexes\n9.0 KiB\nPreprocessing wall time\nNot measured\nNative chunk width\nSource organization\nLoaded query\nFresh-process load + query\n1.44 ms\nMedian / 17-plot batch\n1.42\n1.60 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 245,
+          "y": 895.578125,
+          "width": 569,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "storageRows": [
+        "Original GeoTIFF\n572.5 KiB\nCompressed source baseline",
+        "Separate bands\n574.8 KiB\n17/17 plot outputs match",
+        "separate_zstd_l9\n549.7 KiB\n17/17 plot outputs match",
+        "separate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice"
+      ],
+      "candidate": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nSeparate bands\n574.8 KiB\n0.4% larger than original\nPayload\n571.7 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n6.80 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.48 ms\nMedian / 17-plot batch\n1.45\n1.61 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 245,
+          "y": 895.578125,
+          "width": 569,
+          "height": 511.84375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "method": "Inspect measurement method, environment and experiment identity\n{\n  \"experiment_id\": \"exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856\",\n  \"method\": {\n    \"common_inputs\": \"geometry and supplier input bytes reported separately and excluded symmetrically\",\n    \"excluded\": [\n      \"UI\",\n      \"network acquisition\",\n      \"full source tiles\",\n      \"tile-to-chip crop savings\",\n      \"disk-cold claims\",\n      \"legal compliance or satellite ground-truth accuracy\"\n    ],\n    \"execution_order\": [\n      \"source_geotiff\",\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"hot\": \"one isolated child per representation; load full AOI once then warmups and measured batches\",\n    \"load\": \"includes validation and integrity hashing performed by each native loader\",\n    \"os_file_cache\": \"uncontrolled and likely warm after verification/encoding; NOT disk-cold\",\n    \"p95_method\": \"nearest rank; with 7 repetitions p95 equals maximum\",\n    \"parallel_benchmark_children\": false,\n    \"process_cold\": \"fresh Python child per repetition; timed full load+query after imports and geometry read\",\n    \"query_count_per_batch\": 17,\n    \"repetitions\": 7,\n    \"resources\": \"separate child lifetime peak RSS; not incremental operation-only memory\",\n    \"storage\": \"every file needed to load/query full identical AOI; source manifest counted\",\n    \"subprocess_wall\": \"includes startup/imports/common geometry read/JSON output and exit\",\n    \"timing_unit\": \"ms per complete plot batch\",\n    \"warmups_per_hot_child\": 2\n  },\n  \"environment\": {\n    \"child_thread_limits\": 1,\n    \"compression\": \"Python standard-library compression.zstd; codec defines settings\",\n    \"gdal\": \"3.12.2\",\n    \"hardware\": {\n      \"hw.memsize\": \"34359738368\",\n      \"hw.model\": \"Mac17,2\",\n      \"logical_cpu_count\": 10,\n      \"machdep.cpu.brand_string\": \"Apple M5\",\n      \"machine\": \"arm64\",\n      \"processor\": \"arm\"\n    },\n    \"numpy\": \"2.5.4\",\n    \"platform\": \"macOS-26.6.2-arm64-arm-64bit-Mach-O\",\n    \"python\": \"3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]\",\n    \"rasterio\": \"1.5.2\",\n    \"shapely\": \"2.1.2\"\n  },\n  \"settings\": {\n    \"candidates\": [\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"chunk_size\": 1024,\n    \"repetitions\": 7,\n    \"warmups\": 2\n  }\n}"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "artifact": {
+        "content_sha256": "9186daad50c07579369b3e918da8a7e72f86958806dce925c96f507344741add",
+        "query_version": "hansen-centers.v1",
+        "benchmark_experiment": "exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856",
+        "overall_storage_choice": "separate_zstd_l19",
+        "baseline_storage": {
+          "files": [
+            {
+              "bytes": 414142,
+              "path": "data/public/hansen_treecover2000_sample.tif",
+              "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+            },
+            {
+              "bytes": 159863,
+              "path": "data/public/hansen_lossyear_sample.tif",
+              "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+            },
+            {
+              "bytes": 2994,
+              "path": "data/public/hansen_datamask_sample.tif",
+              "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+            },
+            {
+              "bytes": 8294,
+              "path": "data/public/provenance.json",
+              "sha256": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
+            },
+            {
+              "bytes": 948,
+              "path": "artifacts/stores/exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856/source_geotiff/metadata.json",
+              "sha256": "db06c70ddc751d602e654894fa97bdfe9d164694136a4cb111588ffb122e5d7a"
+            }
+          ],
+          "index_bytes": 0,
+          "metadata_bytes": 9242,
+          "metadata_index_bytes": 9242,
+          "metadata_note": "GeoTIFF embedded grids/masks/index included in payload; required acquisition provenance and external identity manifest counted",
+          "payload_bytes": 576999,
+          "total_bytes": 586241
+        },
+        "winner": {
+          "candidate": "separate_zstd_l19",
+          "criterion": "minimum total stored bytes among fully exact candidates",
+          "hot_batch_median_ms": 1.655292,
+          "process_cold_batch_median_ms": 5.867792,
+          "ratio_to_source_total": 0.9126144367248282,
+          "smaller_than_source": true,
+          "source_hot_batch_median_ms": 1.435292,
+          "source_process_cold_batch_median_ms": 11.373751,
+          "total_bytes": 535012
+        },
+        "plots": [
+          {
+            "plot_id": "P-0003",
+            "selected": 87,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              }
+            },
+            "year2025": 0,
+            "comparison": {
+              "compact_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+              "status": "computed"
+            }
+          },
+          {
+            "plot_id": "P-0005",
+            "selected": 262,
+            "support": "complete",
+            "periods": {
+              "2021-2023": {
+                "mapped_loss_present": false,
+                "observed_loss_cell_count": 0
+              },
+              "2024-2025": {
+                "mapped_loss_present": true,
+                "observed_loss_cell_count": 18
+              }
+            },
+            "year2025": 11,
+            "comparison": {
+              "compact_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "differing_fields": [],
+              "equal": true,
+              "source_result_sha256": "c63e840de5d7bdbf64c76e36af469f424f7bc47723ba02560ab003f5cf16d0da",
+              "status": "computed"
+            }
+          }
+        ]
+      },
+      "p3": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0003\n6.72\nha declared\nReceipt\nShow proof",
+          "x": 16,
+          "y": 334.5,
+          "width": 358,
+          "height": 90.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-panel": {
+          "text": "Annual loss\nCanopy · 2000\nLand mask\nAll 17 plots\n8.58189° N\n98.77243° E · EPSG:4326\nN\nEXACT SUPPLIED BOUNDARY\nP-0003\n6.72 ha declared · 87 selected cells\n2023 mapped loss · 0 cells\nSource grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.\nInspect native cells as a table\n87 selected",
+          "x": 16,
+          "y": 442,
+          "width": 358,
+          "height": 442,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2023 mapped loss · 0 cells",
+          "x": 234.34375,
+          "y": 764.5,
+          "width": 128.65625,
+          "height": 26.5,
+          "fontSize": "7px",
+          "lineHeight": "10.5px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2023 / Hansen 2025 v1.13\n0\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 16,
+          "y": 884,
+          "width": 358,
+          "height": 266.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supports\nthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 16,
+          "y": 1488.25,
+          "width": 358,
+          "height": 522.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".reference-note": {
+          "text": "EVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.",
+          "x": 16,
+          "y": 1832.71875,
+          "width": 358,
+          "height": 128.78125,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation": {
+          "text": "02 / MAPPED OBSERVATION\n2021–2023\nNo mapped loss under this query\n0 observed loss cells\n2024–2025\nNo mapped loss under this query\n0 observed loss cells\nSelected support\nComplete\nValid land / selected cells\n87 / 87\nUnknown cells\n0\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 16,
+          "y": 1150.25,
+          "width": 358,
+          "height": 320,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".observation .fineprint": {
+          "text": "Tree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+          "x": 16,
+          "y": 1399.25,
+          "width": 358,
+          "height": 51,
+          "fontSize": "10px",
+          "lineHeight": "17px"
+        },
+        ".time-context": {
+          "text": "2001–2025 · select a year\n Supplier’s declared analysis: 2021–23",
+          "x": 16,
+          "y": 1062.75,
+          "width": 358,
+          "height": 10.5,
+          "fontSize": "7px",
+          "lineHeight": "10.5px"
+        }
+      },
+      "overview": {
+        "title": "SUPPLIER SAMPLE / SPATIAL INDEX\nChai Buri, Thailand\n17 plot locations · Select a marker",
+        "footnote": "Source grid, not satellite imagery. Whole native cells are selected when their centers fall within the plot. Cell counts are not hectares.",
+        "table": "Inspect native cells as a table\n87 selected",
+        "coordinates": [
+          "8.58189° N",
+          "98.77243° E · EPSG:4326",
+          "N"
+        ],
+        "markers": [
+          {
+            "name": "Select P-0003 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0005 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0008 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0010 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0013 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0001 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0004 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0006 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0009 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0011 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0014 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0015 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0016 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0017 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0018 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0019 on map",
+            "text": ""
+          },
+          {
+            "name": "Select P-0020 on map",
+            "text": ""
+          }
+        ],
+        "legend": null
+      },
+      "p5": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0005\n20.07\nha declared\nReceipt\nShow proof",
+          "x": 16,
+          "y": -255.5,
+          "width": 358,
+          "height": 90.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".map-legend": {
+          "text": "2025 mapped loss · 11 cells",
+          "x": 232.09375,
+          "y": 174.5,
+          "width": 130.90625,
+          "height": 26.5,
+          "fontSize": "7px",
+          "lineHeight": "10.5px"
+        },
+        ".timeline": {
+          "text": "OBSERVATION YEAR\n2025 / Hansen 2025 v1.13\n11\nobserved loss cells\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n2001–2025 · select a year\n Supplier’s declared analysis: 2021–23\nSupplier processing 04 Sept 2024 – 06 Sept 2024\nSupplier harvest 16 Sept 2024\nField meanings require clarification",
+          "x": 16,
+          "y": 294,
+          "width": 358,
+          "height": 266.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".declaration": {
+          "text": "01 / SUPPLIER DECLARATION\nReview lead\nWhat supports\nthe final declaration?\n1\nAnalysis · 2021–2023\nIndication of deforestation\n2\nMitigation reported\nOn-site verification with evidence\n3\nFinal supplier declaration\nDeforestation-free\nEUDR declaration: Compliant\nEVIDENCE REFERENCE\nhyperlink-RG1-P-0002\n\nReferenced by the supplier; the evidence file is not supplied. This key is not an accessible link.\n\nA declaration is not a finding. These records do not establish a violation or verify a legal outcome.",
+          "x": 16,
+          "y": 898.25,
+          "width": 358,
+          "height": 522.25,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        "visibleLossCells": 11,
+        "tableRows": 11,
+        "inspectFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect cell 557:483",
+          "visible": true,
+          "scrollY": 590,
+          "rect": {
+            "x": 274.6875,
+            "y": 403,
+            "width": 72.96875,
+            "height": 27,
+            "top": 403,
+            "right": 347.65625,
+            "bottom": 430,
+            "left": 274.6875
+          }
+        },
+        "inspector": {
+          ".cell-inspector": {
+            "text": "Native cell 557:483\nCanopy 2000: 89%\nLoss year: 2025\nDatamask: 1 · valid land",
+            "x": 167,
+            "y": 64,
+            "width": 190,
+            "height": 102,
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        }
+      },
+      "beforeProof": {
+        "tag": "BUTTON",
+        "name": "Inspect proof for 2025 observed loss cells",
+        "visible": true,
+        "scrollY": 590,
+        "rect": {
+          "x": 265.109375,
+          "y": 647.875,
+          "width": 108.890625,
+          "height": 52,
+          "top": 647.875,
+          "right": 374,
+          "bottom": 699.875,
+          "left": 265.109375
+        }
+      },
+      "afterProof": {
+        "tag": "BODY",
+        "name": "plotline↗Evidence workspaceLot 200001Review deskEncoding proofCommands⌘ KLocal sampleSubmission / 200001Follow theevidence.17 supplied plots.Every answer has a trail.05declared ind",
+        "visible": false,
+        "scrollY": 590,
+        "rect": {
+          "x": 0,
+          "y": -590,
+          "width": 390,
+          "height": 3370.203125,
+          "top": -590,
+          "right": 390,
+          "bottom": 2780.203125,
+          "left": 0
+        }
+      },
+      "proof": {
+        ".plot-header": {
+          "text": "SUPPLIER D001 / THAILAND / ENCODING PROOF\nP-0005\n20.07\nha declared\nReceipt\nBack to review",
+          "x": 16,
+          "y": -255.5,
+          "width": 358,
+          "height": 90.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-heading": {
+          "text": "03 / REPRESENTATION PROOF\nSame question.\nTwo representations.\nP-0005 · selected year 2025\n\nThe same boundary, source grid, validity mask and query contract. Compare outputs without changing the question.",
+          "x": 16,
+          "y": -141,
+          "width": 358,
+          "height": 208.671875,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".agreement": {
+          "text": "Same query outputs\nExact output equality for this plot. This establishes encoding agreement, not source accuracy or compliance.",
+          "x": 16,
+          "y": 93.671875,
+          "width": 358,
+          "height": 90,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".comparison-table": {
+          "text": "P-0005 · hansen-centers.v1\tOriginal source\tCompact\n2025 observed loss cells\t11\t11\nSelected native cells\t262\t262\nValid land cells\t262\t262\nUnknown cells\t0\t0\nOut-of-coverage cells\t0\t0\nSupport\tcomplete\tcomplete\n2021-2023 loss cells\t0\t0\n2024-2025 loss cells\t18\t18",
+          "x": 16,
+          "y": 201.671875,
+          "width": 358,
+          "height": 329.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".proof-actions": {
+          "text": "Inspect provenance receipt\nDownload comparison",
+          "x": 16,
+          "y": 549.171875,
+          "width": 358,
+          "height": 98,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark": {
+          "text": "04 / MEASURED TRADEOFFS\nKeep the answer.\nQuestion the representation.\nFrozen experiment\n\nIdentical regional grid. All required payload, indexes and metadata included. A compact format earns its place through measurements.\n\nStorage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.\n\nComplete stored footprint\nKiB · lower is smaller\nOriginal GeoTIFF\n572.5 KiB\nCompressed source baseline\nSeparate bands\n574.8 KiB\n17/17 plot outputs match\nseparate_zstd_l9\n549.7 KiB\n17/17 plot outputs match\nseparate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice\nPayload\nMetadata + indexes\nSELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.\n\nCohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells\nInspect measurement method, environment and experiment identity\nInspect full selected-candidate evidence",
+          "x": 16,
+          "y": 963.09375,
+          "width": 358,
+          "height": 1572.109375,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "afterProofNextTab": {
+        "tag": "BUTTON",
+        "name": "Inspect provenance receipt",
+        "visible": true,
+        "scrollY": 590,
+        "rect": {
+          "x": 16,
+          "y": 549.171875,
+          "width": 193.15625,
+          "height": 44,
+          "top": 549.171875,
+          "right": 209.15625,
+          "bottom": 593.171875,
+          "left": 16
+        }
+      },
+      "receipt": {
+        "text": "EVIDENCE RECEIPT\nP-0005 evidence receipt\n\nA reproducibility record, not a certification. Original supplier values and source metadata remain inspectable.\n\nSource product\nHansen Global Forest Change 2025 v1.13\nQuery contract\nhansen-centers.v1\nSpatial rule\nNative cell centers covered by exact plot polygon\nObservation / release\nAnnual events 2001–2025 / Hansen 2025 v1.13\nUnknowns\nNone reported under this query\nDownload receipt JSON\nHashes, grid and source provenance\nExact supplier CSV fields\nDataset metadata\nEvidence limitations",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Close dialog",
+          "visible": true,
+          "scrollY": 590,
+          "rect": {
+            "x": 316,
+            "y": 95.09375,
+            "width": 34,
+            "height": 35,
+            "top": 95.09375,
+            "right": 350,
+            "bottom": 130.09375,
+            "left": 316
+          }
+        },
+        "returnFocus": {
+          "tag": "BUTTON",
+          "name": "Inspect provenance receipt",
+          "visible": true,
+          "scrollY": 590,
+          "rect": {
+            "x": 16,
+            "y": 549.171875,
+            "width": 193.15625,
+            "height": 44,
+            "top": 549.171875,
+            "right": 209.15625,
+            "bottom": 593.171875,
+            "left": 16
+          }
+        }
+      },
+      "benchmarkDefault": {
+        ".benchmark-decision": {
+          "text": "Storage choice: separate_zstd_l19.\nPrototype encoding agreement does not guarantee smaller storage. Select a representation to inspect its measured tradeoffs.",
+          "x": 16,
+          "y": 1197.203125,
+          "width": 358,
+          "height": 102.5,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nseparate_zstd_l19\n522.5 KiB\n8.7% smaller than original\nPayload\n519.4 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n212.59 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.66 ms\nMedian / 17-plot batch\n1.51\n1.76 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 16,
+          "y": 1740.703125,
+          "width": 358,
+          "height": 540,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        },
+        ".benchmark-method": {
+          "text": "Cohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells",
+          "x": 16,
+          "y": 2280.703125,
+          "width": 358,
+          "height": 119,
+          "fontSize": "9px",
+          "lineHeight": "13.5px"
+        },
+        ".benchmark .json-details summary": {
+          "text": "Inspect measurement method, environment and experiment identity",
+          "x": 16,
+          "y": 2416.703125,
+          "width": 358,
+          "height": 59,
+          "fontSize": "11px",
+          "lineHeight": "16.5px"
+        }
+      },
+      "baseline": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nOriginal GeoTIFF\n572.5 KiB\nOriginal-source baseline\nPayload\n563.5 KiB\nMetadata + indexes\n9.0 KiB\nPreprocessing wall time\nNot measured\nNative chunk width\nSource organization\nLoaded query\nFresh-process load + query\n1.44 ms\nMedian / 17-plot batch\n1.42\n1.60 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 16,
+          "y": 761.703125,
+          "width": 358,
+          "height": 540,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "storageRows": [
+        "Original GeoTIFF\n572.5 KiB\nCompressed source baseline",
+        "Separate bands\n574.8 KiB\n17/17 plot outputs match",
+        "separate_zstd_l9\n549.7 KiB\n17/17 plot outputs match",
+        "separate_zstd_l19\n522.5 KiB\n17/17 plot outputs match · storage choice"
+      ],
+      "candidate": {
+        ".candidate-detail": {
+          "text": "SELECTED REPRESENTATION\nSeparate bands\n574.8 KiB\n0.4% larger than original\nPayload\n571.7 KiB\nMetadata + indexes\n3.1 KiB\nPreprocessing wall time\n6.80 ms\nNative chunk width\n1024 cells\nLoaded query\nFresh-process load + query\n1.48 ms\nMedian / 17-plot batch\n1.45\n1.61 ms\n\nFull regional data loaded before query timing. 7 measured repetitions.",
+          "x": 16,
+          "y": 761.703125,
+          "width": 358,
+          "height": 540,
+          "fontSize": "16px",
+          "lineHeight": "24px"
+        }
+      },
+      "method": "Inspect measurement method, environment and experiment identity\n{\n  \"experiment_id\": \"exp-26ba2d043721e20e770efc52bd46f9536eb02b494eed7264aa01e3d41cf5f856\",\n  \"method\": {\n    \"common_inputs\": \"geometry and supplier input bytes reported separately and excluded symmetrically\",\n    \"excluded\": [\n      \"UI\",\n      \"network acquisition\",\n      \"full source tiles\",\n      \"tile-to-chip crop savings\",\n      \"disk-cold claims\",\n      \"legal compliance or satellite ground-truth accuracy\"\n    ],\n    \"execution_order\": [\n      \"source_geotiff\",\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"hot\": \"one isolated child per representation; load full AOI once then warmups and measured batches\",\n    \"load\": \"includes validation and integrity hashing performed by each native loader\",\n    \"os_file_cache\": \"uncontrolled and likely warm after verification/encoding; NOT disk-cold\",\n    \"p95_method\": \"nearest rank; with 7 repetitions p95 equals maximum\",\n    \"parallel_benchmark_children\": false,\n    \"process_cold\": \"fresh Python child per repetition; timed full load+query after imports and geometry read\",\n    \"query_count_per_batch\": 17,\n    \"repetitions\": 7,\n    \"resources\": \"separate child lifetime peak RSS; not incremental operation-only memory\",\n    \"storage\": \"every file needed to load/query full identical AOI; source manifest counted\",\n    \"subprocess_wall\": \"includes startup/imports/common geometry read/JSON output and exit\",\n    \"timing_unit\": \"ms per complete plot batch\",\n    \"warmups_per_hot_child\": 2\n  },\n  \"environment\": {\n    \"child_thread_limits\": 1,\n    \"compression\": \"Python standard-library compression.zstd; codec defines settings\",\n    \"gdal\": \"3.12.2\",\n    \"hardware\": {\n      \"hw.memsize\": \"34359738368\",\n      \"hw.model\": \"Mac17,2\",\n      \"logical_cpu_count\": 10,\n      \"machdep.cpu.brand_string\": \"Apple M5\",\n      \"machine\": \"arm64\",\n      \"processor\": \"arm\"\n    },\n    \"numpy\": \"2.5.4\",\n    \"platform\": \"macOS-26.6.2-arm64-arm-64bit-Mach-O\",\n    \"python\": \"3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]\",\n    \"rasterio\": \"1.5.2\",\n    \"shapely\": \"2.1.2\"\n  },\n  \"settings\": {\n    \"candidates\": [\n      \"separate_zstd\",\n      \"separate_zstd_l9\",\n      \"separate_zstd_l19\"\n    ],\n    \"chunk_size\": 1024,\n    \"repetitions\": 7,\n    \"warmups\": 2\n  }\n}"
+    }
+  ],
+  "errors": [],
+  "endHashes": {
+    "app/src/App.tsx": "714674041a3b5f710c2652f68cc360e9a4897b9b65e6fb55d04f0ff6d775efdd",
+    "app/src/Benchmark.tsx": "908f107618c61afed7228c7f6afc729adb8eb94773a1dfac41b7ba5862d9fea4",
+    "app/src/CellTable.tsx": "768d473beb62f3b80f03963d0e0386439310112925504308c10433621bf64ad6",
+    "app/src/app.css": "4bf16e9a1e63b80e2db0359d4c01b2d90e6656eb3b600491488885399406b976"
+  },
+  "ended": "2026-10-13T02:26:18.647Z"
+}
