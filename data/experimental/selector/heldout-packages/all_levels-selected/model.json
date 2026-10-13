@@ -1,0 +1,1 @@
+{"feature_names":["canopy_entropy","loss_entropy","land_fraction","water_fraction","loss_fraction","canopy_zero_fraction","canopy_change_fraction","loss_change_fraction"],"format":"selector.cost-tree.v1","sample_stride":16,"tree":{"feature":"canopy_entropy","gt":{"config":"separate_zstd_l19__512"},"le":{"config":"uint16_zstd__512"},"threshold":0.8463727491480996}}
