@@ -1,0 +1,18 @@
+{
+  "v7": {
+    "alerts": [
+      "Latest reload failed: Invalid demo artifact at plots[1].comparison.equal: declared equality contradicts the query result fields.. Showing the last loaded evidence.Retry"
+    ],
+    "currentYear": "0\nobserved loss cells",
+    "plot": "SUPPLIER D001 / THAILAND / PLOT REVIEW\nP-0003\n6.72\nha declared\nReceipt\nShow proof",
+    "retainedKnownCount": "02 / MAPPED OBSERVATION\n2021–2023\nNo mapped loss under this query\n0 observed loss cells\n2024–2025\nNo mapped loss under this query\n0 observed loss cells\nSelected support\nComplete\nValid land / selected cells\n87 / 87\nUnknown cells\n0\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline."
+  },
+  "v5": {
+    "alerts": [],
+    "inspector": "Native cell -1:-1\nCanopy 2000: Unavailable\nLoss year: Unavailable\nDatamask: Unavailable",
+    "observation": "02 / MAPPED OBSERVATION\n2021–2023\nMapped result unknown\nUnavailable observed loss cells\n2024–2025\nMapped result unknown\nUnavailable observed loss cells\nSelected support\nNone\nValid land / selected cells\n0 / 1\nUnknown cells\n1\n\nUnknown reasons: out_of_coverage, no_valid_land\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+    "table": "Inspect native cells as a table\nP-0003 · 1 selected\n\nExact values from selected source cells. Selection uses each cell’s center; the footprint may extend beyond the plot boundary.\n\nOnly 2023 valid-land loss events (0)\nNative row : column\tCanopy 2000\tLoss event\tLand mask\tInspect\n-1 : -1\tUnavailable\tUnavailable\tUnavailable\tShow on map",
+    "tooltip": "Cell -1:-1; canopy Unavailable; loss Unavailable; mask Unavailable"
+  },
+  "scope": "Own tab_k only; actual normal runtime load; synthetic unknown accepted and false equality rejected; original report files preserved"
+}

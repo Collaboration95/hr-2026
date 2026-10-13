@@ -1,0 +1,471 @@
+{
+  "baseline": {
+    "candidate": "source_geotiff",
+    "preprocessing": {
+      "cpu_ms": null,
+      "note": "existing acquired DEFLATE chips; historical chip production not remeasured",
+      "wall_ms": null
+    },
+    "queries": {
+      "hot": {
+        "answer_sha256": [
+          "30db22a7444b42a962ac9dd917400c454b0f1c544e0d149755fb7397d1f8bccd"
+        ],
+        "cpu_ms": {
+          "median": 1.419,
+          "min": 1.39,
+          "p95": 1.613,
+          "repetitions": 7,
+          "samples": [
+            1.445,
+            1.613,
+            1.432,
+            1.39,
+            1.404,
+            1.419,
+            1.416
+          ]
+        },
+        "peak_rss": {
+          "bytes": 77611008,
+          "native_unit": "bytes",
+          "native_value": 77611008,
+          "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+        },
+        "subprocess_wall_ms": 146.9165,
+        "wall_ms": {
+          "median": 1.418167,
+          "min": 1.3895,
+          "p95": 1.620125,
+          "repetitions": 7,
+          "samples": [
+            1.444083,
+            1.620125,
+            1.432458,
+            1.3895,
+            1.403625,
+            1.418167,
+            1.417167
+          ]
+        }
+      },
+      "process_cold": {
+        "answer_sha256": [
+          "30db22a7444b42a962ac9dd917400c454b0f1c544e0d149755fb7397d1f8bccd"
+        ],
+        "cpu_ms": {
+          "median": 11.177,
+          "min": 10.918,
+          "p95": 12.113,
+          "repetitions": 7,
+          "samples": [
+            11.177,
+            11.180000000000001,
+            11.045,
+            10.918,
+            12.113,
+            11.099,
+            11.458
+          ]
+        },
+        "load_ms": {
+          "median": 9.285417,
+          "min": 8.961667,
+          "p95": 10.26475,
+          "repetitions": 7,
+          "samples": [
+            9.285417,
+            9.44575,
+            9.24275,
+            8.961667,
+            10.26475,
+            9.117667,
+            9.621334
+          ]
+        },
+        "peak_rss": [
+          {
+            "bytes": 77398016,
+            "native_unit": "bytes",
+            "native_value": 77398016,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77299712,
+            "native_unit": "bytes",
+            "native_value": 77299712,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77168640,
+            "native_unit": "bytes",
+            "native_value": 77168640,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77086720,
+            "native_unit": "bytes",
+            "native_value": 77086720,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77365248,
+            "native_unit": "bytes",
+            "native_value": 77365248,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77414400,
+            "native_unit": "bytes",
+            "native_value": 77414400,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 77348864,
+            "native_unit": "bytes",
+            "native_value": 77348864,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          }
+        ],
+        "query_ms": {
+          "median": 1.896916,
+          "min": 1.807458,
+          "p95": 2.031083,
+          "repetitions": 7,
+          "samples": [
+            1.896916,
+            1.812041,
+            1.807458,
+            1.954917,
+            2.022625,
+            2.031083,
+            1.866167
+          ]
+        },
+        "subprocess_wall_ms": {
+          "median": 126.004334,
+          "min": 124.310542,
+          "p95": 128.60075,
+          "repetitions": 7,
+          "samples": [
+            128.60075,
+            124.310542,
+            127.471458,
+            125.994333,
+            127.458459,
+            126.004334,
+            125.85075
+          ]
+        },
+        "wall_ms": {
+          "median": 11.182333,
+          "min": 10.916584,
+          "p95": 12.287374999999999,
+          "repetitions": 7,
+          "samples": [
+            11.182333,
+            11.257791000000001,
+            11.050208,
+            10.916584,
+            12.287374999999999,
+            11.148750000000001,
+            11.487500999999998
+          ]
+        }
+      },
+      "timed_answers_exact": true
+    },
+    "research_overhead": {
+      "files": [
+        {
+          "bytes": 948,
+          "path": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/source_geotiff/metadata.json",
+          "sha256": "db06c70ddc751d602e654894fa97bdfe9d164694136a4cb111588ffb122e5d7a"
+        }
+      ],
+      "note": "generated duplicate metadata.json is not read by the loader; excluded from necessary bytes and all storage ratios",
+      "total_bytes": 948
+    },
+    "storage": {
+      "files": [
+        {
+          "bytes": 414142,
+          "path": "data/public/hansen_treecover2000_sample.tif",
+          "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+        },
+        {
+          "bytes": 159863,
+          "path": "data/public/hansen_lossyear_sample.tif",
+          "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+        },
+        {
+          "bytes": 2994,
+          "path": "data/public/hansen_datamask_sample.tif",
+          "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+        },
+        {
+          "bytes": 8294,
+          "path": "data/public/provenance.json",
+          "sha256": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
+        }
+      ],
+      "index_bytes": 0,
+      "metadata_bytes": 8294,
+      "metadata_index_bytes": 8294,
+      "metadata_note": "GeoTIFF embedded grids/masks/index included in payload; only loader-required acquisition provenance counted externally",
+      "payload_bytes": 576999,
+      "total_bytes": 585293
+    }
+  },
+  "canonical_equals_fresh_positive": true,
+  "metric_free_positive": {
+    "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+    "compact_plot_count": 17,
+    "failures": [],
+    "plot_count": 17,
+    "valid": true
+  },
+  "negative_controls": [
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "unbound benchmark: source metadata"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "source metadata",
+      "label": "wrong-vintage",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "unbound benchmark: query cohort"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "query cohort",
+      "label": "wrong-cohort",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "unbound benchmark: measured archive differs"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "measured archive differs",
+      "label": "forged-measured-size",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: receipt contract/source/hash claims"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "receipt contract",
+      "label": "receipt-version",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: receipt contract/source/hash claims"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "receipt contract",
+      "label": "receipt-period",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "derived summary"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "derived summary",
+      "label": "summary-count",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: receipt contract/source/hash claims"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "receipt contract",
+      "label": "receipt-source",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: full raw-value fidelity",
+          "P-0001: store files/full-fidelity claims",
+          "P-0001: receipt contract/source/hash claims",
+          "P-0003: store files/full-fidelity claims",
+          "P-0003: receipt contract/source/hash claims",
+          "P-0004: store files/full-fidelity claims",
+          "P-0004: receipt contract/source/hash claims",
+          "P-0005: store files/full-fidelity claims",
+          "P-0005: receipt contract/source/hash claims",
+          "P-0006: store files/full-fidelity claims",
+          "P-0006: receipt contract/source/hash claims",
+          "P-0008: store files/full-fidelity claims",
+          "P-0008: receipt contract/source/hash claims",
+          "P-0009: store files/full-fidelity claims",
+          "P-0009: receipt contract/source/hash claims",
+          "P-0010: store files/full-fidelity claims",
+          "P-0010: receipt contract/source/hash claims",
+          "P-0011: store files/full-fidelity claims",
+          "P-0011: receipt contract/source/hash claims",
+          "P-0013: store files/full-fidelity claims",
+          "P-0013: receipt contract/source/hash claims",
+          "P-0014: store files/full-fidelity claims",
+          "P-0014: receipt contract/source/hash claims",
+          "P-0015: store files/full-fidelity claims",
+          "P-0015: receipt contract/source/hash claims",
+          "P-0016: store files/full-fidelity claims",
+          "P-0016: receipt contract/source/hash claims",
+          "P-0017: store files/full-fidelity claims",
+          "P-0017: receipt contract/source/hash claims",
+          "P-0018: store files/full-fidelity claims",
+          "P-0018: receipt contract/source/hash claims",
+          "P-0019: store files/full-fidelity claims",
+          "P-0019: receipt contract/source/hash claims",
+          "P-0020: store files/full-fidelity claims",
+          "P-0020: receipt contract/source/hash claims"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "full raw-value fidelity",
+      "label": "raw-offplot",
+      "pass": true
+    },
+    {
+      "error": "compact store failed full raw-value or mask fidelity",
+      "label": "raw-export",
+      "pass": true
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: full band-mask fidelity",
+          "P-0001: store files/full-fidelity claims",
+          "P-0001: receipt contract/source/hash claims",
+          "P-0003: store files/full-fidelity claims",
+          "P-0003: receipt contract/source/hash claims",
+          "P-0004: store files/full-fidelity claims",
+          "P-0004: receipt contract/source/hash claims",
+          "P-0005: store files/full-fidelity claims",
+          "P-0005: receipt contract/source/hash claims",
+          "P-0006: store files/full-fidelity claims",
+          "P-0006: receipt contract/source/hash claims",
+          "P-0008: store files/full-fidelity claims",
+          "P-0008: receipt contract/source/hash claims",
+          "P-0009: store files/full-fidelity claims",
+          "P-0009: receipt contract/source/hash claims",
+          "P-0010: store files/full-fidelity claims",
+          "P-0010: receipt contract/source/hash claims",
+          "P-0011: store files/full-fidelity claims",
+          "P-0011: receipt contract/source/hash claims",
+          "P-0013: store files/full-fidelity claims",
+          "P-0013: receipt contract/source/hash claims",
+          "P-0014: store files/full-fidelity claims",
+          "P-0014: receipt contract/source/hash claims",
+          "P-0015: store files/full-fidelity claims",
+          "P-0015: receipt contract/source/hash claims",
+          "P-0016: store files/full-fidelity claims",
+          "P-0016: receipt contract/source/hash claims",
+          "P-0017: store files/full-fidelity claims",
+          "P-0017: receipt contract/source/hash claims",
+          "P-0018: store files/full-fidelity claims",
+          "P-0018: receipt contract/source/hash claims",
+          "P-0019: store files/full-fidelity claims",
+          "P-0019: receipt contract/source/hash claims",
+          "P-0020: store files/full-fidelity claims",
+          "P-0020: receipt contract/source/hash claims"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected_failure": "full band-mask fidelity",
+      "label": "mask-offplot",
+      "pass": true
+    },
+    {
+      "error": "compact store failed full raw-value or mask fidelity",
+      "label": "mask-export",
+      "pass": true
+    },
+    {
+      "error": "unbound benchmark: query cohort",
+      "label": "upstream-export-wrong-benchmark",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "positive": {
+    "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+    "compact_plot_count": 17,
+    "failures": [],
+    "plot_count": 17,
+    "valid": true
+  },
+  "positive_content": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "required_baseline_paths": [
+    "data/public/hansen_treecover2000_sample.tif",
+    "data/public/hansen_lossyear_sample.tif",
+    "data/public/hansen_datamask_sample.tif",
+    "data/public/provenance.json"
+  ],
+  "required_baseline_sum": 585293,
+  "retained": {
+    "experiment_id": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+    "overall_storage_choice": "separate_zstd_l19",
+    "reason": "Retain separate_zstd_l19 at chunk1024 as minimum necessary stored bytes among fully exact levels3/9/19 at256/512/1024. Complete store535012 bytes versus actual source loader585293 bytes (576999 TIFF +8294 acquisition provenance), saving50281 bytes /8.59%. Unused948-byte generated source metadata is research overhead only and excluded from all denominators. Every raw value/mask/metadata and17/17 real query results match, as do all timed digests. Encoding costs212.443 ms wall; cold-process median5.800 ms. This selects minimum storage with bounded one-time ingestion cost; hot speedup and disk-cold access are not claimed. Prior archives/decisions remain unchanged.",
+    "result_path": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/run-71a5b90b05bdce363044d8e232ae33d20b31f3868a6f5ba50bf61372b98194a9.json",
+    "run_id": "run-71a5b90b05bdce363044d8e232ae33d20b31f3868a6f5ba50bf61372b98194a9",
+    "schema_version": "plotline.retained-benchmark.v1",
+    "smallest_encoded": {
+      "candidate": "separate_zstd_l19",
+      "chunk_size": 1024,
+      "store_path": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
+      "total_bytes": 535012
+    },
+    "source_total_bytes": 585293
+  },
+  "stable_files": true
+}

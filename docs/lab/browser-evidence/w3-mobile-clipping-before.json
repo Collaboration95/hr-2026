@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-13T02:18:00Z",
+  "timestamp_precision": "minute",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "pre_fix_measured_css_pixels": {
+    "map_panel": {
+      "x": 16,
+      "width": 358,
+      "right": 374,
+      "overflow": "hidden"
+    },
+    "map_canvas": {
+      "x": 17,
+      "width": 527.65625,
+      "height": 310,
+      "right": 544.65625,
+      "aspectRatio": "800 / 470"
+    },
+    "map_legend": {
+      "x": 406,
+      "width": 128.65625,
+      "right": 534.65625
+    }
+  },
+  "source": "actual isolated Chromium page evaluate; transcribed from tool output",
+  "status": "lead fixed; final harness checks containment"
+}

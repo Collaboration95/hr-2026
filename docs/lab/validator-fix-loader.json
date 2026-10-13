@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "file": "artifacts/demo-v1.json",
+      "expectedAccepted": true,
+      "accepted": true,
+      "error": null,
+      "pass": true
+    },
+    {
+      "file": "validation/fix-verification/ui-unknown-valid.json",
+      "expectedAccepted": true,
+      "accepted": true,
+      "error": null,
+      "pass": true
+    },
+    {
+      "file": "validation/fix-verification/ui-false-equality.json",
+      "expectedAccepted": false,
+      "accepted": false,
+      "error": "Invalid demo artifact at plots[1].comparison.equal: declared equality contradicts the query result fields.",
+      "pass": true
+    },
+    {
+      "kind": "actual nullable rendering helpers",
+      "labels": [
+        "Unavailable",
+        "Unavailable",
+        "Unavailable"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "scope": "paired fresh and consistent-unknown positives versus original V7 negative; browser evidence recorded separately"
+}

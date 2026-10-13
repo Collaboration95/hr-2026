@@ -1,0 +1,1622 @@
+{
+  "scope": "synthetic only; bounded 180 cases + 6 native ULP/winding cases + 10 compressed/parser probes",
+  "pass": true,
+  "check_count": 196,
+  "failures": [],
+  "checks": [
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 0",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 1",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 2",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 3",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 4",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 5",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 6",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 7",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 8",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 9",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 10",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 11",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 12",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 13",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 14",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 15",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 16",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 17",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 18",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 19",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 20",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 21",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 22",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 23",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 24",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 25",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 26",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 27",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 28",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 29",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 30",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 31",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 32",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 33",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 34",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 35",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 36",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 37",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 38",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 39",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 40",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 41",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 42",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 43",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 44",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 45",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 46",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 47",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 48",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 49",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 50",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 51",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 52",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 53",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 54",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 55",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 56",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 57",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 58",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 59",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 60",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 61",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 62",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 63",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 64",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 65",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 66",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 67",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 68",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 69",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 70",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 71",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 72",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 73",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 74",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 75",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 76",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 77",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 78",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 79",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 80",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 81",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 82",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 83",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 84",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 85",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 86",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 87",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 88",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 89",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 90",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 91",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 92",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 93",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 94",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 95",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 96",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 97",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 98",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "lossyear",
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 99",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000",
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 100",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 101",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 102",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 103",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 104",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 105",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 106",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 107",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 108",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 109",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 110",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 111",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 112",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 113",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 114",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 115",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 116",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 117",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 118",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 119",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 120",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 121",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 122",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 123",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 124",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 125",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 126",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 127",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 128",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 129",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 130",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 131",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 132",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 133",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 134",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 135",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 136",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 137",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 138",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 139",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 140",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 141",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 142",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 143",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 144",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 145",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 146",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 147",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 148",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 149",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 150",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 151",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 152",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000",
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 153",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 154",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 155",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 156",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 157",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 158",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 159",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 160",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 161",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 162",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 163",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 164",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 165",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 166",
+      "detail": {
+        "type": "Polygon",
+        "missing": [
+          "treecover2000"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 167",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 168",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 169",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 170",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 171",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 172",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 173",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 174",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 175",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 176",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "datamask"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 177",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 178",
+      "detail": {
+        "type": "Polygon",
+        "missing": []
+      }
+    },
+    {
+      "pass": true,
+      "label": "seeded native-grid geometry/masks/unknown 179",
+      "detail": {
+        "type": "MultiPolygon",
+        "missing": [
+          "treecover2000",
+          "lossyear"
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49bp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49bp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49cp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49cp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49dp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native one-ULP boundary 0x1.8b172b020c49dp+6",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "valid independently generated 300-byte zstd frame",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "bounded 64KiB frame cannot satisfy 1-byte declared stream",
+      "detail": "zstd frame content size/dictionary does not match stream"
+    },
+    {
+      "pass": true,
+      "label": "two concatenated frames rejected",
+      "detail": "truncated, oversized, or trailing compressed stream"
+    },
+    {
+      "pass": true,
+      "label": "trailing 1-byte junk rejected",
+      "detail": "truncated, oversized, or trailing compressed stream"
+    },
+    {
+      "pass": true,
+      "label": "truncated frame rejected",
+      "detail": "truncated, oversized, or trailing compressed stream"
+    },
+    {
+      "pass": true,
+      "label": "unknown decompressed size rejected",
+      "detail": "zstd frame content size/dictionary does not match stream"
+    },
+    {
+      "pass": true,
+      "label": "300-byte frame advertising 1GiB window rejected before decode",
+      "detail": "zstd advertised window exceeds size limit"
+    },
+    {
+      "pass": true,
+      "label": "self-checksummed trillion-cell dimensions rejected before arrays",
+      "detail": "dimension must be an integer in 1..16384"
+    },
+    {
+      "pass": true,
+      "label": "self-checksummed trillion-byte raw stream rejected",
+      "detail": "illegal stream raw size"
+    },
+    {
+      "pass": true,
+      "label": "duplicate JSON index key rejected",
+      "detail": "duplicate JSON key"
+    }
+  ]
+}

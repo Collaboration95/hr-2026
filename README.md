@@ -11,13 +11,37 @@ This repository holds the project context for the selected SystemEarth track and
 - **Recommended product:** **Plotline**, an evidence-review workflow for supplier declarations and mapped observations, backed by a compact encoding and measured original-versus-compact query/fidelity proof. See [product direction](docs/planning/systemearth-product-direction.md). This is a planning recommendation; final team scope and stack remain undecided.
 - **Company sample acquired locally:** The [audit](docs/research/company-sample-audit.md) confirms 17 CSV records and 17 GeoJSON polygons matched one-to-one, with no duplicate or unmatched IDs. The CSV labels them Surat Thani, Chai Buri, Thailand; bounds are **98.772429–99.080292° E, 8.431179–8.581888° N**. Recommend starting with this sample. Songkhla/rubber remains a teammate proposal, not a final team decision or the supplied sample's location.
 - **Review leads:** Five sample rows declare a deforestation indication, mitigation with evidence, and a final deforestation-free/compliant status. These are declaration-backed review leads; the sample does not independently verify the mapped signal, mitigation evidence, or legal outcome.
-- **Public layers acquired:** Hansen GFC 2025 v1.13 `treecover2000`, `lossyear`, and `datamask` from `10N_090E`. The three native-grid chips total **576,999 bytes**, share a **1233 × 604** grid, cover the full 17-plot bounding box with outward-aligned bounds, and match their source windows pixel-for-pixel on readback. Full source tiles total 224,170,336 bytes in the ignored raw cache. The JRC v3 2020 baseline remains missing after HTTP 500 on retry; WDPA use remains conditional on its terms. See the final [layer report](docs/research/layer-acquisition.md). Acquisition is complete for these Hansen inputs; plot queries, encoding, and fidelity benchmarks are still to be built. The [October 11 catalog](docs/systemearth-open-data-options.md) remains historical research.
-- **Implementation:** No application has been built; application stack, dependencies, build commands, and test suite remain undecided. A Python standard-library sample audit exists: `python3 scripts/inspect_company_sample.py` regenerates `docs/research/company-sample-audit.json` from the local sample.
-- **Next goal:** One real plot with a reviewable evidence receipt and the same declared query outputs from original and compact data; then expand to all 17. Confirm rules and field meanings with the company in parallel, while documenting provisional assumptions and unknowns.
+- **Public layers acquired:** Hansen GFC 2025 v1.13 `treecover2000`, `lossyear`, and `datamask` from `10N_090E`. The three native-grid chips total **576,999 bytes**, share a **1233 × 604** grid, cover the full 17-plot bounding box with outward-aligned bounds, and match their source windows pixel-for-pixel on readback. Full source tiles total 224,170,336 bytes in the ignored raw cache. See the [Hansen acquisition report](docs/research/layer-acquisition.md). A separately versioned **JRC forest-2020 v4** chip is now acquired experimentally; its v3 predecessor remains unavailable. See [JRC candidate and provenance](docs/lab/engine-data-W4.md). JRC integration is under review and is not included in the retained Hansen measurements. WDPA use remains conditional on its terms. The [October 11 catalog](docs/systemearth-open-data-options.md) remains historical research.
+- **Implementation:** A working local prototype now combines a Python 3.14 geospatial engine with a React/TypeScript/Vite evidence workspace. Original and compact queries agree across the 17 supplied plots; an independent scalar oracle and separate synthetic cases test the declared computational rules. The current research lab is refining codec selection, indexed queries, evidence verification, and the experience. These are encoding/query results, not independently verified supplier compliance. See [engine report](docs/lab/engine-report.md) and [experience report](docs/lab/experience-report.md).
+- **Next goal:** Finish a deliberately retained benchmark/store/export, independent proof-gate validation, and interaction QA, then continue measured improvements within the four-hour [research lab](docs/lab/charter.md). Keep company field meanings and publication permissions unresolved where evidence is missing.
 - **Planning window:** Use 13–16 October for the first complete slice, batch comparison, and demo preparation; conservatively aim to be ready on 16 October. See [track work sequence](SystemEarth-track.md#proposed-work-sequence).
 - **Deadline clarification:** The challenge-page screenshot provided on 11 October shows an end time of 17 October at 00:00 SGT. Confirm whether this is the application closing time or project submission deadline; finals remain recorded as 17 October.
 
 Update this section when a decision is made so subsequent work starts from the current project state.
+
+## Running the local lab
+
+The user authorized implementation and original UI/UX design on 13 October, superseding the earlier planning-only/Claude-only limits. The lab runs 09:52–13:52 SGT; [master log](docs/lab/master-log.md) records the actual agent dispatch and milestones. Prototype code is in `engine/` and `app/`; canonical computed exports and measured experiment records are in `artifacts/`.
+
+With the existing project-local Python 3.14 environment, reproduce a query and start the app:
+
+```sh
+.venv-data/bin/python -m engine --plot P-0003
+npm ci --prefix app
+npm run dev --prefix app -- --port 5173 --strictPort
+```
+
+The app is local at `http://127.0.0.1:5173/`. Its numbers come from a frozen computed export; changing a UI year does not imply a fresh backend query. [Engine instructions](engine/README.md) describe source/compact queries, benchmark generation and exports; the [versioned interface](docs/lab/interface-v1.md) defines unknown states and exact computational semantics. The [independent validator](docs/lab/validator-report.md) records concrete findings and their verification status. The initial mock judging report predates implementation and is historical until refreshed.
+
+Useful checks:
+
+```sh
+.venv-data/bin/python -B -m unittest discover -s engine/tests -v
+node --test app/tests/contract-check.test.mjs
+npm run build --prefix app
+```
+
+The standard-library source audit remains `python3 scripts/inspect_company_sample.py`. Immutable supplied files and public source chips are preserved; experimental stores, hashes, and measurements are not legal or environmental ground truth.
 
 ## Available tracks
 

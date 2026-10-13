@@ -22,6 +22,16 @@ venv/
 # Reproducible data acquisition cache (derived sample chips remain tracked)
 data/public/raw/
 
+# Regenerable lab stores and private negative-test scratch
+# A deliberately retained release bundle can be tracked explicitly after review.
+artifacts/stores/
+data/experimental/**/measure-stores*/
+data/experimental/**/legacy-v1/
+data/experimental/jrc/JRC_GFC2020_V4_N10_E90.tif
+validation/repro-proof/
+validation/fix-verification/
+validation/tmp/
+
 # Editor and tooling state
 .vscode/
 .idea/

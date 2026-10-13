@@ -1,0 +1,4893 @@
+{
+  "benchmark_status": {
+    "state": "bound_retained"
+  },
+  "dataset": {
+    "band_names": [
+      "treecover2000",
+      "lossyear",
+      "datamask"
+    ],
+    "crs": "EPSG:4326",
+    "license": "CC BY 4.0",
+    "product": "Hansen Global Forest Change 2025 v1.13",
+    "shape": [
+      604,
+      1233
+    ],
+    "source_url": "https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2025_v1_13",
+    "sources": [
+      {
+        "band": "treecover2000",
+        "bytes": 414142,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_treecover2000_sample.tif",
+        "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+      },
+      {
+        "band": "lossyear",
+        "bytes": 159863,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_lossyear_sample.tif",
+        "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+      },
+      {
+        "band": "datamask",
+        "bytes": 2994,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_datamask_sample.tif",
+        "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+      }
+    ],
+    "transform": [
+      0.00025,
+      0.0,
+      98.77225,
+      0.0,
+      -0.00025,
+      8.582
+    ]
+  },
+  "limitations": [
+    "Mapped tree-cover loss is not legal deforestation or a compliance verdict.",
+    "Treecover2000 describes year-2000 canopy context, not a 2020 forest baseline.",
+    "The latest Hansen release may differ from the supplier historical analysis vintage.",
+    "Supplier declarations and opaque evidence references are unverified; referenced evidence is unavailable.",
+    "Cell counts use native centers covered by each polygon; they are not hectares or complete polygon area.",
+    "Exact source/compact agreement measures encoding fidelity, not satellite or legal accuracy.",
+    "The 17 supplied plots are a small local cohort, not a representative global evaluation.",
+    "JRC 2020 baseline and restriction/legality layers are unavailable in this export.",
+    "Company sample publication rights are unresolved; keep this generated demo local."
+  ],
+  "periods": {
+    "2021-2023": {
+      "end_year": 2023,
+      "start_year": 2021
+    },
+    "2024-2025": {
+      "end_year": 2025,
+      "start_year": 2024
+    }
+  },
+  "plot": {
+    "compact_result": {
+      "canopy_histogram": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        5,
+        0,
+        4,
+        0,
+        0,
+        0,
+        3,
+        3,
+        0,
+        3,
+        2,
+        23,
+        0,
+        19,
+        5,
+        0,
+        0,
+        0,
+        7,
+        4,
+        0,
+        2,
+        0,
+        0,
+        2
+      ],
+      "datamask_counts": {
+        "0": 0,
+        "1": 87,
+        "2": 0
+      },
+      "in_coverage_cell_count": 87,
+      "lossyear_histogram": [
+        87,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "out_of_coverage_cell_count": 0,
+      "periods": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      "selected_cell_count": 87,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "unknown_reasons": [],
+      "valid_land_cell_count": 87,
+      "yearly_loss_counts": {
+        "2001": 0,
+        "2002": 0,
+        "2003": 0,
+        "2004": 0,
+        "2005": 0,
+        "2006": 0,
+        "2007": 0,
+        "2008": 0,
+        "2009": 0,
+        "2010": 0,
+        "2011": 0,
+        "2012": 0,
+        "2013": 0,
+        "2014": 0,
+        "2015": 0,
+        "2016": 0,
+        "2017": 0,
+        "2018": 0,
+        "2019": 0,
+        "2020": 0,
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+      }
+    },
+    "comparison": {
+      "compact_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+      "differing_fields": [],
+      "equal": true,
+      "source_result_sha256": "5b69f23146e894ba8ad3245bc7ee9e8b86edcb0c37b57552300bbf968020e7fb",
+      "status": "computed"
+    },
+    "evidence": {
+      "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.581750000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.581750000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.5815
+                ],
+                [
+                  98.7735,
+                  8.5815
+                ],
+                [
+                  98.7735,
+                  8.581750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "1:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.581625
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 1,
+            "treecover2000": 78,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.581750000000001
+                ],
+                [
+                  98.774,
+                  8.581750000000001
+                ],
+                [
+                  98.774,
+                  8.5815
+                ],
+                [
+                  98.77374999999999,
+                  8.5815
+                ],
+                [
+                  98.77374999999999,
+                  8.581750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "1:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.581625
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 1,
+            "treecover2000": 76,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.581750000000001
+                ],
+                [
+                  98.77425,
+                  8.581750000000001
+                ],
+                [
+                  98.77425,
+                  8.5815
+                ],
+                [
+                  98.774,
+                  8.5815
+                ],
+                [
+                  98.774,
+                  8.581750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "1:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.581625
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 1,
+            "treecover2000": 78,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.5815
+                ],
+                [
+                  98.7735,
+                  8.5815
+                ],
+                [
+                  98.7735,
+                  8.58125
+                ],
+                [
+                  98.77325,
+                  8.58125
+                ],
+                [
+                  98.77325,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.581375000000001
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 95,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.5815
+                ],
+                [
+                  98.77374999999999,
+                  8.5815
+                ],
+                [
+                  98.77374999999999,
+                  8.58125
+                ],
+                [
+                  98.7735,
+                  8.58125
+                ],
+                [
+                  98.7735,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.581375000000001
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 83,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.5815
+                ],
+                [
+                  98.774,
+                  8.5815
+                ],
+                [
+                  98.774,
+                  8.58125
+                ],
+                [
+                  98.77374999999999,
+                  8.58125
+                ],
+                [
+                  98.77374999999999,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.581375000000001
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 75,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.5815
+                ],
+                [
+                  98.77425,
+                  8.5815
+                ],
+                [
+                  98.77425,
+                  8.58125
+                ],
+                [
+                  98.774,
+                  8.58125
+                ],
+                [
+                  98.774,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.581375000000001
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 74,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.5815
+                ],
+                [
+                  98.7745,
+                  8.5815
+                ],
+                [
+                  98.7745,
+                  8.58125
+                ],
+                [
+                  98.77425,
+                  8.58125
+                ],
+                [
+                  98.77425,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.581375000000001
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 76,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.5815
+                ],
+                [
+                  98.77475,
+                  8.5815
+                ],
+                [
+                  98.77475,
+                  8.58125
+                ],
+                [
+                  98.7745,
+                  8.58125
+                ],
+                [
+                  98.7745,
+                  8.5815
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "2:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.581375000000001
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 2,
+            "treecover2000": 76,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.58125
+                ],
+                [
+                  98.77325,
+                  8.58125
+                ],
+                [
+                  98.77325,
+                  8.581000000000001
+                ],
+                [
+                  98.773,
+                  8.581000000000001
+                ],
+                [
+                  98.773,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.581125
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.58125
+                ],
+                [
+                  98.7735,
+                  8.58125
+                ],
+                [
+                  98.7735,
+                  8.581000000000001
+                ],
+                [
+                  98.77325,
+                  8.581000000000001
+                ],
+                [
+                  98.77325,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.581125
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.58125
+                ],
+                [
+                  98.77374999999999,
+                  8.58125
+                ],
+                [
+                  98.77374999999999,
+                  8.581000000000001
+                ],
+                [
+                  98.7735,
+                  8.581000000000001
+                ],
+                [
+                  98.7735,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.581125
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 82,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.58125
+                ],
+                [
+                  98.774,
+                  8.58125
+                ],
+                [
+                  98.774,
+                  8.581000000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.581000000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.581125
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 76,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.58125
+                ],
+                [
+                  98.77425,
+                  8.58125
+                ],
+                [
+                  98.77425,
+                  8.581000000000001
+                ],
+                [
+                  98.774,
+                  8.581000000000001
+                ],
+                [
+                  98.774,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.581125
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 76,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.58125
+                ],
+                [
+                  98.7745,
+                  8.58125
+                ],
+                [
+                  98.7745,
+                  8.581000000000001
+                ],
+                [
+                  98.77425,
+                  8.581000000000001
+                ],
+                [
+                  98.77425,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.581125
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 78,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.58125
+                ],
+                [
+                  98.77475,
+                  8.58125
+                ],
+                [
+                  98.77475,
+                  8.581000000000001
+                ],
+                [
+                  98.7745,
+                  8.581000000000001
+                ],
+                [
+                  98.7745,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.581125
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 78,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.58125
+                ],
+                [
+                  98.775,
+                  8.58125
+                ],
+                [
+                  98.775,
+                  8.581000000000001
+                ],
+                [
+                  98.77475,
+                  8.581000000000001
+                ],
+                [
+                  98.77475,
+                  8.58125
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "3:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.581125
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 3,
+            "treecover2000": 83,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.581000000000001
+                ],
+                [
+                  98.77325,
+                  8.581000000000001
+                ],
+                [
+                  98.77325,
+                  8.58075
+                ],
+                [
+                  98.773,
+                  8.58075
+                ],
+                [
+                  98.773,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.580875
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.581000000000001
+                ],
+                [
+                  98.7735,
+                  8.581000000000001
+                ],
+                [
+                  98.7735,
+                  8.58075
+                ],
+                [
+                  98.77325,
+                  8.58075
+                ],
+                [
+                  98.77325,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.580875
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.581000000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.581000000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.58075
+                ],
+                [
+                  98.7735,
+                  8.58075
+                ],
+                [
+                  98.7735,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.580875
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 83,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.581000000000001
+                ],
+                [
+                  98.774,
+                  8.581000000000001
+                ],
+                [
+                  98.774,
+                  8.58075
+                ],
+                [
+                  98.77374999999999,
+                  8.58075
+                ],
+                [
+                  98.77374999999999,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.580875
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.581000000000001
+                ],
+                [
+                  98.77425,
+                  8.581000000000001
+                ],
+                [
+                  98.77425,
+                  8.58075
+                ],
+                [
+                  98.774,
+                  8.58075
+                ],
+                [
+                  98.774,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.580875
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.581000000000001
+                ],
+                [
+                  98.7745,
+                  8.581000000000001
+                ],
+                [
+                  98.7745,
+                  8.58075
+                ],
+                [
+                  98.77425,
+                  8.58075
+                ],
+                [
+                  98.77425,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.580875
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.581000000000001
+                ],
+                [
+                  98.77475,
+                  8.581000000000001
+                ],
+                [
+                  98.77475,
+                  8.58075
+                ],
+                [
+                  98.7745,
+                  8.58075
+                ],
+                [
+                  98.7745,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.580875
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.581000000000001
+                ],
+                [
+                  98.775,
+                  8.581000000000001
+                ],
+                [
+                  98.775,
+                  8.58075
+                ],
+                [
+                  98.77475,
+                  8.58075
+                ],
+                [
+                  98.77475,
+                  8.581000000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "4:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.580875
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 4,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77275,
+                  8.58075
+                ],
+                [
+                  98.773,
+                  8.58075
+                ],
+                [
+                  98.773,
+                  8.5805
+                ],
+                [
+                  98.77275,
+                  8.5805
+                ],
+                [
+                  98.77275,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:2",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772875,
+              8.580625000000001
+            ],
+            "col": 2,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 90,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.58075
+                ],
+                [
+                  98.77325,
+                  8.58075
+                ],
+                [
+                  98.77325,
+                  8.5805
+                ],
+                [
+                  98.773,
+                  8.5805
+                ],
+                [
+                  98.773,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.580625000000001
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 90,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.58075
+                ],
+                [
+                  98.7735,
+                  8.58075
+                ],
+                [
+                  98.7735,
+                  8.5805
+                ],
+                [
+                  98.77325,
+                  8.5805
+                ],
+                [
+                  98.77325,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.580625000000001
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.58075
+                ],
+                [
+                  98.77374999999999,
+                  8.58075
+                ],
+                [
+                  98.77374999999999,
+                  8.5805
+                ],
+                [
+                  98.7735,
+                  8.5805
+                ],
+                [
+                  98.7735,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.580625000000001
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.58075
+                ],
+                [
+                  98.774,
+                  8.58075
+                ],
+                [
+                  98.774,
+                  8.5805
+                ],
+                [
+                  98.77374999999999,
+                  8.5805
+                ],
+                [
+                  98.77374999999999,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.580625000000001
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.58075
+                ],
+                [
+                  98.77425,
+                  8.58075
+                ],
+                [
+                  98.77425,
+                  8.5805
+                ],
+                [
+                  98.774,
+                  8.5805
+                ],
+                [
+                  98.774,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.580625000000001
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.58075
+                ],
+                [
+                  98.7745,
+                  8.58075
+                ],
+                [
+                  98.7745,
+                  8.5805
+                ],
+                [
+                  98.77425,
+                  8.5805
+                ],
+                [
+                  98.77425,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.580625000000001
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.58075
+                ],
+                [
+                  98.77475,
+                  8.58075
+                ],
+                [
+                  98.77475,
+                  8.5805
+                ],
+                [
+                  98.7745,
+                  8.5805
+                ],
+                [
+                  98.7745,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.580625000000001
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 97,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.58075
+                ],
+                [
+                  98.775,
+                  8.58075
+                ],
+                [
+                  98.775,
+                  8.5805
+                ],
+                [
+                  98.77475,
+                  8.5805
+                ],
+                [
+                  98.77475,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.580625000000001
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.775,
+                  8.58075
+                ],
+                [
+                  98.77525,
+                  8.58075
+                ],
+                [
+                  98.77525,
+                  8.5805
+                ],
+                [
+                  98.775,
+                  8.5805
+                ],
+                [
+                  98.775,
+                  8.58075
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "5:11",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.775125,
+              8.580625000000001
+            ],
+            "col": 11,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 5,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77275,
+                  8.5805
+                ],
+                [
+                  98.773,
+                  8.5805
+                ],
+                [
+                  98.773,
+                  8.580250000000001
+                ],
+                [
+                  98.77275,
+                  8.580250000000001
+                ],
+                [
+                  98.77275,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:2",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772875,
+              8.580375
+            ],
+            "col": 2,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 95,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.5805
+                ],
+                [
+                  98.77325,
+                  8.5805
+                ],
+                [
+                  98.77325,
+                  8.580250000000001
+                ],
+                [
+                  98.773,
+                  8.580250000000001
+                ],
+                [
+                  98.773,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.580375
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 86,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.5805
+                ],
+                [
+                  98.7735,
+                  8.5805
+                ],
+                [
+                  98.7735,
+                  8.580250000000001
+                ],
+                [
+                  98.77325,
+                  8.580250000000001
+                ],
+                [
+                  98.77325,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.580375
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 86,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.5805
+                ],
+                [
+                  98.77374999999999,
+                  8.5805
+                ],
+                [
+                  98.77374999999999,
+                  8.580250000000001
+                ],
+                [
+                  98.7735,
+                  8.580250000000001
+                ],
+                [
+                  98.7735,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.580375
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.5805
+                ],
+                [
+                  98.774,
+                  8.5805
+                ],
+                [
+                  98.774,
+                  8.580250000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.580250000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.580375
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 90,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.5805
+                ],
+                [
+                  98.77425,
+                  8.5805
+                ],
+                [
+                  98.77425,
+                  8.580250000000001
+                ],
+                [
+                  98.774,
+                  8.580250000000001
+                ],
+                [
+                  98.774,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.580375
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 90,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.5805
+                ],
+                [
+                  98.7745,
+                  8.5805
+                ],
+                [
+                  98.7745,
+                  8.580250000000001
+                ],
+                [
+                  98.77425,
+                  8.580250000000001
+                ],
+                [
+                  98.77425,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.580375
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.5805
+                ],
+                [
+                  98.77475,
+                  8.5805
+                ],
+                [
+                  98.77475,
+                  8.580250000000001
+                ],
+                [
+                  98.7745,
+                  8.580250000000001
+                ],
+                [
+                  98.7745,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.580375
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.5805
+                ],
+                [
+                  98.775,
+                  8.5805
+                ],
+                [
+                  98.775,
+                  8.580250000000001
+                ],
+                [
+                  98.77475,
+                  8.580250000000001
+                ],
+                [
+                  98.77475,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.580375
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.775,
+                  8.5805
+                ],
+                [
+                  98.77525,
+                  8.5805
+                ],
+                [
+                  98.77525,
+                  8.580250000000001
+                ],
+                [
+                  98.775,
+                  8.580250000000001
+                ],
+                [
+                  98.775,
+                  8.5805
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "6:11",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.775125,
+              8.580375
+            ],
+            "col": 11,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 6,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7725,
+                  8.580250000000001
+                ],
+                [
+                  98.77275,
+                  8.580250000000001
+                ],
+                [
+                  98.77275,
+                  8.58
+                ],
+                [
+                  98.7725,
+                  8.58
+                ],
+                [
+                  98.7725,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:1",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772625,
+              8.580125
+            ],
+            "col": 1,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 82,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77275,
+                  8.580250000000001
+                ],
+                [
+                  98.773,
+                  8.580250000000001
+                ],
+                [
+                  98.773,
+                  8.58
+                ],
+                [
+                  98.77275,
+                  8.58
+                ],
+                [
+                  98.77275,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:2",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772875,
+              8.580125
+            ],
+            "col": 2,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 85,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.580250000000001
+                ],
+                [
+                  98.77325,
+                  8.580250000000001
+                ],
+                [
+                  98.77325,
+                  8.58
+                ],
+                [
+                  98.773,
+                  8.58
+                ],
+                [
+                  98.773,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.580125
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.580250000000001
+                ],
+                [
+                  98.7735,
+                  8.580250000000001
+                ],
+                [
+                  98.7735,
+                  8.58
+                ],
+                [
+                  98.77325,
+                  8.58
+                ],
+                [
+                  98.77325,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.580125
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 100,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.580250000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.580250000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.58
+                ],
+                [
+                  98.7735,
+                  8.58
+                ],
+                [
+                  98.7735,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.580125
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 95,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.580250000000001
+                ],
+                [
+                  98.774,
+                  8.580250000000001
+                ],
+                [
+                  98.774,
+                  8.58
+                ],
+                [
+                  98.77374999999999,
+                  8.58
+                ],
+                [
+                  98.77374999999999,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.580125
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.580250000000001
+                ],
+                [
+                  98.77425,
+                  8.580250000000001
+                ],
+                [
+                  98.77425,
+                  8.58
+                ],
+                [
+                  98.774,
+                  8.58
+                ],
+                [
+                  98.774,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.580125
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.580250000000001
+                ],
+                [
+                  98.7745,
+                  8.580250000000001
+                ],
+                [
+                  98.7745,
+                  8.58
+                ],
+                [
+                  98.77425,
+                  8.58
+                ],
+                [
+                  98.77425,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.580125
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.580250000000001
+                ],
+                [
+                  98.77475,
+                  8.580250000000001
+                ],
+                [
+                  98.77475,
+                  8.58
+                ],
+                [
+                  98.7745,
+                  8.58
+                ],
+                [
+                  98.7745,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.580125
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.580250000000001
+                ],
+                [
+                  98.775,
+                  8.580250000000001
+                ],
+                [
+                  98.775,
+                  8.58
+                ],
+                [
+                  98.77475,
+                  8.58
+                ],
+                [
+                  98.77475,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.580125
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.775,
+                  8.580250000000001
+                ],
+                [
+                  98.77525,
+                  8.580250000000001
+                ],
+                [
+                  98.77525,
+                  8.58
+                ],
+                [
+                  98.775,
+                  8.58
+                ],
+                [
+                  98.775,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "7:11",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.775125,
+              8.580125
+            ],
+            "col": 11,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 7,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7725,
+                  8.58
+                ],
+                [
+                  98.77275,
+                  8.58
+                ],
+                [
+                  98.77275,
+                  8.57975
+                ],
+                [
+                  98.7725,
+                  8.57975
+                ],
+                [
+                  98.7725,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:1",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772625,
+              8.579875000000001
+            ],
+            "col": 1,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 82,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77275,
+                  8.58
+                ],
+                [
+                  98.773,
+                  8.58
+                ],
+                [
+                  98.773,
+                  8.57975
+                ],
+                [
+                  98.77275,
+                  8.57975
+                ],
+                [
+                  98.77275,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:2",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772875,
+              8.579875000000001
+            ],
+            "col": 2,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 85,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.58
+                ],
+                [
+                  98.77325,
+                  8.58
+                ],
+                [
+                  98.77325,
+                  8.57975
+                ],
+                [
+                  98.773,
+                  8.57975
+                ],
+                [
+                  98.773,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.579875000000001
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.58
+                ],
+                [
+                  98.7735,
+                  8.58
+                ],
+                [
+                  98.7735,
+                  8.57975
+                ],
+                [
+                  98.77325,
+                  8.57975
+                ],
+                [
+                  98.77325,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.579875000000001
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 100,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.58
+                ],
+                [
+                  98.77374999999999,
+                  8.58
+                ],
+                [
+                  98.77374999999999,
+                  8.57975
+                ],
+                [
+                  98.7735,
+                  8.57975
+                ],
+                [
+                  98.7735,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.579875000000001
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 95,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.58
+                ],
+                [
+                  98.774,
+                  8.58
+                ],
+                [
+                  98.774,
+                  8.57975
+                ],
+                [
+                  98.77374999999999,
+                  8.57975
+                ],
+                [
+                  98.77374999999999,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.579875000000001
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.58
+                ],
+                [
+                  98.77425,
+                  8.58
+                ],
+                [
+                  98.77425,
+                  8.57975
+                ],
+                [
+                  98.774,
+                  8.57975
+                ],
+                [
+                  98.774,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.579875000000001
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.58
+                ],
+                [
+                  98.7745,
+                  8.58
+                ],
+                [
+                  98.7745,
+                  8.57975
+                ],
+                [
+                  98.77425,
+                  8.57975
+                ],
+                [
+                  98.77425,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.579875000000001
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.58
+                ],
+                [
+                  98.77475,
+                  8.58
+                ],
+                [
+                  98.77475,
+                  8.57975
+                ],
+                [
+                  98.7745,
+                  8.57975
+                ],
+                [
+                  98.7745,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.579875000000001
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.58
+                ],
+                [
+                  98.775,
+                  8.58
+                ],
+                [
+                  98.775,
+                  8.57975
+                ],
+                [
+                  98.77475,
+                  8.57975
+                ],
+                [
+                  98.77475,
+                  8.58
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "8:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.579875000000001
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 8,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77275,
+                  8.57975
+                ],
+                [
+                  98.773,
+                  8.57975
+                ],
+                [
+                  98.773,
+                  8.579500000000001
+                ],
+                [
+                  98.77275,
+                  8.579500000000001
+                ],
+                [
+                  98.77275,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:2",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.772875,
+              8.579625
+            ],
+            "col": 2,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 58,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.57975
+                ],
+                [
+                  98.77325,
+                  8.57975
+                ],
+                [
+                  98.77325,
+                  8.579500000000001
+                ],
+                [
+                  98.773,
+                  8.579500000000001
+                ],
+                [
+                  98.773,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.579625
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 54,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.57975
+                ],
+                [
+                  98.7735,
+                  8.57975
+                ],
+                [
+                  98.7735,
+                  8.579500000000001
+                ],
+                [
+                  98.77325,
+                  8.579500000000001
+                ],
+                [
+                  98.77325,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.579625
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 85,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.57975
+                ],
+                [
+                  98.77374999999999,
+                  8.57975
+                ],
+                [
+                  98.77374999999999,
+                  8.579500000000001
+                ],
+                [
+                  98.7735,
+                  8.579500000000001
+                ],
+                [
+                  98.7735,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.579625
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.57975
+                ],
+                [
+                  98.774,
+                  8.57975
+                ],
+                [
+                  98.774,
+                  8.579500000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.579500000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.579625
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.57975
+                ],
+                [
+                  98.77425,
+                  8.57975
+                ],
+                [
+                  98.77425,
+                  8.579500000000001
+                ],
+                [
+                  98.774,
+                  8.579500000000001
+                ],
+                [
+                  98.774,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.579625
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.57975
+                ],
+                [
+                  98.7745,
+                  8.57975
+                ],
+                [
+                  98.7745,
+                  8.579500000000001
+                ],
+                [
+                  98.77425,
+                  8.579500000000001
+                ],
+                [
+                  98.77425,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.579625
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 97,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.57975
+                ],
+                [
+                  98.77475,
+                  8.57975
+                ],
+                [
+                  98.77475,
+                  8.579500000000001
+                ],
+                [
+                  98.7745,
+                  8.579500000000001
+                ],
+                [
+                  98.7745,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.579625
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 90,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77475,
+                  8.57975
+                ],
+                [
+                  98.775,
+                  8.57975
+                ],
+                [
+                  98.775,
+                  8.579500000000001
+                ],
+                [
+                  98.77475,
+                  8.579500000000001
+                ],
+                [
+                  98.77475,
+                  8.57975
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "9:10",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774875,
+              8.579625
+            ],
+            "col": 10,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 9,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.773,
+                  8.579500000000001
+                ],
+                [
+                  98.77325,
+                  8.579500000000001
+                ],
+                [
+                  98.77325,
+                  8.57925
+                ],
+                [
+                  98.773,
+                  8.57925
+                ],
+                [
+                  98.773,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:3",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773125,
+              8.579375
+            ],
+            "col": 3,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 18,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77325,
+                  8.579500000000001
+                ],
+                [
+                  98.7735,
+                  8.579500000000001
+                ],
+                [
+                  98.7735,
+                  8.57925
+                ],
+                [
+                  98.77325,
+                  8.57925
+                ],
+                [
+                  98.77325,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:4",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773375,
+              8.579375
+            ],
+            "col": 4,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.579500000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.579500000000001
+                ],
+                [
+                  98.77374999999999,
+                  8.57925
+                ],
+                [
+                  98.7735,
+                  8.57925
+                ],
+                [
+                  98.7735,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.579375
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.579500000000001
+                ],
+                [
+                  98.774,
+                  8.579500000000001
+                ],
+                [
+                  98.774,
+                  8.57925
+                ],
+                [
+                  98.77374999999999,
+                  8.57925
+                ],
+                [
+                  98.77374999999999,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.579375
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.579500000000001
+                ],
+                [
+                  98.77425,
+                  8.579500000000001
+                ],
+                [
+                  98.77425,
+                  8.57925
+                ],
+                [
+                  98.774,
+                  8.57925
+                ],
+                [
+                  98.774,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.579375
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.579500000000001
+                ],
+                [
+                  98.7745,
+                  8.579500000000001
+                ],
+                [
+                  98.7745,
+                  8.57925
+                ],
+                [
+                  98.77425,
+                  8.57925
+                ],
+                [
+                  98.77425,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.579375
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.579500000000001
+                ],
+                [
+                  98.77475,
+                  8.579500000000001
+                ],
+                [
+                  98.77475,
+                  8.57925
+                ],
+                [
+                  98.7745,
+                  8.57925
+                ],
+                [
+                  98.7745,
+                  8.579500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "10:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.579375
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 10,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7735,
+                  8.57925
+                ],
+                [
+                  98.77374999999999,
+                  8.57925
+                ],
+                [
+                  98.77374999999999,
+                  8.579
+                ],
+                [
+                  98.7735,
+                  8.579
+                ],
+                [
+                  98.7735,
+                  8.57925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "11:5",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773625,
+              8.579125000000001
+            ],
+            "col": 5,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 11,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77374999999999,
+                  8.57925
+                ],
+                [
+                  98.774,
+                  8.57925
+                ],
+                [
+                  98.774,
+                  8.579
+                ],
+                [
+                  98.77374999999999,
+                  8.579
+                ],
+                [
+                  98.77374999999999,
+                  8.57925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "11:6",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.773875,
+              8.579125000000001
+            ],
+            "col": 6,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 11,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.774,
+                  8.57925
+                ],
+                [
+                  98.77425,
+                  8.57925
+                ],
+                [
+                  98.77425,
+                  8.579
+                ],
+                [
+                  98.774,
+                  8.579
+                ],
+                [
+                  98.774,
+                  8.57925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "11:7",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774125,
+              8.579125000000001
+            ],
+            "col": 7,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 11,
+            "treecover2000": 89,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.77425,
+                  8.57925
+                ],
+                [
+                  98.7745,
+                  8.57925
+                ],
+                [
+                  98.7745,
+                  8.579
+                ],
+                [
+                  98.77425,
+                  8.579
+                ],
+                [
+                  98.77425,
+                  8.57925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "11:8",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774375,
+              8.579125000000001
+            ],
+            "col": 8,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 11,
+            "treecover2000": 87,
+            "valid_land": true
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  98.7745,
+                  8.57925
+                ],
+                [
+                  98.77475,
+                  8.57925
+                ],
+                [
+                  98.77475,
+                  8.579
+                ],
+                [
+                  98.7745,
+                  8.579
+                ],
+                [
+                  98.7745,
+                  8.57925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "11:9",
+          "properties": {
+            "band_validity": [
+              true,
+              true,
+              true
+            ],
+            "center": [
+              98.774625,
+              8.579125000000001
+            ],
+            "col": 9,
+            "datamask": 1,
+            "in_coverage": true,
+            "lossyear": 0,
+            "row": 11,
+            "treecover2000": 94,
+            "valid_land": true
+          },
+          "type": "Feature"
+        }
+      ],
+      "type": "FeatureCollection"
+    },
+    "geometry": {
+      "coordinates": [
+        [
+          [
+            98.772429,
+            8.579774
+          ],
+          [
+            98.773869,
+            8.578875
+          ],
+          [
+            98.774588,
+            8.57901
+          ],
+          [
+            98.775263,
+            8.580134
+          ],
+          [
+            98.774993,
+            8.581168
+          ],
+          [
+            98.773824,
+            8.581888
+          ],
+          [
+            98.773104,
+            8.581348
+          ],
+          [
+            98.772429,
+            8.579774
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    },
+    "geometry_properties": {
+      "Area": 6.72,
+      "ProducerCountry": "TH",
+      "ProducerName": "RG1",
+      "ProductionPlace": "P-0003"
+    },
+    "plot_id": "P-0003",
+    "receipt": {
+      "boundary_rule": "native cell centers covered by polygon, including polygon and hole boundaries",
+      "compact_store": {
+        "band_masks_equal": true,
+        "files": [
+          {
+            "bytes": 3165,
+            "path": "index.json",
+            "sha256": "33fb7c401550898853ee09c1a1e82fadb8114a234d840893cc96a2ee003b1a84"
+          },
+          {
+            "bytes": 531847,
+            "path": "payload.bin",
+            "sha256": "db7ba9295eccc2e816b73ab0ac321af05febf3cd2f2b8204b07778ba7fdd0a6c"
+          }
+        ],
+        "path": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
+        "raw_bands_equal": true
+      },
+      "geometry_sha256": "85b9e5e1411c14a6a41bb6ed2008cd30771821b6fd433a4b70a05bd16f47bfec",
+      "grid": {
+        "crs": "EPSG:4326",
+        "shape": [
+          604,
+          1233
+        ],
+        "transform": [
+          0.00025,
+          0.0,
+          98.77225,
+          0.0,
+          -0.00025,
+          8.582
+        ]
+      },
+      "observed_periods": {
+        "2021-2023": [
+          2021,
+          2023
+        ],
+        "2024-2025": [
+          2024,
+          2025
+        ]
+      },
+      "partial_support_rule": "retain observed valid-land counts; witnessed loss true; absent loss unknown",
+      "product": "Hansen Global Forest Change 2025 v1.13",
+      "query_version": "hansen-centers.v1",
+      "receipt_sha256": "a48845bbafa2bdb90718c887fda1978a417ac952c8cee6bf829810ba8a2258e9",
+      "source_metadata_sha256": "3518674627d828f59a43784ce0fadc16868c5cdb56c9e092792a56715d6dc396",
+      "sources": [
+        {
+          "band": "treecover2000",
+          "bytes": 414142,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_treecover2000_sample.tif",
+          "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+        },
+        {
+          "band": "lossyear",
+          "bytes": 159863,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_lossyear_sample.tif",
+          "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+        },
+        {
+          "band": "datamask",
+          "bytes": 2994,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_datamask_sample.tif",
+          "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+        }
+      ],
+      "supplier_row_sha256": "04560e2c9f277d6005f70f36e2b8b320fa386266ffe1867cddd0288702694e17",
+      "supplier_sources": [
+        {
+          "bytes": 13381,
+          "path": "data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+          "sha256": "43b47916d4900d4bf2f86a8a3ca3ee107f22b1fb80702174bbb9b55403c0fca2"
+        },
+        {
+          "bytes": 5884,
+          "path": "data/company-sample/2026-10-12/200001-17plots-valid.geojson",
+          "sha256": "8922eef5040120b180a86f6002f52e090ee9bb8273c3c1cf71f984b68648662b"
+        }
+      ],
+      "unknown_reasons": [],
+      "valid_land_rule": "datamask == 1 and every required band validity mask is true"
+    },
+    "source_result": {
+      "canopy_histogram": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        5,
+        0,
+        4,
+        0,
+        0,
+        0,
+        3,
+        3,
+        0,
+        3,
+        2,
+        23,
+        0,
+        19,
+        5,
+        0,
+        0,
+        0,
+        7,
+        4,
+        0,
+        2,
+        0,
+        0,
+        2
+      ],
+      "datamask_counts": {
+        "0": 0,
+        "1": 87,
+        "2": 0
+      },
+      "in_coverage_cell_count": 87,
+      "lossyear_histogram": [
+        87,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "out_of_coverage_cell_count": 0,
+      "periods": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      "selected_cell_count": 87,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "unknown_reasons": [],
+      "valid_land_cell_count": 87,
+      "yearly_loss_counts": {
+        "2001": 0,
+        "2002": 0,
+        "2003": 0,
+        "2004": 0,
+        "2005": 0,
+        "2006": 0,
+        "2007": 0,
+        "2008": 0,
+        "2009": 0,
+        "2010": 0,
+        "2011": 0,
+        "2012": 0,
+        "2013": 0,
+        "2014": 0,
+        "2015": 0,
+        "2016": 0,
+        "2017": 0,
+        "2018": 0,
+        "2019": 0,
+        "2020": 0,
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+      }
+    },
+    "supplier": {
+      "a1_factory_id": "RG1",
+      "a2_lot_number": "200001",
+      "a3_plot_id": "P-0003",
+      "a4_processing_date": "20240904-20240906",
+      "a5_production_harvest_date": "20240916",
+      "a6_tier1_supplier_id": "D001",
+      "a7_size_of_plot_ha": "6.72",
+      "a8_plantation_size_type": "a. Smallholder",
+      "b1_supply_chain_type": "d. Tier 4+",
+      "b2_leakage_mitigation": "b. Segregation monitoring",
+      "c1_indicate_deforestation_analysis_layer_used": "Hansen Tree Cover Loss 2021-2023",
+      "c2_deforestation_spatial_analysis_result": "b. Indication of deforestation",
+      "c3_mitigation_if_indication_found": "b. On-site verification with evidence",
+      "c4_reference_or_link_if_applicable": "hyperlink-RG1-P-0002",
+      "c5_deforestation_final_status": "a. Deforestation-free",
+      "d1_strict_protected_area_spatial_analysis_result": "a. No overlap with strict PA",
+      "d2_restricted_use_area_spatial_analysis_result": "a. No overlap with RA",
+      "d3_land_tenure_or_documentation": "a. Official land title (with evidence)",
+      "d4_further_mitigation_if_any": "Not Applicable",
+      "d5_land_tenure_and_use_rights_final_status": "a. Official land title or right-of-use",
+      "e1_plot_located_on_environmentally_non_compliant_area": "a. No indication of non-compliance",
+      "e2_non_compliant_chemical_use": "a. Not detected",
+      "e3_environmental_protection_final_status": "a. Env non-compliance not detected",
+      "f1_child_labor": "a. No child labor detected",
+      "f2_workers": "a. No workers present",
+      "f3_forced_or_migrant_labor": "a. No foreign workers and no forced labor detected",
+      "f4_labor_and_human_rights_final_status": "a. Labor non-compliance not detected",
+      "g1_fpic_and_land_conflict_with_local_communities": "a. No indication of land conflicts",
+      "h1_trade_tax_and_corruption": "a. Evidence or indication of tax activity",
+      "i1_eudr_status": "a. Compliant",
+      "j1_contribution_from_plot_dry_weight_kg": "51",
+      "j2_annual_quota_from_plot_dry_weight_kg": "12330",
+      "j3_country_of_origin": "TH",
+      "j4_province_of_origin": "Surat Thani",
+      "j5_district_of_origin": "Chai Buri"
+    }
+  },
+  "query_version": "hansen-centers.v1",
+  "schema_version": "plotline.demo.v1"
+}

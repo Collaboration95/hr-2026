@@ -1,0 +1,7 @@
+{
+  "agreement": "Same query outputs\nExact output equality for this plot. This establishes encoding agreement, not source accuracy or compliance.",
+  "cohort": "Full-cohort evidence\n\n17 / 17 plots with measured matching outputs\n\nInspect cohort summary\n",
+  "comparison": "P-0003 · hansen-centers.v1\tOriginal source\tCompact\n2023 observed loss cells\t0\t1\nSelected native cells\t87\t87\nValid land cells\t87\t87\nUnknown cells\t0\t0\nOut-of-coverage cells\t0\t0\nSupport\tcomplete\tcomplete\n2021-2023 loss cells\t0\t1\n2024-2025 loss cells\t0\t0",
+  "expected": "Reject artifact or show Encoding mismatch; source 2023=0, compact 2023=1",
+  "fixture": "Deliberately invalid comparison claim, validator-only fetch response"
+}
