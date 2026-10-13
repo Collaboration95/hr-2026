@@ -16,6 +16,7 @@ Start with these documents:
 
 | Need | Read |
 | --- | --- |
+| Agent-swarm research method and retrospective | [Research methodology](lab/research-methodology.md) |
 | Current run instructions and context | [README](../README.md), [app instructions](../app/README.md), [engine instructions](../engine/README.md) |
 | Stable app status, servers, checks and gaps | [experience integration handoff](lab/experience-integration-status.md) |
 | Final engine state and minimal bundles | [engine report](lab/engine-report.md), [engine final checkpoint](lab/engine-checkpoint.md) |
@@ -144,7 +145,7 @@ Missing external proof includes company-approved query semantics, historical evi
 
 Full source tiles and disposable validation/measurement caches stay local and ignored. Small native chips, provenance, code, measured records and selected packages are retained. Some research commands need the raw cache to repeat original-download verification; normal product execution does not. Do not delete original files or overwrite a retained experiment to make a test pass.
 
-Branch: **`guru/plotline-research-lab`**. Initial data/context and planning were committed before the lab. `7cecd05` preserves the first verified prototype; `20cd47c` preserves adaptive research and the live direction. The final checkpoint commit is recorded in the final response and Git log. No push or PR was requested or performed. All future GitHub access must use authenticated `gh` exclusively.
+Branch: **`guru/plotline-research-lab`**. Initial data/context and planning were committed before the lab. `7cecd05` preserves the first verified prototype; `20cd47c` preserves adaptive research and the live direction. The final checkpoint commit is recorded in the final response and Git log. At the initial checkpoint no push or PR had been requested. The user subsequently authorized pushing all tracked project work and documentation to the existing public repository on this branch. All GitHub access uses authenticated `gh` exclusively.
 
 ## 9. Next work, in priority order
 
@@ -160,4 +161,4 @@ Read AGENTS.md, README and this handover first, then the relevant source referen
 
 Treat original company inputs, current source chips and retained experiments as immutable. Use `guru/` branches and project commit conventions. Keep new write scopes disjoint if delegation is newly requested. Prefer `rg`; use `gh` for all GitHub access. Browser work must use T3 preview first, with documented unsupported/unavailable failures before switching systems.
 
-A new agent should verify the current retained state before editing, keep source uncertainty distinct from encoding errors, and update the accepted artifact only through its explicit export/measurement lifecycle. Preserve the local-only boundary until publication is authorized.
+A new agent should verify the current retained state before editing, keep source uncertainty distinct from encoding errors, and update the accepted artifact only through its explicit export/measurement lifecycle. The follow-up user instruction authorizes publication of this tracked repository checkpoint; deployment, unrelated uploads and messages to people are separate actions.
