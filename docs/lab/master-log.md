@@ -35,3 +35,13 @@ The leads report no nested spawning/messaging tools. Master dispatched their sco
 ## Additional research allocation
 
 The user's next explicit grant authorizes another researcher. Added a Sol/xhigh scientist for a bounded adaptive codec-selection study on separate spatial patches from the existing public Hansen tile. Training, model selection and held-out evidence must stay distinct; model/index overhead and feature-computation cost count. All candidate outputs must preserve raw values and masks. This research cannot change production code until the engine lead reviews it, and a losing adaptive policy is a valid result. It does not use supplier declarations as environmental truth labels.
+
+## Second-hour checkpoint and live-query dispatch
+
+- Commit `7cecd05` preserves the first verified prototype and minimal retained Hansen bundle. No remote publication occurred.
+- Independent validator found and helped close Hansen V1–V7: forged measurements, off-plot raw/mask changes, receipt identity, stale exports, unknown-as-zero UI, baseline accounting, and independent UI comparison. Reports retain concrete negatives.
+- The spatially held-out adaptive codec study did not justify integration: its joint policy lost to fixed compression, and standard GeoTIFF controls challenged the custom storage claim. A formal separate Hansen control now measures532,444bytes versus535,012custom, pending lead review. The production retained run stays immutable.
+- Luna acquired official JRC2020v4 and its native chip. A separate companion proves full native values/masks and17plot queries, but independent review found intermediate timing-answer and export-lifecycle gaps. Ramanujan owns fixes; no accepted UI fusion is claimed.
+- At03:49UTC, four-hour run has roughly2hours remaining. The next selected milestone is a genuinely live, read-only loopback query lab over the pinned Hansen snapshot. Volta owns contract/backend review; Bohr implements service; Hooke owns view/integration; Carver owns typed proof-validating client.
+- Extra user-authorized researcher Godel (Sol/xhigh, `01a13360-b491-7c80-808f-9f87d9e87a7c`) studies center-versus-positive-area inclusion sensitivity on unchanged source inputs. Galileo now measures a separate one-bit standard JRC control. Both have research-only write scopes and may report negative results.
+- Active concurrency remains seven including the two Astra leads. Completed workers are closed/reused rather than bypassing the limit. No account quota or exact20%token-rate control is available. The goal tool reports4,128,885aggregate tokens at this checkpoint; that counter is not a rate-limit balance.

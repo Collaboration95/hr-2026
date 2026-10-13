@@ -37,3 +37,12 @@ validation/tmp/
 .idea/
 *.swp
 *.swo
+
+# Reproducible research caches; retain scripts, results and measured packages.
+data/experimental/selector/patches/
+data/experimental/selector/stores/
+data/experimental/selector/aoi-controls/
+data/experimental/w1/smoke/
+data/experimental/w1/test-runs/
+validation/jrc/
+artifacts/experiments/.registry.lock
