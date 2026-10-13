@@ -103,8 +103,11 @@ The sample lies around 99° E; the teammate's Songkhla tile `10N_100E` does not
 cover it. The source-acquisition setup and command are recorded in the final
 layer report; current application commands are in README.
 
-The official JRC Global Forest Cover 2020 v3 tile request returned HTTP 500 on retry;
-that baseline remains missing. WDPA is conditional on applicable use and
+The official JRC Global Forest Cover 2020 v3 tile request returned HTTP 500 on retry.
+The lab subsequently acquired an official **v4** native-grid chip and provenance;
+its separate companion is under independent review, as recorded in
+[the JRC report](docs/lab/engine-jrc-report.md). This does not retroactively supply v3
+or change the retained Hansen benchmark. WDPA is conditional on applicable use and
 redistribution terms. Do not reconstruct a claimed 2020 forest baseline merely
 by subtracting Hansen loss from 2000 canopy cover. Keep the supplier's stated
 2021–2023 Hansen interval separate from a newer source release and any new
@@ -151,14 +154,14 @@ remain visible rather than becoming assumed approvals.
 
 ## Minimum data package
 
-The supplier CSV and plot GeoJSON are acquired and audited locally. A complete
-benchmark package still needs the following, assembled from inspected public
-sources while company clarification proceeds:
+The supplier CSV and plot GeoJSON are acquired and audited locally. The retained Hansen
+benchmark package implements the following requirements; new layers must meet
+them separately while company clarification proceeds:
 
 - Preserve the 17 exact plot geometries, stable join IDs, supplied declarations,
   and source checksums. The audit's complete join does not validate declarations.
 - Freeze the decision-relevant subset and dates from the acquired three Hansen
-  bands. The JRC 2020 baseline remains missing and any
+  bands. A separately versioned JRC2020v4 companion is under review; any
   restriction layer remains conditional. The chosen query determines which
   layers are essential and which can be left outside the first slice.
 - Record layer definitions, class codes, units, resolution, CRS, grid alignment,
