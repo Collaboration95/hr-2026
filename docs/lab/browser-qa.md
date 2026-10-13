@@ -1,5 +1,13 @@
 # W3 browser and interaction QA
 
+## Current C5-C verdict — 04:13 UTC
+
+**14 integrated live-service checks pass,0failures, no blocker.** Actual unaugmented service responses now pass client and independent byte checks. Exact P-0003 matches frozen87cells; its temporary bounding rectangle selects143. Cancellation/late responses, unavailable/retry/frozenreview, invalid/oversize/tiny/outside/partial, complete cells/receipt and390pxkeyboard workflow pass. No sharedserver/product/config/canonical mutation. Earlier-cycle findings below are historical.
+
+## Current index/receipt verdict — 03:13 UTC
+
+**11 focused integrated checks pass,0failures.** All17plot/yearcounts match canonical, displayedCSVdownload is exact, desktop/mobile index navigation and receipt focus work, and expanded readable receipt fits390/320pxwith full hashes/rawJSON/download intact. No blocking defect found. Nonblocking observation: returning to index resets the selected period to its documented2024–25default. Older cycle results below are historical.
+
 ## Current cycle3 verdict — 02:41 UTC
 
 **14 focused browser checks pass after the lead increased mobile year labels.** Proof count arrival/return, local notes, all six separate synthetic cases and revised overview controls/coordinates are verified. **Residual P2 visual issue:** overview title still overlaps P-0003 and P-0001 markers; see cycle3 final delivery. Earlier18-check results are historical and were not blindly rerun.
@@ -169,3 +177,83 @@ PLAYWRIGHT_MODULE=/Users/speedpowermac/.npm/_npx/e41f203b7505f1fb/node_modules/p
 - No page errors captured. This cycle does not duplicate C2-B102ingestionchecks or independent validator'sV5/V7malformedfixture suite. Storage mocks only affect notes in disposable contexts.
 
 **Master relay:** cycle3 bounded regression complete;14/14functional/design-target checks pass after mobile text fix; residual overview title/marker collision is documented for lead. Current experiment winner is read from the artifact, not forced to the historical source-winning run.
+
+## CohortIndex / ReceiptDetails integration QA started — 03:08 UTC
+
+Read both component reports and03:05integration milestone. T3status/open on own `tab_i` succeeded; real earlierperiod→P-0001/2022/38cellsnavigation passed with `plot-review-heading` focused at y100below76pxstickyheader. T3resize390×844then timed out5000ms. Using pinned project-local Playwright1.63.0 and ignored app/.cache/playwright for bounded integratedchecks; no install or old32checkrerun. Canonical/source files are read-only; JRC remains outside scope.
+
+### Index/receipt bounded result — 03:12 UTC
+
+`node app/tests/index-receipt-journey.mjs` passed **11focusedchecks,0failures**, using pinned project-local Playwright/browser. Evidence index: actual17rows and425all-yearcounts plus34/51periodcells agree with canonical; downloaded earlierperiodCSVhas51uniqueplot/yearrows with exact values, declaration strings, source/query/artifact context. Desktop/mobile positiveP-0001/2022/38count→review focuses the correctheading belowstickyheader.
+
+Readable receipt:6nativekeyboarddisclosures; full7filehashes plus row/geometry/source/receipt/export/experiment/runidentities; actual nullnodata→Unavailable, truefidelity explicitlyengineclaim; rawJSONandactualreceiptJSONdownload match canonical. Expandedmodal fits390and320CSSpx; Escape restoresReceipttrigger. No page errors. No JRC/maliciousfixture/externalupload/app/package/canonicalchanges.
+
+**Nonblocking return-context observation for lead:** leaving index from2021–23and returning via Evidenceindex resets period to2024–25 (fresh component default), with focus correctly on indexheading. This matches component's documented local state, so not counted as a broken callback; consider retaining period in App for repeated earlier-period investigations. Current bounded functionalchecks pass.
+
+## Index/receipt final handoff — 03:13 UTC
+
+- Added `app/tests/index-receipt-journey.mjs` under W3ownership. Uses standard app-local `playwright` resolution and project-local browser cache, with no dependency installation or machine-specific path. Run from any working directory with the correct script path: `node app/tests/index-receipt-journey.mjs` from repo root.
+- Existing32browserchecks and componentworker23checks were supporting evidence and were not blindly repeated. This run checks integrated routes, downloads and real modal layout. Lead may add this script to the owned `app/scripts/browser-qa.mjs` command list; W3did not edit that wrapper.
+- Final result `browser-evidence/w3-index-receipt-results.json`: **11passed,0failed**, artifact `d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2`, no page errors.
+- Actual counts:2024–25has34cells/5positiveplots/47summedobservations;2021–23has51cells/3positiveplots/40summedobservations;all25yearshas425cells/16positiveplots/257summedobservations. These are per-plot source counts, not unique-area or legal metrics. Each displayed cell and exact supplier indication was checked against JSON.
+- Downloaded `w3-index-displayed-2021-2023.csv` has51distinctplot/yearrows,48zerorows, exact counts/support/declarations/source/query/artifactcontext and explicit non-area/non-legal basis.
+- Actual P-0001/2022positive38-cellroute focuses plotheading at desktop y100below76pxheader; mobile y121.5below100pxheader. Return reaches and focuses indexheading; its period remounts to2024–25as noted.
+- Receipt sixkeyboarddisclosures preserve full row/geometry/source/receipt/export/experiment/runIDs plus7filehashes. All3actual nullnodatafields showUnavailable; bothretainedfidelitybooleans are explicitlyEqual—engineclaim. No fabricated missing/falseclaim was injected; componentworker's isolated false/nullclaimverification remains supporting evidence.
+- Full expandedmodal sizes:390viewport→350pxclientwidth;320viewport→280pxclientwidth, each scrollWidthequalsclientWidth, zero field/code/summary overflow. Escape restoresReceiptwith visiblefocus. Raw supplier/receipt JSON and actual `w3-index-receipt-P-0001.json` download equal canonical.
+- Screenshot review caught a harness issue: the320pxiteration initially reopened a fresh receipt with collapsed disclosures after390pxEscape. Updated harness to reopen all6disclosures and assert6open separately at bothwidths; complete focused rerun passed. Final screenshots show fullwrappedsourcehashes at320px. This was a test correction, not an app defect.
+- Evidence screenshots: `w3-index-receipt-index-arrival.png`, `w3-index-receipt-mobile-arrival.png`, `w3-index-receipt-receipt-390.png`, `w3-index-receipt-receipt-320.png`; final hashes snapshot in `w3-index-receipt-file-hashes.json`.
+- No app/package/canonical/JRC/other-workerfile changes, no Git mutations or external uploads. T3todaystatus/open and first actual journey succeeded; explicit resize5000mstimeout triggered project-local isolatedbrowserfallback. Browser closed after each run.
+
+**Master relay:** C3-A/C3-B integrated QAcomplete,11/11focusedchecks pass. Return-period reset is the only new nonblocking usability observation; no blocking implementation defect found.
+
+## C5-C early readiness blocker — 04:07 UTC
+
+Read current C5assignment, liveinterface (including canonical result/evidence strings), clientreport and leadreport. The announced5173proxy is up; `GET /v1/health` currently returnsHTTP500emptytext because the optional backend is not running. No positive result can yet be claimed. Please announce health-ready5173service in experience-report after additive canonicalfields are active. W3willnotstart/kill sharedservice or mutateproduct/config. Preparing standalone project-local browser harness now; frozenreview/unavailable state can be verified independently. Actual unaugmentedresponses are mandatory for all finalpositivechecks.
+
+### C5service ready / independent run underway — 04:09 UTC
+
+Lead announced LIVE POSITIVE READY at04:08; actual5173health nowHTTP200and snapshotcanonicalbytes pass independently. First browser pass confirms unavailable/review recovery at1440/390. Initial positive test stopped on a harness locator: wrapping label includes optiontext for getByLabel(exact), while actual accessible combobox name is correctlyReferenceplot. Corrected harness to native role/name selector after inspecting actualARIA; not an app bug. Positivefulljourney/racechecks now running against unaugmentedservice.
+
+## C5-C final live-service handoff — 04:13 UTC
+
+### Completion and command
+
+Added standalone `app/tests/live-service-journey.mjs`. Actual run: **14passed,0failed**,12queryrequests (including deliberately faulty/delayed transport cases), no captured application pageerrors. Portable command uses existing pinned project-local Playwright and ignored browsercache; installs nothing:
+
+```sh
+node app/tests/live-service-journey.mjs
+```
+
+Optional alternate announced loopback origin: `PLOTLINE_QA_ORIGIN=http://127.0.0.1:5173`. Script rejects non-loopback/non-HTTPorigins. It exits2with explicitblockedreport when actualhealth is unavailable; successfulpositivechecks require realserviceHTTPresponses. No runner edit: Hooke has not authorized W3tochange `app/scripts/browser-qa.mjs`; recommend keeping this backend-dependent suite a separate opt-in command or adding it only to the liveQApath.
+
+### Actual positive basis
+
+- Snapshot `84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06` from real5173health/proxy, matching exactUTF8canonicalSHA and descriptor. Actual health status ready and immutable-loaded-snapshot lifetime verified. SharedAPI8765and Vite5173remainrunning; W3didnotstart/restart/kill either.
+- Frozen artifact `d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2`. Exact P-0003source/compact dictionaries and all87nativeevidencefeatures equal that frozenplot. Temporary use-of-bounds selects143cells and differentgeometry; it is not described as a revisedfarm.
+- Every successful case independently checks exactsubmittedrequestbytes→request_body_sha256, geometry/request/snapshot association, receiptcanonicalbytes→receiptSHAandpayload, all3actual source/compact/evidencecanonicalstrings→parsedobjects→receiptpayloadhashes, completecounts/features and source/compactequality. **No canonicalfield or successfulpayload was added/edited by the harness.** OriginalsuccessfulHTTPbody hashes and request/receiptIDs are in the resultJSON.
+- Completepreview was checked as Ntable rows and Nnativefootprints plus submittedoutline, including0tinycells and outsidecells. Actual downloaded `w3-live-service-exact-receipt.json` retains the exactresponse andhealthsnapshot; verifiedagain againstsubmittedbody. Timings explicitlycarrybenchmark:false and were not promoted to speedup evidence.
+
+### Geometry and lifecycle checks
+
+| Case | Actual outcome |
+| --- | --- |
+| Empty/reversed bounds | Readable validation;0requests sent; oldresult cleared. |
+| Oversized region | ActualHTTP422QUERY_TOO_LARGE; no sampling/result. |
+| Tiny region |0selected, supportnone, nullperiodsignals/counts; succeeds asunknown, notHTTPerror. |
+| Fully outside |4selected/4outside, supportnone, nullsignals/counts; all4footprints/table rows returned. |
+| Partial edge |4selected/2outside, supportpartial; observedcounts0withnullsignals, notfalse. |
+| Active edit + late older response | ActualolderHTTPbody held; draftedit clearsanswer; newer tinyqueryaccepted; olderbodydelivered afterward and never replacesnewrequest/receipt. |
+| Cancel query | Actualresponseheld; Cancel clearspendingstate; latebodydelivery leaves noresult. Run re-enabled. |
+| Unavailable/retry | Own-browserHTTP500health/queryfaults showunavailable anddisableRun; frozenreview/receiptworks; removingfault andreconnectingacceptsactualnewquery. |
+
+For the editrace only, the disposabletab's fetch wrapper intentionally ignoredtransportAbortSignal whiletheclient/UIretainedtheiractualcancellation/versionguards. Bothold/newbodieswererealservicebytes; lateoldbodywasactuallydelivered. This tests a stronger cancellationrace without fabricating a success. Wrapper was restored in finally. Cancelcase usesnormaltransport. Failureinjection affects only thisbrowser, never sharedserviceavailability.
+
+### Keyboard/mobile evidence and limits
+
+- Actual390×844keyboard workflow uses nativegeometryradio, labelledplotselect and Enter onRun; resultheadingreceivesfocus and its bounds are below100pxstickyheader/insideviewport (exactboundsinJSON). Complete87cellsaccessiblethroughnative disclosure/table, no documentoverflow. Desktop1440andmobile390unavailability/reviewrecoverypass. Screenshots visuallyreviewed for truthfulpartialhatch/outsidevalues and mobilecounts.
+- T3todaystatus/open/actualunavailableinspection on own`tab_i`succeeded;390resizefailedwith explicit5000mstimeout. Onlythen used isolatedproject-localPlaywright. No lead/validator tabs touched.
+- Evidence: `w3-live-service-results.json`, `w3-live-service-exact-receipt.json`, `w3-live-service-race-receipt.json`; screenshots `w3-live-service-unavailable-1440.png`, `w3-live-service-unavailable-390.png`, `w3-live-service-exact-p0003.png`, `w3-live-service-rectangle.png`, `w3-live-service-oversize.png`, `w3-live-service-tiny-no-centers.png`, `w3-live-service-outside.png`, `w3-live-service-partial.png`, `w3-live-service-mobile-result.png`. Codehashsnapshot: `w3-live-service-file-hashes.json`.
+- Initial test locator `getByLabel(Reference plot,exact)` didnotmatcha wrappinglabel containingoptiontext. ActualARIAnamewas correct; correctedto nativecombobox role/name. No productdefect inferred. No final blockingdefectfound.
+- This is browser/transportbinding evidence, not independentrasteroracleorbenchmarkcertification. Backend46tests/client112checks remain separate supportingwork. No V5/V7maliciousartifactfixture duplication, no JRC integration or combinedclaim. Frozenservedartifact remainsunchangedaftertemporaryqueries.
+
+**Master relay:** C5-C complete;14/14integratedchecks passagainstactualunaugmentedreadyservice. Allrequestedlivepaths verified withlocalcommands/screenshots/bytechecks. Keep sharedserversrunning; no newimplementationfixrequest.

@@ -1,0 +1,378 @@
+{
+  "checked_at_utc": "2026-10-13T04:18:17.815894+00:00",
+  "comparison_sha256": "7fe4c78901732fff74982c1081634ee866b4ec7acbb1551cef2105a0391bb252",
+  "selected_cells_sha256": "eca064fa25a869fc85f17e96f54991a58431056a403bea2c842795b38ca84d54",
+  "method": "Existing independent scalar ray-casting/counter oracle for all 17 plots in each release; four deterministic witnesses reread directly from both original tile sets, including per-band validity masks. No engine.query imports.",
+  "oracle_checks": [
+    {
+      "plot_id": "P-0001",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0003",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0004",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0005",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0006",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0008",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0009",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0010",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0011",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0013",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0014",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0015",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0016",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0017",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0018",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0019",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    },
+    {
+      "plot_id": "P-0020",
+      "historical_scalar_oracle_equal": true,
+      "current_scalar_oracle_equal": true
+    }
+  ],
+  "all_34_scalar_queries_equal": true,
+  "historical_future_observation_leak_check_passed": true,
+  "original_tile_sha256_verified_all_six": true,
+  "witnesses": [
+    {
+      "case": "first_selected_0_to_24",
+      "plot_id": "P-0005",
+      "row": 562,
+      "col": 483,
+      "center": [
+        98.893125,
+        8.441375
+      ],
+      "old_values": [
+        89,
+        0,
+        1
+      ],
+      "current_values": [
+        89,
+        24,
+        1
+      ],
+      "old_masks": [
+        true,
+        true,
+        true
+      ],
+      "current_masks": [
+        true,
+        true,
+        true
+      ],
+      "old_2021_2023_observed_event": false,
+      "current_2021_2023_observed_event": false,
+      "raw_loss_changed": true,
+      "independent_scalar_membership": true,
+      "original_tile_reads": {
+        "old": {
+          "source_row_col": [
+            6234,
+            35572
+          ],
+          "values": [
+            89,
+            0,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        },
+        "current": {
+          "source_row_col": [
+            6234,
+            35572
+          ],
+          "values": [
+            89,
+            24,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        }
+      }
+    },
+    {
+      "case": "first_selected_0_to_25",
+      "plot_id": "P-0005",
+      "row": 557,
+      "col": 483,
+      "center": [
+        98.893125,
+        8.442625000000001
+      ],
+      "old_values": [
+        89,
+        0,
+        1
+      ],
+      "current_values": [
+        89,
+        25,
+        1
+      ],
+      "old_masks": [
+        true,
+        true,
+        true
+      ],
+      "current_masks": [
+        true,
+        true,
+        true
+      ],
+      "old_2021_2023_observed_event": false,
+      "current_2021_2023_observed_event": false,
+      "raw_loss_changed": true,
+      "independent_scalar_membership": true,
+      "original_tile_reads": {
+        "old": {
+          "source_row_col": [
+            6229,
+            35572
+          ],
+          "values": [
+            89,
+            0,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        },
+        "current": {
+          "source_row_col": [
+            6229,
+            35572
+          ],
+          "values": [
+            89,
+            25,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        }
+      }
+    },
+    {
+      "case": "first_unchanged_2021_2023_event",
+      "plot_id": "P-0001",
+      "row": 55,
+      "col": 73,
+      "center": [
+        98.790625,
+        8.568125
+      ],
+      "old_values": [
+        76,
+        22,
+        1
+      ],
+      "current_values": [
+        76,
+        22,
+        1
+      ],
+      "old_masks": [
+        true,
+        true,
+        true
+      ],
+      "current_masks": [
+        true,
+        true,
+        true
+      ],
+      "old_2021_2023_observed_event": true,
+      "current_2021_2023_observed_event": true,
+      "raw_loss_changed": false,
+      "independent_scalar_membership": true,
+      "original_tile_reads": {
+        "old": {
+          "source_row_col": [
+            5727,
+            35162
+          ],
+          "values": [
+            76,
+            22,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        },
+        "current": {
+          "source_row_col": [
+            5727,
+            35162
+          ],
+          "values": [
+            76,
+            22,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        }
+      }
+    },
+    {
+      "case": "first_unchanged_zero",
+      "plot_id": "P-0001",
+      "row": 51,
+      "col": 69,
+      "center": [
+        98.789625,
+        8.569125000000001
+      ],
+      "old_values": [
+        76,
+        0,
+        1
+      ],
+      "current_values": [
+        76,
+        0,
+        1
+      ],
+      "old_masks": [
+        true,
+        true,
+        true
+      ],
+      "current_masks": [
+        true,
+        true,
+        true
+      ],
+      "old_2021_2023_observed_event": false,
+      "current_2021_2023_observed_event": false,
+      "raw_loss_changed": false,
+      "independent_scalar_membership": true,
+      "original_tile_reads": {
+        "old": {
+          "source_row_col": [
+            5723,
+            35158
+          ],
+          "values": [
+            76,
+            0,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        },
+        "current": {
+          "source_row_col": [
+            5723,
+            35158
+          ],
+          "values": [
+            76,
+            0,
+            1
+          ],
+          "masks": [
+            true,
+            true,
+            true
+          ],
+          "matches_chip": true
+        }
+      }
+    }
+  ]
+}

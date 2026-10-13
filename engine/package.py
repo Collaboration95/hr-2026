@@ -26,6 +26,8 @@ def manifest(output=None):
         paths.add(str(relative))
     for p in (ROOT/'engine').rglob('*'):
         if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.py','.txt','.md'):
+            if p.name in ('package_jrc.py', 'package_control.py', 'package_live.py') or p.name.startswith(('jrc', 'test_jrc', 'strong_baseline', 'test_strong_baseline', 'live_', 'test_live')):
+                continue  # Additive research components get a separate reviewed bundle.
             add(p)
     for item in benchmark['baseline']['storage']['files']:
         add(item['path'])
@@ -50,7 +52,8 @@ def manifest(output=None):
     result = {'schema_version':'plotline.bundle-manifest.v1','purpose':'local retained proof bundle; no staging/publication performed',
               'experiment_id':exp,'run_id':run,'retained_store':selection['smallest_encoded']['store_path'],
               'files':files,'total_bytes':sum(f['bytes'] for f in files),
-              'notes':['Includes every measured candidate in the retained run because the proof gate verifies their files.',
+              'notes':['Accepted Hansen component only; separate JRC/strong-baseline research components are excluded until separately reviewed.',
+                       'Includes every measured candidate in the retained run because the proof gate verifies their files.',
                        'Excludes all other experimental stores/runs, temporary files, virtualenv and source full-tile cache.',
                        'Includes local private supplier data; this manifest is not publication permission.',
                        'The full-tile acquisition cache is optional for original-download readback validation; native verified chips are the runtime inputs.',

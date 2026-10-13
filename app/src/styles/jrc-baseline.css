@@ -1,0 +1,65 @@
+.jrc-baseline {
+  color: var(--pl-ink, #173d32);
+  background: var(--pl-surface, #fcfdf8);
+  border: 1px solid var(--pl-border, #c8d3c8);
+  border-radius: 12px;
+  padding: clamp(16px, 3vw, 28px);
+  margin-block: 24px;
+  font: 14px/1.55 system-ui, sans-serif;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.jrc-baseline * { box-sizing: border-box; }
+.jrc-baseline h2 { font-size: clamp(19px, 2.5vw, 25px); line-height: 1.25; margin: 0; }
+.jrc-baseline h3 { font-size: 16px; margin-block: 18px 8px; }
+.jrc-baseline p { margin-block: 10px; }
+.jrc-header { display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
+.jrc-baseline .jrc-eyebrow { font-size: 12px; font-weight: 650; margin: 0 0 6px; }
+.jrc-source-tag { background: #e8efdf; padding: 5px 10px; border-radius: 20px; font-size: 12px; }
+.jrc-source-name { font-weight: 600; }
+.jrc-grid-warning { border-inline-start: 3px solid #9b621c; padding-inline-start: 12px; color: #68420e; }
+.jrc-signal { font-weight: 650; font-size: 16px; padding-block: 10px; }
+.jrc-signal[data-signal="unknown"] { color: #65430e; }
+.jrc-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-block: 16px; padding-block: 16px; border-block: 1px solid #c8d3c8; }
+.jrc-counts dt, .jrc-proof-fields dt { font-size: 13px; }
+.jrc-counts dd { font-size: 23px; font-weight: 650; margin: 4px 0 0; font-variant-numeric: tabular-nums; }
+.jrc-support, .jrc-reasons { font-size: 13px; }
+.jrc-table-scroll { width: 100%; max-width: 100%; overflow-x: auto; border: 1px solid #c8d3c8; border-radius: 6px; }
+.jrc-baseline table { width: 100%; min-width: 980px; border-collapse: collapse; font-size: 13px; text-align: left; overflow-wrap: normal; }
+.jrc-baseline caption { text-align: left; padding: 12px; font-size: 13px; background: #f0f4e9; }
+.jrc-baseline th, .jrc-baseline td { padding: 10px 12px; border-bottom: 1px solid #d8e0d4; vertical-align: top; }
+.jrc-baseline thead th { background: #edf2e6; font-weight: 650; }
+.jrc-baseline tbody th { white-space: nowrap; font-weight: 500; }
+.jrc-baseline th:first-child { min-width: 104px; }
+.jrc-baseline th:nth-child(2), .jrc-baseline td:nth-child(2) { min-width: 130px; }
+.jrc-baseline th:nth-child(3), .jrc-baseline td:nth-child(3) { min-width: 94px; }
+.jrc-cell-state { display: inline-block; min-width: 128px; padding: 3px 6px; border: 1px solid; border-radius: 4px; }
+.jrc-nonforest { color: #243d32; background: #f3f5e8; border-color: #869584; }
+.jrc-forest { color: #143b27; background: #dcefd8; border-color: #71946a; }
+.jrc-unknown { color: #68420e; background: #fbefd6; border-color: #ab7e38; }
+.jrc-coordinate { min-width: 210px; font-variant-numeric: tabular-nums; }
+.jrc-corners { padding-inline-start: 20px; min-width: 210px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.jrc-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-block: 12px; font-size: 13px; }
+.jrc-baseline button { font: inherit; font-size: 13px; min-height: 44px; padding: 8px 12px; color: #173d32; background: #f0f4e9; border: 1px solid #869584; border-radius: 5px; cursor: pointer; }
+.jrc-baseline button:disabled { opacity: .65; cursor: default; }
+.jrc-baseline summary { font-size: 14px; min-height: 40px; padding-block: 8px; cursor: pointer; }
+.jrc-baseline :is(button, summary, .jrc-table-scroll):focus-visible { outline: 3px solid #296745; outline-offset: 3px; }
+.jrc-proof { margin-top: 20px; padding-top: 8px; border-top: 1px solid #c8d3c8; }
+.jrc-proof > summary { font-weight: 650; }
+.jrc-proof-message { padding: 10px 12px; border-inline-start: 3px solid #296745; background: #edf2e6; }
+.jrc-proof-warning { color: #68420e; border-color: #ab7e38; background: #fbefd6; }
+.jrc-proof-fields { display: grid; gap: 10px; }
+.jrc-proof-fields dd { margin: 2px 0 0; font-size: 13px; }
+.jrc-hash, .jrc-baseline pre { font: 13px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+.jrc-baseline pre { max-height: 400px; max-width: 100%; overflow: auto; white-space: pre-wrap; background: #f0f4e9; padding: 12px; border-radius: 5px; }
+.jrc-citation { font-size: 13px; }
+@media (max-width: 480px) {
+  .jrc-baseline { padding: 16px; }
+  .jrc-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jrc-counts dd { font-size: 21px; }
+  .jrc-pagination { justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jrc-baseline *, .jrc-baseline *::before, .jrc-baseline *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

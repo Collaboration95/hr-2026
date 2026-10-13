@@ -99,3 +99,7 @@ Report winner variation, per-chunk payload-only hypothetical best-choice bound a
 Master dispatched independent Solxhigh selector study `01a1331f-024a-7ec3-8ae1-f8ee5423680f`, owning data/experimental/selector/ and docs/lab/engine-selector-report/results. It studies spatialholdouts/modeloverhead/fixedbaselines/roundtrip/regret onexistingpublicrawtile. This covers the core generalizationquestion above; do not separately dispatch the overlapping W5multi-AOI task until lead reviews that study. CurrentAOI's zero adaptivepayloadgain remains a measurednegative; newregions maydiffer.
 
 LunaW4 successfully acquired JRCv4. A separate bounded nativeJRCworker assignment is now in `docs/lab/engine-jrc-task.md`. Lead verified officialQMLcode0=Non-forest,1=Forest; acquisition/sourcefiles remainimmutable. NoJRC/Hansenresampling orlegalverdict authorized.
+
+## Spatial rule sensitivity assignment ready
+
+User/master research-agenda suggestion accepted asuseful. `engine-spatial-sensitivity-task.md` scopes a thirdparallel Solstudy (resumeW2oravailableworker), only data/experimental/spatial-sensitivity/ and itsreport. Comparesacceptedcentercovers with strictlypositivearea cellfootprintoverlap on17unchangedplots, same pinnedsource/compactvalues, explicitzerotouches/unknowns and nativewitnesses. No productioncontractchange, no declarationgroundtruth or labeltuning. JRC and strongGeoTIFFworkers remaindisjoint; acceptedHansenunchanged.

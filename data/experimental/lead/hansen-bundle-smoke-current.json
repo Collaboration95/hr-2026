@@ -1,0 +1,47 @@
+{
+  "component": "hansen",
+  "manifest_sha256": "172736a446aa7ec59fd80d036764d2534a29effd1819b0732295c2a1ab5d2631",
+  "experiment_id": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+  "run_id": "run-71a5b90b05bdce363044d8e232ae33d20b31f3868a6f5ba50bf61372b98194a9",
+  "file_count": 50,
+  "bundle_bytes": 4286386,
+  "only_manifest_files_copied": true,
+  "reexport_byte_identical": true,
+  "passed": true,
+  "steps": [
+    {
+      "step": "verify_before",
+      "args": [
+        "-m",
+        "engine.verify",
+        "artifacts/demo-v1.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"plot_count\": 17,\n  \"compact_plot_count\": 17,\n  \"checks\": \"exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code\",\n  \"failures\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "ordinary_export",
+      "args": [
+        "-m",
+        "engine.export",
+        "--output",
+        "artifacts/bundle-smoke-rebuilt.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"plot_count\": 17,\n  \"selected_cell_count_sum\": 1048,\n  \"selected_cell_count_note\": \"sum over plots; overlapping geometries could count the same native cell twice\",\n  \"comparison_status\": \"computed\",\n  \"exact_match_count\": 17,\n  \"mapped_loss_plot_counts\": {\n    \"2021-2023\": {\n      \"true\": 3,\n      \"false\": 14,\n      \"unknown\": 0\n    },\n    \"2024-2025\": {\n      \"true\": 5,\n      \"false\": 12,\n      \"unknown\": 0\n    }\n  },\n  \"supplier_indication_count\": 5\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "verify_after",
+      "args": [
+        "-m",
+        "engine.verify",
+        "artifacts/bundle-smoke-rebuilt.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"plot_count\": 17,\n  \"compact_plot_count\": 17,\n  \"checks\": \"exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code\",\n  \"failures\": []\n}\n",
+      "stderr": ""
+    }
+  ]
+}

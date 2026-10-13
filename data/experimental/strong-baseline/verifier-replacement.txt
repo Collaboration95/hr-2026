@@ -1,0 +1,117 @@
+def read_artifact(path):
+    with Path(path).open('rb') as stream:
+        raw = stream.read(32*1024*1024+1)
+    if len(raw) > 32*1024*1024:
+        raise ValueError('strong artifact exceeds size limit')
+    return json.loads(raw, object_pairs_hook=_pairs, parse_constant=_constant)
+
+
+def verify_artifact(artifact):
+    """Reconstruct typed proof and derived fields; validate measured data bounds."""
+    a = read_artifact(artifact) if not isinstance(artifact, dict) else artifact
+    fields(a, ('schema_version','experiment_id','identity','environment','accepted_immutable_files',
+               'source','accepted_custom','controls','comparison','common_input_view','method','verified','archive'),
+           'strong artifact')
+    same(a['schema_version'],'plotline.strong-baseline.v1','strong control schema mismatch')
+    same(a['verified'],True,'verified flag mismatch')
+    ident = a['identity']
+    fields(ident, ('schema','guard','accepted_benchmark','accepted_store_path','metadata','queries_sha256',
+                   'query_version','settings','seen_aoi_not_heldout','preliminary_selector_audit_sha256'), 'identity')
+    blocks, repetitions, warmups = settings(ident['settings'])
+    same(ident['schema'],'plotline.strong-baseline.identity.v1','identity schema mismatch')
+    same(ident['query_version'],QUERY_VERSION,'query version mismatch')
+    same(ident['seen_aoi_not_heldout'],True,'seen AOI flag mismatch')
+    audit = sha(ident['preliminary_selector_audit_sha256'],'preliminary audit')
+    audit_path = ROOT / 'data/experimental/selector/aoi-control-results.json'
+    if audit_path.exists():
+        same(audit,sha256_file(audit_path),'preliminary audit identity mismatch')
+    same(a['experiment_id'],'exp-'+digest(ident),'strong-control content identity mismatch')
+    fields(a['archive'],('path','sha256'),'archive')
+    if type(a['archive']['path']) is not str or Path(a['archive']['path']).is_absolute():
+        raise ValueError('archive must be relative')
+    archive = ROOT / a['archive']['path']
+    if not archive.resolve().is_relative_to(AREA.resolve()):
+        raise ValueError('strong-control archive outside owned area')
+    payload = {k:v for k,v in a.items() if k != 'archive'}
+    same(sha256_file(archive),a['archive']['sha256'],'strong-control archive equality/hash mismatch')
+    same(read_artifact(archive),payload,'strong-control archive equality/hash mismatch')
+    same(str(archive.relative_to(ROOT)),str((AREA/a['experiment_id']/'runs'/('run-'+digest(payload)+'.json')).relative_to(ROOT)),
+         'strong-control archive content/path mismatch')
+    check_guard(ident['guard'])
+    accepted, source, plots, accepted_store, accepted_files = accepted_context()
+    same(a['accepted_immutable_files'],accepted_files,'accepted benchmark/store binding differs')
+    same(ident['metadata'],source.metadata,'strong-control source metadata mismatch')
+    same(ident['queries_sha256'],digest([p['geometry'] for p in plots]),'strong-control cohort mismatch')
+    same(ident['accepted_benchmark'],file_record(ROOT/'artifacts/benchmark-v1.json'),'strong-control accepted identity mismatch')
+    same(ident['accepted_store_path'],str(accepted_store.relative_to(ROOT)),'strong-control accepted store mismatch')
+    same(read_artifact(AREA/a['experiment_id']/'identity.json'),ident,'strong-control archived identity differs')
+    source_files = [file_record(ROOT/s['path']) for s in source.metadata['sources']]
+    source_files.append(file_record(ROOT/'data/public/provenance.json'))
+    cohort_files = [file_record(ROOT/SAMPLE/name) for name in (CSV_NAME,GEOJSON_NAME)]
+    expected_guard = dict(IMPORTED_CODE)
+    expected_guard.update({f['path']:f['sha256'] for f in source_files+cohort_files+accepted_files})
+    same(ident['guard'],expected_guard,'strong-control required code/input/accepted-file fingerprint set differs')
+    runtime = dict(environment(), compression='GDAL GeoTIFF ZSTD for control; Python compression.zstd for custom/masks',
+                   python_libzstd_version=list(zstd.zstd_version_info),
+                   gdal_libzstd_version='not asserted; GDAL and rasterio versions recorded')
+    same(a['environment'],runtime,'environment fields differ')
+    fields(a['source'],('storage','proof','measurements'),'source row')
+    same(a['source']['storage'],{'total_bytes':sum(f['bytes'] for f in source_files),'files':source_files},
+         'source byte/file claims mismatch')
+    same(a['source']['proof'],prove_dataset(source,source,plots),'source/oracle proof claim mismatch')
+    custom = a['accepted_custom']
+    fields(custom,('store_path','storage','proof','preprocessing','measurements'),'custom row')
+    same(custom['store_path'],str(accepted_store.relative_to(ROOT)),'accepted custom store differs')
+    custom_files = [file_record(p,accepted_store) for p in sorted(accepted_store.iterdir())]
+    same(custom['storage'],{'total_bytes':sum(f['bytes'] for f in custom_files),'files':custom_files},'custom byte/file claims mismatch')
+    same(custom['proof'],prove_dataset(source,Dataset(*decode_store(accepted_store)).validate(),plots),'custom proof claim mismatch')
+    index = read_artifact(accepted_store/'index.json')
+    sizes_by_name = {f['path']:f['bytes'] for f in custom_files}
+    preprocessing(custom['preprocessing'], {'candidate':index['candidate'],'chunk_size':index['chunk_size'],
+        'compression_level':index['compression_level'],'files':[{k:f[k] for k in ('path','bytes')} for f in custom_files],
+        'payload_bytes':sizes_by_name['payload.bin'],'metadata_index_bytes':sizes_by_name['index.json'],
+        'total_bytes':sum(sizes_by_name.values())},custom=True)
+    controls = a['controls']
+    if type(controls) is not list or len(controls) != len(blocks):
+        raise ValueError('control set does not match identity settings')
+    for c,block in zip(controls,blocks):
+        fields(c,('candidate','store_path','block_size','storage','preprocessing','proof','measurements'),'control row')
+        candidate = f'gtiff_zstd19_p1_b{block}'
+        same(c['candidate'],candidate,'control candidate/settings claim mismatch')
+        same(c['block_size'],block,'control block/settings claim mismatch')
+        path = AREA/a['experiment_id']/candidate
+        same(c['store_path'],str(path.relative_to(ROOT)),'control store path is not bound to this experiment/candidate')
+        with ControlWindowReader(path) as reader:
+            same(reader.manifest['candidate'],candidate,'control manifest candidate mismatch')
+            same(reader.manifest['settings'],_settings(block),'control manifest settings mismatch')
+            mask_mode = reader.manifest['masks']['mode']
+        actual_storage = storage_info(path)
+        same(c['storage'],actual_storage,'control byte/file claims differ from actual files')
+        preprocessing(c['preprocessing'],dict(actual_storage,candidate=candidate,settings=_settings(block),mask_mode=mask_mode))
+        same(c['proof'],prove_dataset(source,decode_control(path),plots),'control full-value/mask/metadata/query proof claim mismatch')
+        with ControlWindowReader(path) as reader:
+            actual_answers = [evaluate_reader(reader,p['geometry']) for p in plots]
+        same(digest(actual_answers),digest([evaluate(source,p['geometry']) for p in plots]),'original-lattice indexed queries differ')
+    best = min(controls,key=lambda c:(c['storage']['total_bytes'],c['candidate']))
+    sizes = {'source':a['source']['storage']['total_bytes'],'accepted_custom':custom['storage']['total_bytes'],
+             **{c['candidate']:c['storage']['total_bytes'] for c in controls}}
+    same(a['comparison'],{'smallest_exact_control':best['candidate'],'control_total_bytes':best['storage']['total_bytes'],
+         'delta_control_minus_accepted_custom_bytes':best['storage']['total_bytes']-custom['storage']['total_bytes'],
+         'control_smaller_percent':(1-best['storage']['total_bytes']/custom['storage']['total_bytes'])*100,
+         'smallest_measured_representation':min(sizes,key=lambda k:(sizes[k],k)),'accepted_choice_changed':False},
+         'derived control comparison mismatch')
+    expected_answer = digest([evaluate(source,p['geometry']) for p in plots])
+    for row in [a['source'],custom]+controls:
+        measurements(row['measurements'],repetitions,expected_answer)
+    supplier_bytes = sum(f['bytes'] for f in cohort_files)
+    provenance_bytes = source_files[-1]['bytes']
+    same(a['common_input_view'],{'supplier_geometry_files':cohort_files,'supplier_geometry_bytes':supplier_bytes,
+         'provenance_bytes':provenance_bytes,'totals_with_same_acquisition_provenance_and_supplier_files':{
+             k:value+supplier_bytes+(0 if k=='source' else provenance_bytes) for k,value in sizes.items()},
+         'note':'acquisition provenance counted once for each representation; source already requires it'},
+         'symmetric common-input accounting mismatch')
+    same(a['method'],method_record(controls,repetitions,warmups),'declared method/settings mismatch')
+    check_guard(ident['guard'])
+    check_files([file_record(ROOT/c['store_path']/f['path']) for c in controls for f in c['storage']['files']])
+    return {'valid':True,'experiment_id':a['experiment_id'],'controls':len(controls),
+            'real_plot_count':len(plots),'accepted_artifacts_unchanged':True}

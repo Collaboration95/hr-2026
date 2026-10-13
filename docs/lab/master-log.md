@@ -45,3 +45,16 @@ The user's next explicit grant authorizes another researcher. Added a Sol/xhigh 
 - At03:49UTC, four-hour run has roughly2hours remaining. The next selected milestone is a genuinely live, read-only loopback query lab over the pinned Hansen snapshot. Volta owns contract/backend review; Bohr implements service; Hooke owns view/integration; Carver owns typed proof-validating client.
 - Extra user-authorized researcher Godel (Sol/xhigh, `01a13360-b491-7c80-808f-9f87d9e87a7c`) studies center-versus-positive-area inclusion sensitivity on unchanged source inputs. Galileo now measures a separate one-bit standard JRC control. Both have research-only write scopes and may report negative results.
 - Active concurrency remains seven including the two Astra leads. Completed workers are closed/reused rather than bypassing the limit. No account quota or exact20%token-rate control is available. The goal tool reports4,128,885aggregate tokens at this checkpoint; that counter is not a rate-limit balance.
+
+## Third-hour research and integration
+
+- The added spatial researcher completed29 tests and17/17source/compact agreements under each of two explicitly different inclusion rules. Positive-area overlap adds337memberships and changes5periodflags; it does not explain the five supplier-indication records in2021–23. Lead and independent review are pending; no default rule changes.
+- Standard JRC control completed21tests and reports19,901bytes versus21,459custom; custom full loading and peak memory remain better. Separate measurement identities stay separate.
+- Live backend first slice passes46tests and17/17realHTTPqueries. Client first slice passes112checks but correctly rejects missing canonical result/evidence bytes; additive contract fix is underway before positive browser acceptance.
+- JRC timing/export fixes pass28worker tests, including a clean46file bundle verify→export→verify without the fulltile cache or remeasurement. Independent validator is rechecking original counterexamples.
+- C4JRCgate+panel assigned to Ptolemy (Sol/high, `01a1336f-a508-7fc0-a709-5323c6f3e815`) with unmounted/gated ownership. Parfit resumed integratedliveQA.
+- At04:11UTC Luna resumed a final bounded source-vintage study: preselect official2023v1.11, compare only2021–23 with pinned2025v1.13 on unchanged17plots/center rule, preserve older source/masks/grid and mark later years unavailable. Unknown company historical release remains unknown. New source caches stay local/ignored, no production contract changes.
+
+## User-requested early wrap-up
+
+At04:19UTC the user requested the nearest final checkpoint to preserve usage, then explicitly requested extensive handover documents. New dispatches stopped, optional RuleLens UI was deferred before component code, and all active workers/leads were closed after safe handoffs. The historical-vintage study had already finished its evidence and is retained as bounded research. Main completed198engine tests,298frontend checks,build,retainedHansen/JRC verification and the original six strong-control forgery reproducers. Detailed handover and mock judging are in docs/HANDOVER.md and docs/lab/final-judge-review.md. No unused portion of the original four-hour window should auto-resume.

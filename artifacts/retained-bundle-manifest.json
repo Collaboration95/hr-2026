@@ -107,9 +107,9 @@
       "sha256": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
     },
     {
-      "bytes": 15933,
+      "bytes": 16873,
       "path": "docs/lab/engine-report.md",
-      "sha256": "101c406e0bb4c1097b6490af9f99ff3ad6f3936a12ed2882e5f068b31e5a3a60"
+      "sha256": "a89dc0d3e09310417dbca4236887ea6653c045994c2d304a8465d09142cbd6fc"
     },
     {
       "bytes": 6104,
@@ -167,9 +167,9 @@
       "sha256": "6835eb9c37856cc47086c30462eae1f8f276022e1d0107fba84ce103932a8792"
     },
     {
-      "bytes": 3873,
+      "bytes": 4302,
       "path": "engine/package.py",
-      "sha256": "e550278cc329cf54d3a626c3ee929bd5cc2f44950785d5ab2a11bebe8d362749"
+      "sha256": "87ca3aa0b7a253010abf9c81f773b82d52602e7c2019db2b31605d5b6d936b8e"
     },
     {
       "bytes": 9477,
@@ -253,6 +253,7 @@
     }
   ],
   "notes": [
+    "Accepted Hansen component only; separate JRC/strong-baseline research components are excluded until separately reviewed.",
     "Includes every measured candidate in the retained run because the proof gate verifies their files.",
     "Excludes all other experimental stores/runs, temporary files, virtualenv and source full-tile cache.",
     "Includes local private supplier data; this manifest is not publication permission.",
@@ -263,5 +264,5 @@
   "retained_store": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
   "run_id": "run-71a5b90b05bdce363044d8e232ae33d20b31f3868a6f5ba50bf61372b98194a9",
   "schema_version": "plotline.bundle-manifest.v1",
-  "total_bytes": 4288816
+  "total_bytes": 4290185
 }

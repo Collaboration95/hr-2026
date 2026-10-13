@@ -1,0 +1,112 @@
+{
+  "recorded_at_utc": "2026-10-13T04:26:50.430226+00:00",
+  "executor": "master integration agent",
+  "scope": "user-requested early stable checkpoint; no new research",
+  "checks": [
+    {
+      "command": ".venv-data/bin/python -B -m unittest discover -s engine/tests -q",
+      "exit_code": 0,
+      "tests": 198,
+      "result": "pass",
+      "seconds": 14.067
+    },
+    {
+      "command": "npm test --prefix app",
+      "exit_code": 0,
+      "tests": 298,
+      "failed": 0,
+      "skipped": 0,
+      "result": "pass"
+    },
+    {
+      "command": "npm run build --prefix app",
+      "exit_code": 0,
+      "result": "pass",
+      "modules": 49
+    },
+    {
+      "command": ".venv-data/bin/python -B -m engine.verify",
+      "exit_code": 0,
+      "result": "valid",
+      "plots": 17
+    },
+    {
+      "command": ".venv-data/bin/python -B -m engine.jrc --verify artifacts/jrc-baseline-v1.json",
+      "exit_code": 0,
+      "result": "valid",
+      "plots": 17,
+      "full_pixels": 6684255
+    },
+    {
+      "command": ".venv-data/bin/python -B validation/strong_proof_controls.py",
+      "exit_code": 0,
+      "positive_valid": true,
+      "rehashed_forgeries_rejected": 6
+    }
+  ],
+  "prior_integrated_browser_evidence": {
+    "live_actual_unaugmented_checks": 14,
+    "source": "docs/lab/browser-qa.md",
+    "jrc_real_desktop_mobile": "docs/lab/browser-lead-evidence/jrc-integration-check.json",
+    "independent_second_jrc_browser_pass": "deferred"
+  },
+  "manifests": [
+    {
+      "path": "artifacts/jrc-bundle-manifest.json",
+      "files": 46,
+      "all_hashes_match": true
+    },
+    {
+      "path": "artifacts/live-bundle-manifest.json",
+      "files": 37,
+      "all_hashes_match": true
+    },
+    {
+      "path": "artifacts/retained-bundle-manifest.json",
+      "files": 50,
+      "all_hashes_match": true
+    },
+    {
+      "path": "artifacts/strong-baseline-bundle-manifest.json",
+      "files": 44,
+      "all_hashes_match": true
+    }
+  ],
+  "files": [
+    {
+      "path": "artifacts/demo-v1.json",
+      "bytes": 1542929,
+      "sha256": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555"
+    },
+    {
+      "path": "artifacts/benchmark-v1.json",
+      "bytes": 26607,
+      "sha256": "a356ce606eec338d9c2d7efafad406fa994915cb15506397e72bfc04d96a7e09"
+    },
+    {
+      "path": "artifacts/jrc-baseline-v1.json",
+      "bytes": 591831,
+      "sha256": "933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71"
+    },
+    {
+      "path": "artifacts/strong-baseline-v1.json",
+      "bytes": 54461,
+      "sha256": "f36e83f4d8df214eb5770a9eeb906f3f4a6f74ec224ea9f7d04d0e20a36bc80b"
+    },
+    {
+      "path": "app/package-lock.json",
+      "bytes": 39602,
+      "sha256": "5f1da1cd6b7d3a6eca972bdb1aec89ed406c6b0a74eff4bbbd2530a7942a5456"
+    },
+    {
+      "path": "engine/live_query.py",
+      "bytes": 17033,
+      "sha256": "fc4fc327b18b0b357ec5c5c8069e74054464dbd19f640c860c72ec3979dec8df"
+    },
+    {
+      "path": "engine/live_server.py",
+      "bytes": 12287,
+      "sha256": "05a6c6a0d523dbb23480f39f9d6e86640fddb3a9c7300204d55f2855d5894c2b"
+    }
+  ]
+}

@@ -7,17 +7,17 @@
       "band_masks_equal": true,
       "files": [
         {
-          "bytes": 184666,
+          "bytes": 3165,
           "path": "index.json",
-          "sha256": "c7478e0645ee8d9339b327f49852123886f917761278c1c7f9c505537a3eabaf"
+          "sha256": "33fb7c401550898853ee09c1a1e82fadb8114a234d840893cc96a2ee003b1a84"
         },
         {
-          "bytes": 601734,
+          "bytes": 531847,
           "path": "payload.bin",
-          "sha256": "f9ada92a99f8436128f8b468eba0aa60e8df131180a36113aa1df95ed72472e3"
+          "sha256": "db7ba9295eccc2e816b73ab0ac321af05febf3cd2f2b8204b07778ba7fdd0a6c"
         }
       ],
-      "path": "artifacts/stores/exp-8ae93e262ba33d37348e317200f77395d3218e244092b285d22c7aa1dc92c1b8/separate_zstd",
+      "path": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
       "raw_bands_equal": true
     },
     "geometry_sha256": "ea099021f0ad8e35ffd2f78603555a7e950e0c35c98c8680c5692c2a43985218",
@@ -49,7 +49,7 @@
     "partial_support_rule": "retain observed valid-land counts; witnessed loss true; absent loss unknown",
     "product": "Hansen Global Forest Change 2025 v1.13",
     "query_version": "hansen-centers.v1",
-    "receipt_sha256": "219df58960517641c37f72c83a1a093f2899aea9f2c03c83459d02f406c64af2",
+    "receipt_sha256": "45a9bcae041da9bdcd855e5687a0be898b0cc9b384828b6402f0ef018a590a68",
     "source_metadata_sha256": "3518674627d828f59a43784ce0fadc16868c5cdb56c9e092792a56715d6dc396",
     "sources": [
       {

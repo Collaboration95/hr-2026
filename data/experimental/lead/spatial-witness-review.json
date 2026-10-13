@@ -1,0 +1,99 @@
+{
+  "checked_witnesses": [
+    {
+      "plot_id": "P-0003",
+      "period": "2024-2025",
+      "row": 7,
+      "col": 12
+    },
+    {
+      "plot_id": "P-0004",
+      "period": "2024-2025",
+      "row": 109,
+      "col": 208
+    },
+    {
+      "plot_id": "P-0014",
+      "period": "2021-2023",
+      "row": 447,
+      "col": 1182
+    },
+    {
+      "plot_id": "P-0014",
+      "period": "2021-2023",
+      "row": 447,
+      "col": 1183
+    },
+    {
+      "plot_id": "P-0014",
+      "period": "2021-2023",
+      "row": 450,
+      "col": 1181
+    },
+    {
+      "plot_id": "P-0014",
+      "period": "2021-2023",
+      "row": 451,
+      "col": 1182
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 358,
+      "col": 1228
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 358,
+      "col": 1229
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 358,
+      "col": 1232
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 359,
+      "col": 1232
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 360,
+      "col": 1232
+    },
+    {
+      "plot_id": "P-0015",
+      "period": "2021-2023",
+      "row": 366,
+      "col": 1231
+    },
+    {
+      "plot_id": "P-0019",
+      "period": "2024-2025",
+      "row": 281,
+      "col": 1183
+    },
+    {
+      "plot_id": "P-0019",
+      "period": "2024-2025",
+      "row": 281,
+      "col": 1184
+    },
+    {
+      "plot_id": "P-0019",
+      "period": "2024-2025",
+      "row": 281,
+      "col": 1185
+    }
+  ],
+  "count": 15,
+  "direct_source_values_masks_verified": true,
+  "polygon_and_original_affine_verified": true,
+  "GEOS_shared_for_geometry": true,
+  "artifact_sha256": "8db20d36345a759c6267ce6a412caae4f5d40f7787bcbeb483715e53f82808b7"
+}

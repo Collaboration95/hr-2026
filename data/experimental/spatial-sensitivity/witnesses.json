@@ -1,0 +1,1399 @@
+{
+  "changed_period_flags": [
+    {
+      "center": {
+        "mapped_loss_present": false,
+        "observed_loss_cell_count": 0
+      },
+      "period": "2024-2025",
+      "plot_id": "P-0003",
+      "positive_area_overlap": {
+        "mapped_loss_present": true,
+        "observed_loss_cell_count": 1
+      },
+      "unknown_or_support_witnesses": [],
+      "witnesses": [
+        {
+          "angular_cell_intersection_fraction": 0.007428989624897371,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            98.775375,
+            8.580125
+          ],
+          "col": 12,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  98.77525,
+                  8.580250000000001
+                ],
+                [
+                  98.7755,
+                  8.580250000000001
+                ],
+                [
+                  98.7755,
+                  8.58
+                ],
+                [
+                  98.77525,
+                  8.58
+                ],
+                [
+                  98.77525,
+                  8.580250000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "85b9e5e1411c14a6a41bb6ed2008cd30771821b6fd433a4b70a05bd16f47bfec",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  98.772429,
+                  8.579774
+                ],
+                [
+                  98.773869,
+                  8.578875
+                ],
+                [
+                  98.774588,
+                  8.57901
+                ],
+                [
+                  98.775263,
+                  8.580134
+                ],
+                [
+                  98.774993,
+                  8.581168
+                ],
+                [
+                  98.773824,
+                  8.581888
+                ],
+                [
+                  98.773104,
+                  8.581348
+                ],
+                [
+                  98.772429,
+                  8.579774
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0003",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 25,
+            "treecover2000": 83
+          },
+          "row": 7,
+          "source_tile_col": 35101,
+          "source_tile_row": 5679,
+          "valid_land": true
+        }
+      ]
+    },
+    {
+      "center": {
+        "mapped_loss_present": false,
+        "observed_loss_cell_count": 0
+      },
+      "period": "2024-2025",
+      "plot_id": "P-0004",
+      "positive_area_overlap": {
+        "mapped_loss_present": true,
+        "observed_loss_cell_count": 1
+      },
+      "unknown_or_support_witnesses": [],
+      "witnesses": [
+        {
+          "angular_cell_intersection_fraction": 0.09580180192992792,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            98.824375,
+            8.554625000000001
+          ],
+          "col": 208,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  98.82425,
+                  8.55475
+                ],
+                [
+                  98.8245,
+                  8.55475
+                ],
+                [
+                  98.8245,
+                  8.5545
+                ],
+                [
+                  98.82425,
+                  8.5545
+                ],
+                [
+                  98.82425,
+                  8.55475
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "139110c18c870ee7e64abe7b8153b7dbf8b417a34cc8412d04a1f8f109244a92",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  98.824203,
+                  8.554603
+                ],
+                [
+                  98.82369,
+                  8.553474
+                ],
+                [
+                  98.825639,
+                  8.552346
+                ],
+                [
+                  98.826187,
+                  8.553577
+                ],
+                [
+                  98.824203,
+                  8.554603
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0004",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 25,
+            "treecover2000": 100
+          },
+          "row": 109,
+          "source_tile_col": 35297,
+          "source_tile_row": 5781,
+          "valid_land": true
+        }
+      ]
+    },
+    {
+      "center": {
+        "mapped_loss_present": false,
+        "observed_loss_cell_count": 0
+      },
+      "period": "2021-2023",
+      "plot_id": "P-0014",
+      "positive_area_overlap": {
+        "mapped_loss_present": true,
+        "observed_loss_cell_count": 4
+      },
+      "unknown_or_support_witnesses": [],
+      "witnesses": [
+        {
+          "angular_cell_intersection_fraction": 0.15111705340668713,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.067875,
+            8.470125000000001
+          ],
+          "col": 1182,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.06775,
+                  8.47025
+                ],
+                [
+                  99.068,
+                  8.47025
+                ],
+                [
+                  99.068,
+                  8.47
+                ],
+                [
+                  99.06775,
+                  8.47
+                ],
+                [
+                  99.06775,
+                  8.47025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.067779,
+                  8.470078
+                ],
+                [
+                  99.067685,
+                  8.469408
+                ],
+                [
+                  99.06821,
+                  8.469119
+                ],
+                [
+                  99.068391,
+                  8.469872
+                ],
+                [
+                  99.067779,
+                  8.470078
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0014",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 23,
+            "treecover2000": 76
+          },
+          "row": 447,
+          "source_tile_col": 36271,
+          "source_tile_row": 6119,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.00030992448793004337,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.068125,
+            8.470125000000001
+          ],
+          "col": 1183,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.068,
+                  8.47025
+                ],
+                [
+                  99.06825,
+                  8.47025
+                ],
+                [
+                  99.06825,
+                  8.47
+                ],
+                [
+                  99.068,
+                  8.47
+                ],
+                [
+                  99.068,
+                  8.47025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.067779,
+                  8.470078
+                ],
+                [
+                  99.067685,
+                  8.469408
+                ],
+                [
+                  99.06821,
+                  8.469119
+                ],
+                [
+                  99.068391,
+                  8.469872
+                ],
+                [
+                  99.067779,
+                  8.470078
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0014",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 23,
+            "treecover2000": 85
+          },
+          "row": 447,
+          "source_tile_col": 36272,
+          "source_tile_row": 6119,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.10478620270850687,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.067625,
+            8.469375000000001
+          ],
+          "col": 1181,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.0675,
+                  8.4695
+                ],
+                [
+                  99.06775,
+                  8.4695
+                ],
+                [
+                  99.06775,
+                  8.46925
+                ],
+                [
+                  99.0675,
+                  8.46925
+                ],
+                [
+                  99.0675,
+                  8.4695
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.067779,
+                  8.470078
+                ],
+                [
+                  99.067685,
+                  8.469408
+                ],
+                [
+                  99.06821,
+                  8.469119
+                ],
+                [
+                  99.068391,
+                  8.469872
+                ],
+                [
+                  99.067779,
+                  8.470078
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0014",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 60
+          },
+          "row": 450,
+          "source_tile_col": 36270,
+          "source_tile_row": 6122,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.0034466159180482083,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.067875,
+            8.469125
+          ],
+          "col": 1182,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.06775,
+                  8.46925
+                ],
+                [
+                  99.068,
+                  8.46925
+                ],
+                [
+                  99.068,
+                  8.469000000000001
+                ],
+                [
+                  99.06775,
+                  8.469000000000001
+                ],
+                [
+                  99.06775,
+                  8.46925
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.067779,
+                  8.470078
+                ],
+                [
+                  99.067685,
+                  8.469408
+                ],
+                [
+                  99.06821,
+                  8.469119
+                ],
+                [
+                  99.068391,
+                  8.469872
+                ],
+                [
+                  99.067779,
+                  8.470078
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0014",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 57
+          },
+          "row": 451,
+          "source_tile_col": 36271,
+          "source_tile_row": 6123,
+          "valid_land": true
+        }
+      ]
+    },
+    {
+      "center": {
+        "mapped_loss_present": false,
+        "observed_loss_cell_count": 0
+      },
+      "period": "2021-2023",
+      "plot_id": "P-0015",
+      "positive_area_overlap": {
+        "mapped_loss_present": true,
+        "observed_loss_cell_count": 6
+      },
+      "unknown_or_support_witnesses": [],
+      "witnesses": [
+        {
+          "angular_cell_intersection_fraction": 0.33220496396976357,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.079375,
+            8.492375000000001
+          ],
+          "col": 1228,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.07925,
+                  8.492500000000001
+                ],
+                [
+                  99.0795,
+                  8.492500000000001
+                ],
+                [
+                  99.0795,
+                  8.49225
+                ],
+                [
+                  99.07925,
+                  8.49225
+                ],
+                [
+                  99.07925,
+                  8.492500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 100
+          },
+          "row": 358,
+          "source_tile_col": 36317,
+          "source_tile_row": 6030,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.2841665332255804,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.079625,
+            8.492375000000001
+          ],
+          "col": 1229,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.0795,
+                  8.492500000000001
+                ],
+                [
+                  99.07975,
+                  8.492500000000001
+                ],
+                [
+                  99.07975,
+                  8.49225
+                ],
+                [
+                  99.0795,
+                  8.49225
+                ],
+                [
+                  99.0795,
+                  8.492500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 89
+          },
+          "row": 358,
+          "source_tile_col": 36318,
+          "source_tile_row": 6030,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.025541545976780405,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.080375,
+            8.492375000000001
+          ],
+          "col": 1232,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.08025,
+                  8.492500000000001
+                ],
+                [
+                  99.0805,
+                  8.492500000000001
+                ],
+                [
+                  99.0805,
+                  8.49225
+                ],
+                [
+                  99.08025,
+                  8.49225
+                ],
+                [
+                  99.08025,
+                  8.492500000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 86
+          },
+          "row": 358,
+          "source_tile_col": 36321,
+          "source_tile_row": 6030,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.09552233192037746,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.080375,
+            8.492125000000001
+          ],
+          "col": 1232,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.08025,
+                  8.49225
+                ],
+                [
+                  99.0805,
+                  8.49225
+                ],
+                [
+                  99.0805,
+                  8.492
+                ],
+                [
+                  99.08025,
+                  8.492
+                ],
+                [
+                  99.08025,
+                  8.49225
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 59
+          },
+          "row": 359,
+          "source_tile_col": 36321,
+          "source_tile_row": 6031,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.00734265319293731,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.080375,
+            8.491875
+          ],
+          "col": 1232,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.08025,
+                  8.492
+                ],
+                [
+                  99.0805,
+                  8.492
+                ],
+                [
+                  99.0805,
+                  8.491750000000001
+                ],
+                [
+                  99.08025,
+                  8.491750000000001
+                ],
+                [
+                  99.08025,
+                  8.492
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 55
+          },
+          "row": 360,
+          "source_tile_col": 36321,
+          "source_tile_row": 6032,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.32213258107912424,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.080125,
+            8.490375
+          ],
+          "col": 1231,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.08,
+                  8.4905
+                ],
+                [
+                  99.08025,
+                  8.4905
+                ],
+                [
+                  99.08025,
+                  8.490250000000001
+                ],
+                [
+                  99.08,
+                  8.490250000000001
+                ],
+                [
+                  99.08,
+                  8.4905
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.079043,
+                  8.492349
+                ],
+                [
+                  99.078863,
+                  8.490322
+                ],
+                [
+                  99.080057,
+                  8.490162
+                ],
+                [
+                  99.080292,
+                  8.492289
+                ],
+                [
+                  99.079043,
+                  8.492349
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0015",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 22,
+            "treecover2000": 41
+          },
+          "row": 366,
+          "source_tile_col": 36320,
+          "source_tile_row": 6038,
+          "valid_land": true
+        }
+      ]
+    },
+    {
+      "center": {
+        "mapped_loss_present": false,
+        "observed_loss_cell_count": 0
+      },
+      "period": "2024-2025",
+      "plot_id": "P-0019",
+      "positive_area_overlap": {
+        "mapped_loss_present": true,
+        "observed_loss_cell_count": 3
+      },
+      "unknown_or_support_witnesses": [],
+      "witnesses": [
+        {
+          "angular_cell_intersection_fraction": 0.10511941530238753,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.068125,
+            8.511625
+          ],
+          "col": 1183,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.068,
+                  8.511750000000001
+                ],
+                [
+                  99.06825,
+                  8.511750000000001
+                ],
+                [
+                  99.06825,
+                  8.511500000000002
+                ],
+                [
+                  99.068,
+                  8.511500000000002
+                ],
+                [
+                  99.068,
+                  8.511750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "a38144e5d391d2a6d7c957d98f478c45a8e5dba92b5ee6ec1c684a304fec5331",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.068135,
+                  8.511563
+                ],
+                [
+                  99.068085,
+                  8.51062
+                ],
+                [
+                  99.068917,
+                  8.510574
+                ],
+                [
+                  99.068974,
+                  8.511464
+                ],
+                [
+                  99.068135,
+                  8.511563
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0019",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 25,
+            "treecover2000": 94
+          },
+          "row": 281,
+          "source_tile_col": 36272,
+          "source_tile_row": 5953,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.1387222884300279,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.068375,
+            8.511625
+          ],
+          "col": 1184,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.06825,
+                  8.511750000000001
+                ],
+                [
+                  99.0685,
+                  8.511750000000001
+                ],
+                [
+                  99.0685,
+                  8.511500000000002
+                ],
+                [
+                  99.06825,
+                  8.511500000000002
+                ],
+                [
+                  99.06825,
+                  8.511750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "a38144e5d391d2a6d7c957d98f478c45a8e5dba92b5ee6ec1c684a304fec5331",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.068135,
+                  8.511563
+                ],
+                [
+                  99.068085,
+                  8.51062
+                ],
+                [
+                  99.068917,
+                  8.510574
+                ],
+                [
+                  99.068974,
+                  8.511464
+                ],
+                [
+                  99.068135,
+                  8.511563
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0019",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 25,
+            "treecover2000": 76
+          },
+          "row": 281,
+          "source_tile_col": 36273,
+          "source_tile_row": 5953,
+          "valid_land": true
+        },
+        {
+          "angular_cell_intersection_fraction": 0.02693204117153209,
+          "band_validity": {
+            "datamask": true,
+            "lossyear": true,
+            "treecover2000": true
+          },
+          "center": [
+            99.068625,
+            8.511625
+          ],
+          "col": 1185,
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  99.0685,
+                  8.511750000000001
+                ],
+                [
+                  99.06875,
+                  8.511750000000001
+                ],
+                [
+                  99.06875,
+                  8.511500000000002
+                ],
+                [
+                  99.0685,
+                  8.511500000000002
+                ],
+                [
+                  99.0685,
+                  8.511750000000001
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "fraction_units": "dimensionless EPSG:4326 angular-area ratio; not hectares or weighted loss area",
+          "geometry_sha256": "a38144e5d391d2a6d7c957d98f478c45a8e5dba92b5ee6ec1c684a304fec5331",
+          "in_coverage": true,
+          "inclusion": {
+            "center_covers": false,
+            "positive_area_overlap": true,
+            "zero_area_touch": false
+          },
+          "index_frame": "global original chip lattice (never window-local)",
+          "original_polygon": {
+            "coordinates": [
+              [
+                [
+                  99.068135,
+                  8.511563
+                ],
+                [
+                  99.068085,
+                  8.51062
+                ],
+                [
+                  99.068917,
+                  8.510574
+                ],
+                [
+                  99.068974,
+                  8.511464
+                ],
+                [
+                  99.068135,
+                  8.511563
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "overlap_interior_dimension_2": true,
+          "plot_id": "P-0019",
+          "raw_values": {
+            "datamask": 1,
+            "lossyear": 25,
+            "treecover2000": 94
+          },
+          "row": 281,
+          "source_tile_col": 36274,
+          "source_tile_row": 5953,
+          "valid_land": true
+        }
+      ]
+    }
+  ],
+  "results_content_sha256": "37ddeb70c8dfd7c0b6f8169bb1063232510ac4cfd5a26f935c73f24cd276e045",
+  "schema_version": "plotline.spatial-witnesses.v1",
+  "synthetic": false
+}

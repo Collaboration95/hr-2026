@@ -1,0 +1,269 @@
+{
+  "fresh_positive": {
+    "valid": true,
+    "failures": [],
+    "plot_count": 17,
+    "full_pixel_count": 6684255,
+    "source_and_compact_raw_masks_equal": true,
+    "independent_plot_checks": 17,
+    "benchmark_bound": true,
+    "full_source_cache_present": true,
+    "note": "Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims."
+  },
+  "fresh_equals_canonical": true,
+  "metric_free_positive": {
+    "valid": true,
+    "failures": [],
+    "plot_count": 17,
+    "full_pixel_count": 6684255,
+    "source_and_compact_raw_masks_equal": true,
+    "independent_plot_checks": 17,
+    "benchmark_bound": false,
+    "full_source_cache_present": true,
+    "note": "Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims."
+  },
+  "negatives": [
+    {
+      "name": "zero-as-unknown",
+      "expected_failure": "source_result",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0003 source_result mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "flag-bool-to-int",
+      "expected_failure": "source_result",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 source_result mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "count-zero-to-bool",
+      "expected_failure": "source_result",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0003 source_result mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "evidence-zero-to-bool",
+      "expected_failure": "receipt mismatch",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0003 receipt mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "mask-bool-to-int",
+      "expected_failure": "receipt mismatch",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 receipt mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "comparison-bool-to-int",
+      "expected_failure": "comparison",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 comparison mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "summary-count",
+      "expected_failure": "summary",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact summary mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "summary-bool-for-one",
+      "expected_failure": "summary",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact summary mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "receipt-year",
+      "expected_failure": "receipt",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 receipt mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "receipt-query",
+      "expected_failure": "receipt",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 receipt mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "receipt-mask-claim",
+      "expected_failure": "receipt",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 receipt mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "cohort-missing-plot",
+      "expected_failure": "plot cohort",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot cohort mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "dataset-vintage",
+      "expected_failure": "dataset",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact dataset mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "rehashed-geometry",
+      "expected_failure": "geometry",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC artifact plot P-0001 geometry mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "benchmark-cohort",
+      "expected_failure": "identity",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC benchmark input/code/query identity mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "benchmark-vintage",
+      "expected_failure": "identity",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC benchmark input/code/query identity mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "benchmark-size",
+      "expected_failure": "measured archive",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC benchmark differs from measured archive"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "benchmark-timing",
+      "expected_failure": "measured archive",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC benchmark differs from measured archive"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "raw-offplot",
+      "expected_failure": "raw values mismatch",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC full-chip raw values mismatch"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "mask-offplot",
+      "expected_failure": "mask mismatch",
+      "actual": {
+        "valid": false,
+        "failures": [
+          "JRC full-chip mask mismatch"
+        ]
+      },
+      "pass": true
+    }
+  ],
+  "offplot_witness": {
+    "row": 0,
+    "col": 0,
+    "original_value": 0,
+    "original_valid": true
+  },
+  "minimal_explicit_positive": {
+    "valid": true,
+    "failures": [],
+    "plot_count": 17,
+    "full_pixel_count": 6684255,
+    "source_and_compact_raw_masks_equal": true,
+    "independent_plot_checks": 17,
+    "benchmark_bound": true,
+    "full_source_cache_present": false,
+    "note": "Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims."
+  },
+  "ordinary_export_without_full_cache": {
+    "accepted": false,
+    "error": "[Errno 2] No such file or directory: '/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/validation/jrc/minimal-bundle/data/experimental/jrc/JRC_GFC2020_V4_N10_E90.tif'"
+  },
+  "proof_controls_pass": true
+}

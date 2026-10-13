@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "case": "fresh_positive",
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"experiment_id\": \"exp-7daaf163af701f29eefac7f988a7b556ec9e9c84c74417af11bc9d72691e9ebc\",\n  \"controls\": 2,\n  \"real_plot_count\": 17,\n  \"accepted_artifacts_unchanged\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "integer_in_boolean_proof_with_rehashed_archive",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "le \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/strong-proof-hatxf8vl/engine/strong_baseline.py\", line 294, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/strong-proof-hatxf8vl/engine/strong_baseline.py\", line 290, in main\n    run()\n    ~~~^^\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/strong-proof-hatxf8vl/engine/strong_baseline_measure.py\", line 477, in main\n    print(json.dumps(verify_artifact(args.verify), indent=2))\n                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/strong-proof-hatxf8vl/engine/strong_baseline_measure.py\", line 436, in verify_artifact\n    same(c['proof'],prove_dataset(source,decode_control(path),plots),'control full-value/mask/metadata/query proof claim mismatch')\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/data/experimental/lead/strong-proof-hatxf8vl/engine/strong_baseline_validation.py\", line 16, in same\n    raise ValueError(label)\nValueError: control full-value/mask/metadata/query proof claim mismatch\n"
+    }
+  ],
+  "canonical_files_modified": false,
+  "method": "separate manifest-only copy; fresh positive then rehashed typed-proof forgery"
+}

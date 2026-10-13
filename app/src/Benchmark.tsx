@@ -34,7 +34,10 @@ type Bench = {
   method: Record<string, unknown>;
   environment: Record<string, unknown>;
   common_input_bytes?: number;
-  identity?: { settings?: { chunk_size?: number; repetitions?: number } };
+  identity?: {
+    settings?: { chunk_size?: number; repetitions?: number };
+    source_metadata?: { sources?: { compression?: string }[] };
+  };
 };
 const labels: Record<string, string> = {
   source_geotiff: "Original GeoTIFF",
@@ -103,6 +106,16 @@ export default function Benchmark({ value }: { value: unknown }) {
         </p>
       </section>
     );
+  const sourceFiles = Array.isArray(b.identity?.source_metadata?.sources)
+    ? b.identity.source_metadata.sources
+    : [];
+  const compression = [
+    ...new Set(
+      sourceFiles.flatMap((s) =>
+        s && typeof s.compression === "string" ? [s.compression] : [],
+      ),
+    ),
+  ].join(" / ");
   const all = [b.baseline, ...b.candidates];
   const selected =
     all.find((c) => c.candidate === choice) ||
@@ -129,6 +142,20 @@ export default function Benchmark({ value }: { value: unknown }) {
       <p className="benchmark-intro">
         Identical regional grid. All required payload, indexes and metadata
         included. A compact format earns its place through measurements.
+      </p>
+      <p className="benchmark-scope">
+        Baseline: the supplied {compression || "original"} GeoTIFF inputs.
+        Savings are scoped to this frozen comparison and its required-loader
+        accounting; alternative standard-format settings are separate
+        experiments.
+      </p>
+      <p className="benchmark-scope">
+        <strong>Separate reviewed standard-format control:</strong> optimized
+        GeoTIFF uses 532,444 required bytes versus 535,012 for the retained
+        custom store — 2,568 bytes smaller on this same Hansen chip. These
+        additive storage results do not replace the frozen experiment below. The
+        custom format is not universally smallest; loading, window access and
+        integrity policies also matter.
       </p>
       <div className="benchmark-decision">
         <Icon name="info" />

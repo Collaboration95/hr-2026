@@ -1,0 +1,9 @@
+{
+  "experiment_id": "exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1",
+  "file_count": 43,
+  "total_bytes": 3718216,
+  "returncode": 0,
+  "stdout": "{\n  \"valid\": true,\n  \"experiment_id\": \"exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1\",\n  \"controls\": 2,\n  \"real_plot_count\": 17,\n  \"accepted_artifacts_unchanged\": true\n}\n",
+  "stderr": "",
+  "scope": "Manifest-only disposable copy; no full tiles/historical stores."
+}

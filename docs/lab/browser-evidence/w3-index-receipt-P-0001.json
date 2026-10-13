@@ -1,0 +1,140 @@
+{
+  "schema_version": "plotline.demo.v1",
+  "plot_id": "P-0001",
+  "receipt": {
+    "boundary_rule": "native cell centers covered by polygon, including polygon and hole boundaries",
+    "compact_store": {
+      "band_masks_equal": true,
+      "files": [
+        {
+          "bytes": 3165,
+          "path": "index.json",
+          "sha256": "33fb7c401550898853ee09c1a1e82fadb8114a234d840893cc96a2ee003b1a84"
+        },
+        {
+          "bytes": 531847,
+          "path": "payload.bin",
+          "sha256": "db7ba9295eccc2e816b73ab0ac321af05febf3cd2f2b8204b07778ba7fdd0a6c"
+        }
+      ],
+      "path": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
+      "raw_bands_equal": true
+    },
+    "geometry_sha256": "4d79c69a6fb4c6ece8a20dfe71b2b3b20b6cb838aca3d9ba222dad9584e14078",
+    "grid": {
+      "crs": "EPSG:4326",
+      "shape": [
+        604,
+        1233
+      ],
+      "transform": [
+        0.00025,
+        0,
+        98.77225,
+        0,
+        -0.00025,
+        8.582
+      ]
+    },
+    "observed_periods": {
+      "2021-2023": [
+        2021,
+        2023
+      ],
+      "2024-2025": [
+        2024,
+        2025
+      ]
+    },
+    "partial_support_rule": "retain observed valid-land counts; witnessed loss true; absent loss unknown",
+    "product": "Hansen Global Forest Change 2025 v1.13",
+    "query_version": "hansen-centers.v1",
+    "receipt_sha256": "aaa5e9051003e9282d710ebe0112f1741d0c0befe94c931c06e7bcd0659d1e95",
+    "source_metadata_sha256": "3518674627d828f59a43784ce0fadc16868c5cdb56c9e092792a56715d6dc396",
+    "sources": [
+      {
+        "band": "treecover2000",
+        "bytes": 414142,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_treecover2000_sample.tif",
+        "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+      },
+      {
+        "band": "lossyear",
+        "bytes": 159863,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_lossyear_sample.tif",
+        "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+      },
+      {
+        "band": "datamask",
+        "bytes": 2994,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_datamask_sample.tif",
+        "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+      }
+    ],
+    "supplier_row_sha256": "6219c4ee3bdcd3c2c0d67273fb4a872743abefaec8cbb9de0701814319b16b20",
+    "supplier_sources": [
+      {
+        "bytes": 13381,
+        "path": "data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+        "sha256": "43b47916d4900d4bf2f86a8a3ca3ee107f22b1fb80702174bbb9b55403c0fca2"
+      },
+      {
+        "bytes": 5884,
+        "path": "data/company-sample/2026-10-12/200001-17plots-valid.geojson",
+        "sha256": "8922eef5040120b180a86f6002f52e090ee9bb8273c3c1cf71f984b68648662b"
+      }
+    ],
+    "unknown_reasons": [],
+    "valid_land_rule": "datamask == 1 and every required band validity mask is true"
+  },
+  "supplier": {
+    "a1_factory_id": "RG1",
+    "a2_lot_number": "200001",
+    "a3_plot_id": "P-0001",
+    "a4_processing_date": "20240904-20240906",
+    "a5_production_harvest_date": "20240916",
+    "a6_tier1_supplier_id": "D001",
+    "a7_size_of_plot_ha": "9.14",
+    "a8_plantation_size_type": "a. Smallholder",
+    "b1_supply_chain_type": "b. Tier 2",
+    "b2_leakage_mitigation": "b. Segregation monitoring",
+    "c1_indicate_deforestation_analysis_layer_used": "Hansen Tree Cover Loss 2021-2023",
+    "c2_deforestation_spatial_analysis_result": "a. No Indication of deforestation",
+    "c3_mitigation_if_indication_found": "c. Not Applicable",
+    "c4_reference_or_link_if_applicable": "Not Applicable",
+    "c5_deforestation_final_status": "a. Deforestation-free",
+    "d1_strict_protected_area_spatial_analysis_result": "a. No overlap with strict PA",
+    "d2_restricted_use_area_spatial_analysis_result": "a. No overlap with RA",
+    "d3_land_tenure_or_documentation": "a. Official land title (with evidence)",
+    "d4_further_mitigation_if_any": "Not Applicable",
+    "d5_land_tenure_and_use_rights_final_status": "a. Official land title or right-of-use",
+    "e1_plot_located_on_environmentally_non_compliant_area": "a. No indication of non-compliance",
+    "e2_non_compliant_chemical_use": "a. Not detected",
+    "e3_environmental_protection_final_status": "a. Env non-compliance not detected",
+    "f1_child_labor": "a. No child labor detected",
+    "f2_workers": "a. No workers present",
+    "f3_forced_or_migrant_labor": "a. No foreign workers and no forced labor detected",
+    "f4_labor_and_human_rights_final_status": "a. Labor non-compliance not detected",
+    "g1_fpic_and_land_conflict_with_local_communities": "a. No indication of land conflicts",
+    "h1_trade_tax_and_corruption": "a. Evidence or indication of tax activity",
+    "i1_eudr_status": "a. Compliant",
+    "j1_contribution_from_plot_dry_weight_kg": "5",
+    "j2_annual_quota_from_plot_dry_weight_kg": "2280",
+    "j3_country_of_origin": "TH",
+    "j4_province_of_origin": "Surat Thani",
+    "j5_district_of_origin": "Chai Buri"
+  },
+  "comparison": {
+    "compact_result_sha256": "c1ace7ddc7c5d8d4eb5067b2f29c681c594ed6dd8b7c45dcb3a9b288c337f6aa",
+    "differing_fields": [],
+    "equal": true,
+    "source_result_sha256": "c1ace7ddc7c5d8d4eb5067b2f29c681c594ed6dd8b7c45dcb3a9b288c337f6aa",
+    "status": "computed"
+  }
+}

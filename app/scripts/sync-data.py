@@ -27,3 +27,15 @@ if synthetic.exists():
     assert fixture.get('schema_version') == 'plotline.synthetic.v1' and fixture.get('synthetic') is True
     shutil.copyfile(synthetic, out / 'synthetic-v1.json')
     print('Copied separate synthetic query-support lab.')
+
+# Explicit engine source-view acceptance, recorded in engine-jrc-interface.md.
+# A changed experiment must be reviewed before this optional asset is shipped.
+jrc = root / 'artifacts/jrc-baseline-v1.json'
+jrc_output = out / 'jrc-baseline-v1.json'
+accepted_jrc_file_sha256 = '933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71'
+if jrc.exists() and hashlib.sha256(jrc.read_bytes()).hexdigest() == accepted_jrc_file_sha256:
+    shutil.copyfile(jrc, jrc_output)
+    print('Copied accepted separate JRC 2020 v4 companion.')
+else:
+    jrc_output.unlink(missing_ok=True)
+    print('JRC companion unavailable: canonical file absent or changed from reviewed acceptance. Hansen remains usable.')

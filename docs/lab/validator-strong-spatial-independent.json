@@ -1,0 +1,1252 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "pass": true,
+      "label": "pinned source treecover2000",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "pinned source lossyear",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "pinned source datamask",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "control manifest selfhash gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "independent full TIFF values gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native grid gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "actual TIFF layout gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "implicit masks justified gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "independent masks/reconstruction metadata gtiff_zstd19_p1_b256",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "complete control bytes gtiff_zstd19_p1_b256",
+      "detail": 532444
+    },
+    {
+      "pass": true,
+      "label": "control measured file gtiff_zstd19_p1_b256/bands.tif",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "control measured file gtiff_zstd19_p1_b256/manifest.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "control manifest selfhash gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "independent full TIFF values gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "native grid gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "actual TIFF layout gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "implicit masks justified gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "independent masks/reconstruction metadata gtiff_zstd19_p1_b512",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "complete control bytes gtiff_zstd19_p1_b512",
+      "detail": 537920
+    },
+    {
+      "pass": true,
+      "label": "control measured file gtiff_zstd19_p1_b512/bands.tif",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "control measured file gtiff_zstd19_p1_b512/manifest.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/benchmark-v1.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/experiments/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/identity.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/experiments/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/run-71a5b90b05bdce363044d8e232ae33d20b31f3868a6f5ba50bf61372b98194a9.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/experiments/retained-choice.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/experiments/selections/choice-db3f51d882999e707ec334389e8c05e7ff545465d49d746e6badc745141f905a.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19/index.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19/payload.bin",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/company-sample/2026-10-12/200001-17plots-valid.geojson",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/public/hansen_datamask_sample.tif",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/public/hansen_lossyear_sample.tif",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/public/hansen_treecover2000_sample.tif",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard data/public/provenance.json",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/benchmark.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/codecs.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/experiments.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/indexed.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/model.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/oracle.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/proof.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/query.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/source.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/strong_baseline.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "code/input guard engine/strong_baseline_measure.py",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "production center query unchanged from accepted benchmark",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "actual source/custom baseline bytes",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "control complete storage advantage",
+      "detail": 2568
+    },
+    {
+      "pass": true,
+      "label": "P-0001 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 exact geometry",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 independently clipped cellset center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 independent full result center_covers",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 production remains center rule",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 independently clipped cellset positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 independent full result positive_area_overlap",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "independently recomputed total support",
+      "detail": {
+        "center": 1048,
+        "overlap": 1385
+      }
+    },
+    {
+      "pass": true,
+      "label": "all independently recomputed changed flags",
+      "detail": [
+        [
+          "P-0003",
+          "2024-2025"
+        ],
+        [
+          "P-0004",
+          "2024-2025"
+        ],
+        [
+          "P-0014",
+          "2021-2023"
+        ],
+        [
+          "P-0015",
+          "2021-2023"
+        ],
+        [
+          "P-0019",
+          "2024-2025"
+        ]
+      ]
+    },
+    {
+      "pass": true,
+      "label": "P-0003 witness inclusion (7, 12)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 witness source values (7, 12)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 rational angular fraction (7, 12)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 witness inclusion (109, 208)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 witness source values (109, 208)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 rational angular fraction (109, 208)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness inclusion (447, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness source values (447, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 rational angular fraction (447, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness inclusion (447, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness source values (447, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 rational angular fraction (447, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness inclusion (450, 1181)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness source values (450, 1181)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 rational angular fraction (450, 1181)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness inclusion (451, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 witness source values (451, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 rational angular fraction (451, 1182)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (358, 1228)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (358, 1228)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (358, 1228)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (358, 1229)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (358, 1229)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (358, 1229)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (358, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (358, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (358, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (359, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (359, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (359, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (360, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (360, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (360, 1232)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness inclusion (366, 1231)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 witness source values (366, 1231)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 rational angular fraction (366, 1231)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness inclusion (281, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness source values (281, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 rational angular fraction (281, 1183)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness inclusion (281, 1184)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness source values (281, 1184)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 rational angular fraction (281, 1184)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness inclusion (281, 1185)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 witness source values (281, 1185)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 rational angular fraction (281, 1185)",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "all15 changed-flag event witnesses",
+      "detail": null
+    },
+    {
+      "pass": true,
+      "label": "all accepted/research inputs unchanged during audit",
+      "detail": null
+    }
+  ],
+  "changes": [
+    [
+      "P-0003",
+      "2024-2025"
+    ],
+    [
+      "P-0004",
+      "2024-2025"
+    ],
+    [
+      "P-0014",
+      "2021-2023"
+    ],
+    [
+      "P-0015",
+      "2021-2023"
+    ],
+    [
+      "P-0019",
+      "2024-2025"
+    ]
+  ],
+  "witnesses": [
+    {
+      "plot": "P-0003",
+      "row": 7,
+      "col": 12,
+      "raw": [
+        83,
+        25,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "10920762028615485078538415239/1470019825073088770756610026256",
+      "fraction": 0.007428989624730068,
+      "recorded_fraction": 0.007428989624897371
+    },
+    {
+      "plot": "P-0004",
+      "row": 109,
+      "col": 208,
+      "raw": [
+        100,
+        25,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "103949900232334974100449918844117536893888/1085051618430251798010370014234205691379075",
+      "fraction": 0.09580180192968117,
+      "recorded_fraction": 0.09580180192992792
+    },
+    {
+      "plot": "P-0014",
+      "row": 447,
+      "col": 1182,
+      "raw": [
+        76,
+        23,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "6077415023906252155832679043507171410989133/40216606180189482569110635534286714466332420",
+      "fraction": 0.15111705340516673,
+      "recorded_fraction": 0.15111705340668713
+    },
+    {
+      "plot": "P-0014",
+      "row": 447,
+      "col": 1183,
+      "raw": [
+        85,
+        23,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "1277416359057655690267588715111315512416/4121701927158759492605845576258160790120125",
+      "fraction": 0.0003099244879015853,
+      "recorded_fraction": 0.00030992448793004337
+    },
+    {
+      "plot": "P-0014",
+      "row": 450,
+      "col": 1181,
+      "raw": [
+        60,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "49184704105030426170641814509187969495289/469381491385689755319586078076147916145650",
+      "fraction": 0.10478620271078277,
+      "recorded_fraction": 0.10478620270850687
+    },
+    {
+      "plot": "P-0014",
+      "row": 451,
+      "col": 1182,
+      "raw": [
+        57,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "1424710838991607136715958146196761335328/413365130543038150979931645608809036555715",
+      "fraction": 0.0034466159182801976,
+      "recorded_fraction": 0.0034466159180482083
+    },
+    {
+      "plot": "P-0015",
+      "row": 358,
+      "col": 1228,
+      "raw": [
+        100,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "1027302065724285493535/3092374218153081787542",
+      "fraction": 0.33220496397031823,
+      "recorded_fraction": 0.33220496396976357
+    },
+    {
+      "plot": "P-0015",
+      "row": 358,
+      "col": 1229,
+      "raw": [
+        89,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "390555227113848142497/1374388541401369683352",
+      "fraction": 0.2841665332247501,
+      "recorded_fraction": 0.2841665332255804
+    },
+    {
+      "plot": "P-0015",
+      "row": 358,
+      "col": 1232,
+      "raw": [
+        86,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "6655126308275205219998043625259540590270793/260560825676096459176236320063294062693548384",
+      "fraction": 0.025541545974943302,
+      "recorded_fraction": 0.025541545976780405
+    },
+    {
+      "plot": "P-0015",
+      "row": 359,
+      "col": 1232,
+      "raw": [
+        59,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "503039410702045076606/5266196926994904165697",
+      "fraction": 0.09552233189826778,
+      "recorded_fraction": 0.09552233192037746
+    },
+    {
+      "plot": "P-0015",
+      "row": 360,
+      "col": 1232,
+      "raw": [
+        55,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "719942077989031262115994586496184094483161/98049309902804477458099188985680285086637360",
+      "fraction": 0.007342653188509988,
+      "recorded_fraction": 0.00734265319293731
+    },
+    {
+      "plot": "P-0015",
+      "row": 366,
+      "col": 1231,
+      "raw": [
+        41,
+        22,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "1357130886949843183321/4212957541835402242743",
+      "fraction": 0.32213258108426135,
+      "recorded_fraction": 0.32213258107912424
+    },
+    {
+      "plot": "P-0019",
+      "row": 281,
+      "col": 1183,
+      "raw": [
+        94,
+        25,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "2719033315760987418404042512113185244449357/25866138124233526345721336759639338615459125",
+      "fraction": 0.10511941530280368,
+      "recorded_fraction": 0.10511941530238753
+    },
+    {
+      "plot": "P-0019",
+      "row": 281,
+      "col": 1184,
+      "raw": [
+        76,
+        25,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "1152650922279606527158/8309053543655649729575",
+      "fraction": 0.138722288431961,
+      "recorded_fraction": 0.1387222884300279
+    },
+    {
+      "plot": "P-0019",
+      "row": 281,
+      "col": 1185,
+      "raw": [
+        94,
+        25,
+        1
+      ],
+      "exact_binary_coordinate_fraction": "2194045443985932073824376410912794112800/81465991754936287885193284820775359494557",
+      "fraction": 0.02693204117106925,
+      "recorded_fraction": 0.02693204117153209
+    }
+  ],
+  "accepted_fingerprints": {
+    "artifacts/demo-v1.json": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555",
+    "artifacts/benchmark-v1.json": "a356ce606eec338d9c2d7efafad406fa994915cb15506397e72bfc04d96a7e09",
+    "artifacts/experiments/retained-choice.json": "fe76fb839ed166d66f290a23f9e4c6d8497a188e8fac8a357cfdd8939aff8612",
+    "engine/query.py": "68398bf5fa77b7e8775699a90cc72dfe86cf597e8b743907dbb2320259e8c257",
+    "artifacts/strong-baseline-v1.json": "578d5d789d4fe116e12a81bbb689047958e46083b7a92c4257a1a1a79f0d1082",
+    "data/experimental/spatial-sensitivity/results.json": "a80b8b8c018f27126ea188a4d3555b2f6a0750a1d6f12902dd53b44399e27add"
+  },
+  "scope": "independent Fraction clipping of actual rings; no GEOS membership/intersection or study helper; TIFF decompression shares rasterio/GDAL"
+}
