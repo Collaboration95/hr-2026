@@ -1,0 +1,8 @@
+{
+  "cellTitle": "Cell -1:-1; canopy null%; loss none mapped; mask null",
+  "expected": "Unknown/Unavailable for null canopy, loss and datamask; no absence statement",
+  "fixture": "Explicit synthetic out-of-coverage cell, validator-owned tab_k only",
+  "inspector": "Native cell -1:-1\nCanopy 2000: %\nLoss year: No mapped event\nDatamask: · not valid land",
+  "observation": "02 / MAPPED OBSERVATION\n2021–2023\nMapped result unknown\nUnavailable observed loss cells\n2024–2025\nMapped result unknown\nUnavailable observed loss cells\nSelected support\nNone\nValid land / selected cells\n0 / 1\nUnknown cells\n1\n\nUnknown reasons: out_of_coverage, no_valid_land\n\nTree-cover loss is not a legal deforestation finding. This release may differ from the supplier’s historical source. Canopy 2000 is not a forest-2020 baseline.",
+  "table": "Inspect native cells as a table\n1 selected\n\nExact values from selected source cells. Selection uses each cell’s center; the footprint may extend beyond the plot boundary.\n\nOnly 2023 valid-land loss events (0)\nNative row : column\tCanopy 2000\tLoss event\tLand mask\tInspect\n-1 : -1\t%\tNone mapped\t· Not valid land\tShow on map"
+}

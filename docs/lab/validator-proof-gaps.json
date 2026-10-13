@@ -1,0 +1,116 @@
+{
+  "fixture_scope": "deliberately invalid proof fixtures, no real observation claim",
+  "mutated_native_cell": {
+    "band": "treecover2000",
+    "changed": 86,
+    "col": 0,
+    "in_any_plot": false,
+    "original": 85,
+    "row": 0
+  },
+  "normal_export_one_wrong_pixel": "unbound benchmark: demo store differs from retained benchmark store",
+  "probes": [
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "benchmark status",
+          "unbound benchmark: source metadata"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected": "valid=false: benchmark provenance/storage/registry binding differs",
+      "fixture": "validation/repro-proof/wrong-benchmark.json",
+      "label": "wrong-benchmark"
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: receipt contract/source/hash claims",
+          "P-0003: receipt contract/source/hash claims",
+          "P-0004: receipt contract/source/hash claims",
+          "P-0005: receipt contract/source/hash claims",
+          "P-0006: receipt contract/source/hash claims",
+          "P-0008: receipt contract/source/hash claims",
+          "P-0009: receipt contract/source/hash claims",
+          "P-0010: receipt contract/source/hash claims",
+          "P-0011: receipt contract/source/hash claims",
+          "P-0013: receipt contract/source/hash claims",
+          "P-0014: receipt contract/source/hash claims",
+          "P-0015: receipt contract/source/hash claims",
+          "P-0016: receipt contract/source/hash claims",
+          "P-0017: receipt contract/source/hash claims",
+          "P-0018: receipt contract/source/hash claims",
+          "P-0019: receipt contract/source/hash claims",
+          "P-0020: receipt contract/source/hash claims",
+          "derived summary",
+          "benchmark status",
+          "unbound benchmark: stale implementation: benchmark.py"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected": "valid=false: executable query/period/summary claims differ",
+      "fixture": "validation/repro-proof/wrong-receipt-period-summary.json",
+      "label": "wrong-receipt-period-summary"
+    },
+    {
+      "actual": {
+        "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+        "compact_plot_count": 17,
+        "failures": [
+          "P-0001: full raw-value fidelity",
+          "P-0001: store files/full-fidelity claims",
+          "P-0001: receipt contract/source/hash claims",
+          "P-0003: store files/full-fidelity claims",
+          "P-0003: receipt contract/source/hash claims",
+          "P-0004: store files/full-fidelity claims",
+          "P-0004: receipt contract/source/hash claims",
+          "P-0005: store files/full-fidelity claims",
+          "P-0005: receipt contract/source/hash claims",
+          "P-0006: store files/full-fidelity claims",
+          "P-0006: receipt contract/source/hash claims",
+          "P-0008: store files/full-fidelity claims",
+          "P-0008: receipt contract/source/hash claims",
+          "P-0009: store files/full-fidelity claims",
+          "P-0009: receipt contract/source/hash claims",
+          "P-0010: store files/full-fidelity claims",
+          "P-0010: receipt contract/source/hash claims",
+          "P-0011: store files/full-fidelity claims",
+          "P-0011: receipt contract/source/hash claims",
+          "P-0013: store files/full-fidelity claims",
+          "P-0013: receipt contract/source/hash claims",
+          "P-0014: store files/full-fidelity claims",
+          "P-0014: receipt contract/source/hash claims",
+          "P-0015: store files/full-fidelity claims",
+          "P-0015: receipt contract/source/hash claims",
+          "P-0016: store files/full-fidelity claims",
+          "P-0016: receipt contract/source/hash claims",
+          "P-0017: store files/full-fidelity claims",
+          "P-0017: receipt contract/source/hash claims",
+          "P-0018: store files/full-fidelity claims",
+          "P-0018: receipt contract/source/hash claims",
+          "P-0019: store files/full-fidelity claims",
+          "P-0019: receipt contract/source/hash claims",
+          "P-0020: store files/full-fidelity claims",
+          "P-0020: receipt contract/source/hash claims",
+          "benchmark status",
+          "unbound benchmark: stale implementation: benchmark.py"
+        ],
+        "plot_count": 17,
+        "valid": false
+      },
+      "expected": "valid=false: full raw-value fidelity false even though cohort query matches",
+      "fixture": "validation/repro-proof/one-wrong-offplot-pixel.json",
+      "label": "one-wrong-offplot-pixel"
+    }
+  ],
+  "wrong_benchmark_export": {
+    "accepted": false,
+    "error": "unbound benchmark: source metadata"
+  }
+}

@@ -66,7 +66,8 @@ reproduce the original layers' plot-level compliance decisions.
 - Recommend the Surat Thani-labelled sample as the initial region. Songkhla/rubber
   remains a teammate proposal; the earlier Brazil direction is historical research
   in [public data and project options](docs/systemearth-open-data-options.md).
-  Final team geography, commodity, scope, and stack remain undecided.
+  Final team geography and commodity remain open; the authorized local lab uses
+  Python 3.14 and React/TypeScript/Vite for this sample-first prototype.
 - First complete **one real plot, a reviewable evidence receipt, and identical
   declared outputs from original and compact query paths**. Then expand to all
   17 plots. A receipt should identify the exact plot, source versions, observation
@@ -77,8 +78,10 @@ reproduce the original layers' plot-level compliance decisions.
   rules. The interface should make the evidence and measured comparison easy to
   inspect. Change replay and a separately labelled synthetic edge/scale cohort
   follow the real sample comparison if time permits.
-- No application has been built; stack and application build/test commands are
-  undecided. The existing sample audit uses Python's standard library:
+- The local app and original/compact query paths are implemented for all 17 plots.
+  Independent verification and measured optimization continue in the
+  [research lab](docs/lab/charter.md); [README](README.md) records current run/test
+  commands. The existing sample audit uses Python's standard library:
   `python3 scripts/inspect_company_sample.py` regenerates
   `docs/research/company-sample-audit.json` from the two local sample files.
 
@@ -91,13 +94,14 @@ The three chips total **576,999 bytes**, share an aligned **1233 × 604** native
 EPSG:4326 grid, contain the full 17-plot bounding box using outward floor/ceil
 bounds, and equal the source windows pixel-for-pixel on readback. Full source
 tiles total **224,170,336 bytes** in the ignored raw cache. Acquisition of these
-inputs is complete; no plot query, compact representation, or benchmark is yet
-claimed. Apply the datamask before interpreting loss-year zero as observed
+inputs is complete. The [engine report](docs/lab/engine-report.md) now records
+plot-query, codec, and benchmark implementation evidence; acquisition checks
+alone do not establish those results. Apply the datamask before interpreting loss-year zero as observed
 no loss. Bounding-rectangle pixel counts are not plot-overlap results.
 
 The sample lies around 99° E; the teammate's Songkhla tile `10N_100E` does not
 cover it. The source-acquisition setup and command are recorded in the final
-layer report; the application stack remains undecided.
+layer report; current application commands are in README.
 
 The official JRC Global Forest Cover 2020 v3 tile request returned HTTP 500 on retry;
 that baseline remains missing. WDPA is conditional on applicable use and

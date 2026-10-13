@@ -1,0 +1,127 @@
+{
+  "acquired_at_utc": "2026-10-13T02:36:05+00:00",
+  "product": "JRC Global Forest Cover Map 2020",
+  "version": "v4",
+  "version_note": "This is an explicitly versioned newer alternative; it is not v3 and is not interchangeable with v3 without review.",
+  "provider_page": "https://forobs.jrc.ec.europa.eu/GFC",
+  "provider_metadata_xml": "https://forobs.jrc.ec.europa.eu/GFC/download?version=v4&type=metadata",
+  "official_band_catalog": "https://developers.google.com/earth-engine/datasets/catalog/JRC_GFC2020_V4",
+  "source_url": "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/FOREST/GFC2020/LATEST/tiles/JRC_GFC2020_V4_N10_E90.tif",
+  "source_file": "JRC_GFC2020_V4_N10_E90.tif",
+  "source_bytes": 197739699,
+  "source_sha256": "fbae885505a5ee7a481775401f27c23b1b8ef1e5451b69156a70c04aa42f38d7",
+  "source_http_observation": {
+    "status": 200,
+    "content_type": "image/tiff",
+    "content_length_bytes": 197739699,
+    "etag": "bc944b3-65b6e6b114b0b",
+    "last_modified": "Mon, 14 Sep 2026 09:54:21 GMT",
+    "observed_via": "HTTP HEAD of official JRC tile URL; listing also exposes the linked tile"
+  },
+  "licence": "Official JRC page states the data are free of charge without restriction of use; proper acknowledgement is required.",
+  "required_citation": "Bourgoin, Clement; Achard, Frederic; Beuchle, Rene; Carboni, Silvia; Carreiras, Joao; Marinelli, Daniele; Rotllan-Puig, Xavier; Simonetti, Dario; Colditz, Rene (2026): Global map of forest cover 2020 - version 4. European Commission, Joint Research Centre [Dataset] doi: 10.2905/JRC.3KATEH8 PID: http://data.europa.eu/89h/cf7c49ea-8f00-4c5a-bd40-6f25dc341580",
+  "download_route_note": "Official GFC v3 page's UI-generated ies-ows route could not be reached in this environment. The official JRC LATEST/tiles/ directory provided this per-tile v4 GeoTIFF, avoiding the ~50 GB mosaic.",
+  "software": {
+    "python": "3.14.7",
+    "rasterio": "1.5.2",
+    "gdal": "3.12.2",
+    "numpy": "2.5.4"
+  },
+  "source_raster": {
+    "driver": "GTiff",
+    "width": 120000,
+    "height": 120000,
+    "bands": 1,
+    "dtype": "uint8",
+    "crs": "EPSG:4326",
+    "bounds_wgs84": [
+      90.0,
+      0.0,
+      100.0,
+      10.0
+    ],
+    "transform": [
+      8.333333333333333e-05,
+      0.0,
+      90.0,
+      0.0,
+      -8.333333333333333e-05,
+      10.0
+    ],
+    "nodata": null,
+    "block_shapes": [
+      [
+        1,
+        120000
+      ]
+    ],
+    "nominal_pixel_size": "10 m per official JRC/Google Earth Engine catalog; raster affine step is 1/12000 degree",
+    "tags": {
+      "AREA_OR_POINT": "Area"
+    }
+  },
+  "company_bbox_wgs84": [
+    98.772429,
+    8.431179,
+    99.080292,
+    8.581888
+  ],
+  "chip_file": "JRC_GFC2020_V4_N10_E90_company-bbox.tif",
+  "chip_bytes": 46238,
+  "chip_sha256": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5",
+  "chip_window_source_row_col_height_width": [
+    17017,
+    105269,
+    1809,
+    3695
+  ],
+  "chip_dimensions_width_height": [
+    3695,
+    1809
+  ],
+  "chip_crs": "EPSG:4326",
+  "chip_transform": [
+    8.333333333333333e-05,
+    0.0,
+    98.77241666666667,
+    0.0,
+    -8.333333333333333e-05,
+    8.581916666666666,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "chip_bounds_wgs84": [
+    98.77241666666667,
+    8.431166666666666,
+    99.08033333333334,
+    8.581916666666666
+  ],
+  "chip_contains_company_bbox": true,
+  "pixel_readback_equal_to_source_window": true,
+  "decoded_bbox_pixel_count": 6684255,
+  "decoded_value_counts": {
+    "0": 5618060,
+    "1": 1066195
+  },
+  "decoded_min": 0,
+  "decoded_max": 1,
+  "value_semantics": {
+    "official_product_description": "Spatial representation of forest presence and absence for reference year 2020 at 10 m; for EUDR use it is non-mandatory, non-exclusive and not legally binding.",
+    "official_band": "Map",
+    "official_class_table": {
+      "1": "Forest"
+    },
+    "decoded_codes_in_chip": {
+      "0": 5618060,
+      "1": 1066195
+    },
+    "zero_note": "0 is present in the decoded raster; the catalog describes both presence and absence but its displayed class table names only value 1. Preserve raw 0 and confirm its exact metadata label before semantic integration."
+  },
+  "limits": [
+    "This is a rectangular bbox chip, not plot-polygon statistics.",
+    "The product represents mapped forest cover for reference year 2020; it does not independently establish legal compliance or supplier declarations.",
+    "The current official page says v4 technical documentation is expected by December 2026; review version-specific methods and class definitions before semantic integration.",
+    "This v4 acquisition does not resolve availability of the requested v3 tile."
+  ]
+}
