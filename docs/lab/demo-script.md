@@ -1,5 +1,7 @@
 # Plotline demonstration — evidence before verdict
 
+> **Superseded for the redesigned UI (15 October 2026).** Use the three-minute flow in [docs/writeups/04-pitch.md](../writeups/04-pitch.md); `npm run demo:record --prefix app` records that flow. The narration below describes the pre-redesign screens, but its interpretation rules still apply.
+
 Updated 14 October 2026. Illustrative three-minute core plus a one-minute live/JRC extension, not a claimed organizer pitch duration. The recorded user authorization covers the tracked GitHub repository; confirm organizer logistics separately. Retained measurements are frozen. Use the displayed values and their accounting boundary.
 
 Fallback: [silent recorded walkthrough](completion-demo.webm), with [chapter timestamps](completion-demo.json). It shows actual local responses and can accompany the narration below if the live environment fails.

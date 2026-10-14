@@ -1,5 +1,7 @@
 # Claude handoff — complete Plotline UI redesign
 
+> **Status, 15 October 2026: delivered** on `guru/plotline-ui-redesign`. Decisions, the design system and verification are in [docs/writeups/05-redesign-decisions.md](docs/writeups/05-redesign-decisions.md) and [design/DESIGN.md](design/DESIGN.md). The brief below is kept as the record of what was asked.
+
 **Prepared 14 October 2026 by Astra.** Implementation baseline: `b3a49ac170d2aefc37c9239b24b75b87fd04e0a8` on `guru/plotline-research-lab`. Repository: `Collaboration95/hr-2026`. Local workspace: `/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll`.
 
 ## 1. Your assignment and authority
