@@ -34,15 +34,15 @@ async function check(name, fn) {
 }
 const shot = name => page.screenshot({ path: resolve(evidence, name), fullPage: true });
 const active = () => page.evaluate(() => ({ tag: document.activeElement.tagName, name: document.activeElement.getAttribute('aria-label') || document.activeElement.textContent, focusVisible: document.activeElement.matches(':focus-visible'), outline: getComputedStyle(document.activeElement).outline }));
-const row = name => page.getByRole('row').filter({ has: page.getByRole('rowheader', { name, exact: true }) });
+const row = name => page.locator('.proof-compare tbody tr').filter({ has: page.getByRole('rowheader', { name, exact: true }) });
 async function noOverflow() {
   const dimensions = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll('body *')].filter(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.right > innerWidth + 1 && getComputedStyle(e).position !== 'absolute'; }).slice(0, 12).map(e => ({ tag: e.tagName, class: e.className, right: e.getBoundingClientRect().right })) }));
   assert.ok(dimensions.document <= dimensions.viewport + 1, JSON.stringify(dimensions));
   return dimensions;
 }
 try {
-  await page.goto(baseURL);
-  await page.getByRole('button', { name: 'Show proof', exact: true }).waitFor();
+  await page.goto(`${baseURL}/#/map/P-0004/2025`);
+  await page.locator('.pl-review__actions').getByRole('button', { name: 'Proof', exact: true }).waitFor();
   await check('served artifact equals canonical', async () => {
     const served = await page.evaluate(async () => (await fetch('/data/demo-v1.json')).json());
     assert.deepEqual(served, canonical);
@@ -50,56 +50,83 @@ try {
   });
   await check('keyboard queue and annual evidence', async () => {
     await page.keyboard.press('j');
-    assert.match(await page.locator('.plot-header h2').innerText(), /P-0005/);
+    await page.waitForFunction(() => document.querySelector('#plot-review-heading')?.textContent === 'P-0005');
+    assert.match(await page.locator('#plot-review-heading').innerText(), /P-0005/);
     const count2024 = p5.source_result.yearly_loss_counts['2024'];
     await page.getByRole('button', { name: `Year 2024, ${count2024} observed loss cells`, exact: true }).click();
+    await page.waitForFunction(n => document.querySelectorAll('.native-cell').length === n, p5.evidence.features.length);
     assert.equal(await page.locator('.native-cell').count(), p5.evidence.features.length);
-    assert.equal(await page.locator('.native-cell[fill="#df743f"]').count(), count2024);
-    await page.keyboard.press('Tab'); await page.keyboard.press('Enter');
+    assert.equal(await page.locator('.native-cell[data-event="true"]').count(), count2024);
+    await page.getByRole('button', { name: `Year 2024, ${count2024} observed loss cells`, exact: true }).focus(); await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => document.querySelector('.pl-scrub__cols [aria-pressed=true]')?.dataset.year === '2025');
     const count2025 = p5.source_result.yearly_loss_counts['2025'];
-    assert.equal(await page.locator('.native-cell[fill="#df743f"]').count(), count2025);
-    assert.match(await page.locator('.map-legend').innerText(), new RegExp(`2025 mapped loss · ${count2025} cells`));
+    assert.equal(await page.locator('.native-cell[data-event="true"]').count(), count2025);
     const focus = await active(); assert.ok(focus.focusVisible); assert.match(focus.outline, /solid/);
+    await page.getByRole('button', { name: 'Legend', exact: true }).click();
+    assert.match(await page.locator('.pl-map__legend').innerText(), /Loss in 2025/);
+    assert.equal(await page.locator('#annual-proof-trigger').getAttribute('aria-label'), `Inspect proof for 2025 observed loss cells`);
+    assert.match(await page.locator('#annual-proof-trigger').innerText(), new RegExp(`^${count2025}\\s`));
     await shot('w3-desktop-year-2025.png');
     return { plot: p5.plot_id, selected: p5.source_result.selected_cell_count, count2024, count2025, focus };
   });
-  await page.getByRole('button', { name: 'Show proof', exact: true }).click();
+  await page.locator('.pl-review__actions').getByRole('button', { name: 'Proof', exact: true }).click();
+  await page.locator('#proof-heading').waitFor();
   await check('proof table and cohort agree with JSON', async () => {
-    for (const [label, value] of [['Selected native cells', p5.source_result.selected_cell_count], ['2024-2025 loss cells', p5.source_result.periods['2024-2025'].observed_loss_cell_count]]) {
-      assert.deepEqual(await row(label).locator('td').allTextContents(), [String(value), String(value)]);
+    for (const [label, value] of [['Selected native cells', p5.source_result.selected_cell_count], ['2024–2025 loss cells', p5.source_result.periods['2024-2025'].observed_loss_cell_count]]) {
+      assert.deepEqual(await row(label).locator('td').allTextContents(), [String(value), String(value), 'same']);
     }
-    assert.match(await page.locator('.proof-secondary').innerText(), /17 \/ 17 plots with measured matching outputs/);
-    await page.getByText('Inspect benchmark and method', { exact: true }).click();
-    const shown = JSON.parse(await page.locator('details').filter({ has: page.getByText('Inspect benchmark and method', { exact: true }) }).locator('pre').textContent());
-    assert.deepEqual(shown, canonical.benchmark);
-    await page.getByText('Inspect benchmark and method', { exact: true }).click();
+    const b = canonical.benchmark, retainedId = b.retained_selection?.overall_storage_choice ?? b.overall_storage_choice;
+    const kept = b.candidates.find(c => c.candidate === retainedId), base = b.baseline;
+    const fixed = (n,digits) => n.toLocaleString('en-US',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+    const percent = 100*(kept.storage.total_bytes/base.storage.total_bytes-1);
+    const hotRatio = base.queries.hot.wall_ms.median/kept.queries.hot.wall_ms.median;
+    assert.deepEqual(await page.locator('.proof-hero .pl-stat__value').allTextContents(),[
+      `${canonical.summary.exact_match_count}/${canonical.summary.plot_count}`,
+      kept.roundtrip.raw_bands_equal && kept.roundtrip.all_band_masks_equal ? '100%' : 'Differs',
+      `${percent < 0 ? '−' : '+'}${fixed(Math.abs(percent),2)}%`,
+      `${fixed(base.queries.process_cold.wall_ms.median/kept.queries.process_cold.wall_ms.median,2)}×`,
+      hotRatio > 0.95 && hotRatio < 1.05 ? '≈1.0×' : `${fixed(hotRatio,2)}×`,
+    ]);
+    const summary = page.locator('details').filter({ has: page.locator('summary').getByText('Cohort summary (JSON)', { exact: true }) });
+    await summary.locator('summary').click(); assert.deepEqual(JSON.parse(await summary.locator('pre').textContent()), canonical.summary);
+    const outputs = page.locator('details').filter({ has: page.locator('summary').getByText('Full source and compact query outputs', { exact: true }) });
+    await outputs.locator('summary').click(); assert.deepEqual(JSON.parse(await outputs.locator('pre').textContent()), { source: p5.source_result, compact: p5.compact_result });
     await shot('w3-desktop-proof.png');
-    return { overall_storage_choice: shown.overall_storage_choice, source_bytes: shown.baseline.storage.total_bytes, best_candidate_bytes: shown.winner.total_bytes };
+    return { exactPlots: canonical.summary.exact_match_count };
   });
   await check('benchmark storage choice, units and timing match JSON', async () => {
     const benchmark = canonical.benchmark;
     const choices = [benchmark.baseline, ...benchmark.candidates];
-    const chosenIndex = choices.findIndex(c => c.candidate === benchmark.overall_storage_choice);
-    assert.ok(chosenIndex >= 0, 'embedded storage choice must identify a measured representation');
-    const chosenRow = page.locator('.storage-row').nth(chosenIndex);
-    assert.match(await chosenRow.innerText(), /storage choice/);
-    await chosenRow.click();
-    assert.equal(await page.locator('.candidate-id').innerText(), benchmark.overall_storage_choice);
-    const decision = await page.locator('.benchmark-decision').innerText();
-    if (benchmark.overall_storage_choice === 'source_geotiff') assert.match(decision, /Compressed originals remain the storage choice/);
-    else assert.ok(decision.includes(await chosenRow.locator('strong').innerText()));
-    const format = (number, digits) => number.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
-    const original = page.locator('.storage-row').filter({ hasText: 'Original GeoTIFF' });
-    await original.click();
-    assert.equal(await page.locator('.candidate-size strong').innerText(), `${format(benchmark.baseline.storage.total_bytes / 1024, 1)} KiB`);
-    await page.getByRole('button', { name: 'Loaded query', exact: true }).click();
-    assert.equal(await page.locator('.timing-number strong').innerText(), `${format(benchmark.baseline.queries.hot.wall_ms.median, 2)} ms`);
-    assert.match(await page.locator('.timing-number').innerText(), /17-plot batch/);
-    await page.getByRole('button', { name: 'Fresh-process load + query', exact: true }).click();
-    assert.equal(await page.locator('.timing-number strong').innerText(), `${format(benchmark.baseline.queries.process_cold.wall_ms.median, 2)} ms`);
-    assert.match(await page.locator('.candidate-detail').innerText(), /not disk-cold/);
+    assert.equal(await page.locator('button.bench-row').count(), choices.length);
+    const retained = benchmark.retained_selection?.overall_storage_choice ?? benchmark.overall_storage_choice;
+    assert.equal(await page.locator('button.bench-row.is-retained code').innerText(), retained);
+    const format = (n, digits) => n.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+    for (let i = 0; i < choices.length; i++) {
+      const c = choices[i], control = page.locator('button.bench-row').nth(i);
+      assert.equal(await control.locator('code').innerText(), c.candidate);
+      assert.equal(await control.locator('.bench-row__total small').innerText(), `${c.storage.total_bytes.toLocaleString('en-US')} B`);
+      assert.ok((await control.locator('.bench-row__total').innerText()).startsWith(`${format(c.storage.total_bytes / 1024, 1)} KiB`));
+      await control.click(); assert.equal(await control.getAttribute('aria-pressed'), 'true');
+      const detail = page.locator('details').filter({ has: page.locator('summary').filter({ hasText: 'Full evidence for the selected candidate' }) });
+      if (!(await detail.evaluate(e => e.open))) await detail.locator('summary').click();
+      assert.deepEqual(JSON.parse(await detail.locator('pre').textContent()), c);
+      for (const [title, key] of [['Hot query', 'hot'], ['Fresh-process load + query', 'process_cold']]) {
+        const stats = c.queries[key].wall_ms;
+        const timing = page.getByRole('region', { name: title, exact: true }).locator('.bench-timing-row').nth(i);
+        assert.equal(await timing.locator('b').innerText(), `${format(stats.median, 2)} ms`);
+        assert.equal(await timing.locator('.bench-dots__dot').count(), stats.samples.length);
+        assert.match(await timing.locator('small').innerText(), new RegExp(`n=${stats.repetitions}`));
+        assert.ok((await timing.locator('[role=img]').getAttribute('aria-label')).includes(`median ${format(stats.median, 2)} milliseconds`));
+      }
+    }
+    const method = page.locator('details').filter({ has: page.locator('summary').getByText('Measurement method, environment and experiment identity', { exact: true }) });
+    await method.locator('summary').click();
+    assert.deepEqual(JSON.parse(await method.locator('pre').textContent()), { experiment_id: benchmark.experiment_id, method: benchmark.method, environment: benchmark.environment, settings: benchmark.identity.settings });
+    await page.getByRole('button', { name: 'About fresh-process load + query timing', exact: true }).click();
+    assert.match(await page.locator('.pl-info__panel').innerText(), /not disk-cold/);
+    await page.getByRole('button', { name: 'About fresh-process load + query timing', exact: true }).click();
     await shot('w3-benchmark-source.png');
-    return { sourceTotalBytes: benchmark.baseline.storage.total_bytes, sourceHotMs: benchmark.baseline.queries.hot.wall_ms.median, sourceFreshProcessMs: benchmark.baseline.queries.process_cold.wall_ms.median };
+    return { candidates: choices.length, retained };
   });
   await page.getByRole('button', { name: 'Inspect provenance receipt', exact: true }).click();
   await check('receipt content and downloaded JSON agree with canonical', async () => {
@@ -125,33 +152,34 @@ try {
     await page.keyboard.press('Shift+Tab');
     assert.ok(await page.locator('dialog').evaluate(e => e.contains(document.activeElement)));
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('dialog').evaluate(e => e.open), false);
+    assert.equal(await page.locator('dialog[open]').count(), 0);
     assert.equal((await active()).name, 'Inspect provenance receipt');
   });
-  if (await page.locator('dialog').evaluate(e => e.open)) await page.keyboard.press('Escape');
+  if (await page.locator('dialog[open]').count()) await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Back to map', exact: true }).click();
   await check('empty search retains clearly labelled selection and recovers', async () => {
     await page.keyboard.press('/'); assert.equal((await active()).name, 'Search plots');
     await page.getByRole('textbox', { name: 'Search plots' }).fill('W3-no-matching-plot-unique');
     await page.getByText('No matching plots', { exact: true }).waitFor();
-    assert.equal(await page.locator('.queue-row').count(), 0);
-    assert.match(await page.locator('.selection-notice').innerText(), /P-0005 remains open/);
+    assert.equal(await page.locator('.plot-row').count(), 0);
+    assert.match(await page.locator('.pl-rail__notice').innerText(), /P-0005 is open but hidden by this filter/);
     await shot('w3-empty-search.png');
     await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
-    assert.equal(await page.locator('.queue-row').count(), 17);
+    assert.equal(await page.locator('.plot-row').count(), 17);
     assert.equal(await page.getByRole('textbox', { name: 'Search plots' }).inputValue(), '');
   });
   await check('command Find a plot focuses search after close', async () => {
     await page.getByRole('button', { name: 'Open commands', exact: true }).click();
     await page.getByRole('button', { name: /Find a plot/ }).click();
-    await page.waitForFunction(() => !document.querySelector('dialog').open);
+    await page.waitForFunction(() => !document.querySelector('dialog[open]'));
     assert.equal((await active()).name, 'Search plots');
   });
-  await page.getByRole('button', { name: 'Review desk', exact: true }).click();
+  await page.locator('nav[aria-label="Workspace view"]').getByRole('button', { name: 'Map', exact: true }).click();
   await check('all-plot map keyboard selection', async () => {
-    await page.getByRole('button', { name: 'All 17 plots', exact: true }).click();
+    await page.getByRole('button', { name: 'Region', exact: true }).click();
     assert.equal(await page.getByRole('button', { name: /Select P-\d+ on map/ }).count(), 17);
     await page.getByRole('button', { name: 'Select P-0001 on map', exact: true }).focus(); await page.keyboard.press('Enter');
-    assert.match(await page.locator('.plot-header h2').innerText(), /P-0001/);
+    assert.match(await page.locator('#plot-review-heading').innerText(), /P-0001/);
     return { selected: 'P-0001' };
   });
   await check('cell inspector has keyboard-accessible entry', async () => {
@@ -162,27 +190,29 @@ try {
     assert.equal(await page.locator('.cell-table tbody tr').count(), p1.evidence.features.length);
     const control = page.getByRole('button', { name: `Inspect cell ${cell.row}:${cell.col}`, exact: true });
     await control.focus(); await page.keyboard.press('Enter');
-    assert.match(await page.locator('.cell-inspector').innerText(), new RegExp(`Native cell ${cell.row}:${cell.col}`));
+    assert.match(await page.locator('.pl-map__pinned').innerText(), new RegExp(`NATIVE CELL\\s+${cell.row}:${cell.col}`));
     await page.getByRole('button', { name: 'Close cell details', exact: true }).click();
     await page.locator('.cell-table > summary').click();
     return { rows: p1.evidence.features.length, keyboardInspected: `${cell.row}:${cell.col}` };
   });
   await check('17 plots expose all 25 annual counts from JSON', async () => {
     for (const plot of canonical.plots) {
-      await page.locator('.queue-row').filter({ has: page.getByText(plot.plot_id, { exact: true }) }).click();
-      await page.waitForFunction(id => document.querySelector('.map-title strong')?.textContent === id, plot.plot_id);
-      const labels = await page.locator('.year-bars button').evaluateAll(nodes => nodes.map(n => n.getAttribute('aria-label')));
+      await page.locator('.plot-row').filter({ has: page.getByText(plot.plot_id, { exact: true }) }).click();
+      await page.waitForFunction(id => document.querySelector('#plot-review-heading')?.textContent === id, plot.plot_id);
+      const labels = await page.locator('.pl-scrub__cols button').evaluateAll(nodes => nodes.map(n => n.getAttribute('aria-label')));
       assert.deepEqual(labels, Object.entries(plot.source_result.yearly_loss_counts).map(([year, count]) => `Year ${year}, ${count} observed loss cells`));
+      await page.waitForFunction(n => document.querySelectorAll('.native-cell').length === n, plot.evidence.features.length);
       assert.equal(await page.locator('.native-cell').count(), plot.evidence.features.length);
     }
-    await page.locator('.queue-row').filter({ has: page.getByText('P-0001', { exact: true }) }).click();
+    await page.locator('.plot-row').filter({ has: page.getByText('P-0001', { exact: true }) }).click();
     return { plots: canonical.plots.length, annualCounts: canonical.plots.length * 25 };
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await check('390px review has no document overflow', async () => { await shot('w3-mobile-review.png'); return noOverflow(); });
   await check('390px map boundary and legend fit inside panel', async () => {
-    const boxes = await page.evaluate(() => Object.fromEntries(['.map-panel', '.map-canvas', '.spatial-map', '.plot-geometry', '.map-legend'].map(selector => { const r = document.querySelector(selector).getBoundingClientRect(); return [selector, { left: r.left, right: r.right, width: r.width }]; })));
-    const panel = boxes['.map-panel'];
+    await page.waitForFunction(() => { const b = document.querySelector('.pl-map__boundary')?.getBoundingClientRect(), p = document.querySelector('.pl-map')?.getBoundingClientRect(); return b && p && b.left >= p.left - 1 && b.right <= p.right + 1; });
+    const boxes = await page.evaluate(() => Object.fromEntries(['.pl-map', '.pl-map__viewport', '.pl-map__svg', '.pl-map__boundary', '.pl-map__legend'].map(selector => { const r = document.querySelector(selector).getBoundingClientRect(); return [selector, { left: r.left, right: r.right, width: r.width }]; })));
+    const panel = boxes['.pl-map'];
     for (const [selector, box] of Object.entries(boxes)) assert.ok(box.left >= panel.left - 1 && box.right <= panel.right + 1, `${selector} is clipped: ${JSON.stringify(boxes)}`);
     return boxes;
   });
@@ -191,9 +221,9 @@ try {
     await page.getByText('No matching plots', { exact: true }).waitFor();
     await shot('w3-mobile-empty.png'); await noOverflow();
     await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
-    assert.equal(await page.locator('.queue-row').count(), 17);
+    assert.equal(await page.locator('.plot-row').count(), 17);
   });
-  await page.getByRole('button', { name: 'Show proof', exact: true }).click();
+  await page.locator('.pl-review__actions').getByRole('button', { name: 'Proof', exact: true }).click();
   await check('390px proof controls and layout', async () => { await shot('w3-mobile-proof.png'); await page.getByRole('button', { name: 'Inspect provenance receipt', exact: true }).click(); await page.getByRole('button', { name: 'Download receipt JSON', exact: true }).waitFor(); await shot('w3-mobile-receipt.png'); const dimensions = await noOverflow(); await page.keyboard.press('Escape'); return dimensions; });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await check('reduced motion media and computed style', async () => {
