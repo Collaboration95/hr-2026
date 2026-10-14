@@ -1,5 +1,7 @@
 # SystemEarth product direction
 
+> **Historical planning document.** For the user-authorized complete UI redesign, start with [the current Claude handoff](../../HANDOFF.md). The app and stack are implemented, JRC v4 is integrated, and the former design-only/provisional implementation limits below are superseded. Use current validated contracts for data semantics.
+
 ## Recommendation
 
 **Working name: Plotline** (creative placeholder; unconfirmed). Plotline helps an analyst answer: **“Which supplier claims need review—and can we answer using less data without changing the evidence?”**
