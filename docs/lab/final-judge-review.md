@@ -1,10 +1,10 @@
 # Final mock SystemEarth judging review
 
-**13 October 2026 — local prototype checkpoint.** Applied the `systemearth-hackathon-judge` skill as a simulated company-side reviewer. These weights and scores are a **mock rubric**, not published organizer criteria or a prediction of winning. The user requested an earlier wrap-up; deferred optional features are not credited as implemented.
+**14 October 2026 — completed local demo slice.** Applied the `systemearth-hackathon-judge` skill as a simulated company-side reviewer. These weights and scores are a **mock rubric**, not published organizer criteria or a prediction of winning. This updates the earlier 13 October assessment after clean-export reproduction, independent JRC browser review and demo packaging. Optional unshipped features receive no credit. Scores assess evidence quality, not percentage of implementation complete.
 
 ## Verdict
 
-**Ready for a scoped local demonstration. Proposal quality: 89/100. Demonstrated readiness: 86/100.**
+**Ready for a scoped local demonstration. Proposal quality: 90/100. Demonstrated readiness: 87/100.**
 
 The project delivers the printed prototype requirement: multiple native layers and years, a real plot query, compact encoding, original-layer comparisons, full pixel/mask preservation and measured storage/query/resource tradeoffs. The product makes that engineering evidence usable. It is not yet a company-approved compliance workflow or independently validated environmental decision system.
 
@@ -21,8 +21,8 @@ Scores use a 0–5 scale; points are weight × score / 5. Proposed future work i
 | Measurement and resources | 15 | 4.5 | 13.5 | Complete accounting, repeated queries, CPU/RSS, standard controls, held-out selector study and clear cache limits. Production-scale/update workload remains undefined. | High |
 | Customer workflow usefulness | 15 | 4.5 | 13.5 | Declaration-to-cell-to-receipt workflow matches the supplied company description; local questions and live exploration are coherent. Customer interviews and expected-result acceptance are outstanding. | Medium |
 | UX and demo clarity | 10 | 4.5 | 9 | Linked views, readable receipts, keyboard alternatives, explicit failure states and a short demonstration narrative. RuleLens is a documented optional concept, not shipped work. | High |
-| Feasibility and reproducibility | 10 | 4 | 8 | Small local stack, pinned inputs, minimal bundles, deterministic export and bounded scope. Fresh-machine setup and public presentation permissions still need confirmation. | Medium |
-| **Total** | **100** | | **89** | | |
+| Feasibility and reproducibility | 10 | 4.5 | 9 | Explicit setup/verification, pinned inputs and bounded scope; clean-export reproduction recorded in completion-reproducibility.md. Cross-platform installation and final presentation logistics remain open. | High |
+| **Total** | **100** | | **90** | | |
 
 ## Demonstrated readiness
 
@@ -32,11 +32,11 @@ Scores use a 0–5 scale; points are weight × score / 5. Proposed future work i
 | Correctness and decision/pixel fidelity | 25 | 4.5 | 22.5 | 17/17 exact source/compact dictionaries, full raw/mask checks, scalar oracle, native cell evidence, independent V1–V7 and J1/J2 closure. Geographical generalization and satellite accuracy are unproven. | High |
 | Measurement and resources | 15 | 4 | 12 | Retained complete storage, hot and process-cold timings, encoding CPU/RSS, stronger standard controls and preserved losing candidates. One small AOI, uncontrolled OS cache and short repeated samples limit generalization. Research verifier hardening has its own bounded review status. | High |
 | Customer workflow usefulness | 15 | 4 | 12 | Actual declarations, missing references, linked evidence index, local notes, proof and downloaded receipts. The customer has not validated the review workflow or supplied mitigation files/reference decisions. | Medium |
-| UX and demo clarity | 10 | 4.5 | 9 | Actual live browser acceptance: 14 checks, exact P-0003, complete evidence, stale/cancel/recovery and 390px keyboard path. Separate JRC desktop/mobile lead checks pass; a second independent integrated JRC browser pass was deferred. | High |
-| Feasibility and reproducibility | 10 | 4 | 8 | Working combined launcher; retained Hansen/JRC/live bundles; no-full-tile ordinary reproduction; production build; documented source/code bindings. Historical-acquisition cache restoration and untested fresh-machine installation remain gaps. | High |
-| **Total** | **100** | | **86** | | |
+| UX and demo clarity | 10 | 4.5 | 9 | Actual live browser acceptance: 14 checks, exact P-0003, complete evidence, stale/cancel/recovery and 390px keyboard path. Independent JRC integrated review passes nine checks; a real silent walkthrough and current narration are retained. The mobile cell table requires horizontal scrolling. | High |
+| Feasibility and reproducibility | 10 | 4.5 | 9 | Clean exports with new Python/npm environments pass both retained verifiers, full/indexed P-0003 queries and production build without full tiles. Portable QA supports alternate ports and isolated output. Same host only: cross-platform and full historical reacquisition remain unproven. | High |
+| **Total** | **100** | | **87** | | |
 
-Evidence: [engine report](engine-report.md), [stable experience handoff](experience-integration-status.md), [browser QA](browser-qa.md), [independent validator](validator-report.md), [JRC independent verification](validator-jrc-report.md), [strong/spatial verification](validator-strong-spatial-report.md), [final command record](final-verification.json) and [detailed handover](../HANDOVER.md). The numerical scores are reviewer judgments, not statistical confidence measures.
+Evidence: [engine report](engine-report.md), [stable experience handoff](experience-integration-status.md), [browser QA](browser-qa.md), [independent validator](validator-report.md), [JRC independent verification](validator-jrc-report.md), [strong/spatial verification](validator-strong-spatial-report.md), [current command record](completion-verification.json), [clean-export audit](completion-reproducibility.md), [independent integrated JRC review](completion-browser-report.md) and [detailed handover](../HANDOVER.md). The numerical scores are reviewer judgments, not statistical confidence measures.
 
 ## Must-have demonstration gate: PASS for the stated slice
 
@@ -60,7 +60,7 @@ The printed kickoff asks for a working prototype; the less-firm speech does not 
 ## Smallest improvements, ordered by value
 
 1. Obtain one company-reviewed plot and reproducible expected result, including source vintage, inclusion rule and mitigation evidence meaning. This changes confidence more than another UI panel.
-2. Rehearse the existing demonstration and confirm sample-use permission, submission deadline and pitch length. Keep the app local until external use is authorized.
-3. Complete the second independent integrated JRC browser pass and fresh-machine reproduction. Treat RuleLens as optional; its research evidence already supports an excellent explanation without shipping more UI.
+2. Use the recorded walkthrough and updated narration to rehearse with the actual presenter; confirm submission deadline, channel and pitch length. Tracked repository publication is already authorized; no organizer submission has been sent.
+3. After workload confirmation, evaluate another geography and the target deployment platform. The independent JRC pass and same-host clean-environment reproduction are complete. RuleLens remains optional; no need to expand scope to demonstrate the accepted slice.
 
 No score establishes legal compliance, real-world source accuracy, public-release readiness or an official event outcome.

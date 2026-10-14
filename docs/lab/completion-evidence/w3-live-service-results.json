@@ -1,0 +1,184 @@
+{
+  "timestamp": "2026-10-14T02:09:16.238Z",
+  "origin": "http://127.0.0.1:5183",
+  "blocked": null,
+  "snapshot_id": "84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06",
+  "frozenArtifact": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "queryRequests": 12,
+  "checks": [
+    {
+      "name": "service unavailable remains explicit at desktop and390px; frozen review works",
+      "status": "PASS",
+      "detail": {
+        "fault": "Browser-local proxy500",
+        "sharedServerStopped": false,
+        "viewports": [
+          1440,
+          390
+        ]
+      }
+    },
+    {
+      "name": "actual service retry accepts immutable snapshot bytes",
+      "status": "PASS",
+      "detail": {
+        "snapshot_id": "84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06",
+        "lifetime": "immutable_loaded_snapshot_until_restart",
+        "limits": {
+          "evidence_mode": "all_selected_cells",
+          "max_body_bytes": 65536,
+          "max_candidate_cells": 4096,
+          "max_selected_cells": 4096,
+          "max_vertices": 512
+        }
+      }
+    },
+    {
+      "name": "actual unaugmented P-0003 response accepted with complete cells and receiptbytes",
+      "status": "PASS",
+      "detail": {
+        "requestId": "local_97a1af0c2d094805b1a6899f1b7b1085",
+        "selectedCells": 87,
+        "rawResponseSha256": "37ab2fa6f96b15b21905967b5a41018e9c0e59d0a411756d20329ca705160220",
+        "receiptSha256": "ce202f7205a7d91503a4730f573cc51c439640973cd6b5328fefcdc63afee2df",
+        "canonicalFieldsAddedByHarness": false
+      }
+    },
+    {
+      "name": "rectangle edits invalidate prior result and compute a different actualregion",
+      "status": "PASS",
+      "detail": {
+        "exactSelected": 87,
+        "rectangleSelected": 143,
+        "rawResponseSha256": "27b202c7d85c9696a59402ba66eb70120c07e5862241bc3e8483de30454a1b85"
+      }
+    },
+    {
+      "name": "blank and reversed bounds reject locally; oversized region rejects withoutsampling",
+      "status": "PASS",
+      "detail": {
+        "invalidRequestsSent": 0,
+        "oversizedStatus": 422,
+        "code": "QUERY_TOO_LARGE"
+      }
+    },
+    {
+      "name": "actual tiny-no-centers region preserves unknown and complete evidence",
+      "status": "PASS",
+      "detail": {
+        "selected": 0,
+        "outside": 0,
+        "support": "none",
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": null
+          },
+          "2024-2025": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": null
+          }
+        },
+        "rawResponseSha256": "672a08f18d9062ec170a2acad4a8ccef5f6a741e9e23c50e001c142418d2023e"
+      }
+    },
+    {
+      "name": "actual outside region preserves unknown and complete evidence",
+      "status": "PASS",
+      "detail": {
+        "selected": 4,
+        "outside": 4,
+        "support": "none",
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": null
+          },
+          "2024-2025": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": null
+          }
+        },
+        "rawResponseSha256": "b8a84bff9124688cb3950a4344b68d8146ba2cd3c92d4a4d37d2bdd76efe0a9e"
+      }
+    },
+    {
+      "name": "actual partial region preserves unknown and complete evidence",
+      "status": "PASS",
+      "detail": {
+        "selected": 4,
+        "outside": 2,
+        "support": "partial",
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": null,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "rawResponseSha256": "e3f50ffbea228e57024367cab6c19ca1ca37e1ce5a87ddec36370dedf8f07d82"
+      }
+    },
+    {
+      "name": "active edit discards late actualresponse even when transport ignoresabort",
+      "status": "PASS",
+      "detail": {
+        "older": "local_bd2d2073c15b4a78a5542bde767319fb",
+        "newer": "local_348ed684a7c34215aa058e64cd7c6d9c",
+        "delivery": {
+          "delivered": true
+        },
+        "oldResultVisible": false
+      }
+    },
+    {
+      "name": "Cancel query clears pendinganswer and staysclear afterlatebody",
+      "status": "PASS",
+      "detail": {
+        "delivery": {
+          "delivered": true
+        },
+        "pendingAnswerVisible": false
+      }
+    },
+    {
+      "name": "queryservicefailure invalidates ready thenrealretryrecovers",
+      "status": "PASS",
+      "detail": {
+        "recoveredRequest": "local_5d1a128827f8436eb211687bb3599e90",
+        "fault": "own browser HTTP500 only"
+      }
+    },
+    {
+      "name": "390px keyboardcomplete actualquery and nativeevidence receipt",
+      "status": "PASS",
+      "detail": {
+        "viewport": 390,
+        "selected": 87,
+        "keyboardFocusedResult": true,
+        "focusBounds": {
+          "top": 456.03125,
+          "bottom": 513.53125,
+          "stickyBottom": 100,
+          "viewportHeight": 844
+        }
+      }
+    },
+    {
+      "name": "frozen source export unchanged after temporaryqueries",
+      "status": "PASS",
+      "detail": {
+        "frozenArtifact": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2"
+      }
+    },
+    {
+      "name": "C5 browser has no application pageerrors",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "noResponseAugmentation": true
+}

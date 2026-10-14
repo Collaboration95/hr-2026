@@ -1,3 +1,4 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -5,8 +6,8 @@ import { pathToFileURL } from 'node:url';
 
 // Focused regression of the 02:32 integration. No artifact mutation or malicious fixtures.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href : 'playwright');
-const origin = 'http://127.0.0.1:5173';
-const out = resolve('docs/lab/browser-evidence'); await mkdir(out, { recursive: true });
+const origin = qaOrigin;
+const out = qaEvidence; await mkdir(out, { recursive: true });
 const demo = JSON.parse(await readFile('artifacts/demo-v1.json', 'utf8'));
 const synthetic = JSON.parse(await readFile('artifacts/synthetic-v1.json', 'utf8'));
 const p5 = demo.plots.find(p => p.plot_id === 'P-0005');

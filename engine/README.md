@@ -66,6 +66,6 @@ Malformed, unclosed, self-intersecting, non-polygon, nonfinite or oversized geom
 
 Pinned dependencies are in requirements.txt; Python3.14 supplies `compression.zstd`. Source inputs remain immutable. Encoded bytes are deterministic for fixed input/settings/libzstd; cross-version byte identity is not promised. Benchmark timing naturally varies. Retained files are content-addressed, and prior losing/failed experiments remain distinct evidence.
 
-Artifacts include private supplied values. Keep them local; no publication permission is inferred. Full original source tiles are an ignored acquisition cache, unnecessary for normal queries/export/proof checks. Independent original-download readback verification can use that cache or reacquire official tiles.
+Artifacts include supplied company values. The user subsequently authorized tracked publication to the existing GitHub repository (see root README); that authorization does not alter source licenses or establish company-approved conclusions. Full original source tiles are an ignored acquisition cache, unnecessary for normal queries/export/proof checks. Independent original-download readback verification can use that cache or reacquire official tiles.
 
 Canopy2000 is not forest2020. Latest-release loss observations may differ from the supplier's historical source vintage. Tree-cover loss is not legal deforestation. Current Hansen inputs cannot establish a2020forest baseline or regulatory compliance.

@@ -1,6 +1,15 @@
 # Plotline — complete project handover
 
-**Checkpoint: 13 October 2026.** The user shortened the originally authorized four-hour lab and requested a stable checkpoint plus detailed handover. Feature expansion has stopped. This document is the next agent's and team's starting point; older planning documents remain useful history, not the current implementation state.
+**Completion checkpoint: 14 October 2026.** The user resumed work to finish the existing local prototype. The scientific/engine checkpoint below is preserved; this pass closes delivery and verification gaps without changing retained measurements or production query semantics.
+
+- Clean tracked-file exports reproduced the retained Hansen and JRC proofs, both P-0003 query access paths and the frontend build with new dependencies and no full-tile caches. This was on the same machine, not a cross-platform test.
+- `scripts/setup-local.sh` and `scripts/verify-local.sh` provide explicit setup and retained-proof/build commands.
+- The second independent integrated JRC browser review passed nine focused checks. A lead replay uses the portable `npm run qa:jrc --prefix app` command. The horizontally scrolling mobile native-cell table remains a documented non-blocking usability suggestion.
+- Frozen browser suites and the 14-check actual-service live suite pass on a configured alternate port. New runs preserve historical evidence and write into a unique ignored cache directory.
+- A [25-second silent walkthrough](lab/completion-demo.webm), [chapter metadata](lab/completion-demo.json), and [updated narration](lab/demo-script.md) provide a fallback demonstration. A recording command reproduces the journey against the actual app and live service.
+- [Completion verification](lab/completion-verification.json), [reproduction report](lab/completion-reproducibility.md), and [independent JRC review](lab/completion-browser-report.md) are the current evidence. The 13 October final-verification file remains historical.
+
+The agreed local software/demo slice is complete. Company-approved source/rule semantics, mitigation evidence, a representative production workload, team presenter and final organizer logistics remain external handoffs. No submission, company message, cloud deployment or legal approval is implied.
 
 ## 1. What exists now
 
@@ -28,7 +37,7 @@ Start with these documents:
 
 ## 2. Run it and verify it
 
-The existing project environment and dependencies are installed. Shared local servers are left running at **http://127.0.0.1:5173/** (app) and **http://127.0.0.1:8765/** (read-only API). They consume ordinary local resources, not agent inference. The latest recorded process/session identifiers are in the experience handoff; inspect actual process ownership before stopping anything because PIDs are transient.
+For a new checkout with Python 3.14 and Node/npm installed, run `scripts/setup-local.sh`, then `scripts/verify-local.sh`. The completion review used **http://127.0.0.1:5183/** with its API on **http://127.0.0.1:8766/**. Earlier port/PID records are historical; inspect current process ownership before stopping anything.
 
 On free ports, launch both services from the repository root:
 
@@ -60,6 +69,7 @@ npm test --prefix app
 npm run build --prefix app
 npm run qa:browser --prefix app
 npm run qa:live --prefix app
+npm run qa:jrc --prefix app
 ```
 
 The live browser suite requires actual healthy API responses; missing health exits with an explicit blocked result, not a successful skip. Browser setup is a separate, explicit command: `npm run qa:install-browser --prefix app`. Tests use app-local Playwright and its ignored project cache. They do not download browsers during a test run.
@@ -122,7 +132,7 @@ The historical custom/strong-control studies remain distinct from the accepted f
 
 The stable experience handoff records production build/typecheck success, **112 live-client checks**, **14 actual live browser checks**, **76 JRC loader checks**, **12 synthetic JRC display cases**, and real desktop/mobile JRC integration. Earlier frozen browser suites cover the queue, proof, notes, cohort index and receipts. Do not sum overlapping historical runs into a fabricated unique-test count. The final master run passed 198 engine tests, 298 frontend checks, the production build, both retained verifiers and the six strong-control negatives. Exact commands and artifact hashes are in [final-verification.json](lab/final-verification.json).
 
-Actual live browser checks use unaugmented service responses. They include exact P-0003 reproduction, edited bounds, tiny/no-center, outside, partial, oversized, cancellation, delayed older responses, unavailable/retry, complete cells, receipt bytes and a 390px keyboard journey. A second independent Parfit pass over the newly mounted JRC view was deferred; the lead's real desktop/mobile checks passed. This distinction remains explicit.
+Actual live browser checks use unaugmented service responses. They include exact P-0003 reproduction, edited bounds, tiny/no-center, outside, partial, oversized, cancellation, delayed older responses, unavailable/retry, complete cells, receipt bytes and a 390px keyboard journey. At the 13 October checkpoint a second independent pass was deferred. The 14 October independent JRC review now closes that gap; its nine checks and limitations are recorded separately, not added to historical totals.
 
 Missing external proof includes company-approved query semantics, historical evidence files, independent environmental ground truth, a representative production workload, broad geographic scaling and user studies. WDPA is not included; its use remains conditional on applicable terms. No legal decision engine, cloud deployment, public release, monitoring daemon or notification integration was built.
 
@@ -152,12 +162,12 @@ Branch: **`guru/plotline-research-lab`**. Initial data/context and planning were
 1. **One company review, one plot, one receipt.** Use P-0003 and ask for the exact historical source version/rule, mitigation reference meaning, and expected reviewer action. Request a reproducible expected-result case. The two bounded rule/vintage studies do not explain the supplied indications; do not invent an explanation.
 2. **Agree on the workload and output contract.** Interactive arbitrary regions, fixed-cohort batches and layer updates imply different representation choices. Select the format based on measured needs rather than protecting the custom codec or adding ML for its own sake.
 3. **Rehearse a narrow demonstration.** Show declaration → native evidence → original/compact proof → live temporary region → explicit unknown state. Include a losing candidate and the stronger standard baseline. Confirm sample-use permission and exact submission/pitch logistics before external presentation/publication.
-4. **Finish optional polish only if it supports that story.** RuleLens has a vetted 22.8 KB witness projection and a design handoff, but no implemented component. Keep it educational and separate from production query semantics. A second independent JRC browser review is a smaller verification follow-up.
+4. **Finish optional polish only if it supports that story.** RuleLens has a vetted 22.8 KB witness projection and a design handoff, but no implemented component. Keep it educational and separate from production query semantics. The second independent JRC browser review is now complete; its mobile table suggestion is optional.
 5. **Scale after the company clarifies the workload.** Add independent geographical cohorts, update/vintage handling and representative performance tests. Avoid an opaque risk score, supplier-label training, unsupported hectares or global performance extrapolation.
 
 ## 10. Restart instructions for another agent
 
-Read AGENTS.md, README and this handover first, then the relevant source references and latest lead/validator report. The user authorized local implementation/design/downloads, but subsequently requested an early checkpoint; do not automatically resume the unused portion of the four-hour lab or relaunch agents. Ask only if a genuinely new decision blocks a newly requested task.
+Read AGENTS.md, README and this handover first, then the relevant source references and latest lead/validator report. The 14 October instruction resumed and completed the existing software/demo slice after the early checkpoint. Do not treat the unused portion of the earlier four-hour lab as authorization for an open-ended new research program. Ask only if a genuinely new decision blocks a newly requested task.
 
 Treat original company inputs, current source chips and retained experiments as immutable. Use `guru/` branches and project commit conventions. Keep new write scopes disjoint if delegation is newly requested. Prefer `rg`; use `gh` for all GitHub access. Browser work must use T3 preview first, with documented unsupported/unavailable failures before switching systems.
 

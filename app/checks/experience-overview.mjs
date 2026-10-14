@@ -1,3 +1,5 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
+import { resolve } from 'node:path';
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= fileURLToPath(
@@ -14,11 +16,11 @@ try {
     });
     const page = await context.newPage();
     await context.route("**/*", (route) =>
-      new URL(route.request().url()).origin === "http://127.0.0.1:5173"
+      new URL(route.request().url()).origin === qaOrigin
         ? route.continue()
         : route.abort(),
     );
-    await page.goto("http://127.0.0.1:5173");
+    await page.goto(qaOrigin);
     await page
       .getByRole("button", { name: "All 17 plots", exact: true })
       .click();
@@ -47,7 +49,7 @@ try {
       false,
     );
     await page.screenshot({
-      path: `docs/lab/browser-lead-evidence/overview-${width}.png`,
+      path: resolve(qaEvidence, `overview-${width}.png`),
       fullPage: true,
     });
     await page
@@ -77,7 +79,7 @@ try {
     }),
   );
   await writeFile(
-    "docs/lab/browser-lead-evidence/overview-check.json",
+    resolve(qaEvidence, "overview-check.json"),
     JSON.stringify({ captured_at: new Date().toISOString(), results }, null, 2),
   );
 } finally {

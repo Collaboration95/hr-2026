@@ -1,3 +1,4 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -8,8 +9,8 @@ const appRoot = fileURLToPath(new URL('../', import.meta.url));
 const repoRoot = resolve(appRoot, '..');
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= resolve(appRoot, '.cache/playwright');
 const { chromium } = await import('playwright');
-const origin = 'http://127.0.0.1:5173';
-const out = resolve(repoRoot, 'docs/lab/browser-evidence'); await mkdir(out, { recursive: true });
+const origin = qaOrigin;
+const out = qaEvidence; await mkdir(out, { recursive: true });
 const data = JSON.parse(await readFile(resolve(repoRoot, 'artifacts/demo-v1.json'), 'utf8'));
 const plots = [...data.plots].sort((a, b) => a.plot_id.localeCompare(b.plot_id));
 const selected = plots.find(p => p.plot_id === 'P-0001');

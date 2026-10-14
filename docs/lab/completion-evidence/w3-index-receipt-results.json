@@ -1,0 +1,156 @@
+{
+  "timestamp": "2026-10-14T02:09:21.628Z",
+  "artifact": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "checks": [
+    {
+      "name": "integrated period tables preserve all17 counts and separate declarations",
+      "status": "PASS",
+      "detail": [
+        {
+          "plots": 17,
+          "displayedCells": 34,
+          "start": 2024,
+          "end": 2025,
+          "positivePlots": 5,
+          "sum": 47
+        },
+        {
+          "plots": 17,
+          "displayedCells": 425,
+          "start": 2001,
+          "end": 2025,
+          "positivePlots": 16,
+          "sum": 257
+        },
+        {
+          "plots": 17,
+          "displayedCells": 51,
+          "start": 2021,
+          "end": 2023,
+          "positivePlots": 3,
+          "sum": 40
+        }
+      ]
+    },
+    {
+      "name": "actual displayed CSV download has51rows and exact source context",
+      "status": "PASS",
+      "detail": {
+        "downloadedFilename": "plotline-source-counts-2021-2023.csv",
+        "rows": 51,
+        "zeroRows": 48
+      }
+    },
+    {
+      "name": "positive earlierperiod count navigates exact plot/year with visible keyboard focus",
+      "status": "PASS",
+      "detail": {
+        "focus": "plot-review-heading",
+        "top": 100,
+        "headerBottom": 76,
+        "year": "Year 2022, 38 observed loss cells",
+        "plot": "P-00019.14 ha declared"
+      }
+    },
+    {
+      "name": "return to index is reachable and focuses visible heading",
+      "status": "PASS",
+      "detail": {
+        "focused": true,
+        "top": 99.59375,
+        "headerBottom": 76,
+        "period": "2021–2023"
+      }
+    },
+    {
+      "name": "readable receipt disclosures open by keyboard and show actual plot/year",
+      "status": "PASS",
+      "detail": [
+        "Observation periods and support",
+        "Supplier record and geometry",
+        "Native grid and query rules",
+        "Source band files and metadata",
+        "Retained compact store · engine claims",
+        "Benchmark experiment identity"
+      ]
+    },
+    {
+      "name": "full hashes rules grid engine claims and unavailable metadata retain meaning",
+      "status": "PASS",
+      "detail": {
+        "completeFileHashes": 7,
+        "nullNodata": [
+          "Unavailable",
+          "Unavailable",
+          "Unavailable"
+        ],
+        "claims": "Engine-reported, not independently reverified"
+      }
+    },
+    {
+      "name": "raw disclosures and original receipt download coexist with readable basis",
+      "status": "PASS",
+      "detail": {
+        "filename": "P-0001-receipt.json",
+        "selectedPlot": "P-0001"
+      }
+    },
+    {
+      "name": "390px integrated expanded receipt fits and Escape restores opener",
+      "status": "PASS",
+      "detail": {
+        "dimensions": {
+          "viewport": 390,
+          "left": 19,
+          "right": 371,
+          "clientWidth": 350,
+          "scrollWidth": 350,
+          "overflowingFields": []
+        },
+        "returnedFocus": {
+          "text": "Receipt",
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "320px integrated expanded receipt fits and Escape restores opener",
+      "status": "PASS",
+      "detail": {
+        "dimensions": {
+          "viewport": 320,
+          "left": 19,
+          "right": 301,
+          "clientWidth": 280,
+          "scrollWidth": 280,
+          "overflowingFields": []
+        },
+        "returnedFocus": {
+          "text": "Receipt",
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile index period→positivecell→receipt preserves exact context below header",
+      "status": "PASS",
+      "detail": {
+        "focus": "plot-review-heading",
+        "y": 121.5,
+        "headerBottom": 100
+      }
+    },
+    {
+      "name": "focused integration has no page errors",
+      "status": "PASS"
+    }
+  ],
+  "observations": [
+    {
+      "returnPeriod": "2021–2023",
+      "departurePeriod": "2021–2023",
+      "note": "Period state remount behavior recorded, not an assumed component persistence promise."
+    }
+  ],
+  "errors": []
+}
