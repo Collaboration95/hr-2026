@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { Pill, EmptyState } from "./components/Primitives";
+import { useEffect, useId, useState } from "react";
+import { EmptyState, Glyph, Icon } from "./components/Primitives";
 import type { Geometry, Result } from "./types";
+import "./styles/proof.css";
+
 type FixtureCell = {
   geometry: Geometry;
   properties: {
@@ -65,7 +67,21 @@ const geomPath = (g: Geometry) =>
           .join(" ") + "Z",
     )
     .join(" ");
+
+/** Fictitious fixtures. This label is part of the lab and must never be separated from it. */
+function Banner() {
+  return (
+    <p className="edge-banner" role="note">
+      <Icon name="alert" size={16} />
+      <span>
+        <strong>Fictitious 4×4 grid:</strong> not supplier data and not part of the real fidelity results.
+      </span>
+    </p>
+  );
+}
+
 export default function EdgeLab() {
+  const hatchId = useId();
   const [lab, setLab] = useState<Lab | null>(null),
     [error, setError] = useState(""),
     [id, setId] = useState("partial_absence_unknown"),
@@ -96,30 +112,44 @@ export default function EdgeLab() {
     return () => controller.abort();
   }, []);
   if (error)
-    return <EmptyState title="Support lab unavailable" detail={error} />;
-  if (!lab) return <p role="status">Loading separate synthetic test cases…</p>;
+    return (
+      <section className="edge-lab" aria-label="Synthetic query-support lab">
+        <Banner />
+        <EmptyState title="Support lab unavailable" detail={error} />
+      </section>
+    );
+  if (!lab)
+    return (
+      <section className="edge-lab" aria-label="Synthetic query-support lab">
+        <Banner />
+        <p role="status" className="pl-muted">
+          Loading separate synthetic test cases…
+        </p>
+      </section>
+    );
   const c = lab.cases.find((v) => v.case_id === id) || lab.cases[0],
     r = c.result,
     p = r.periods[period],
     limits = period.split("-").map(Number),
     disabled = c.missing_bands.length > 0;
+  const signal =
+    p?.mapped_loss_present === true
+      ? "Observed"
+      : p?.mapped_loss_present === false
+        ? "Not observed under this query"
+        : "Unknown";
   return (
     <section className="edge-lab" aria-label="Synthetic query-support lab">
-      <div className="section-title">
-        <div>
-          <span className="eyebrow">Separate synthetic test grid</span>
-          <h3>When is zero still unknown?</h3>
-        </div>
-        <Pill tone="warning">Artificial fixtures</Pill>
+      <Banner />
+      <div className="edge-head">
+        <p className="pl-eyebrow">Synthetic fixtures · {lab.cases.length} cases</p>
+        <h3>When is zero still unknown?</h3>
       </div>
-      <p className="lab-disclaimer">
-        These six engine-generated cases use a fictitious 4 × 4 grid. They are
-        not Hansen observations, supplier records, or part of the 17-plot
-        evidence cohort.
-      </p>
-      <div className="lab-cases" aria-label="Synthetic test case">
+      <div className="edge-cases" role="group" aria-label="Synthetic test case">
         {lab.cases.map((v) => (
           <button
+            type="button"
+            className="pl-chip"
             key={v.case_id}
             aria-pressed={v.case_id === c.case_id}
             onClick={() => setId(v.case_id)}
@@ -128,24 +158,20 @@ export default function EdgeLab() {
           </button>
         ))}
       </div>
-      <div className="lab-layout">
-        <div className="lab-geometry">
+      <div className="edge-layout">
+        <div className="edge-geometry">
           <svg
             viewBox="0 0 300 280"
             role="img"
             aria-label={`${copy[c.case_id]?.[0] || c.case_id}; exact synthetic query boundary and native-cell support`}
           >
             <defs>
-              <pattern
-                id="unknown-hatch"
-                width="6"
-                height="6"
-                patternUnits="userSpaceOnUse"
-              >
-                <path d="M0 6L6 0" stroke="#ac7852" strokeWidth="1" />
+              <pattern id={hatchId} width="6" height="6" patternUnits="userSpaceOnUse">
+                <rect width="6" height="6" className="edge-hatch__bg" />
+                <path d="M0 6L6 0" className="edge-hatch__line" />
               </pattern>
             </defs>
-            <text x="88" y="28" className="lab-svg-label">
+            <text x="88" y="28" className="edge-svg-label">
               AVAILABLE 4 × 4 GRID
             </text>
             {Array.from({ length: 16 }, (_, i) => (
@@ -155,8 +181,7 @@ export default function EdgeLab() {
                 y={55 + Math.floor(i / 4) * 45}
                 width="45"
                 height="45"
-                fill="#e3e8dc"
-                stroke="#c4d0b9"
+                className="edge-grid-cell"
               />
             ))}
             {c.evidence.features.map((cell, i) => {
@@ -167,61 +192,60 @@ export default function EdgeLab() {
                 v.lossyear + 2000 <= limits[1];
               const unavailable =
                 disabled || !v.in_coverage || v.datamask === 0;
+              const kind = unavailable
+                ? "unknown"
+                : v.datamask === 2
+                  ? "water"
+                  : event
+                    ? "event"
+                    : "land";
               return (
                 <g key={i}>
                   <path
                     d={geomPath(cell.geometry)}
-                    fill={
-                      unavailable
-                        ? "url(#unknown-hatch)"
-                        : v.datamask === 2
-                          ? "#c5d6dc"
-                          : event
-                            ? "#db824c"
-                            : "#aabd92"
-                    }
-                    stroke="#f5f7ef"
+                    className={`edge-cell edge-cell--${kind}`}
+                    style={kind === "unknown" ? { fill: `url(#${hatchId})` } : undefined}
                   />
                   <circle
                     cx={45 + (v.center[0] + 1) * 45}
                     cy={235 - v.center[1] * 45}
                     r="2.5"
-                    fill="#244531"
+                    className="edge-center"
                   />
                 </g>
               );
             })}
-            <path
-              d={geomPath(c.geometry)}
-              fill="none"
-              stroke="#213f31"
-              strokeWidth="2.5"
-            />
-            <text x="45" y="262" className="lab-svg-label">
+            <path d={geomPath(c.geometry)} className="edge-boundary" />
+            <text x="45" y="262" className="edge-svg-label">
               Exact query boundary · native cell centers
             </text>
           </svg>
-          <div className="lab-legend">
+          <div className="edge-legend">
             <span>
-              <i className="hatch" />
+              <i className="edge-swatch edge-swatch--unknown" />
               Unknown / disabled
             </span>
             <span>
-              <i className="event" />
+              <i className="edge-swatch edge-swatch--event" />
               Observed event
             </span>
             <span>
-              <i className="land" />
+              <i className="edge-swatch edge-swatch--land" />
               Observed land
+            </span>
+            <span>
+              <i className="edge-swatch edge-swatch--water" />
+              Water
             </span>
           </div>
         </div>
-        <div className="lab-result">
+        <div className="edge-result">
           <h4>{copy[c.case_id]?.[0] || c.case_id}</h4>
-          <p>{copy[c.case_id]?.[1]}</p>
-          <div className="segmented lab-period">
+          <p className="pl-muted">{copy[c.case_id]?.[1]}</p>
+          <div className="pl-segmented edge-period" role="group" aria-label="Period">
             {Object.keys(r.periods).map((k) => (
               <button
+                type="button"
                 key={k}
                 aria-pressed={period === k}
                 onClick={() => setPeriod(k)}
@@ -231,24 +255,27 @@ export default function EdgeLab() {
             ))}
           </div>
           <div
-            className={`lab-signal ${p?.mapped_loss_present == null ? "unknown" : ""}`}
+            className={`edge-signal${p?.mapped_loss_present == null ? " is-unknown pl-hatch" : p.mapped_loss_present ? " is-loss" : ""}`}
           >
-            <span>{period.replace("-", "–")} mapped-loss signal</span>
+            <span className="pl-eyebrow">{period.replace("-", "–")} mapped-loss signal</span>
             <strong>
-              {p?.mapped_loss_present === true
-                ? "Observed"
-                : p?.mapped_loss_present === false
-                  ? "Not observed under this query"
-                  : "Unknown"}
+              {p?.mapped_loss_present === true ? (
+                <Glyph kind="loss" />
+              ) : p?.mapped_loss_present === false ? (
+                <Glyph kind="loss" hollow />
+              ) : (
+                <Glyph kind="unknown" />
+              )}{" "}
+              {signal}
             </strong>
-            <small>
+            <small className="pl-num">
               {p?.observed_loss_cell_count == null
                 ? "Analytical count unavailable"
                 : `${p.observed_loss_cell_count} observed loss cells`}{" "}
               · support: {r.support}
             </small>
           </div>
-          <dl>
+          <dl className="pl-dl">
             <div>
               <dt>Selected / valid-land cells</dt>
               <dd>
@@ -272,20 +299,22 @@ export default function EdgeLab() {
           </dl>
         </div>
       </div>
-      <details className="json-details">
-        <summary>Inspect this synthetic query result</summary>
-        <pre>
-          {JSON.stringify(
-            {
-              case_id: c.case_id,
-              synthetic: true,
-              missing_bands: c.missing_bands,
-              result: c.result,
-            },
-            null,
-            2,
-          )}
-        </pre>
+      <details className="pl-disclosure">
+        <summary>This synthetic query result (JSON)</summary>
+        <div className="pl-disclosure__body">
+          <pre>
+            {JSON.stringify(
+              {
+                case_id: c.case_id,
+                synthetic: true,
+                missing_bands: c.missing_bands,
+                result: c.result,
+              },
+              null,
+              2,
+            )}
+          </pre>
+        </div>
       </details>
     </section>
   );

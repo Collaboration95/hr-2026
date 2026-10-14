@@ -1,5 +1,6 @@
-import { useId, useState } from 'react';
+import { useId, useState, useSyncExternalStore } from 'react';
 import { Icon } from './components/Primitives';
+import type { Plot } from './types';
 import './styles/notes.css';
 
 type Props = { plotId: string; contextKey: string };
@@ -23,6 +24,25 @@ const drafts = new Map<string, Draft>();
 const limit = 4000;
 const storageKey = ({ plotId, contextKey }: Props) =>
   `plotline:analyst-note:v1:${JSON.stringify([contextKey, plotId])}`;
+
+/** Exact supplier-row identity: the receipt's row hash, else the sorted supplier fields. */
+export function noteContextKey(plot: Plot): string {
+  const receipt = plot.receipt as { supplier_row_sha256?: string } | null;
+  return receipt?.supplier_row_sha256 ||
+    JSON.stringify(Object.entries(plot.supplier).sort(([a], [b]) => a.localeCompare(b)));
+}
+
+// Lets a collapsed "Analyst note" heading show whether a note or draft exists.
+const listeners = new Set<() => void>();
+const notify = () => listeners.forEach(listener => listener());
+const subscribe = (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; };
+export type NoteState = 'none' | 'saved' | 'draft' | 'issue';
+export function useNoteState(props: Props): NoteState {
+  return useSyncExternalStore(subscribe, () => {
+    const draft = loadDraft(storageKey(props), props);
+    return draft.storageIssue ? 'issue' : draft.text !== draft.savedText ? 'draft' : draft.savedAt ? 'saved' : 'none';
+  });
+}
 
 function loadDraft(key: string, { plotId, contextKey }: Props): Draft {
   const existing = drafts.get(key);
@@ -63,7 +83,7 @@ function NoteEditor({ plotId, contextKey, noteKey }: Props & { noteKey: string }
   const [feedback, setFeedback] = useState('');
   const dirty = draft.text !== draft.savedText;
   const otherDrafts = [...drafts.entries()].filter(([key, value]) => key !== noteKey && value.text !== value.savedText);
-  const update = (next: Draft) => { drafts.set(noteKey, next); setDraft(next); };
+  const update = (next: Draft) => { drafts.set(noteKey, next); setDraft(next); notify(); };
 
   function save() {
     const savedAt = new Date().toISOString();
@@ -107,19 +127,19 @@ function NoteEditor({ plotId, contextKey, noteKey }: Props & { noteKey: string }
   }
 
   return <section className="pl-notes" aria-labelledby={`${id}-heading`}>
-    <div className="pl-notes__heading"><h3 id={`${id}-heading`}>Analyst question</h3><span>Local-only annotation</span></div>
-    <p className="pl-notes__scope" id={`${id}-scope`}>For {plotId} and this supplier record. Kept in this browser; not sent or added to source evidence.</p>
+    <h3 className="pl-sr-only" id={`${id}-heading`}>Analyst note for {plotId}</h3>
+    <p className="pl-notes__scope" id={`${id}-scope`}>For {plotId} and this supplier record. Kept in this browser only: not sent anywhere and not added to the source evidence.</p>
     {otherDrafts.length > 0 && <p className="pl-notes__warning" role="status">Unsaved drafts retained for {Array.from(new Set(otherDrafts.map(([, value]) => value.plotId))).join(', ')} (other plots or supplier versions). Return to that record to save. Refreshing or closing loses unsaved drafts.</p>}
     <label htmlFor={`${id}-text`}>Question or observation</label>
-    <textarea id={`${id}-text`} value={draft.text} maxLength={limit} rows={4}
+    <textarea id={`${id}-text`} className="pl-textarea" value={draft.text} maxLength={limit} rows={4}
       aria-describedby={`${id}-scope ${id}-limit ${id}-state`}
       onChange={event => { update({ ...draft, text: event.target.value.slice(0, limit) }); setFeedback(''); }} />
-    <div className="pl-notes__meta"><span id={`${id}-state`}>{dirty ? 'Unsaved draft · Save before refreshing or closing.' : draft.savedAt ? `Saved locally ${new Date(draft.savedAt).toLocaleString()}` : 'No saved note.'}</span><span id={`${id}-limit`}>{draft.text.length} / {limit}</span></div>
+    <div className="pl-notes__meta"><span id={`${id}-state`} className={dirty ? 'is-dirty' : undefined}>{dirty ? 'Unsaved draft · Save before refreshing or closing.' : draft.savedAt ? `Saved locally ${new Date(draft.savedAt).toLocaleString()}` : 'No saved note.'}</span><span id={`${id}-limit`}>{draft.text.length} / {limit}</span></div>
     <div className="pl-notes__actions">
-      <button type="button" className="pl-button--accent" onClick={save} disabled={!dirty && !draft.storageIssue}>Save note</button>
-      <button type="button" onClick={exportNote} disabled={!draft.text && !draft.savedAt}><Icon name="download" size={16} />Export note JSON</button>
+      <button type="button" className="pl-btn pl-btn--primary pl-btn--sm" onClick={save} disabled={!dirty && !draft.storageIssue}>Save note</button>
+      <button type="button" className="pl-btn pl-btn--sm" onClick={exportNote} disabled={!draft.text && !draft.savedAt}><Icon name="download" size={15} />Export note JSON</button>
     </div>
     <p className="pl-notes__feedback" role="status" aria-live="polite" aria-atomic="true">{feedback}</p>
-    {draft.storageIssue && <p className="pl-notes__warning" role="alert">{draft.storageIssue}</p>}
+    {draft.storageIssue && <p className="pl-notes__warning pl-notes__warning--error" role="alert">{draft.storageIssue}</p>}
   </section>;
 }
