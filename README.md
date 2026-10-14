@@ -4,7 +4,7 @@ A week-long project for Hack & Hire, organized by Projet with NUS CAT. Participa
 
 This repository holds the project context and working local implementation for the selected SystemEarth track. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
 
-**Start here:** [Demo script](docs/lab/demo-script.md) · [Reproduce from a clean checkout](docs/lab/completion-reproducibility.md) · [Completion verification](docs/lab/completion-verification.json) · [Agent-swarm methodology](docs/lab/research-methodology.md) · [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [13 October verification](docs/lab/final-verification.json)
+**Start here:** [Claude UI redesign handoff](HANDOFF.md) · [Demo script](docs/lab/demo-script.md) · [Reproduce from a clean checkout](docs/lab/completion-reproducibility.md) · [Completion verification](docs/lab/completion-verification.json) · [Agent-swarm methodology](docs/lab/research-methodology.md) · [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [13 October verification](docs/lab/final-verification.json)
 
 ## Current status
 
@@ -70,7 +70,7 @@ These are the current references. Read the documents relevant to the task.
 | [Company sample audit](docs/research/company-sample-audit.md) | Reproducible join, geography, field interpretation, and declaration-backed review leads. |
 | [Recovered conversation context](docs/research/prior-thread-context.md) | October 11 history, active-session provenance, and corrected earlier claims. |
 | [Product direction](docs/planning/systemearth-product-direction.md) | Recommended Plotline scope and engineering proof. |
-| [Claude UX handoff](docs/planning/claude-ux-handoff.md) | Current design handoff for Claude. |
+| [Claude UI redesign handoff](HANDOFF.md) | Current complete-redesign brief, code map, data contracts and acceptance checks. The earlier planning brief is historical. |
 | [Public-layer acquisition report](docs/research/layer-acquisition.md) | Final three-band Hansen acquisition evidence and missing/conditional layers. |
 | [Hackathon judge review](docs/planning/hackathon-judge-review.md) | Mock project evaluation; not an official judging rubric. |
 

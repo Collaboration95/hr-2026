@@ -11,6 +11,8 @@
 
 The agreed local software/demo slice is complete. Company-approved source/rule semantics, mitigation evidence, a representative production workload, team presenter and final organizer logistics remain external handoffs. No submission, company message, cloud deployment or legal approval is implied.
 
+**Next authorized task:** The user requested a complete UI redesign by Claude. [HANDOFF.md](../HANDOFF.md) is the current redesign brief; the verified implementation below is its baseline. Astra prepared the handoff without changing the UI.
+
 ## 1. What exists now
 
 Plotline is a working local geospatial evidence-review product for SystemEarth's Hack & Hire challenge. It connects supplier declarations to mapped observations and makes the original-versus-compact computation inspectable. The implementation is Python 3.14 plus React/TypeScript/Vite.
