@@ -1,87 +1,29 @@
-import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
-import { resolve } from 'node:path';
-import assert from "node:assert/strict";
-import { fileURLToPath } from "node:url";
-process.env.PLAYWRIGHT_BROWSERS_PATH ||= fileURLToPath(
-  new URL("../.cache/playwright", import.meta.url),
-);
-const { chromium } = await import("playwright");
-import { writeFile } from "node:fs/promises";
-const browser = await chromium.launch({ headless: true });
-const results = [];
+import assert from 'node:assert/strict';
+import { harness, demo, noOverflow, selectedCells } from '../tests/frozen-qa.mjs';
+const {page,check,go,shot,errors,finish} = await harness('experience-overview');
 try {
-  for (const width of [1440, 390]) {
-    const context = await browser.newContext({
-      viewport: { width, height: 1000 },
-    });
-    const page = await context.newPage();
-    await context.route("**/*", (route) =>
-      new URL(route.request().url()).origin === qaOrigin
-        ? route.continue()
-        : route.abort(),
-    );
-    await page.goto(qaOrigin);
-    await page
-      .getByRole("button", { name: "All 17 plots", exact: true })
-      .click();
+  for (const width of [1440,390]) await check(`${width}px region markers clear controls and keyboard opens native evidence`,async()=>{
+    await page.setViewportSize({width,height:1000}); await go('#/map');
+    await page.locator('.pl-map[data-raster=ready]').waitFor();
     const measured = await page.evaluate(() => {
-      const title = document
-        .querySelector(".overview-context")
-        .getBoundingClientRect();
-      const markers = [...document.querySelectorAll(".plot-geometry")].map(
-        (el) => {
-          const b = el.getBoundingClientRect();
-          return {
-            name: el.getAttribute("aria-label"),
-            overlapsTitle:
-              b.left < title.right &&
-              b.right > title.left &&
-              b.top < title.bottom &&
-              b.bottom > title.top,
-          };
-        },
-      );
-      return { title: title.toJSON(), markers, viewport: innerWidth };
+      // Region context now lives in the inspector. Map controls/coordinates are
+      // the fixed obstructions that clickable plot markers must remain clear of.
+      const controls = [...document.querySelectorAll('.pl-map__controls,.pl-map__coords')].map(e=>e.getBoundingClientRect());
+      const markers = [...document.querySelectorAll('.pl-map__plot')].map(e=>{
+        const r=e.querySelector('.pl-map__hit').getBoundingClientRect();
+        return { name:e.getAttribute('aria-label'), overlapsControls:controls.some(b=>r.left<b.right && r.right>b.left && r.top<b.bottom && r.bottom>b.top) };
+      });
+      return {markers,viewport:innerWidth};
     });
-    assert.equal(measured.markers.length, 17);
-    assert.equal(
-      measured.markers.some((m) => m.overlapsTitle),
-      false,
-    );
-    await page.screenshot({
-      path: resolve(qaEvidence, `overview-${width}.png`),
-      fullPage: true,
-    });
-    await page
-      .getByRole("button", { name: "Select P-0003 on map", exact: true })
-      .focus();
-    await page.keyboard.press("Enter");
-    assert.equal(await page.locator(".is-overview").count(), 0);
-    assert.equal(await page.locator(".native-cell").count(), 87);
-    assert.equal(
-      await page
-        .getByRole("button", { name: "Annual loss", exact: true })
-        .isEnabled(),
-      true,
-    );
-    results.push({
-      width,
-      allMarkersClearTitle: true,
-      samePlotKeyboardSelectionFocusesBoundary: true,
-      ...measured,
-    });
-    await context.close();
-  }
-  console.log(
-    JSON.stringify({
-      passed: results.length,
-      viewports: results.map((x) => x.width),
-    }),
-  );
-  await writeFile(
-    resolve(qaEvidence, "overview-check.json"),
-    JSON.stringify({ captured_at: new Date().toISOString(), results }, null, 2),
-  );
-} finally {
-  await browser.close();
-}
+    assert.equal(measured.markers.length,demo.plots.length);
+    assert.deepEqual(measured.markers.filter(m=>m.overlapsControls),[]);
+    await noOverflow(page); await shot(String(width));
+    await page.getByRole('button',{name:'Select P-0003 on map',exact:true}).focus(); await page.keyboard.press('Enter');
+    assert.equal(await page.locator('#plot-review-heading').innerText(),'P-0003');
+    await selectedCells(page,demo.plots.find(p=>p.plot_id==='P-0003'),2025);
+    assert.equal(await page.locator('.pl-scrub').getAttribute('data-mode'),'plot');
+    assert.equal(await page.getByRole('group',{name:'Map layer',exact:true}).getByRole('button',{name:'Loss',exact:true}).isEnabled(),true);
+    await noOverflow(page); return measured;
+  });
+  await check('experience overview has no page errors',async()=>assert.deepEqual(errors,[]));
+} finally {await finish();}
