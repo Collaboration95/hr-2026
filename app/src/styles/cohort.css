@@ -33,9 +33,12 @@
 .co-matrix-sub__item { display: inline-flex; align-items: center; gap: 6px; }
 
 .co-matrix { table-layout: fixed; }
+.co-matrix__decl { width: 22%; }
+.co-matrix__mapped { width: 30%; }
+.co-matrix__unknown { width: 18%; }
 .co-matrix caption { padding: 0; height: 0; overflow: hidden; clip-path: inset(50%); position: absolute; }
-.co-matrix th, .co-matrix td { vertical-align: top; padding: var(--pl-3) var(--pl-4); font-family: var(--pl-font); }
-.co-matrix thead th { position: static; font-size: var(--pl-text-sm); letter-spacing: 0; text-transform: none; color: var(--pl-text-2); font-weight: 600; background: var(--pl-panel); }
+.co-matrix.pl-table th, .co-matrix.pl-table td { vertical-align: top; padding: var(--pl-3) var(--pl-4); font-family: var(--pl-font); }
+.co-matrix.pl-table thead th { position: static; font-size: var(--pl-text-sm); letter-spacing: 0; text-transform: none; color: var(--pl-text-2); font-weight: 600; background: var(--pl-panel); overflow-wrap: anywhere; }
 .co-matrix thead th.co-matrix__col { border-top: 3px solid var(--pl-loss); }
 .co-matrix thead th.co-matrix__col:nth-child(3) { border-top-color: color-mix(in srgb, var(--pl-loss) 45%, var(--pl-bg)); }
 .co-matrix thead th.co-matrix__col:nth-child(4) { border-top-color: var(--pl-unknown); }
@@ -167,7 +170,9 @@
   /* The glyph still carries filled = indication, hollow = none; the words stay available to assistive tech. */
   .co-decl-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .co-sticky--decl .pl-glyph { margin-right: 0 !important; }
-  .co-matrix th, .co-matrix td { padding: var(--pl-2); }
+  .co-matrix.pl-table th, .co-matrix.pl-table td { padding: var(--pl-2) 5px; }
   .co-matrix tbody th.co-matrix__row { min-width: 0; width: 28%; }
-  .co-matrix thead th { font-size: var(--pl-text-xs); }
+  .co-matrix.pl-table thead th { font-size: var(--pl-text-xs); }
+  .co-ids { gap: var(--pl-1); }
+  .co-id { padding-inline: 2px; font-size: var(--pl-text-xs); }
 }
