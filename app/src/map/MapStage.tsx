@@ -390,7 +390,8 @@ export default function MapStage({
 
   // Legend starts open on a roomy stage and collapsed on a narrow one, until the user chooses.
   const [legendChoice, setLegendChoice] = useState<boolean | null>(null);
-  const legendOpen = legendChoice ?? vp.width >= 740;
+  // In plot view the legend would cover the plot, so it starts collapsed there.
+  const legendOpen = legendChoice ?? (vp.width >= 740 && !selected);
   const ariaLabel = selected
     ? cellShapes
       ? `Map: ${selected.id} exact boundary and ${cellShapes.length} native cell footprints`
