@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Plotline · Design system</title>
+<!-- Single source of truth: the app's own tokens and primitives. Serve from the repo root
+     (python3 -m http.server 8090) and open /design/style-guide.html. -->
+<link rel="stylesheet" href="../app/src/styles/tokens.css" />
+<link rel="stylesheet" href="../app/src/styles/base.css" />
+<style>
+  body { overflow: auto; }
+  .sg { max-width: 1180px; margin: 0 auto; padding: 48px 32px 96px; display: grid; gap: 56px; }
+  .sg header h1 { font-size: var(--pl-text-4xl); letter-spacing: -0.03em; margin: 10px 0 12px; }
+  .sg header p { max-width: 62ch; color: var(--pl-text-2); font-size: var(--pl-text-lg); }
+  .sg h2 { font-size: var(--pl-text-2xl); margin: 8px 0 18px; }
+  .sg section > p.lead { color: var(--pl-text-2); max-width: 70ch; margin-bottom: 20px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--pl-line); border-radius: var(--pl-radius); overflow: hidden; background: var(--pl-raised); }
+  .swatch i { display: block; height: 64px; }
+  .swatch div { padding: 10px 12px; display: grid; gap: 2px; font-size: var(--pl-text-sm); }
+  .swatch code { color: var(--pl-text-3); font-size: 11px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .type-sample { display: grid; gap: 10px; }
+  .type-sample span { display: flex; gap: 16px; align-items: baseline; }
+  .type-sample code { width: 56px; color: var(--pl-text-3); font-size: 11px; }
+  .frame { position: relative; aspect-ratio: 16 / 9; border-radius: var(--pl-radius-lg); overflow: hidden; background: var(--pl-void); border: 1px solid var(--pl-line); }
+  .frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; object-fit: cover; }
+  .frame .title { position: absolute; left: 36px; bottom: 32px; display: grid; gap: 10px; max-width: 60%; text-shadow: 0 1px 10px rgb(0 0 0 / 0.9); }
+  .frame .title .pl-eyebrow { color: var(--pl-text); }
+  .frame .title h3 { font-size: clamp(22px, 3.4vw, 44px); letter-spacing: -0.03em; text-shadow: 0 2px 18px rgb(0 0 0 / 0.8); }
+  .frame .legend { position: absolute; right: 24px; bottom: 24px; padding: 10px 12px; display: grid; gap: 6px; font-size: 12px; background: rgb(8 17 14 / 0.82); border: 1px solid var(--pl-line); border-radius: var(--pl-radius); }
+  .frame .legend span { display: flex; gap: 8px; align-items: center; }
+  .frame .legend i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+  .controls { margin-top: 12px; }
+  .two-accounts { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--pl-line); border-radius: var(--pl-radius); overflow: hidden; }
+  .two-accounts > div { padding: 14px 16px; display: grid; gap: 8px; background: var(--pl-raised); }
+  .two-accounts > div:first-child { border-top: 2px solid var(--pl-declared); border-right: 1px solid var(--pl-line); }
+  .two-accounts > div:nth-child(2) { border-top: 2px solid var(--pl-loss); }
+  .two-accounts .q { grid-column: 1 / -1; border-top: 1px solid var(--pl-line); }
+  table.pl-table td.hot { color: var(--pl-loss); }
+</style>
+</head>
+<body>
+<main class="sg">
+  <header>
+    <span class="pl-eyebrow">Plotline · design system · v2 · 15 Oct 2026</span>
+    <h1>Night survey</h1>
+    <p>A dark, map-first instrument. Panels sit quietly around a luminous raster. Colour is reserved for meaning: every data concept owns one hue, and none is reused for anything else. Spec: <code>design/DESIGN.md</code>. Tokens: <code>app/src/styles/tokens.css</code>.</p>
+  </header>
+
+  <section>
+    <span class="pl-eyebrow">01 · Colour</span>
+    <h2>One hue per meaning</h2>
+    <p class="lead">Lilac only ever means <em>declared by the supplier</em>. Ember only ever means <em>mapped tree-cover loss</em>. Lime means <em>proof / exact match</em>. Amber is a <em>question for a human</em>, never a violation. Unknown is always hatched.</p>
+    <div class="swatches" id="data-swatches"></div>
+    <h2 style="margin-top:32px">Surfaces & text</h2>
+    <div class="swatches" id="surface-swatches"></div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">02 · Map frame</span>
+    <h2>The map is the data</h2>
+    <p class="lead">This frame is drawn from <code>app/public/region/hansen-bands.png</code>, the actual Hansen 2025 v1.13 bands packed losslessly into RGBA and recoloured here. Use it as the hero frame for slides, videos and writeups. Drag the year to "burn in" loss.</p>
+    <div class="frame">
+      <canvas id="map" width="1233" height="604" aria-label="Hansen raster recoloured: canopy, water and loss up to the selected year"></canvas>
+      <div class="title">
+        <span class="pl-eyebrow">Chai Buri · Surat Thani · TH</span>
+        <h3>Stack the layers.<br />Keep the answer.</h3>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--pl-loss)"></i><b id="yr">2025</b>&nbsp;loss</span>
+        <span><i style="background:var(--pl-loss-past)"></i>earlier loss</span>
+        <span><i style="background:var(--pl-canopy-100)"></i>canopy 2000</span>
+        <span><i style="background:var(--pl-water)"></i>water</span>
+        <span><i style="background:var(--pl-forest)"></i>JRC 2020 forest</span>
+      </div>
+    </div>
+    <div class="row controls">
+      <label class="pl-field" style="display:flex;gap:10px;align-items:center">Year <input id="year" type="range" min="2001" max="2025" value="2025" /></label>
+      <button class="pl-btn" id="jrc" aria-pressed="false">JRC 2020 forest</button>
+      <button class="pl-btn" id="play"><span>Play</span></button>
+    </div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">03 · Type</span>
+    <h2>System sans for words, mono for every number</h2>
+    <div class="grid2">
+      <div class="type-sample">
+        <span><code>56</code><b style="font-size:56px;letter-spacing:-.03em">17/17</b></span>
+        <span><code>40</code><b style="font-size:40px;letter-spacing:-.02em">Same answer</b></span>
+        <span><code>28</code><b style="font-size:28px">Two accounts</b></span>
+        <span><code>20</code><b style="font-size:20px">Declared by supplier</b></span>
+        <span><code>14</code><span style="font-size:14px">Body text at 14px with 1.45 leading.</span></span>
+        <span><code>11</code><span class="pl-eyebrow">Eyebrow label</span></span>
+      </div>
+      <div class="type-sample pl-mono">
+        <span><code>mono</code>P-0001 · 9.14 ha</span>
+        <span><code>mono</code>535,012 B → 585,293 B</span>
+        <span><code>mono</code>98.77225° E · EPSG:4326</span>
+        <span><code>mono</code>sha256 5b69f231…</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">04 · Glyphs & chips</span>
+    <h2>Semantic vocabulary</h2>
+    <div class="row" style="margin-bottom:16px">
+      <span class="pl-chip pl-chip--declared"><span class="pl-glyph pl-glyph--declared"></span>Declared indication</span>
+      <span class="pl-chip pl-chip--declared"><span class="pl-glyph pl-glyph--declared is-hollow"></span>Declared none</span>
+      <span class="pl-chip pl-chip--loss"><span class="pl-glyph pl-glyph--loss"></span>Mapped loss</span>
+      <span class="pl-chip"><span class="pl-glyph pl-glyph--loss is-hollow"></span>No mapped loss</span>
+      <span class="pl-chip pl-chip--forest"><span class="pl-glyph pl-glyph--forest"></span>JRC forest</span>
+      <span class="pl-chip pl-chip--proof">✓ Identical</span>
+      <span class="pl-chip pl-chip--review"><span class="pl-glyph pl-glyph--review">?</span>Question for review</span>
+      <span class="pl-chip pl-chip--unknown"><span class="pl-glyph pl-glyph--unknown"></span>Unknown</span>
+      <span class="pl-chip pl-chip--error">Encoding mismatch</span>
+    </div>
+    <div class="row">
+      <button class="pl-btn pl-btn--primary">Proof →</button>
+      <button class="pl-btn">Receipt</button>
+      <button class="pl-btn pl-btn--ghost">Ghost</button>
+      <button class="pl-btn pl-btn--sm">Small</button>
+      <div class="pl-segmented"><button aria-pressed="true">Loss</button><button aria-pressed="false">Canopy 2000</button><button aria-pressed="false">Land mask</button></div>
+      <span class="pl-kbd">J</span><span class="pl-kbd">K</span><span class="pl-kbd">⌘K</span>
+    </div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">05 · Patterns</span>
+    <h2>Two accounts, one plot</h2>
+    <div class="grid2">
+      <div class="two-accounts">
+        <div><span class="pl-eyebrow" style="color:var(--pl-declared)">◆ Declared by supplier</span><dl class="pl-dl"><div><dt>Analysis 2021–23</dt><dd>No indication</dd></div><div><dt>Final status</dt><dd>Deforestation-free</dd></div><div><dt>EUDR (declared)</dt><dd>Compliant</dd></div></dl></div>
+        <div><span class="pl-eyebrow" style="color:var(--pl-loss)">■ Mapped by Plotline</span><dl class="pl-dl"><div><dt>2021–23 loss</dt><dd>38 cells</dd></div><div><dt>2024–25 loss</dt><dd>0 cells</dd></div><div><dt>Support</dt><dd>complete</dd></div></dl></div>
+        <div class="q"><div class="pl-callout pl-callout--review"><strong>Question for review</strong>&nbsp;The layer shows loss in 2022 that the declaration does not mention. Was it forest or plantation rotation?</div></div>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <div class="row" style="gap:28px">
+          <div class="pl-stat pl-stat--lg pl-stat--proof"><span class="pl-stat__value">17/17</span><span class="pl-stat__label">plots identical</span></div>
+          <div class="pl-stat pl-stat--lg"><span class="pl-stat__value">−8.6<small> %</small></span><span class="pl-stat__label">storage, loader boundary</span></div>
+          <div class="pl-stat pl-stat--lg pl-stat--loss"><span class="pl-stat__value">38</span><span class="pl-stat__label">loss cells · 2022</span></div>
+        </div>
+        <div class="pl-callout pl-callout--proof">✓ <span><strong>Same query outputs.</strong> Encoding agreement, not satellite truth or legal compliance.</span></div>
+        <div class="pl-callout pl-callout--unknown"><span><strong>Unknown.</strong> Partial support and no witnessed event: no conclusion either way.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">06 · Tables</span>
+    <h2>Dense, quiet, mono numerals</h2>
+    <div class="pl-table-wrap"><table class="pl-table">
+      <thead><tr><th>Plot</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+      <tbody>
+        <tr><th>P-0001</th><td>0</td><td class="hot">38</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><th>P-0005</th><td>0</td><td>0</td><td>0</td><td class="hot">7</td><td class="hot">11</td></tr>
+        <tr><th>P-0016</th><td>0</td><td>0</td><td class="hot">1</td><td class="hot">1</td><td>0</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="pl-eyebrow">07 · Paper variant</span>
+    <h2>For print and HTML writeups</h2>
+    <p class="lead">Add <code>data-theme="paper"</code> to any container to switch to the light variant. The data hues are darkened for contrast on white.</p>
+    <div data-theme="paper" style="background:var(--pl-bg);color:var(--pl-text);padding:24px;border-radius:12px;display:grid;gap:14px">
+      <span class="pl-eyebrow">Writeup · finding 1</span>
+      <h3 style="font-size:28px">The declarations don't line up with the layer they cite</h3>
+      <div class="row"><span class="pl-chip pl-chip--declared"><span class="pl-glyph pl-glyph--declared"></span>5 declared</span><span class="pl-chip pl-chip--loss"><span class="pl-glyph pl-glyph--loss"></span>3 mapped</span><span class="pl-chip pl-chip--review">0 overlap</span></div>
+      <p style="color:var(--pl-text-2);max-width:70ch">Paper mode keeps exactly the same semantic vocabulary, so a slide, a printed page and the app all read the same way.</p>
+    </div>
+  </section>
+</main>
+<script type="module">
+const css = getComputedStyle(document.documentElement);
+const v = (n) => css.getPropertyValue(n).trim();
+const data = [["--pl-loss","Mapped loss (selected year)"],["--pl-loss-past","Earlier loss"],["--pl-forest","JRC 2020 forest"],["--pl-canopy-100","Canopy 2000 · 100%"],["--pl-water","Water"],["--pl-declared","Declared by supplier"],["--pl-proof","Proof · exact match"],["--pl-review","Question for review"],["--pl-error","Failure / mismatch"],["--pl-unknown","Unknown (hatched)"]];
+const surf = [["--pl-void","Void"],["--pl-bg","Background"],["--pl-panel","Panel"],["--pl-raised","Raised"],["--pl-line","Line"],["--pl-text","Text"],["--pl-text-2","Text 2"],["--pl-text-3","Text 3"]];
+for (const [id, list] of [["data-swatches", data], ["surface-swatches", surf]])
+  document.getElementById(id).innerHTML = list.map(([t, l]) => `<div class="swatch"><i style="background:var(${t})${t === "--pl-unknown" ? ";background-image:var(--pl-hatch)" : ""}"></i><div><b>${l}</b><code>${t} · ${v(t)}</code></div></div>`).join("");
+
+const hex = (s) => { const m = s.replace("#", ""); return [0, 2, 4].map((i) => parseInt(m.slice(i, i + 2), 16)); };
+const load = async (url) => { const b = await (await fetch(url)).blob(); const bm = await createImageBitmap(b, { colorSpaceConversion: "none", premultiplyAlpha: "none" }); const c = new OffscreenCanvas(bm.width, bm.height); const x = c.getContext("2d"); x.drawImage(bm, 0, 0); return x.getImageData(0, 0, bm.width, bm.height); };
+const canvas = document.getElementById("map"), ctx = canvas.getContext("2d");
+let hansen, jrc, showJrc = false;
+function paint(year) {
+  const [c0, c1, w, l, lp, f] = ["--pl-canopy-0", "--pl-canopy-100", "--pl-water", "--pl-loss", "--pl-loss-past", "--pl-forest"].map((t) => hex(v(t)));
+  const out = ctx.createImageData(hansen.width, hansen.height), s = hansen.data, d = out.data;
+  const yc = year - 2000;
+  // JRC grid is 3x finer; sample its nearest cell at each Hansen centre (display only).
+  const jw = jrc?.width, jh = jrc?.height;
+  for (let i = 0, p = 0; i < s.length; i += 4, p++) {
+    const ly = s[i], dm = s[i + 1], tc = s[i + 2] / 100;
+    let px;
+    if (dm === 2) px = w; else if (dm === 0) px = [51, 65, 59];
+    else if (ly && ly === yc) px = l; else if (ly && ly < yc) px = lp;
+    else px = [0, 1, 2].map((k) => c0[k] + (c1[k] - c0[k]) * tc * 0.7);
+    if (showJrc && jrc) {
+      const x = p % hansen.width, y = (p / hansen.width) | 0;
+      const jx = Math.min(jw - 1, Math.round(((98.77225 + (x + 0.5) * 0.00025) - 98.77241666666667) * 12000 - 0.5));
+      const jy = Math.min(jh - 1, Math.round((8.581916666666666 - (8.582 - (y + 0.5) * 0.00025)) * 12000 - 0.5));
+      if (jx >= 0 && jy >= 0 && jrc.data[(jy * jw + jx) * 4] === 1) px = px.map((c, k) => c * 0.45 + f[k] * 0.55);
+    }
+    d[i] = px[0]; d[i + 1] = px[1]; d[i + 2] = px[2]; d[i + 3] = 255;
+  }
+  ctx.putImageData(out, 0, 0);
+  document.getElementById("yr").textContent = year;
+}
+const yearInput = document.getElementById("year");
+[hansen, jrc] = await Promise.all([load("../app/public/region/hansen-bands.png"), load("../app/public/region/jrc-forest-2020.png")]);
+paint(+yearInput.value);
+yearInput.addEventListener("input", () => paint(+yearInput.value));
+document.getElementById("jrc").addEventListener("click", (e) => { showJrc = !showJrc; e.currentTarget.setAttribute("aria-pressed", showJrc); paint(+yearInput.value); });
+let timer;
+document.getElementById("play").addEventListener("click", (e) => {
+  if (timer) { clearInterval(timer); timer = null; e.currentTarget.textContent = "Play"; return; }
+  let y = +yearInput.value >= 2025 ? 2001 : +yearInput.value; e.currentTarget.textContent = "Pause";
+  timer = setInterval(() => { yearInput.value = y; paint(y); if (++y > 2025) { clearInterval(timer); timer = null; e.currentTarget.textContent = "Play"; } }, 320);
+});
+</script>
+</body>
+</html>

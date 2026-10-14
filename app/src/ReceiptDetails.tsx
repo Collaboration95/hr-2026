@@ -141,7 +141,7 @@ export default function ReceiptDetails({
         <Field label="Selected support">{scalar(result?.support)}</Field>
       </dl>
 
-      <details className="pl-receipt__disclosure">
+      <details className="pl-disclosure pl-receipt__disclosure">
         <summary>Observation periods and support</summary>
         <p className="pl-receipt__note">
           Stored results for this plot. Counts describe observed native cells,
@@ -149,8 +149,8 @@ export default function ReceiptDetails({
           finding.
         </p>
         {periods.length > 0 ? (
-          <div className="pl-receipt__table-wrap">
-            <table>
+          <div className="pl-table-wrap pl-receipt__table-wrap">
+            <table className="pl-table">
               <caption>Mapped observations by query period</caption>
               <thead>
                 <tr>
@@ -200,7 +200,7 @@ export default function ReceiptDetails({
         </dl>
       </details>
 
-      <details className="pl-receipt__disclosure">
+      <details className="pl-disclosure pl-receipt__disclosure">
         <summary>Supplier record and geometry</summary>
         <p className="pl-receipt__note">
           Supplier statements remain declarations. Record and geometry hashes
@@ -224,7 +224,7 @@ export default function ReceiptDetails({
         <Files value={receipt.supplier_sources} />
       </details>
 
-      <details className="pl-receipt__disclosure">
+      <details className="pl-disclosure pl-receipt__disclosure">
         <summary>Native grid and query rules</summary>
         <dl>
           <Field label="Coordinate reference system">{scalar(grid.crs)}</Field>
@@ -273,7 +273,7 @@ export default function ReceiptDetails({
         </p>
       </details>
 
-      <details className="pl-receipt__disclosure">
+      <details className="pl-disclosure pl-receipt__disclosure">
         <summary>Source band files and metadata</summary>
         <p className="pl-receipt__note">
           Files recorded in the export; paths are local identifiers, not
@@ -304,7 +304,7 @@ export default function ReceiptDetails({
         </p>
       </details>
 
-      <details className="pl-receipt__disclosure">
+      <details className="pl-disclosure pl-receipt__disclosure">
         <summary>Retained compact store · engine claims</summary>
         <dl>
           <Field label="Store path" code>
@@ -327,7 +327,7 @@ export default function ReceiptDetails({
       </details>
 
       {(data.benchmark != null || data.benchmark_status != null) && (
-        <details className="pl-receipt__disclosure">
+        <details className="pl-disclosure pl-receipt__disclosure">
           <summary>Benchmark experiment identity</summary>
           <dl>
             <Field label="Binding status reported by export">
