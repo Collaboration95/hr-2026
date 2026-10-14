@@ -220,6 +220,7 @@ export default function CohortIndex({ data, jrc, onReview }: Props) {
               Plots by supplier declaration (rows) and mapped tree-cover loss in 2021–2023 (columns). Plot IDs open the
               plot on the map.
             </caption>
+            <colgroup><col className="co-matrix__decl" /><col className="co-matrix__mapped" /><col className="co-matrix__mapped" /><col className="co-matrix__unknown" /></colgroup>
             <thead>
               <tr>
                 <th scope="col">

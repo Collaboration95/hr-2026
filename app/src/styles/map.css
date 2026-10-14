@@ -93,6 +93,12 @@
 .pl-map__status .pl-spinner { width: 10px; height: 10px; border-width: 1.5px; }
 
 /* ---- SVG overlay ---- */
+.pl-map__graticule { pointer-events: none; }
+.pl-map__graticule line { stroke: var(--pl-line); stroke-opacity: 0.55; stroke-width: 1px; }
+.pl-map__graticule text {
+  fill: var(--pl-text-3); font-family: var(--pl-font-mono); font-size: var(--pl-text-xs);
+  paint-order: stroke; stroke: var(--pl-void); stroke-width: 3px; stroke-linejoin: round;
+}
 .pl-map__halo { fill: none; stroke: var(--pl-map-halo); stroke-width: 4.5px; stroke-linejoin: round; pointer-events: none; }
 .pl-map__outline { fill: rgb(243 247 242 / 0.05); stroke: var(--pl-plot-line); stroke-width: 1.5px; stroke-linejoin: round; transition: stroke-width var(--pl-fast) var(--pl-ease), fill var(--pl-fast); }
 .pl-map__outline.is-selected { fill: none; stroke-width: 2px; pointer-events: none; }
@@ -113,6 +119,8 @@
 .native-cell { fill: transparent; stroke: rgb(255 255 255 / 0.35); stroke-width: 1px; cursor: pointer; pointer-events: all; outline: none; transition: fill var(--pl-fast); }
 .native-cell:hover { stroke: rgb(255 255 255 / 0.9); fill: rgb(255 255 255 / 0.1); }
 .native-cell.is-event { fill: color-mix(in srgb, var(--pl-loss) 85%, transparent); stroke: color-mix(in srgb, var(--pl-loss) 55%, white); stroke-width: 1.25px; shape-rendering: crispEdges; }
+/* With the JRC overlay on, let the 2020 forest tint show through loss cells: the overlay exists to answer "was this forest?" */
+.pl-map[data-jrc="true"] .native-cell.is-event { fill: color-mix(in srgb, var(--pl-loss) 28%, transparent); stroke: var(--pl-loss); stroke-width: 2px; }
 .native-cell.is-event:hover { fill: color-mix(in srgb, var(--pl-loss) 95%, transparent); stroke: #fff; }
 .native-cell.is-unknown { stroke: rgb(127 145 138 / 0.7); }
 .native-cell:focus-visible { stroke: var(--pl-focus); stroke-width: 2px; }
@@ -181,7 +189,7 @@
 .pl-scrub__bar.is-zero { height: 2px; border-radius: 0; background: var(--pl-text-3); opacity: 0.85; }
 .pl-scrub__col.is-selected .pl-scrub__bar.is-zero { background: var(--pl-text-2); }
 .pl-scrub__bar.is-unknown { height: calc(var(--pl-scrub-bar-h) * 0.55); border: 1px dashed var(--pl-unknown); border-bottom: 0; background-color: transparent; background-image: var(--pl-hatch); opacity: 1 !important; }
-.pl-scrub__yr { display: block; height: 14px; font-family: var(--pl-font-mono); font-size: 10px; line-height: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pl-scrub__yr { display: block; height: 14px; font-family: var(--pl-font-mono); font-size: 11px; line-height: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pl-scrub__col.is-selected .pl-scrub__yr { font-weight: 700; }
 .pl-scrub__yr-full { display: none; }
 
@@ -191,7 +199,12 @@
 }
 @container plscrub (max-width: 747px) {
   .pl-scrub__layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 96px; gap: 8px; height: auto; }
-  .pl-scrub__track { min-width: 650px; }
+  .pl-scrub__track { min-width: 500px; }
+}
+@media (max-width: 759.98px) {
+  /* The track scrolls on phones, so labels can meet the 12px readability floor. */
+  .pl-scrub__track { min-width: 720px; }
+  .pl-scrub__yr { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pl-scrub__bar, .pl-scrub__col, .pl-map__outline, .pl-map__plot { transition: none; }

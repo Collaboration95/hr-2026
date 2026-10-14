@@ -195,7 +195,7 @@ export default function MapStage({
   const awaitingBounds = raster.status === "loading" && !raster.chipBounds;
   const regionBounds = useMemo<Bounds | null>(() => rasterBounds ?? unionBounds(shapes.map((s) => s.bounds)), [rasterBounds, shapes]);
   const regionCam = useMemo(
-    () => (regionBounds && vp.width > 0 && !awaitingBounds ? fitBounds(regionBounds, vp.width, vp.height, rasterBounds ? 12 : 64) : null),
+    () => (regionBounds && vp.width > 0 && !awaitingBounds ? fitBounds(regionBounds, vp.width, vp.height, Math.min(64, vp.width * 0.1)) : null),
     [regionBounds, rasterBounds, awaitingBounds, vp],
   );
   const minPx = regionCam ? regionCam.pxPerDeg * 0.9 : 1;
@@ -405,7 +405,7 @@ export default function MapStage({
   };
 
   return (
-    <section className={`pl-map${legendOpen ? " is-legend-open" : ""}`} aria-label={ariaLabel} data-raster={raster.status} data-layer={layer}>
+    <section className={`pl-map${legendOpen ? " is-legend-open" : ""}`} aria-label={ariaLabel} data-raster={raster.status} data-layer={layer} data-jrc={showJrc && !!data ? "true" : undefined}>
       <div className="pl-map__body">
         <div
           ref={viewportRef}
@@ -427,6 +427,7 @@ export default function MapStage({
                   <path d="M0 3H6" style={{ stroke: "var(--pl-unknown)", strokeWidth: 1.5 }} />
                 </pattern>
               </defs>
+              {!selected && <Graticule cam={cam} vp={vp} bounds={regionBounds} legendOpen={legendOpen} />}
               <PlotsLayer shapes={shapes} selectedId={selected?.id ?? null} cam={cam} vp={vp} onSelect={onSelectPlot} />
               {selected && cellShapes && cellFlags && (
                 <CellsLayer cells={cellShapes} flags={cellFlags} cam={cam} vp={vp} pinnedKey={pinned?.key ?? null} hatchId={hatchId} onPin={onPinCell} />
@@ -494,6 +495,43 @@ export default function MapStage({
 }
 
 /* ------------------------------------------------------------------ overlays */
+
+/** Geographic context beyond the source chip, using the raster's display camera. */
+function Graticule({ cam, vp, bounds, legendOpen }: { cam: Camera; vp: Viewport; bounds: Bounds | null; legendOpen: boolean }) {
+  const [west, north] = unproject(cam, vp, 0, 0);
+  const [east, south] = unproject(cam, vp, vp.width, vp.height);
+  const target = (east - west) * 140 / vp.width;
+  const magnitude = 10 ** Math.floor(Math.log10(target));
+  const interval = [1, 2, 5, 10].find((n) => n * magnitude >= target)! * magnitude;
+  const decimals = Math.max(0, -Math.floor(Math.log10(interval)));
+  // Reserve the top controls and bottom legend/read-out; label only clear void.
+  const chipTop = bounds ? project(cam, vp, bounds[0], bounds[3])[1] : 0;
+  const chipBottom = bounds ? project(cam, vp, bounds[0], bounds[1])[1] : vp.height;
+  const longitudeY = chipTop >= 122 ? Math.min(chipTop - 12, vp.height - 76)
+    : chipBottom <= vp.height - 100 ? Math.max(110, chipBottom + 18) : null;
+  const meridians: { value: number; x: number }[] = [];
+  const parallels: { value: number; y: number }[] = [];
+  for (let value = Math.ceil(west / interval) * interval; value <= east; value += interval)
+    meridians.push({ value, x: project(cam, vp, value, cam.lat)[0] });
+  for (let value = Math.ceil(south / interval) * interval; value <= north; value += interval)
+    parallels.push({ value, y: project(cam, vp, cam.lon, value)[1] });
+  return (
+    <g className="pl-map__graticule" aria-hidden="true">
+      {meridians.map(({ value, x }) => (
+        <g key={`lon-${value}`}>
+          <line x1={x} x2={x} y1={0} y2={vp.height} />
+          {longitudeY !== null && x > 48 && x < vp.width - 48 && <text x={x + 5} y={longitudeY}>{Math.abs(value).toFixed(decimals)}°{value < 0 ? "W" : "E"}</text>}
+        </g>
+      ))}
+      {parallels.map(({ value, y }) => (
+        <g key={`lat-${value}`}>
+          <line x1={0} x2={vp.width} y1={y} y2={y} />
+          {y > 105 && y < vp.height - (legendOpen ? 240 : 90) && <text x={8} y={y - 5}>{Math.abs(value).toFixed(decimals)}°{value < 0 ? "S" : "N"}</text>}
+        </g>
+      ))}
+    </g>
+  );
+}
 
 function PlotsLayer({ shapes, selectedId, cam, vp, onSelect }: {
   shapes: PlotShape[]; selectedId: string | null; cam: Camera; vp: Viewport; onSelect: (id: string) => void;
