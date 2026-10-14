@@ -35,16 +35,20 @@ Runtime loading validates shape and internal semantics before replacing accepted
 
 ## Main interactions
 
-- Evidence index shows actual counts across all 17 plots and 25 years, with supplier declarations in a separate column. Positive counts open their exact plot/year; displayed counts export locally as CSV. Sidebar filters only affect the review queue.
-- Search or filter the queue; J/K changes the selected plot outside form inputs and editable fields.
-- Select a loss year; the map and observed-cell count change together. Canopy is year-2000 context; Land mask shows selected support.
-- All 17 plots opens a location index. Select a marker to focus the exact supplied geometry. Layer controls are disabled in location overview.
-- Inspect native cells as a table for keyboard-accessible raw values and per-year event filtering. Unknown/masked values remain unavailable, never no-event.
-- Click the observed-cell count or Show proof to compare the same query on original/compact outputs. Back returns to the originating count or header.
-- Receipt presents source/grid/rule/hash/declaration details in readable disclosures, retains raw JSON, and downloads local JSON.
-- Commands (Cmd/Ctrl+K) provides contextual actions. Escape closes its native dialog. `/` focuses plot search.
-- Analyst questions are separate local browser annotations keyed by exact supplier record. Saved notes survive refresh; unsaved drafts survive plot switches in that tab but not refresh. Export notes separately from source receipts.
-- Query-limit cases below proof use a fictitious 4×4 engine test grid. They never enter real cohort counts.
+The UI was redesigned on 15 October 2026 ("Night survey", see [design/DESIGN.md](../design/DESIGN.md)). Routes are hash-based and deep-linkable: `#/map`, `#/map/P-0001/2022`, `#/cohort`, `#/proof/P-0005/2025`, `#/live`.
+
+- **Map** opens on the region view. The basemap is the pinned Hansen 2025 v1.13 chip, packed losslessly into `public/region/hansen-bands.png` by `scripts/render-region.py` and recoloured in the browser; the JRC 2020 v4 overlay is drawn on its own grid. These rasters are display only, and counts always come from the validated export. **Loss** / **Canopy 2000** / **Land mask** change the raster; **JRC 2020 forest** toggles the overlay. Wheel zoom and drag pan work; **Region** and **Fit plot** reset the view.
+- **Year scrubber:** ▶ plays 2001→2025. ←/→/Home/End work when the scrubber has focus. It marks the supplier's 2021–23 window and the EUDR cut-off.
+- **Plot rail:** search (`/`), filters (*All*, *Declared indication*, *Mapped loss 2021–23*, *Declared ≠ mapped*) and J/K. Filters affect only the rail.
+- **Inspector:**
+  - ◆ *Declared by supplier* and ■ *Mapped by Plotline* side by side, with a review question generated from fixed templates;
+  - the selected-year count, which opens Proof (`#annual-proof-trigger`) and shows the compact-copy agreement;
+  - disclosures for **Native cells** (keyboard table, "Show on map"), **JRC 2020 baseline (separate source)** and **Analyst note** (local only, same storage key and limits as before).
+- **Cohort:** declared-vs-mapped matrix for 2021–23, and a 17 × 25 loss barcode. Positive cells open the plot and year. **Export displayed counts · CSV** keeps the earlier escaping and context rows.
+- **Proof:** export-derived hero numbers (exact-match plots, pixel fidelity, storage change, fresh-process and hot-query timing), the field-by-field original/compact comparison, every storage candidate including the losers and the separate standard-format control, timing distributions, a research summary and the fictitious-grid query-limits lab.
+- **Receipt** (inspector button or ⌘K): readable fields, raw JSON disclosures and **Download receipt JSON**.
+- **Live query:** an exact plot polygon or a temporary rectangle, with every lifecycle state shown, the bound live receipt and complete native-cell evidence.
+- **Keyboard:** ⌘/Ctrl+K opens commands. Esc closes dialogs; on the map it returns to the region view.
 
 ## Repeatable checks
 
@@ -113,4 +117,4 @@ PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:jrc --prefix app
 PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run demo:record --prefix app
 ```
 
-The recording command uses the installed browser and a healthy live service. It captures the actual review → cohort → cells → proof → separate JRC → live-query journey, with no synthetic successful responses. It writes a silent WebM and a chapter JSON; narrate using [the demo script](../docs/lab/demo-script.md). Recording is a demo fallback, not a substitute for the proof verifiers.
+The recording command uses the installed browser and a healthy live service. It captures the pitch flow (region playback → JRC overlay → P-0001 accounts → cohort → P-0005 proof → receipt → live query), with no synthetic successful responses. It writes a silent WebM and a chapter JSON; narrate using [the demo script](../docs/lab/demo-script.md). Recording is a demo fallback, not a substitute for the proof verifiers.

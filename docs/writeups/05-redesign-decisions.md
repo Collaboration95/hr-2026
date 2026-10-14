@@ -40,10 +40,47 @@ The old app worked and was rigorous, but for a three-minute pitch:
 
 ## How it was built
 
-1. I (Claude Opus) read the brief, the data, the research and the old UI. I wrote the spec, tokens, base styles, shared primitives, shared plot-fact logic and the raster packer, then stubbed every cross-module interface so parallel work would compile.
-2. **Five Claude Sonnet 5.5 agents** built in parallel, each owning separate files: map, app shell, inspector, cohort + proof, and live + JRC.
-3. Then integration review, a test-update pass and verification (results below).
+1. **Design and contracts (Claude Opus).** I read the brief, the data, the research and the old UI. Then I wrote the spec, tokens, base styles, shared primitives, the shared declared/mapped logic (`review/plot-facts.ts`) and the raster packer (`app/scripts/render-region.py`, which reads its own PNG back and checks every pixel against the source). Every cross-module interface was stubbed first so parallel work compiled from minute one.
+2. **Implementation (5 × Claude Sonnet 5.5, in parallel, disjoint files):** map, app shell, inspector, cohort + proof, and live + JRC.
+3. **Your mid-session instruction:** you asked that workhorse work go to subagents, with **GPT-6.1 Sol** preferred over Sonnet. The two Sonnet test agents had just restarted after a usage limit and had written nothing, so I stopped them and relaunched the remaining work on Sol:
+   - one rewrote the frozen-review browser suites and added a new redesign suite;
+   - one rewrote the live and JRC suites and the demo recorder;
+   - one did a visual QA and polish pass across 5 viewports and 76 screenshots.
+4. **Review and integration (me):**
+   - A design review of screenshots, which gave the issue lists handed to the agents.
+   - A few direct fixes: the supplier dates restored to the Declared column, no focus box on programmatically focused headings, the JRC toggle state, the plot-view legend collapsed by default, and 12px phone year labels (a real bug the tests caught).
+   - Loss cells now go translucent under the JRC overlay, so the "was this 2020 forest?" question can be read off the map.
 
-## Verification
+## Verification (15 October, on `guru/plotline-ui-redesign`)
 
-*To be completed after integration; see the session summary.*
+| Check | Result |
+| --- | --- |
+| TypeScript (`npx tsc -b`) | clean |
+| Frontend checks (`npm test --prefix app`) | **298 / 298** |
+| Frozen browser suites (`qa:browser`) | **66 / 66**: review 18, cycle3 14, index/receipt 11, index 3, overview 3, **new redesign suite 17** |
+| Actual-service live suite (`qa:live`) | **15 / 15** |
+| Integrated JRC suite (`qa:jrc`) | **13 / 13** |
+| `scripts/verify-local.sh` | pass: Hansen and JRC verifiers, P-0003 full and indexed source = compact, and the production build |
+| Display raster exactness | Browser-decoded bands hash-equal the source GeoTIFF bands (map agent), and the new suite checks the browser decode against the PNG bytes |
+
+The new redesign suite checks:
+- deep links and back/forward;
+- the exact decode of the display raster;
+- that the region scrubber totals equal pixel counts computed in Node;
+- scrubber and native-cell counts against the JSON (P-0001/2022: 121 cells and 38 events; P-0005/2025: 262 and 11);
+- that every plot lands in the right matrix cell;
+- rail filter counts;
+- the JRC overlay state;
+- Esc back to the region view;
+- no horizontal page overflow at 390px on every route.
+
+Every old assertion was ported to an equivalent check on the new design. None were deleted to get a pass. The written audit (old check → new check → why) is in each run's QA output and in the test reports.
+
+**Demo fallback video:** [`docs/lab/redesign-demo.webm`](../lab/redesign-demo.webm), with [chapters](../lab/redesign-demo.json). It is 55 s at 1440×900 and was recorded against the real app and API. It follows the pitch flow: region playback, JRC overlay, P-0001's two accounts, the cohort, P-0005 proof, the receipt, then a live query. It was recorded just before the last two visual tweaks; re-record with `npm run demo:record --prefix app` if you want those included.
+
+## Known limits
+
+- Touch devices can't pan or zoom the map, although tap, Region and Fit plot all work. The rail and tables are the full non-map path.
+- Native cells on the map are not individual Tab stops. Keyboard access to them is through the inspector's Native cells table.
+- The JRC overlay and hover tooltip are display-only renderings of the source raster. All counts shown as evidence come from the validated exports.
+- Exploratory cross-layer figures, such as "under 1% of post-2020 loss in 2020 forest", come from `scripts/explore_cross_layer.py`. They are not in the app as verified results.
