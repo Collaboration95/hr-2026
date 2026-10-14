@@ -190,9 +190,10 @@ Stack unchanged: React 19 + TypeScript + Vite, no new runtime dependencies. Vali
 
 | Area | Files |
 | --- | --- |
-| Design system (design owner) | `styles/tokens.css`, `styles/base.css`, `components/Primitives.tsx`, `design/*` |
+| Design system (design owner) | `styles/tokens.css`, `styles/base.css`, `components/Primitives.tsx`, `review/plot-facts.ts` (shared declared/mapped semantics), `design/*` |
 | Map | `map/region-raster.ts`, `map/MapStage.tsx`, `map/TimeScrubber.tsx`, `map/projection.ts`, `styles/map.css` |
-| Shell + review | `App.tsx`, `main.tsx`, `shell/*`, `review/*`, `CellTable.tsx`, `AnalystNotes.tsx`, `ReceiptDetails.tsx`, `styles/shell.css`, `styles/review.css`, `styles/notes.css`, `styles/receipt.css`; deletes `app.css` and `styles/system.css` at the end |
+| Shell | `App.tsx`, `main.tsx`, `index.html`, `shell/*` (routing, top bar, plot rail, command palette, receipt dialog), `ReceiptDetails.tsx`, `styles/shell.css`, `styles/receipt.css`; deletes `app.css` and `styles/system.css` at the end |
+| Inspector | `review/*` except `plot-facts.ts` (`RegionBrief.tsx`, `PlotInspector.tsx` and its parts), `CellTable.tsx`, `AnalystNotes.tsx`, `styles/review.css`, `styles/notes.css` |
 | Cohort + proof | `CohortIndex.tsx`, `proof/ProofView.tsx`, `Benchmark.tsx`, `EdgeLab.tsx`, `styles/cohort.css`, `styles/proof.css` |
 | Live + JRC | `LiveQueryLab.tsx`, `JrcBaseline.tsx`, `styles/live-query.css`, `styles/jrc-baseline.css` |
 | Tests (later phase) | `app/tests/*`, `app/checks/*browser*`, `app/checks/experience-*.mjs`, `app/scripts/record-demo.mjs` |
@@ -229,6 +230,16 @@ type TimeScrubberProps = {
 type ProofViewProps = { plot: Plot; data: Demo; year: number; onReceipt: () => void; onOpenPlot: (id: string, year: number) => void };
 // CohortIndex.tsx (default export, existing name)
 type CohortProps = { data: Demo; jrc: JrcArtifact | null; onReview: (plotId: string, year: number) => void };
+// review/RegionBrief.tsx (default export)
+type RegionBriefProps = { data: Demo; onSelectPlot: (id: string) => void };
+// review/PlotInspector.tsx (default export)
+type PlotInspectorProps = {
+  data: Demo; plot: Plot; year: number;
+  jrc: JrcArtifact | null; jrcStatus: "idle" | "loading" | "ready" | "error"; jrcError?: string; onLoadJrc: () => void;
+  onProof: (origin: "count" | "header") => void; onReceipt: () => void; onPinCell: (cell: Cell) => void;
+};
+// review/plot-facts.ts: declaredIndication, mappedLoss, periodCount, yearCount, yearSeries, lossYears,
+// differs, cleanLabel, evidenceReference, reviewQuestion. Use these everywhere; do not re-derive.
 // JrcBaseline.tsx: keep default export JrcBaseline({data, plotId}); add named export
 export function JrcSummary(props: { data: JrcArtifact | null; status: "idle" | "loading" | "ready" | "error"; error?: string; plotId: string; onLoad: () => void }): JSX.Element;
 // LiveQueryLab.tsx: default export unchanged ({ data, selectedPlotId })
