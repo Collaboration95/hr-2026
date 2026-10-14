@@ -1,0 +1,40 @@
+{
+  "valid": true,
+  "plot_count": 17,
+  "compact_plot_count": 17,
+  "checks": "exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code",
+  "failures": []
+}
+{
+  "valid": true,
+  "failures": [],
+  "plot_count": 17,
+  "full_pixel_count": 6684255,
+  "source_and_compact_raw_masks_equal": true,
+  "independent_plot_checks": 17,
+  "benchmark_bound": true,
+  "full_source_cache_present": true,
+  "note": "Local pinned-input recomputation; hashes are integrity identities, not signatures or source-accuracy claims."
+}
+P-0003 Hansen full query: source and compact results match.
+P-0003 Hansen indexed query: source and compact results match.
+
+> plotline-local@0.1.0 build
+> npm run sync-data && tsc -b && vite build
+
+
+> plotline-local@0.1.0 sync-data
+> python3 scripts/sync-data.py
+
+Copied canonical engine artifact (17 plots).
+Copied separate synthetic query-support lab.
+Copied accepted separate JRC 2020 v4 companion.
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.57 kB │ gzip:   0.36 kB
+dist/assets/index-Cn9PVWKl.css   57.84 kB │ gzip:  12.31 kB
+dist/assets/index-jAtA6eb1.js   361.29 kB │ gzip: 111.71 kB
+✓ built in 358ms

@@ -1,0 +1,212 @@
+{
+  "timestamp": "2026-10-14T02:09:19.826Z",
+  "scope": "02:32 cycle3 changed UI, not V5/V7 malformed fixtures",
+  "artifact": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "checks": [
+    {
+      "name": "cycle3 accepted artifact matches canonical",
+      "status": "PASS",
+      "detail": {
+        "content_sha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+        "experiment_id": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+        "overall_storage_choice": "separate_zstd_l19"
+      }
+    },
+    {
+      "name": "expanded cell table count → proof focus and scroll → return context",
+      "status": "PASS",
+      "detail": {
+        "arrival": {
+          "id": "proof-selected-year",
+          "top": 528.640625,
+          "bottom": 572.140625,
+          "viewport": 1000,
+          "text": "2025 observed loss cells1111",
+          "scrollY": 87
+        },
+        "returned": {
+          "id": "annual-proof-trigger",
+          "top": 350.90625,
+          "bottom": 390.90625,
+          "viewport": 1000,
+          "text": "11observed loss cells ",
+          "scrollY": 503
+        },
+        "tableReopened": false
+      }
+    },
+    {
+      "name": "integrated note drafts survive plot and proof switches",
+      "status": "PASS"
+    },
+    {
+      "name": "saved note survives reload under exact supplier-row context",
+      "status": "PASS",
+      "detail": {
+        "plot": "P-0005",
+        "context_key": "d2629019feddaa42314be795cdd9530f24215462acf90b35c5bae87f2567a29e",
+        "saved_locally": true
+      }
+    },
+    {
+      "name": "unsaved note export is explicitly a draft and leaves evidence unchanged",
+      "status": "PASS",
+      "detail": {
+        "annotation_type": "local_analyst_note",
+        "saved_locally": false
+      }
+    },
+    {
+      "name": "quota error keeps draft and previous saved note; retry recovers",
+      "status": "PASS"
+    },
+    {
+      "name": "supplier-context versions isolate actual notes component",
+      "status": "PASS"
+    },
+    {
+      "name": "storage read denial remains explicit without blocking evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "overview layer controls, cohort extents and single-plot table scope",
+      "status": "PASS",
+      "detail": {
+        "latitude": "8.58189",
+        "longitude": "98.77243",
+        "plotScopedTable": "P-0005 · 262 selected",
+        "markersOverlappingTitle": []
+      }
+    },
+    {
+      "name": "six actual synthetic cases × two periods stay outside real cohort",
+      "status": "PASS",
+      "detail": [
+        {
+          "case": "tiny_no_centers",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        },
+        {
+          "case": "tiny_no_centers",
+          "period": "2024-2025",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        },
+        {
+          "case": "partial_absence_unknown",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "0 observed loss cells"
+        },
+        {
+          "case": "partial_absence_unknown",
+          "period": "2024-2025",
+          "signal": "Unknown",
+          "count": "0 observed loss cells"
+        },
+        {
+          "case": "partial_positive_known",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "0 observed loss cells"
+        },
+        {
+          "case": "partial_positive_known",
+          "period": "2024-2025",
+          "signal": "Observed",
+          "count": "1 observed loss cells"
+        },
+        {
+          "case": "water_only",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        },
+        {
+          "case": "water_only",
+          "period": "2024-2025",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        },
+        {
+          "case": "nodata",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "0 observed loss cells"
+        },
+        {
+          "case": "nodata",
+          "period": "2024-2025",
+          "signal": "Unknown",
+          "count": "0 observed loss cells"
+        },
+        {
+          "case": "missing_loss_band",
+          "period": "2021-2023",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        },
+        {
+          "case": "missing_loss_band",
+          "period": "2024-2025",
+          "signal": "Unknown",
+          "count": "Analytical count unavailable"
+        }
+      ]
+    },
+    {
+      "name": "mobile timeline scrolls at readable size and retains selected year",
+      "status": "PASS",
+      "detail": {
+        "selected": "Year 2025, 11 observed loss cells",
+        "scrollWidth": 1172,
+        "clientWidth": 358,
+        "scrollLeft": 814,
+        "font": 12,
+        "selectedLeft": 330,
+        "selectedRight": 374,
+        "barLeft": 16,
+        "barRight": 374
+      }
+    },
+    {
+      "name": "mobile count proof focus and back restore visible count",
+      "status": "PASS",
+      "detail": {
+        "arrival": {
+          "id": "proof-selected-year",
+          "top": 464.671875,
+          "bottom": 501.171875,
+          "viewport": 844,
+          "text": "2025 observed loss cells1111",
+          "scrollY": 401
+        },
+        "returned": {
+          "id": "annual-proof-trigger",
+          "top": 121.78125,
+          "bottom": 174.28125,
+          "viewport": 844,
+          "text": "11observed loss cells ",
+          "scrollY": 1106
+        }
+      }
+    },
+    {
+      "name": "integrated notes fit mobile viewport",
+      "status": "PASS",
+      "detail": {
+        "width": 358,
+        "scrollWidth": 358,
+        "documentWidth": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "cycle3 application has no page errors",
+      "status": "PASS"
+    }
+  ],
+  "errors": []
+}

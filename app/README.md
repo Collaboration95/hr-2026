@@ -9,7 +9,8 @@ Verified with Node 26.3.1, npm 11.16.0 and Python 3. Frozen review uses Python f
 From the repository root:
 
 ```sh
-npm ci --prefix app
+scripts/setup-local.sh
+scripts/verify-local.sh
 npm run dev --prefix app -- --port 5173 --strictPort
 ```
 
@@ -20,7 +21,7 @@ npm run build --prefix app
 npm run preview --prefix app -- --port 4173 --strictPort
 ```
 
-Build emits `app/dist/`. It includes the local company sample and is not a publication package. Keep it local under the current authorization.
+Build emits `app/dist/` for offline frozen review through a local HTTP server. It includes the supplied company sample. The user has authorized the tracked GitHub repository publication; this command does not deploy the app or change source terms.
 
 ## Data boundary
 
@@ -97,6 +98,19 @@ For the documented alternate web port:
 PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:live --prefix app
 ```
 
-This separate 14-check suite requires actual unaugmented HTTP success responses. It checks exact P-0003 reproduction, temporary bounds, tiny/outside/partial/oversized regions, complete native evidence, exact receipt bytes, delayed-response rejection, cancellation, unavailable-service recovery and 390px keyboard use. It neither starts nor kills shared servers. Transport faults and delays affect only disposable test browser contexts. Missing health produces an explicit blocked report and exit code 2, not a passing skip. Results and screenshots are written under `docs/lab/browser-evidence/`.
+This separate 14-check suite requires actual unaugmented HTTP success responses. It checks exact P-0003 reproduction, temporary bounds, tiny/outside/partial/oversized regions, complete native evidence, exact receipt bytes, delayed-response rejection, cancellation, unavailable-service recovery and 390px keyboard use. It neither starts nor kills shared servers. Transport faults and delays affect only disposable test browser contexts. Missing health produces an explicit blocked report and exit code 2, not a passing skip. New results and screenshots are written to a unique directory under `app/.cache/qa/`; the runner prints its path. Historical evidence under `docs/lab/browser-evidence/` is preserved.
 
 `npm test` also includes the live-client binding checks; those require the existing `.venv-data` environment and retained local engine inputs. No test command installs dependencies or uploads data.
+
+## Completion checks and demo fallback
+
+All standard browser suites now honor `PLOTLINE_QA_ORIGIN`. Set `PLOTLINE_QA_OUTPUT` to a repository-relative or absolute output directory when retaining a run. Without it, each invocation gets a unique ignored cache directory. The older `PLOTLINE_QA_URL` remains an alias. Only HTTP loopback origins are accepted.
+
+```sh
+PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:browser --prefix app
+PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:live --prefix app
+PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:jrc --prefix app
+PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run demo:record --prefix app
+```
+
+The recording command uses the installed browser and a healthy live service. It captures the actual review → cohort → cells → proof → separate JRC → live-query journey, with no synthetic successful responses. It writes a silent WebM and a chapter JSON; narrate using [the demo script](../docs/lab/demo-script.md). Recording is a demo fallback, not a substitute for the proof verifiers.

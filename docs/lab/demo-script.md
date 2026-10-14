@@ -1,15 +1,17 @@
 # Plotline demonstration — evidence before verdict
 
-Illustrative three-minute rehearsal, not a claimed organizer pitch duration. Run locally; do not publish or upload the company sample. Read the final retained artifact and experiment identity before rehearsal. Engine results may evolve during the lab; use the displayed frozen measurement rather than quoting an obsolete win.
+Updated 14 October 2026. Illustrative three-minute core plus a one-minute live/JRC extension, not a claimed organizer pitch duration. The recorded user authorization covers the tracked GitHub repository; confirm organizer logistics separately. Retained measurements are frozen. Use the displayed values and their accounting boundary.
+
+Fallback: [silent recorded walkthrough](completion-demo.webm), with [chapter timestamps](completion-demo.json). It shows actual local responses and can accompany the narration below if the live environment fails.
 
 ## Preparation
 
 From repository root:
 
 ```sh
-npm ci --prefix app
-npm run build --prefix app
-npm run dev --prefix app -- --port 5173 --strictPort
+scripts/setup-local.sh  # First setup only; installs dependencies
+scripts/verify-local.sh
+npm run dev:local --prefix app
 ```
 
 Open http://127.0.0.1:5173/. Use P-0003 initially, year 2023, Review desk. Confirm all 17 plots and that the benchmark is the engine-approved bound export. Close any local analyst draft created during QA or use a fresh browser context. The app uses exact supplied polygons and real native-grid cells, no invented imagery.
@@ -36,9 +38,9 @@ Open the named receipt. Use its readable disclosures to show the exact supplier 
 
 ## 1:50–2:35 — Explain the measured tradeoff honestly
 
-Open measured tradeoffs. Choose Original GeoTIFF, then a losing compact candidate, then the experiment's retained candidate. The bars include payload and metadata/index overhead over identical support. Initial packing/chunking candidates were larger; later compression-level experiments may improve the measured footprint. Let the current frozen experiment establish the result.
+Open measured tradeoffs. Choose Original GeoTIFF, then a losing compact candidate, then the experiment's retained candidate. The bars include payload and metadata/index overhead over identical support. The retained custom store is 535,012 B versus 585,293 B of necessary supplied source inputs: 8.59% smaller at that boundary. The stronger standard control is 532,444 B, which beats custom size by 0.48%. This is a measured choice, not a universal custom-codec win.
 
-Switch Loaded query and Fresh-process load+query. State the batch scope, repetitions, units and cache limitation. Do not call the second disk-cold, treat tiny timing differences as significant, compare the crop to whole source tiles, or claim global-scale performance from 17 plots.
+Switch Loaded query and Fresh-process load+query. Hot 17-query medians are 1.418 ms source and 1.446 ms compact: no hot-query speedup is established. Fresh-process full load plus 17 queries is 11.182 ms versus 5.800 ms, excluding imports/common geometry and with uncontrolled OS cache. State the batch scope, repetitions, units and cache limitation. Do not call the second disk-cold, treat tiny timing differences as significant, compare the crop to whole source tiles, or claim global-scale performance from 17 plots.
 
 ## 2:35–3:00 — Show an honest limit and next action
 
@@ -61,10 +63,18 @@ The evidence index is useful when a reviewer asks for the whole cohort rather th
 
 The accepted JRC companion is available in the separate disclosure below Hansen review. P-0003 has 793 mapped class-0 cells; P-0001 has 529 class-0 and 554 class-1 cells on the separate JRC grid. Explain its 2020 reference year, v4 source classes and separate proof. Non-forest does not mean no tree canopy. Never compare JRC and Hansen cell counts as common-area quantities or extend the Hansen compression percentage to the companion.
 
-## Optional live-query extension (integrated acceptance passed)
+## One-minute live-query and JRC extension
 
 Start the verified local API and app with `cd app && npm run dev:local`. Open Query lab from P-0003 and run the exact supplied polygon. Compare its real original/compact output with the frozen review, inspect the complete native-cell evidence and download the bound live receipt. Explain that this is a temporary read-only query on one immutable source/store snapshot, not an edit to supplier records.
 
 Choose Temporary rectangle and explicitly use the plot bounds. Run again to see the actual changed selection; do not predict a loss result before computing it. The form is fully usable without drawing. Editing the bounds clears the prior answer. Demonstrate Cancel only while a request is active; if the request is already complete, do not pretend cancellation happened.
 
 If the optional API is unavailable or receipt binding fails, show that state and return to the frozen Review desk. Single-request preloaded timings are not a benchmark or speedup claim. The live production rule remains cell-center inclusion; the separate overlap study is not a production toggle.
+
+## Submission handoff
+
+Use the branch `guru/plotline-research-lab`, root README for setup, this script for narration, [completion checks](completion-verification.json) for the latest evidence, and [HANDOVER](../HANDOVER.md) for technical detail. The repository and recording are ready to review; no organizer submission or company message has been sent.
+
+The printed prototype gate is met for the stated evidence-screening slice: three aligned Hansen bands across annual loss observations, compact storage, exact original/compact queries, full raw/mask checks, and measured storage/query/resource comparisons. The separate JRC baseline has its own proof. No legal compliance classifier is claimed. RuleLens and cost estimation are optional and are not required to run this demonstration.
+
+Before the final pitch, the team still needs the confirmed submission channel/deadline, presentation length and attendance details, plus a named presenter. SystemEarth should confirm its historical layer/rule and explain one mitigation reference. Those are human handoffs, not unfinished app features.

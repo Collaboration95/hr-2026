@@ -12,7 +12,9 @@
     "qa:install-browser": "node scripts/browser-qa.mjs --install",
     "qa:browser": "node scripts/browser-qa.mjs",
     "dev:local": "node scripts/dev-local.mjs",
-    "qa:live": "node scripts/browser-qa.mjs --live"
+    "qa:jrc": "node scripts/browser-qa.mjs --jrc",
+    "qa:live": "node scripts/browser-qa.mjs --live",
+    "demo:record": "node scripts/record-demo.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
