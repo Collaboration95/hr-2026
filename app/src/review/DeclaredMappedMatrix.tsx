@@ -58,7 +58,7 @@ export default function DeclaredMappedMatrix({ plots, onSelectPlot, period = ANA
                 const differs = r.declared !== null && c.mapped !== null && r.declared !== c.mapped;
                 const unknown = r.declared === null || c.mapped === null;
                 return (
-                  <td key={c.key} className={`pl-matrix__cell${differs ? " is-differ" : ""}${unknown ? " is-unknown pl-hatch" : ""}`}>
+                  <td key={c.key} className={`pl-matrix__cell${differs ? " is-differ" : ""}${unknown && ids.length > 0 ? " is-unknown pl-hatch" : ""}`}>
                     <span className={`pl-matrix__n${ids.length ? "" : " is-zero"}`}>{ids.length}{differs && ids.length > 0 && <Glyph kind="review" />}</span>
                     {ids.length > 0 && (
                       <span className="pl-matrix__ids">

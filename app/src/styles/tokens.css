@@ -21,7 +21,7 @@
   /* Text */
   --pl-text: #e6eee8;
   --pl-text-2: #a3b4ab;
-  --pl-text-3: #6c8077;
+  --pl-text-3: #81958b;       /* >= 4.5:1 on panel, raised and hover surfaces */
   --pl-text-inverse: #07100d;
 
   /* Data semantics — each meaning owns one hue. Never reuse a hue for another meaning. */
