@@ -4,7 +4,7 @@ A week-long project for Hack & Hire, organized by Projet with NUS CAT. Participa
 
 This repository holds the project context and working local implementation for the selected SystemEarth track. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
 
-**Start here:** [Agent-swarm methodology](docs/lab/research-methodology.md) · [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [Final verification](docs/lab/final-verification.json)
+**Start here:** [Demo script](docs/lab/demo-script.md) · [Reproduce from a clean checkout](docs/lab/completion-reproducibility.md) · [Completion verification](docs/lab/completion-verification.json) · [Agent-swarm methodology](docs/lab/research-methodology.md) · [Detailed handover](docs/HANDOVER.md) · [Final mock judge review](docs/lab/final-judge-review.md) · [13 October verification](docs/lab/final-verification.json)
 
 ## Current status
 
@@ -15,7 +15,7 @@ This repository holds the project context and working local implementation for t
 - **Review leads:** Five sample rows declare a deforestation indication, mitigation with evidence, and a final deforestation-free/compliant status. These are declaration-backed review leads; the sample does not independently verify the mapped signal, mitigation evidence, or legal outcome.
 - **Public layers acquired:** Hansen GFC 2025 v1.13 `treecover2000`, `lossyear`, and `datamask` from `10N_090E`. The three native-grid chips total **576,999 bytes**, share a **1233 × 604** grid, cover the full 17-plot bounding box with outward-aligned bounds, and match their source windows pixel-for-pixel on readback. Full source tiles total 224,170,336 bytes in the ignored raw cache. See the [Hansen acquisition report](docs/research/layer-acquisition.md). A separately versioned **JRC forest-2020 v4** chip is now acquired experimentally; its v3 predecessor remains unavailable. See [JRC candidate and provenance](docs/lab/engine-data-W4.md). The separate JRC native-grid companion is verified and mounted; it is not included in the retained Hansen measurements. WDPA use remains conditional on its terms. The [October 11 catalog](docs/systemearth-open-data-options.md) remains historical research.
 - **Implementation:** A working local prototype now combines a Python 3.14 geospatial engine with a React/TypeScript/Vite evidence workspace. Original and compact queries agree across the 17 supplied plots; an independent scalar oracle and separate synthetic cases test the declared computational rules. The lab is checkpointed with live local queries, independent proof checks, measured representation controls and a detailed handover. These are encoding/query results, not independently verified supplier compliance. See [engine report](docs/lab/engine-report.md) and [experience report](docs/lab/experience-report.md).
-- **Next goal:** Review one plot and receipt with SystemEarth to confirm source vintage, query semantics and mitigation-reference meaning. The local prototype, live lab, separate JRC view, retained proof checks and handover are checkpointed. The user ended the lab early to preserve usage; optional RuleLens UI is deferred.
+- **Completed local slice (14 October):** The existing SystemEarth prototype is verified from tracked files with new dependencies, the integrated JRC experience is independently checked, and a recorded walkthrough plus current demo narration are packaged. The user authorized this completion pass after the earlier stop. Company-approved rules, missing mitigation files, a production workload, and submission logistics remain external decisions. Optional RuleLens is outside this completed slice; its research remains available.
 - **Planning window:** Use 13–16 October for the first complete slice, batch comparison, and demo preparation; conservatively aim to be ready on 16 October. See [track work sequence](SystemEarth-track.md#proposed-work-sequence).
 - **Deadline clarification:** The challenge-page screenshot provided on 11 October shows an end time of 17 October at 00:00 SGT. Confirm whether this is the application closing time or project submission deadline; finals remain recorded as 17 October.
 
@@ -25,12 +25,13 @@ Update this section when a decision is made so subsequent work starts from the c
 
 The user authorized implementation and original UI/UX design on 13 October, superseding the earlier planning-only/Claude-only limits. The lab began at 09:52 SGT and was wrapped early at the user’s request around 12:28 SGT; [master log](docs/lab/master-log.md) records the actual agent dispatch and milestones. Prototype code is in `engine/` and `app/`; canonical computed exports and measured experiment records are in `artifacts/`.
 
-With the existing project-local Python 3.14 environment, reproduce a query and start the app:
+For a new checkout, install Python 3.14 and Node/npm, then run `scripts/setup-local.sh` and `scripts/verify-local.sh`. The setup installs dependencies explicitly; verification checks the retained proofs and builds the app without rebenchmarking. The clean-export audit used a new environment on this machine, with no full-tile caches.
+
+With dependencies ready, reproduce a query and start both the app and live API:
 
 ```sh
 .venv-data/bin/python -m engine --plot P-0003
-npm ci --prefix app
-npm run dev --prefix app -- --port 5173 --strictPort
+npm run dev:local --prefix app
 ```
 
 The app is local at `http://127.0.0.1:5173/`. Review desk and Evidence index use a frozen computed export; changing their year does not run a new query. Query lab runs fresh temporary-geometry queries against an identified, immutable local snapshot when the optional service is available. To start both the API and app on free local ports, use `npm run dev:local --prefix app`; see [live run instructions](docs/lab/experience-live-run.md). [Engine instructions](engine/README.md) describe source/compact queries, benchmark generation and exports; the [versioned interface](docs/lab/interface-v1.md) defines unknown states and exact computational semantics. The [independent validator](docs/lab/validator-report.md) records concrete findings and their verification status. The [final mock judging review](docs/lab/final-judge-review.md) assesses the implemented checkpoint; the original planning score remains historical.
@@ -39,7 +40,7 @@ Useful checks:
 
 ```sh
 .venv-data/bin/python -B -m unittest discover -s engine/tests -v
-node --test app/tests/contract-check.test.mjs
+npm test --prefix app
 npm run build --prefix app
 ```
 

@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-10-14T02:16:38.975Z",
+  "origin": "http://127.0.0.1:5183",
+  "recording": "completion-demo.webm",
+  "narration": false,
+  "note": "Actual local browser walkthrough; use the demo script for narration. No successful service responses were injected.",
+  "chapters": [
+    {
+      "seconds": 0.2,
+      "title": "Review desk",
+      "description": "P-0003: declarations and missing evidence remain separate from mapped observations."
+    },
+    {
+      "seconds": 4.3,
+      "title": "Cohort evidence",
+      "description": "The 17 real plots share a linked annual observation index."
+    },
+    {
+      "seconds": 8.4,
+      "title": "Native cells",
+      "description": "P-0005 has 11 selected loss cells in 2025; cell counts are not hectares."
+    },
+    {
+      "seconds": 12.4,
+      "title": "Encoding proof",
+      "description": "Original and compact results match under the same declared query rule."
+    },
+    {
+      "seconds": 16.8,
+      "title": "Separate forest baseline",
+      "description": "JRC v4 retains its own native grid, classes and receipt. It is not fused with Hansen."
+    },
+    {
+      "seconds": 21,
+      "title": "Live query",
+      "description": "A new read-only P-0003 request reproduces the original and compact answer with bound evidence."
+    }
+  ],
+  "errors": [],
+  "duration_seconds": 25.0
+}

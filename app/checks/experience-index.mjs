@@ -1,3 +1,5 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
+import { resolve } from 'node:path';
 import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -15,12 +17,12 @@ try {
       acceptDownloads: true,
     });
     await context.route("**/*", (route) =>
-      new URL(route.request().url()).origin === "http://127.0.0.1:5173"
+      new URL(route.request().url()).origin === qaOrigin
         ? route.continue()
         : route.abort(),
     );
     const page = await context.newPage();
-    await page.goto("http://127.0.0.1:5173");
+    await page.goto(qaOrigin);
     await page
       .getByRole("button", { name: "Evidence index", exact: true })
       .click();
@@ -62,7 +64,7 @@ try {
       positives,
     );
     await page.screenshot({
-      path: `docs/lab/browser-lead-evidence/index-${width}.png`,
+      path: resolve(qaEvidence, `index-${width}.png`),
       fullPage: true,
     });
     await page
@@ -106,7 +108,7 @@ try {
     await context.close();
   }
   await writeFile(
-    "docs/lab/browser-lead-evidence/index-check.json",
+    resolve(qaEvidence, "index-check.json"),
     JSON.stringify({ captured_at: new Date().toISOString(), results }, null, 2),
   );
   console.log(JSON.stringify({ passed: results.length, results }));

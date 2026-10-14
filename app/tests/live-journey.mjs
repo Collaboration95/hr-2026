@@ -1,3 +1,4 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -7,10 +8,10 @@ import { pathToFileURL } from 'node:url';
 // From repo root: PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node app/tests/live-journey.mjs
 const modulePath = process.env.PLAYWRIGHT_MODULE;
 const { chromium } = await import(modulePath ? pathToFileURL(resolve(modulePath)).href : 'playwright');
-const baseURL = process.env.PLOTLINE_QA_URL || 'http://127.0.0.1:5173';
+const baseURL = qaOrigin;
 const endpoint = new URL(baseURL);
 assert.ok(endpoint.protocol === 'http:' && ['127.0.0.1', 'localhost', '[::1]'].includes(endpoint.hostname), 'QA only targets loopback');
-const evidence = resolve('docs/lab/browser-evidence');
+const evidence = qaEvidence;
 await mkdir(evidence, { recursive: true });
 const canonical = JSON.parse(await readFile('artifacts/demo-v1.json', 'utf8'));
 const p5 = canonical.plots.find(p => p.plot_id === 'P-0005');

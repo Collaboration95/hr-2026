@@ -1,0 +1,31 @@
+{
+  "captured_at": "2026-10-14T02:09:22.814Z",
+  "results": [
+    {
+      "width": 1440,
+      "rows": 17,
+      "annualCells": 425,
+      "positiveButtons": 37,
+      "csvRows": 34,
+      "focus": {
+        "id": "plot-review-heading",
+        "top": 100,
+        "headerBottom": 76,
+        "overflow": false
+      }
+    },
+    {
+      "width": 390,
+      "rows": 17,
+      "annualCells": 425,
+      "positiveButtons": 37,
+      "csvRows": 34,
+      "focus": {
+        "id": "plot-review-heading",
+        "top": 121.5,
+        "headerBottom": 100,
+        "overflow": false
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { qaOrigin, qaEvidence } from '../scripts/qa-config.mjs';
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -8,9 +9,9 @@ import { fileURLToPath } from 'node:url';
 const appRoot = fileURLToPath(new URL('../', import.meta.url)), repoRoot = resolve(appRoot, '..');
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= resolve(appRoot, '.cache/playwright');
 const { chromium } = await import('playwright');
-const origin = process.env.PLOTLINE_QA_ORIGIN || 'http://127.0.0.1:5173';
+const origin = qaOrigin;
 const url = new URL(origin); assert.ok(url.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(url.hostname));
-const out = resolve(repoRoot, 'docs/lab/browser-evidence'); await mkdir(out, { recursive: true });
+const out = qaEvidence; await mkdir(out, { recursive: true });
 const frozen = JSON.parse(await readFile(resolve(repoRoot, 'artifacts/demo-v1.json'), 'utf8'));
 const p3 = frozen.plots.find(p => p.plot_id === 'P-0003');
 const hash = text => createHash('sha256').update(text, 'utf8').digest('hex');

@@ -1,0 +1,66 @@
+{
+  "positive": {
+    "valid": true,
+    "experiment_id": "exp-7daaf163af701f29eefac7f988a7b556ec9e9c84c74417af11bc9d72691e9ebc",
+    "controls": 2,
+    "real_plot_count": 17,
+    "accepted_artifacts_unchanged": true
+  },
+  "negative_controls": [
+    {
+      "label": "bool-as-int",
+      "expected": "reject rehashed semantic inconsistency",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: control full-value/mask/metadata/query proof claim mismatch"
+      },
+      "fixture": "validation/strong/bundle/bool-as-int.json"
+    },
+    {
+      "label": "hot-one-sample",
+      "expected": "reject rehashed semantic inconsistency",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: timing sample count differs from settings"
+      },
+      "fixture": "validation/strong/bundle/hot-one-sample.json"
+    },
+    {
+      "label": "cold-one-sample",
+      "expected": "reject rehashed semantic inconsistency",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: timing sample count differs from settings"
+      },
+      "fixture": "validation/strong/bundle/cold-one-sample.json"
+    },
+    {
+      "label": "negative-encode-time",
+      "expected": "reject rehashed semantic inconsistency",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: encode_wall_ms: finite nonnegative number required"
+      },
+      "fixture": "validation/strong/bundle/negative-encode-time.json"
+    },
+    {
+      "label": "settings-level-3",
+      "expected": "reject rehashed semantic inconsistency",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: unsupported constant settings"
+      },
+      "fixture": "validation/strong/bundle/settings-level-3.json"
+    },
+    {
+      "label": "missing-declared-control",
+      "expected": "reject missing block512 still declared in settings",
+      "actual": {
+        "valid": false,
+        "error": "ValueError: control set does not match identity settings"
+      },
+      "fixture": "validation/strong/bundle/missing-declared-control.json"
+    }
+  ],
+  "all_rejected": true
+}

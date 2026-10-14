@@ -1,0 +1,139 @@
+{
+  "started_at": "2026-10-14T02:14:29.438Z",
+  "origin": "http://127.0.0.1:5183",
+  "source": {
+    "hansen_content_sha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+    "hansen_file_sha256": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555",
+    "jrc_file_sha256": "933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71",
+    "jrc_content_sha256": "c13127c9f6d8654a1dae0d66945c981bfc340b20467124dd2e55829d79d754a3"
+  },
+  "checks": [
+    {
+      "name": "served Hansen JSON is byte-identical to canonical evidence",
+      "pass": true,
+      "evidence": {
+        "sha256": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555",
+        "content_sha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2"
+      }
+    },
+    {
+      "name": "served JRC JSON is byte-identical to accepted pinned evidence",
+      "pass": true,
+      "evidence": {
+        "sha256": "933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71",
+        "content_sha256": "c13127c9f6d8654a1dae0d66945c981bfc340b20467124dd2e55829d79d754a3"
+      }
+    },
+    {
+      "name": "desktop P-0003 known class 0 is shown as mapped non-forest, not unknown",
+      "pass": true,
+      "evidence": {
+        "selected": 793,
+        "class_counts": {
+          "0": 793,
+          "1": 0
+        },
+        "unknown": 0,
+        "signal": false
+      }
+    },
+    {
+      "name": "native cell display preserves raw class zero and analytical class label",
+      "pass": true,
+      "evidence": {
+        "first_row": "1 / 15 0 — Non-forest Valid Mapped non-forest 98.773708333, 8.581791667 Inspect corners"
+      }
+    },
+    {
+      "name": "class 1 P-0001 and separate JRC receipt download match canonical JSON exactly",
+      "pass": true,
+      "evidence": {
+        "counts": {
+          "0": 529,
+          "1": 554
+        },
+        "selected": 1083,
+        "receipt_sha256": "4abdfbdabe62c99b9eb5c5e6147c02fc487b07dcbc7ce055c697e80b1f15d6b2"
+      }
+    },
+    {
+      "name": "integrated selection updates the bound JRC plot; J keyboard navigation moves away from P-0001 and returns correctly",
+      "pass": true,
+      "evidence": {
+        "keyboard_next_plot": "P-0004",
+        "returned_plot": "P-0001"
+      }
+    },
+    {
+      "name": "390px mobile J/K keyboard flow preserves selected plot binding and contained native table",
+      "pass": true,
+      "evidence": {
+        "next_plot": "P-0005",
+        "returned_plot": "P-0003",
+        "dimensions": {
+          "inner": 390,
+          "document": 390,
+          "body": 390,
+          "tableRegion": 296,
+          "table": 980
+        }
+      }
+    },
+    {
+      "name": "failed JRC fetch stays unavailable without inventing zero and retains usable Hansen review",
+      "pass": true,
+      "evidence": {
+        "actual_transport_outcome": "aborted test request",
+        "jrc_unavailable": true,
+        "hansen_retained": true
+      }
+    },
+    {
+      "name": "no unexpected browser page or console errors",
+      "pass": true,
+      "evidence": {
+        "page_errors": [],
+        "unexpected_console_errors": [],
+        "expected_console_errors_from_aborted_JRC_request": [
+          "Failed to load resource: net::ERR_FAILED"
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "severity": "non-blocking UX improvement",
+      "area": "390px native-cell table",
+      "observation": "The 980px evidence table shows only about 30% of its columns in the 296px viewport. Raw class and mask are visible first; analytical observation, native center and corners require horizontal scrolling.",
+      "evidence": {
+        "inner": 390,
+        "document": 390,
+        "body": 390,
+        "tableRegion": 296,
+        "table": 980
+      },
+      "suggestion": "For the demo, keep the analytical observation column pinned or offer a compact mobile row view. The existing scroll instruction and keyboard arrow navigation make the current behavior discoverable and usable."
+    }
+  ],
+  "screenshots": [
+    {
+      "label": "desktop P-0003 JRC known class 0 with separate proof",
+      "path": "completion-browser-jrc-desktop-p0003.png"
+    },
+    {
+      "label": "desktop P-0001 JRC class 1 and independent Hansen context",
+      "path": "completion-browser-jrc-desktop-p0001.png"
+    },
+    {
+      "label": "390px JRC integration, separate proof, keyboard navigation and contained native table",
+      "path": "completion-browser-jrc-mobile.png"
+    }
+  ],
+  "downloaded_receipt": {
+    "path": "completion-browser-jrc-receipt-P-0001.json",
+    "suggested_filename": "plotline-jrc-P-0001.json",
+    "exact_plot_match": true,
+    "receipt_sha256": "4abdfbdabe62c99b9eb5c5e6147c02fc487b07dcbc7ce055c697e80b1f15d6b2"
+  },
+  "finished_at": "2026-10-14T02:14:32.663Z"
+}
