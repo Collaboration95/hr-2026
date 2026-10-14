@@ -121,9 +121,12 @@ export default function TwoAccounts({ plot, jrc, jrcStatus, jrcError, onLoadJrc 
             <Fact label="Mitigation" title={s.c3_mitigation_if_indication_found}>{cleanLabel(s.c3_mitigation_if_indication_found)}</Fact>
             <Fact label="Final status" title={s.c5_deforestation_final_status}>{cleanLabel(s.c5_deforestation_final_status)}</Fact>
             <Fact label="EUDR (as declared)" title={s.i1_eudr_status}>{cleanLabel(s.i1_eudr_status)}</Fact>
-            <Fact label="Processing · harvest" title={`${s.a4_processing_date ?? ""} · ${s.a5_production_harvest_date ?? ""}`}>
-              <span>{typeof s.a4_processing_date === "string" ? s.a4_processing_date.split("-").map(supplierDate).join(" – ") : "Not supplied"} · {supplierDate(s.a5_production_harvest_date)}</span>
-              <span className="pl-fact__note">field meanings need company clarification</span>
+            <Fact label="Processing dates" title={s.a4_processing_date}>
+              {typeof s.a4_processing_date === "string" ? s.a4_processing_date.split("-").map(supplierDate).join(" – ") : "Not supplied"}
+            </Fact>
+            <Fact label="Harvest date" title={s.a5_production_harvest_date}>
+              {supplierDate(s.a5_production_harvest_date)}
+              <span className="pl-fact__note">date meanings need company clarification</span>
             </Fact>
             <Fact label="Evidence reference" title={typeof rawReference === "string" ? rawReference : undefined}>
               {reference ? (
