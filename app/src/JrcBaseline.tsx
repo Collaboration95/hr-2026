@@ -107,3 +107,15 @@ export default function JrcBaseline({ data, plotId }: { data: JrcArtifact; plotI
     </details>
   </section>;
 }
+
+/** STUB (owner: Live + JRC agent): compact JRC card for the review inspector. See design/DESIGN.md §5.1 and §8. */
+export function JrcSummary({ data, status, error, plotId, onLoad }: {
+  data: JrcArtifact | null; status: 'idle' | 'loading' | 'ready' | 'error'; error?: string; plotId: string; onLoad: () => void;
+}) {
+  if (status === 'idle') return <button type="button" className="pl-btn pl-btn--sm" onClick={onLoad}>Load JRC 2020 baseline</button>;
+  if (status === 'loading') return <p role="status">Loading the separate JRC source…</p>;
+  if (status === 'error' || !data) return <p role="status">{error || 'JRC companion unavailable.'} Hansen review remains usable.</p>;
+  const plot = data.plots.find(p => p.plot_id === plotId);
+  if (!plot) return <p role="status">Baseline unavailable for {plotId}. No mapped absence is inferred.</p>;
+  return <p>JRC 2020 v4: {count(plot.source_result.class_counts?.['1'])} forest-class cells of {count(plot.source_result.selected_cell_count)} selected JRC cells.</p>;
+}
