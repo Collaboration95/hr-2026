@@ -45,27 +45,31 @@ async function field(label) {
   return page.locator('.pl-receipt__field').filter({ has: page.locator('dt').filter({ hasText: new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) }) }).locator('dd').innerText();
 }
 async function validateDisplayed(start, end) {
-  const rendered = await page.locator('.cohort-table tbody tr').evaluateAll(rows => rows.map(row => ({ id: row.querySelector('th button').textContent.trim(), declaration: row.querySelector('.cohort-declaration').textContent.trim(), values: [...row.querySelectorAll('td:not(.cohort-declaration)')].map(e => e.textContent.trim().match(/^(Unknown|[\d,]+)/)?.[1]) })));
-  assert.equal(rendered.length, 17);
+  const rendered = await page.locator('.co-barcode tbody tr').evaluateAll(rows => rows.map(row => ({ id: row.querySelector('th button').textContent.trim(), declaration: row.querySelector('.co-sticky--decl').getAttribute('title'), values: [...row.querySelectorAll('td.co-cell')].map(e => e.textContent.trim().match(/^(unknown|[\d,]+)/)?.[1]) })));
+  assert.equal(rendered.length, plots.length);
   let sum = 0, positives = 0;
   for (let index = 0; index < plots.length; index++) {
     const p = plots[index], values = Array.from({ length: end - start + 1 }, (_, i) => p.source_result.yearly_loss_counts[start + i]);
-    assert.equal(rendered[index].id, p.plot_id); assert.equal(rendered[index].declaration, p.supplier.c2_deforestation_spatial_analysis_result);
-    assert.deepEqual(rendered[index].values, values.map(v => v == null ? 'Unknown' : v.toLocaleString('en-US')));
-    sum += values.reduce((a, b) => a + (b || 0), 0); if (values.some(v => v > 0)) positives++;
+    assert.equal(rendered[index].id, p.plot_id); assert.equal(rendered[index].declaration, p.supplier.c2_deforestation_spatial_analysis_result === 'b. Indication of deforestation' ? 'declared indication' : 'declared none');
+    assert.deepEqual(rendered[index].values, values.map(v => v == null ? 'unknown' : v.toLocaleString('en-US')));
+    sum += values.reduce((a, b) => a + (b ?? 0), 0); if (values.some(v => v > 0)) positives++;
   }
-  const totals = await page.locator('.cohort-overview dd').allTextContents();
-  assert.equal(parseInt(totals[0]), positives); assert.equal(parseInt(totals[1].replaceAll(',', '')), sum);
-  assert.ok((await page.locator('.cohort-context').innerText()).includes(data.dataset.product));
-  assert.ok((await page.locator('.cohort-context').innerText()).includes(data.query_version));
-  return { plots: rendered.length, displayedCells: 17 * (end - start + 1), start, end, positivePlots: positives, sum };
+  // The former aggregate cards are replaced by the barcode: independently sum
+  // rendered values and count positive rows, preserving both aggregate oracles.
+  const numeric = rendered.map(row => row.values.map(v => v === 'unknown' ? null : Number(v.replaceAll(',', ''))));
+  assert.equal(numeric.flat().reduce((a,b) => a + (b ?? 0), 0), sum);
+  assert.equal(numeric.filter(values => values.some(v => v > 0)).length, positives);
+  assert.ok((await page.locator('.co-context').innerText()).includes(data.dataset.product));
+  assert.ok((await page.locator('.co-context').innerText()).includes(data.query_version));
+  return { plots: rendered.length, displayedCells: plots.length * (end - start + 1), start, end, positivePlots: positives, sum };
 }
 try {
-  await page.goto(origin); await page.getByRole('button', { name: 'Evidence index', exact: true }).waitFor();
-  await page.getByRole('button', { name: 'Evidence index', exact: true }).click();
+  await page.goto(origin); await page.locator('nav[aria-label="Workspace view"]').getByRole('button', { name: 'Cohort', exact: true }).waitFor();
+  await page.locator('nav[aria-label="Workspace view"]').getByRole('button', { name: 'Cohort', exact: true }).click();
   await check('integrated period tables preserve all17 counts and separate declarations', async () => {
     assert.deepEqual(await page.evaluate(async () => (await fetch('/data/demo-v1.json')).json()), data);
-    const result = [await validateDisplayed(2024, 2025)];
+    const result = [await validateDisplayed(2001, 2025)];
+    await page.getByRole('button', { name: '2024–2025', exact: true }).click(); result.push(await validateDisplayed(2024, 2025));
     await page.getByRole('button', { name: 'All years · 2001–2025', exact: true }).click(); result.push(await validateDisplayed(2001, 2025));
     await page.getByRole('button', { name: '2021–2023', exact: true }).click(); result.push(await validateDisplayed(2021, 2023));
     return result;
@@ -73,7 +77,7 @@ try {
   await check('actual displayed CSV download has51rows and exact source context', async () => {
     const csv = await download(page.getByRole('button', { name: 'Export displayed counts · CSV', exact: true }), 'w3-index-displayed-2021-2023.csv');
     assert.equal(csv.suggested, 'plotline-source-counts-2021-2023.csv');
-    const [header, ...rows] = parseCsv(csv.text); assert.equal(rows.length, 51);
+    const [header, ...rows] = parseCsv(csv.text); assert.equal(rows.length, plots.length * 3);
     const records = rows.map(values => Object.fromEntries(header.map((key, i) => [key, values[i]])));
     for (const row of records) {
       const p = plots.find(p => p.plot_id === row.plot_id); assert.ok(p);
@@ -84,20 +88,20 @@ try {
       assert.equal(row.selected_support, p.source_result.support); assert.equal(row.count_state, 'observed');
       assert.equal(row.view_start_year, '2021'); assert.equal(row.view_end_year, '2023'); assert.match(row.count_basis, /not area or a legal verdict/);
     }
-    assert.equal(new Set(records.map(r => `${r.plot_id}/${r.year}`)).size, 51);
+    assert.equal(new Set(records.map(r => `${r.plot_id}/${r.year}`)).size, plots.length * 3);
     return { downloadedFilename: csv.suggested, rows: records.length, zeroRows: records.filter(r => r.observed_loss_cell_count === '0').length };
   });
   await check('positive earlierperiod count navigates exact plot/year with visible keyboard focus', async () => {
     const button = page.getByRole('button', { name: 'Review P-0001, 2022: 38 observed loss cells', exact: true });
     await button.focus(); await page.keyboard.press('Enter');
     await page.waitForFunction(() => document.activeElement.id === 'plot-review-heading');
-    const state = await page.evaluate(() => ({ focus: document.activeElement.id, top: document.activeElement.getBoundingClientRect().top, headerBottom: document.querySelector('.topbar').getBoundingClientRect().bottom, year: document.querySelector('.year-bars [aria-pressed=true]').getAttribute('aria-label'), plot: document.querySelector('.plot-header h2').textContent }));
+    const state = await page.evaluate(() => ({ focus: document.activeElement.id, top: document.activeElement.getBoundingClientRect().top, headerBottom: document.querySelector('.pl-topbar').getBoundingClientRect().bottom, year: document.querySelector('.pl-scrub__cols [aria-pressed=true]').getAttribute('aria-label'), plot: document.querySelector('#plot-review-heading').textContent }));
     assert.match(state.plot, /^P-0001/); assert.equal(state.year, 'Year 2022, 38 observed loss cells'); assert.ok(state.top >= state.headerBottom);
-    assert.equal(await page.locator('.native-cell[fill="#df743f"]').count(), 38); await shot('index-arrival'); return state;
+    assert.equal(await page.locator('.native-cell[data-event="true"]').count(), 38); await shot('index-arrival'); return state;
   });
   await check('return to index is reachable and focuses visible heading', async () => {
-    await page.getByRole('button', { name: 'Evidence index', exact: true }).click();
-    const state = await page.locator('.cohort-heading h2').evaluate(e => ({ focused: document.activeElement === e, top: e.getBoundingClientRect().top, headerBottom: document.querySelector('.topbar').getBoundingClientRect().bottom, period: document.querySelector('.cohort-controls [aria-pressed=true]').textContent }));
+    await page.locator('nav[aria-label="Workspace view"]').getByRole('button', { name: 'Cohort', exact: true }).click();
+    const state = await page.locator('#cohort-heading').evaluate(e => ({ focused: document.activeElement === e, top: e.getBoundingClientRect().top, headerBottom: document.querySelector('.pl-topbar').getBoundingClientRect().bottom, period: document.querySelector('.co-periods [aria-pressed=true]').textContent }));
     assert.ok(state.focused); assert.ok(state.top >= state.headerBottom, JSON.stringify(state));
     observations.push({ returnPeriod: state.period, departurePeriod: '2021–2023', note: 'Period state remount behavior recorded, not an assumed component persistence promise.' });
     await page.getByRole('button', { name: '2021–2023', exact: true }).click();
@@ -109,7 +113,8 @@ try {
     assert.equal(await field('Source product / release'), data.dataset.product);
     const summaries = page.locator('.pl-receipt__disclosure > summary'); assert.equal(await summaries.count(), 6);
     const names = await summaries.allTextContents();
-    for (let i = 0; i < names.length; i++) { await summaries.nth(i).focus(); await page.keyboard.press('Enter'); assert.equal(await summaries.nth(i).evaluate(e => e.parentElement.open), true); }
+    for (let i = 0; i < names.length; i++) { if (await summaries.nth(i).evaluate(e => e.parentElement.open)) await summaries.nth(i).click();
+      await summaries.nth(i).focus(); await page.keyboard.press('Enter'); assert.equal(await summaries.nth(i).evaluate(e => e.parentElement.open), true); }
     assert.match(await page.locator('.pl-receipt').innerText(), /does not independently verify/);
     const rows = await page.locator('.pl-receipt tbody tr').evaluateAll(rows => rows.map(r => [...r.children].map(c => c.textContent.trim())));
     for (const row of rows) { const period = selected.source_result.periods[row[0]]; assert.ok(period); assert.equal(row[1], period.mapped_loss_present ? 'Mapped loss present' : 'No mapped loss'); assert.equal(row[2], String(period.observed_loss_cell_count)); }
@@ -131,9 +136,9 @@ try {
   });
   await check('raw disclosures and original receipt download coexist with readable basis', async () => {
     await page.getByText('Hashes, grid and source provenance', { exact: true }).click();
-    const raw = JSON.parse(await page.locator('dialog .json-details').filter({ has: page.getByText('Hashes, grid and source provenance', { exact: true }) }).locator('pre').textContent()); assert.deepEqual(raw, selected.receipt);
+    const raw = JSON.parse(await page.locator('dialog .pl-receipt-json').filter({ has: page.getByText('Hashes, grid and source provenance', { exact: true }) }).locator('pre').textContent()); assert.deepEqual(raw, selected.receipt);
     await page.getByText('Exact supplier CSV fields', { exact: true }).click();
-    const supplier = JSON.parse(await page.locator('dialog .json-details').filter({ has: page.getByText('Exact supplier CSV fields', { exact: true }) }).locator('pre').textContent()); assert.deepEqual(supplier, selected.supplier);
+    const supplier = JSON.parse(await page.locator('dialog .pl-receipt-json').filter({ has: page.getByText('Exact supplier CSV fields', { exact: true }) }).locator('pre').textContent()); assert.deepEqual(supplier, selected.supplier);
     const downloaded = await download(page.getByRole('button', { name: 'Download receipt JSON', exact: true }), 'w3-index-receipt-P-0001.json');
     const payload = JSON.parse(downloaded.text); assert.deepEqual(payload.receipt, selected.receipt); assert.deepEqual(payload.supplier, selected.supplier); assert.deepEqual(payload.comparison, selected.comparison);
     return { filename: downloaded.suggested, selectedPlot: payload.plot_id };
@@ -150,7 +155,7 @@ try {
       const dimensions = await page.locator('dialog').evaluate(dialog => { const r = dialog.getBoundingClientRect(); return { viewport: innerWidth, left: r.left, right: r.right, clientWidth: dialog.clientWidth, scrollWidth: dialog.scrollWidth, overflowingFields: [...dialog.querySelectorAll('.pl-receipt dd,.pl-receipt code,.pl-receipt summary')].filter(e => e.getBoundingClientRect().right > r.right + 1).map(e => e.textContent.slice(0,90)) }; });
       assert.ok(dimensions.left >= 0 && dimensions.right <= width + 1); assert.ok(dimensions.scrollWidth <= dimensions.clientWidth + 1); assert.deepEqual(dimensions.overflowingFields, []);
       await page.locator('.pl-receipt__disclosure').nth(3).locator('.pl-receipt__files code').nth(1).evaluate(e => e.scrollIntoView({ block: 'center' })); await shot(`receipt-${width}`);
-      await page.keyboard.press('Escape'); assert.equal(await page.locator('dialog').evaluate(e => e.open), false);
+      await page.keyboard.press('Escape'); assert.equal(await page.locator('dialog[open]').count(), 0);
       const active = await page.evaluate(() => ({ text: document.activeElement.textContent, visible: document.activeElement.matches(':focus-visible') })); assert.equal(active.text, 'Receipt');
       await page.getByRole('button', { name: 'Receipt', exact: true }).click(); return { dimensions, returnedFocus: active };
     });
@@ -158,10 +163,11 @@ try {
   await page.keyboard.press('Escape');
   await page.setViewportSize({ width: 390, height: 844 });
   await check('mobile index period→positivecell→receipt preserves exact context below header', async () => {
-    await page.getByRole('button', { name: 'Evidence index', exact: true }).click();
+    await page.locator('nav[aria-label="Workspace view"]').getByRole('button', { name: 'Cohort', exact: true }).click();
     await page.getByRole('button', { name: '2021–2023', exact: true }).click();
     await page.getByRole('button', { name: 'Review P-0001, 2022: 38 observed loss cells', exact: true }).click();
-    const arrival = await page.evaluate(() => ({ focus: document.activeElement.id, y: document.activeElement.getBoundingClientRect().top, headerBottom: document.querySelector('.topbar').getBoundingClientRect().bottom }));
+    await page.waitForFunction(() => document.activeElement.id === 'plot-review-heading');
+    const arrival = await page.evaluate(() => ({ focus: document.activeElement.id, y: document.activeElement.getBoundingClientRect().top, headerBottom: document.querySelector('.pl-topbar').getBoundingClientRect().bottom }));
     assert.equal(arrival.focus, 'plot-review-heading'); assert.ok(arrival.y >= arrival.headerBottom); await shot('mobile-arrival');
     await page.getByRole('button', { name: 'Receipt', exact: true }).click(); assert.equal(await field('2022 observed loss cells'), '38'); await page.keyboard.press('Escape'); return arrival;
   });

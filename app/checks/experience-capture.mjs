@@ -1,71 +1,15 @@
-import { fileURLToPath } from "node:url";
-process.env.PLAYWRIGHT_BROWSERS_PATH ||= fileURLToPath(
-  new URL("../.cache/playwright", import.meta.url),
-);
-const { chromium } = await import("playwright");
-import { writeFile } from "node:fs/promises";
-const browser = await chromium.launch({ headless: true });
-const context = await browser.newContext({
-  viewport: { width: 1440, height: 1000 },
-  reducedMotion: "reduce",
-});
-await context.route("**/*", (route) =>
-  new URL(route.request().url()).origin === "http://127.0.0.1:5173"
-    ? route.continue()
-    : route.abort(),
-);
-const page = await context.newPage();
-const errors = [];
-page.on("pageerror", (e) => errors.push(e.message));
+import assert from 'node:assert/strict';
+import { harness, noOverflow, selectedCells, plots } from '../tests/frozen-qa.mjs';
+const {page,check,go,errors,shot,finish}=await harness('experience-capture');
 try {
-  await page.goto("http://127.0.0.1:5173");
-  await page.getByRole("button", { name: "Show proof", exact: true }).waitFor();
-  await page.screenshot({
-    path: "docs/lab/browser-lead-evidence/review-p3-desktop.png",
-    fullPage: true,
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await check('capture canonical plot3 and plot5, proof and mobile review',async()=>{
+    await go('#/map/P-0003/2025'); await selectedCells(page,plots.find(p=>p.plot_id==='P-0003'),2025);await shot('review-p3-desktop');
+    await go('#/map/P-0005/2025'); await selectedCells(page,plots.find(p=>p.plot_id==='P-0005'),2025);await shot('review-p5-desktop');
+    await page.locator('.pl-review__actions').getByRole('button',{name:'Proof',exact:true}).click();await page.locator('#proof-heading').waitFor();await shot('proof-desktop');
+    await page.getByRole('button',{name:'Back to map',exact:true}).click();await page.locator('#plot-review-heading').waitFor();
+    await page.setViewportSize({width:390,height:844});await noOverflow(page);await shot('review-p5-mobile');
+    return {screenshots:4,fixture:'Canonical P-0003/P-0005; UI captures do not reverify the engine'};
   });
-  await page.locator(".queue-row").filter({ hasText: "P-0005" }).click();
-  await page
-    .getByRole("button", {
-      name: "Year 2025, 11 observed loss cells",
-      exact: true,
-    })
-    .click();
-  await page.evaluate(() => scrollTo(0, 0));
-  await page.screenshot({
-    path: "docs/lab/browser-lead-evidence/review-p5-desktop.png",
-    fullPage: true,
-  });
-  await page.getByRole("button", { name: "Show proof", exact: true }).click();
-  await page.screenshot({
-    path: "docs/lab/browser-lead-evidence/proof-desktop.png",
-    fullPage: true,
-  });
-  await page
-    .getByRole("button", { name: "Back to review", exact: true })
-    .click();
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.evaluate(() => scrollTo(0, 0));
-  await page.screenshot({
-    path: "docs/lab/browser-lead-evidence/review-p5-mobile.png",
-    fullPage: true,
-  });
-  await writeFile(
-    "docs/lab/browser-lead-evidence/capture.json",
-    JSON.stringify(
-      {
-        captured_at: new Date().toISOString(),
-        errors,
-        title: await page.title(),
-        fixture:
-          "actual canonical P-0003/P-0005; screenshots only, no new engine verification",
-      },
-      null,
-      2,
-    ),
-  );
-  console.log(JSON.stringify({ screenshots: 4, errors }));
-} finally {
-  await context.close();
-  await browser.close();
-}
+  await check('capture has no page errors',async()=>assert.deepEqual(errors,[]));
+} finally {await finish();}
