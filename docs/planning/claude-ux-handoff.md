@@ -1,5 +1,7 @@
 # Claude UX handoff: Plotline evidence review
 
+> **Historical planning document.** For the user-authorized complete UI redesign, start with [the current Claude handoff](../../HANDOFF.md). The app and stack are implemented, JRC v4 is integrated, and the former design-only/provisional implementation limits below are superseded. Use current validated contracts for data semantics.
+
 ## How to use this brief
 
 Design an exceptional, coherent UX for the **Evidence Review Desk** described here and in [systemearth-product-direction.md](systemearth-product-direction.md). Treat **Plotline** as an unconfirmed creative working name. Claude owns the visual design: choose and define typography, color, layout, motion, and the visual system. The evidence semantics and truth constraints in this brief are immutable. Do not implement application code, choose a final runtime/stack, or fabricate data. Implementation will be planned separately after the evidence/query contract is ready.
