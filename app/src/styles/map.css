@@ -31,9 +31,9 @@
 .pl-map__controls .pl-btn { box-shadow: var(--pl-shadow-float); background: color-mix(in srgb, var(--pl-panel) 92%, transparent); backdrop-filter: blur(8px); min-height: 34px; }
 .pl-map__controls .pl-btn:hover:not(:disabled) { background: var(--pl-hover); }
 .pl-map__toggle { color: var(--pl-text-2); }
-.pl-map__toggle[aria-pressed="true"] {
-  color: var(--pl-text); border-color: color-mix(in srgb, var(--pl-forest) 60%, transparent);
-  background: color-mix(in srgb, var(--pl-forest) 16%, var(--pl-panel)) !important;
+.pl-map__toggle[aria-pressed="true"], .pl-map__toggle[aria-pressed="true"]:hover:not(:disabled) {
+  color: var(--pl-forest); border-color: var(--pl-forest) !important;
+  background: color-mix(in srgb, var(--pl-forest) 22%, var(--pl-panel)) !important;
 }
 .pl-map__right { position: absolute; z-index: 3; top: 12px; right: 12px; display: flex; flex-direction: column; align-items: flex-end; gap: var(--pl-2); max-width: min(260px, calc(100% - 24px)); }
 .pl-map__float-chip .pl-chip { box-shadow: var(--pl-shadow-float); background-color: color-mix(in srgb, var(--pl-panel) 92%, transparent); }
