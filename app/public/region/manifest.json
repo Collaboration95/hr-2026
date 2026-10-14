@@ -1,0 +1,84 @@
+{
+  "schema_version": "plotline.region-display.v1",
+  "purpose": "Display rasters for the map. Not evidence: all counts come from validated engine exports.",
+  "hansen": {
+    "product": "Hansen Global Forest Change 2025 v1.13",
+    "crs": "EPSG:4326",
+    "shape_rows_columns": [
+      604,
+      1233
+    ],
+    "transform": [
+      0.00025,
+      0.0,
+      98.77225,
+      0.0,
+      -0.00025,
+      8.582
+    ],
+    "bounds_west_south_east_north": [
+      98.77225,
+      8.431000000000001,
+      99.0805,
+      8.582
+    ],
+    "png": "hansen-bands.png",
+    "png_sha256": "ce301defbb99be303a89ba177248b4a9136fa901766d604d581fd4d553d72c61",
+    "channels": {
+      "r": "lossyear (0 = no loss, n = 2000 + n)",
+      "g": "datamask (0 no data, 1 land, 2 water)",
+      "b": "treecover2000 (percent)",
+      "a": "always 255"
+    },
+    "sources": {
+      "lossyear": {
+        "path": "data/public/hansen_lossyear_sample.tif",
+        "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+      },
+      "datamask": {
+        "path": "data/public/hansen_datamask_sample.tif",
+        "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+      },
+      "treecover2000": {
+        "path": "data/public/hansen_treecover2000_sample.tif",
+        "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+      }
+    }
+  },
+  "jrc": {
+    "product": "JRC Global Forest Cover 2020 v4",
+    "crs": "EPSG:4326",
+    "shape_rows_columns": [
+      1809,
+      3695
+    ],
+    "transform": [
+      8.333333333333333e-05,
+      0.0,
+      98.77241666666667,
+      0.0,
+      -8.333333333333333e-05,
+      8.581916666666666
+    ],
+    "bounds_west_south_east_north": [
+      98.77241666666667,
+      8.431166666666666,
+      99.08033333333334,
+      8.581916666666666
+    ],
+    "png": "jrc-forest-2020.png",
+    "png_sha256": "7a395999e19e439592d0dfb99277c069b0f9ecafafa1d04daa4f7345b1a550ed",
+    "channels": {
+      "r": "class (0 = valid Non-forest, 1 = Forest)",
+      "g": "validity (255 = valid)",
+      "b": "unused",
+      "a": "always 255"
+    },
+    "sources": {
+      "class": {
+        "path": "data/experimental/jrc/JRC_GFC2020_V4_N10_E90_company-bbox.tif",
+        "sha256": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+      }
+    }
+  }
+}
