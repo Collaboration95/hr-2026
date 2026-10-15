@@ -2,15 +2,17 @@ import { Icon } from "../components/Primitives";
 import ProofView from "../proof/ProofView";
 import type { Demo, Plot } from "../types";
 import { DEFAULT_YEAR, FIRST_YEAR } from "./route";
+import type { DecisionState } from "./useDecisionSummary";
 
 const YEAR_OPTIONS = Array.from({ length: DEFAULT_YEAR - FIRST_YEAR + 1 }, (_, i) => DEFAULT_YEAR - i);
 
 /** Proof route: a slim context bar (back, plot, year) above the proof view. */
-export default function ProofRoute({ data, plots, plot, year, onBack, onOpen, onYear, onReceipt }: {
+export default function ProofRoute({ data, plots, plot, year, decision, onBack, onOpen, onYear, onReceipt }: {
   data: Demo;
   plots: Plot[];
   plot: Plot;
   year: number;
+  decision?: DecisionState;
   onBack: () => void;
   /** Switch the proof to another plot (a new history entry). */
   onOpen: (id: string, year: number) => void;
@@ -46,7 +48,7 @@ export default function ProofRoute({ data, plots, plot, year, onBack, onOpen, on
         </label>
       </div>
       <div className="pl-page">
-        <ProofView plot={plot} data={data} year={year} onReceipt={onReceipt} onOpenPlot={onOpen} />
+        <ProofView plot={plot} data={data} year={year} decision={decision} onReceipt={onReceipt} onOpenPlot={onOpen} />
       </div>
     </div>
   );
