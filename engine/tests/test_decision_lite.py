@@ -20,7 +20,7 @@ import zlib
 import numpy as np
 
 from engine import decision, decision_benchmark as bench, decision_index as di, decision_lite as L
-from engine import decision_store as S, decision_summary
+from engine import decision_format as F, decision_store as S, decision_summary
 from engine.tests.test_decision_index import forge_registry, plot_record, sealed_registry
 from engine.tests.test_decision_store import crafted_split, edge_rasters, metadata, replace_header, structured
 
@@ -95,13 +95,18 @@ def expected_codes(codes, runs):
 
 
 class ContractTest(unittest.TestCase):
-    def test_mirrored_constants_equal_decision_store(self):
+    def test_format_layer_is_shared_with_decision_store_and_stays_off_numpy(self):
         for name in ('MAGIC', 'VERSION', 'PREFIX', 'ENCODINGS', 'SOURCE_KEYS', 'MAX_DIMENSION', 'MAX_CELLS', 'MAX_HEADER_BYTES',
-                     'MAX_PAYLOAD_BYTES', 'MAX_WINDOW_LOG', 'STORED', 'ZSTD', 'LZMA', 'LZMA_SETS', 'HEX'):
-            self.assertEqual(getattr(L, name).format if name == 'PREFIX' else getattr(L, name),
-                             getattr(S, name).format if name == 'PREFIX' else getattr(S, name), name)
-        for size, count_ in ((10, 4), (10 ** 6, 10 ** 5), (16_777_216, 16_777_216)):
-            self.assertEqual(L._varint_limit(count_, size), S._varint_limit(count_, size))
+                     'MAX_PAYLOAD_BYTES', 'MAX_WINDOW_LOG', 'MAX_LZMA_MEMORY', 'STORED', 'ZSTD', 'LZMA', 'LZMA_SETS', 'HEX',
+                     'LEVELS', 'SCREEN_VERSION', 'DECISION_VERSION', '_Reader', '_get_stream', '_unzstd', '_unlz', '_unxz',
+                     '_parse_header', '_canonical', '_digest', '_varint_limit', '_varint', '_shape', '_finite'):
+            self.assertIs(getattr(S, name), getattr(F, name), name)
+        for name in ('MAGIC', 'PREFIX', 'VERSION', '_Reader', '_get_stream', '_parse_header', '_varint_limit'):
+            self.assertIs(getattr(L, name), getattr(F, name), name)
+        self.assertEqual(F.LEVELS, decision_summary.LEVELS)
+        done = subprocess.run([sys.executable, '-B', '-c', "import sys; import engine.decision_format; print('numpy' in sys.modules)"],
+                              cwd=ROOT, capture_output=True, text=True, check=True)
+        self.assertEqual(done.stdout.strip(), 'False')
 
     def test_the_reducer_is_shared_and_decision_reexports_it(self):
         self.assertIs(decision.summarize_counts, decision_summary.summarize_counts)
