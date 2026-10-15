@@ -10,7 +10,8 @@ vertex on a centre row, or a horizontal edge on one), run over every edge of eve
   linearrings/polygons call and one is_valid call, windows from vectorized bounds;
 - crossings of all polygons are expanded with np.repeat, sorted by (row, column) in one np.sort, and
   consecutive pairs are the inside spans; the code histogram reads those spans directly (no per-cell
-  dense grid), clipped to the chip, with out-of-chip centres counted in selected_count as usual;
+  dense grid), clipped to the chip, with out-of-chip centres counted in selected_count as usual, and every
+  output is decision.summarize_counts of that histogram (the same single reducer as the loop);
 - ambiguous centres of all polygons are decided by ONE vectorized shapely.covers call, and replace the
   parity answer for exactly those centres.
 
@@ -360,45 +361,10 @@ def _pipeline(lat, codes, held, geoms, idxs):
     ok = np.flatnonzero(fast & ~failed)
     bad = np.flatnonzero(~(fast & ~failed))
     rest = rest + [kept[q] for q in bad.tolist()]
-    return dict(zip((kept[q] for q in ok.tolist()), _summaries(counts[ok], selected[ok], outside[ok], held))), rest
-
-
-def _summaries(counts, selected, outside, level):
-    """decision.summarize_counts for every row (identical dicts), with the sums taken once over the whole array."""
-    n = len(counts)
-    s = counts[:, decision.LAND:].reshape(n, 3, 6)  # per JRC forest state, per post-2020 year index
-    sums = s.sum(axis=2)
-    screen = level == decision.SCREEN_VERSION
-    land = sums.sum(axis=1)
-    unknown = outside + counts[:, 0]
-    post = s[:, 1, 1:]
-    if screen:
-        loss = s[:, :, 1:].sum(axis=1)
-        loss_rows = loss.tolist()
-        periods = [(key, loss[:, sl].sum(axis=1).tolist()) for key, sl in decision._PERIOD_SLICES]
-    keys = decision._YEAR_KEYS
-    forest_states = decision.FOREST_STATES
-    out = []
-    rows = zip(selected.tolist(), outside.tolist(), unknown.tolist(), counts[:, 1].tolist(), land.tolist(), sums.tolist(),
-               post.tolist(), post.sum(axis=1).tolist(), s[:, 2, 1:].sum(axis=1).tolist())
-    for i, (sel, outs, unk, water, ld, (nf, fo, fu), yr, total, fu_post) in enumerate(rows):
-        ok = ld > 0
-        res = {'contract': level, 'selected_cell_count': sel, 'out_of_coverage_cell_count': outs,
-               'valid_land_cell_count': ld, 'water_cell_count': water, 'unknown_cell_count': unk,
-               'forest_2020': {'cell_counts': dict(zip(forest_states, (nf, fo, fu))) if ok else None,
-                               'present': None if not ok else True if fo > 0 else (False if unk + fu == 0 else None)},
-               'deforestation_after_2020': {
-                   'yearly_cell_counts': dict(zip(keys, yr)) if ok else None, 'cell_count': total if ok else None,
-                   'present': None if not ok else True if total > 0 else (False if unk + fu_post == 0 else None)}}
-        if screen:
-            res['hansen_loss_after_2020'] = {
-                'yearly_cell_counts': dict(zip(keys, loss_rows[i])) if ok else None,
-                'periods': {key: {'observed_loss_cell_count': v[i] if ok else None,
-                                  'mapped_loss_present': None if not ok else True if v[i] > 0 else (False if unk == 0 else None)}
-                            for key, v in periods}}
-        res['support'] = 'none' if sel == 0 or ld == 0 else 'partial' if unk or fu else 'complete'
-        out.append(res)
-    return out
+    summarize = decision.summarize_counts  # the one reducer: every output is summarize_counts of the selected histogram
+    out = [summarize(row, sel, outs, held) for row, sel, outs in
+           zip(counts[ok].tolist(), selected[ok].tolist(), outside[ok].tolist())]
+    return dict(zip((kept[q] for q in ok.tolist()), out)), rest
 
 
 def _edge_mask(ring_lens, n):

@@ -84,22 +84,17 @@ class DecisionBatchTests(unittest.TestCase):
             self.assertEqual(bad, [], f'{name}: {len(bad)} of {len(want)} differ, first at {bad[:5]}')
         return want
 
-    def test_summaries_equal_summarize_counts(self):
-        rng = np.random.default_rng(9)
-        for level in decision.LEVELS:
-            counts = rng.integers(0, 5, (3000, decision.CODE_COUNT))
-            counts *= rng.random(counts.shape) < rng.random((3000, 1))  # sparse rows: no land, no forest, unknown only
-            counts[:5] = 0
-            counts[5, 0] = 7
-            counts[6, 1] = 2
-            counts[7, decision.LAND:] = 1
-            outside = rng.integers(0, 3, 3000) * (rng.random(3000) < .5)
-            selected = counts.sum(axis=1) + outside
-            got = db._summaries(counts, selected, outside, level)
-            want = [decision.summarize_counts(row, int(sel), int(out), level) for row, sel, out in zip(counts, selected, outside)]
-            self.assertEqual(got, want)
-            self.assertEqual([list(g) for g in got], [list(w) for w in want])  # key order too
-            self.assertTrue(all(type(v) is int for g in got for v in (g['selected_cell_count'], g['unknown_cell_count'])))
+    def test_every_output_is_summarize_counts_of_the_selected_histogram(self):
+        geometries = fuzz_geometries(self.header, 300, seed=21)
+        with mock.patch.object(decision, 'summarize_counts', wraps=decision.summarize_counts) as spy:
+            got = db.evaluate_many(self.codes, self.header, geometries, on_error='return')
+        self.assertEqual(spy.call_count, db._stats['batched'])
+        self.assertGreater(spy.call_count, 200)
+        for call in spy.call_args_list:
+            row, selected, outside, level = call.args
+            self.assertTrue(type(row) is list and all(type(v) is int for v in row) and type(selected) is int and type(outside) is int)
+            self.assertEqual(level, decision.DECISION_VERSION)
+        self.assertTrue(all(same(a, b) for a, b in zip(got, loop(self.codes, self.header, geometries))))
 
     # ---- generators ----
 
