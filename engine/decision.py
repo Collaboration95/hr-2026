@@ -20,7 +20,7 @@ and refuses a conflicting request. Outputs are mapped observations, never legal 
 import numpy as np
 
 from .decision_summary import (CODE_COUNT, DECISION_VERSION, FOREST_STATES, LAND, LEVELS, PERIODS, POST_YEARS,
-                               SCREEN_VERSION, UNKNOWN, WATER, summarize_counts)
+                               SCREEN_VERSION, UNKNOWN, WATER, summarize_counts, summarize_ints)
 
 CUTOFF_LOSSYEAR = 20  # Hansen lossyear 20 is 2020; EUDR cut-off is 31 Dec 2020.
 MAX_LOSSYEAR = POST_YEARS[-1] - 2000  # the last year the code space holds (post index 1..5)

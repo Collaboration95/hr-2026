@@ -51,16 +51,16 @@ MAX_RECT_LOOP = 64  # ambiguous rectangles up to which they are painted one by o
 SCALAR_EDGE_ROWS = 500  # candidate rows x edges up to which a pure-Python scan beats numpy's per-call overhead
 SCALAR_CELLS = 4096  # and candidate cells up to which it stays cheaper
 
-np = summarize_counts = summarize_selection = bind_level = None
+np = summarize_ints = summarize_selection = bind_level = None
 CODE_COUNT = 20
 
 
 def _numpy():
     """Bind numpy and the pure reducers on first use; keeps the module import stdlib-only."""
-    global np, summarize_counts, summarize_selection, bind_level, CODE_COUNT
+    global np, summarize_ints, summarize_selection, bind_level, CODE_COUNT
     import numpy
     from . import decision
-    np, summarize_counts, summarize_selection = numpy, decision.summarize_counts, decision.summarize_selection
+    np, summarize_ints, summarize_selection = numpy, decision.summarize_ints, decision.summarize_selection
     bind_level, CODE_COUNT = decision.bind_level, decision.CODE_COUNT
 
 
@@ -117,7 +117,7 @@ def registry_evaluate(codes, entry, level):
     counts = np.bincount(codes.ravel()[entry['flat_index']], minlength=CODE_COUNT)
     if counts.size != CODE_COUNT:
         raise ValueError('code raster holds values outside the contract code space')
-    return summarize_counts(counts, entry['selected_count'], entry['outside_count'], level)
+    return summarize_ints(counts.tolist(), entry['selected_count'], entry['outside_count'], level)  # bincount: int64
 
 
 def registry_evaluate_store(codes, header, entry, level=None):
@@ -727,7 +727,7 @@ def fast_summarize(codes, header, geometry, level):
     counts = np.bincount(np.frombuffer(selected, np.uint8), minlength=CODE_COUNT)
     if counts.size != CODE_COUNT:
         raise ValueError('code raster holds values outside the contract code space')
-    return summarize_counts(counts, len(selected), 0, level)
+    return summarize_ints(counts.tolist(), len(selected), 0, level)  # bincount: int64
 
 
 fast_select_cells.summarize = fast_summarize  # evaluate_store reduces through it

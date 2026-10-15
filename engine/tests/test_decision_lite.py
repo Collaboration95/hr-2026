@@ -110,7 +110,8 @@ class ContractTest(unittest.TestCase):
 
     def test_the_reducer_is_shared_and_decision_reexports_it(self):
         self.assertIs(decision.summarize_counts, decision_summary.summarize_counts)
-        self.assertIs(L.summarize_counts, decision_summary.summarize_counts)
+        self.assertIs(decision.summarize_ints, decision_summary.summarize_ints)
+        self.assertIs(L.summarize_ints, decision_summary.summarize_ints)
         for name in ('SCREEN_VERSION', 'DECISION_VERSION', 'LEVELS', 'POST_YEARS', 'PERIODS', 'FOREST_STATES', 'UNKNOWN',
                      'WATER', 'LAND', 'CODE_COUNT'):
             self.assertIs(getattr(decision, name), getattr(decision_summary, name), name)

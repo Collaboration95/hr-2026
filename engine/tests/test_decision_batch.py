@@ -84,9 +84,10 @@ class DecisionBatchTests(unittest.TestCase):
             self.assertEqual(bad, [], f'{name}: {len(bad)} of {len(want)} differ, first at {bad[:5]}')
         return want
 
-    def test_every_output_is_summarize_counts_of_the_selected_histogram(self):
+    def test_every_output_is_the_shared_reducer_of_the_selected_histogram(self):
+        # summarize_ints is summarize_counts without its coercion, so it must only ever see lists of Python ints
         geometries = fuzz_geometries(self.header, 300, seed=21)
-        with mock.patch.object(decision, 'summarize_counts', wraps=decision.summarize_counts) as spy:
+        with mock.patch.object(decision, 'summarize_ints', wraps=decision.summarize_ints) as spy:
             got = db.evaluate_many(self.codes, self.header, geometries, on_error='return')
         self.assertEqual(spy.call_count, db._stats['batched'])
         self.assertGreater(spy.call_count, 200)

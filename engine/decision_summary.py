@@ -13,7 +13,7 @@ UNKNOWN, WATER, LAND = 0, 1, 2
 CODE_COUNT = LAND + 6 * len(FOREST_STATES)  # 20 codes: 0..19
 
 
-# summarize_counts unpacks this exact layout by name: change it there too if any of these change.
+# summarize_ints (so summarize_counts too) unpacks this exact layout by name: change it there too if any change.
 if (POST_YEARS, tuple(PERIODS.items()), FOREST_STATES, (UNKNOWN, WATER, LAND)) != (
         (2021, 2022, 2023, 2024, 2025), (('2021-2023', (2021, 2023)), ('2024-2025', (2024, 2025))),
         ('nonforest', 'forest', 'unknown'), (0, 1, 2)):
@@ -21,13 +21,29 @@ if (POST_YEARS, tuple(PERIODS.items()), FOREST_STATES, (UNKNOWN, WATER, LAND)) !
 
 
 def summarize_counts(counts, selected_count, outside_count, level):
-    """Contract outputs from a 20-bin code histogram plus out-of-chip selections."""
+    """Contract outputs from a 20-bin code histogram plus out-of-chip selections.
+
+    Accepts any 20 integers (an integer ndarray, a list, anything int() takes); summarize_ints is the same reducer
+    for a caller that already holds a list of Python ints.
+    """
     if level not in LEVELS:
         raise ValueError('unknown contract level')
     if getattr(getattr(counts, 'dtype', None), 'kind', None) in ('i', 'u'):  # an integer ndarray
         counts = counts.tolist()
     else:
         counts = list(map(int, counts))
+    return summarize_ints(counts, selected_count, outside_count, level)  # same checks, in the same order, then the body
+
+
+def summarize_ints(counts, selected_count, outside_count, level):
+    """summarize_counts for a caller that guarantees `counts` is a list of Python ints: the one reducer's body.
+
+    Every output of summarize_counts is this function's output, so the level check and the length and accounting
+    checks (and their order) are the same; only the coercion is skipped. Anything else in `counts` (an ndarray, a
+    tuple, floats, bools) is outside this contract: pass it to summarize_counts.
+    """
+    if level not in LEVELS:
+        raise ValueError('unknown contract level')
     if len(counts) != CODE_COUNT or selected_count != sum(counts) + outside_count or outside_count < 0:
         raise ValueError('code histogram accounting mismatch')
     # codes: 0 unknown, 1 water, then land 2 + 6 * JRC 2020 state (nonforest, forest, unknown) + post-2020 year 0..5

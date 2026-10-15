@@ -32,7 +32,7 @@ import zlib
 from . import decision_index as di
 from .decision_format import (MAX_HEADER_BYTES, MAX_PAYLOAD_BYTES, MAGIC, PREFIX, VERSION, _Reader, _digest, _get_stream,
                               _parse_header, _varint_limit)
-from .decision_summary import CODE_COUNT, DECISION_VERSION, summarize_counts
+from .decision_summary import CODE_COUNT, DECISION_VERSION, summarize_ints
 
 
 class LiteUnsupported(ValueError):
@@ -342,7 +342,7 @@ class Lite:
         counts = [0] * CODE_COUNT
         for code in set(codes):
             counts[code] = codes.count(code)
-        return summarize_counts(counts, selected, outside, self.level)
+        return summarize_ints(counts, selected, outside, self.level)  # counts: a list of ints by construction
 
 
 def load(store_path, registry_path, *, expected_sha256=None, level=None):

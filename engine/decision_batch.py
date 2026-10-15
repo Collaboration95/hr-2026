@@ -11,7 +11,7 @@ vertex on a centre row, or a horizontal edge on one), run over every edge of eve
 - crossings of all polygons are expanded with np.repeat, sorted by (row, column) in one np.sort, and
   consecutive pairs are the inside spans; the code histogram reads those spans directly (no per-cell
   dense grid), clipped to the chip, with out-of-chip centres counted in selected_count as usual, and every
-  output is decision.summarize_counts of that histogram (the same single reducer as the loop);
+  output is the shared reducer's (decision.summarize_ints: summarize_counts minus its coercion) for that histogram;
 - ambiguous centres of all polygons are decided by ONE vectorized shapely.covers call, and replace the
   parity answer for exactly those centres.
 
@@ -367,7 +367,7 @@ def _pipeline(lat, codes, held, geoms, idxs):
     ok = np.flatnonzero(fast & ~failed)
     bad = np.flatnonzero(~(fast & ~failed))
     rest = rest + [kept[q] for q in bad.tolist()]
-    summarize = decision.summarize_counts  # the one reducer: every output is summarize_counts of the selected histogram
+    summarize = decision.summarize_ints  # the one reducer, minus its coercion: .tolist() of int64 rows is lists of ints
     out = [summarize(row, sel, outs, held) for row, sel, outs in
            zip(counts[ok].tolist(), selected[ok].tolist(), outside[ok].tolist())]
     return dict(zip((kept[q] for q in ok.tolist()), out)), rest
