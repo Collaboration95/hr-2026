@@ -130,55 +130,55 @@
   "first_pass_blob_4n_bytes:n=250000": {
    "file_bytes": 63,
    "outcome": "ValueError: stream size out of bounds",
-   "peak_bytes": 50341138,
-   "amplification": 799066
+   "peak_bytes": 6291952,
+   "amplification": 99872
   },
   "largest_blob_new_bound_admits:n=250000": {
    "file_bytes": 39,
    "outcome": "ValueError: truncated stream",
-   "peak_bytes": 69112152,
-   "amplification": 1772106
+   "peak_bytes": 20877712,
+   "amplification": 535326
   },
   "first_pass_blob_4n_bytes:n=1000000": {
    "file_bytes": 158,
    "outcome": "ValueError: stream size out of bounds",
-   "peak_bytes": 50341138,
-   "amplification": 318615
+   "peak_bytes": 6291952,
+   "amplification": 39822
   },
   "largest_blob_new_bound_admits:n=1000000": {
    "file_bytes": 63,
    "outcome": "ValueError: truncated stream",
-   "peak_bytes": 75112152,
-   "amplification": 1192256
+   "peak_bytes": 26877712,
+   "amplification": 426630
   },
   "first_pass_blob_4n_bytes:n=2000000": {
    "file_bytes": 282,
    "outcome": "ValueError: stream size out of bounds",
-   "peak_bytes": 50341138,
-   "amplification": 178515
+   "peak_bytes": 6291952,
+   "amplification": 22312
   },
   "largest_blob_new_bound_admits:n=2000000": {
    "file_bytes": 95,
    "outcome": "ValueError: truncated stream",
-   "peak_bytes": 83112152,
-   "amplification": 874865
+   "peak_bytes": 34877712,
+   "amplification": 367134
   },
   "largest_blob_new_bound_admits:n=8000000": {
    "file_bytes": 283,
    "outcome": "ValueError: truncated stream",
-   "peak_bytes": 178332588,
-   "amplification": 630150
+   "peak_bytes": 130097980,
+   "amplification": 459710
   },
   "honest_dense_events_1414x1414": {
    "file_bytes": 163,
    "outcome": "accepted",
-   "peak_bytes": 61999613,
+   "peak_bytes": 52742036,
    "cells": 1999396,
    "decoded_bytes": 1999396
   },
   "extrapolated_at_MAX_CELLS": {
    "bytes_per_event": 15.9,
-   "estimated_peak_mb": 318,
+   "estimated_peak_mb": 269,
    "first_pass_estimate_mb": 1093,
    "note": "linear in n; MAX_CELLS bounds n"
   }

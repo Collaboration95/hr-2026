@@ -114,7 +114,7 @@
    ]
   },
   "all_equal": true,
-  "read_seconds_single_strip_single_process": 0.02,
+  "read_seconds_single_strip_single_process": 0.03,
   "jrc_values": [
    0,
    1
