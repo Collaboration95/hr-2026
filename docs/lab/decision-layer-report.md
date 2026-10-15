@@ -68,24 +68,24 @@ The 17 supplied plots, isolated child processes, two full runs, and every timed 
 
 | Path | Hot, 17 plots | Fresh process: load + query | End-to-end incl. Python start | Peak memory |
 | --- | --- | --- | --- | --- |
-| Original layers, retained v1 query | 1.44 ms | 11.1 ms | 114 ms | 75 MB |
-| Original layers, same EUDR question | 1.86 ms | 19.0 ms | 125 ms | 97 MB |
-| Decision layer | 1.19 ms | 2.7 ms | 57 ms | 40 MB |
-| Decision layer + exact fast selection | 0.29 ms (**5.0×**) | 1.6 ms | 57 ms | 40 MB |
-| Decision layer + batch evaluator (needs a batch in hand) | 0.24 ms (**6.0×**) | 3.6 ms | 59 ms | 42 MB |
-| Decision layer + registered-plot index | **0.044 ms (33×)** | 1.3 ms (8.6×) | 50 ms | 37 MB |
-| Registered-plot index, numpy-free re-check | **0.033 ms (44×)** | 1.0 ms (10.8×) | **25 ms (4.6×)** | 23 MB |
+| Original layers, retained v1 query | 1.44 ms | 11.1 ms | 115 ms | 75 MB |
+| Original layers, same EUDR question | 1.86 ms | 19.0 ms | 124 ms | 97 MB |
+| Decision layer | 1.17 ms | 2.7 ms | 57 ms | 40 MB |
+| Decision layer + exact fast selection | 0.27 ms (**5.3×**) | 1.5 ms | 57 ms | 40 MB |
+| Decision layer + batch evaluator (needs a batch in hand) | 0.23 ms (**6.4×**) | 1.5 ms | 56.5 ms | 40 MB |
+| Decision layer + registered-plot index | **0.033 ms (44×)** | 1.3 ms (8.7×) | 50 ms | 37 MB |
+| Registered-plot index, numpy-free re-check | **0.022 ms (65×)** | 1.0 ms (11.0×) | **25 ms (4.6×)** | 23 MB |
 | Registered-plot answer table | **0.0035 ms (417×)** | 0.24 ms (46×) | 21 ms (5.4×) | 21 MB |
 
-Multiples are against the retained v1 path.
+Multiples are against the retained v1 path. These are the figures after the third perf pass; what each pass changed is [below](#third-perf-pass-15-oct-late-night).
 
-- **Where the speed comes from.** The representation alone gives 1.6× hot and 7.0× fresh-process speedups, because there is one small band instead of three plus a 101-bin canopy histogram. Exact scanline selection gives about 4× on new polygons. The big hot-path gain needs the **registered-plot index**: EUDR plots are registered once and re-checked whenever a layer updates, so their cells are found once (33×). The **answer table** goes further: it holds each registered plot's precomputed answer, keyed by plot ID, geometry hash and store hash (417×).
-- **New, unregistered plots** take the decision layer + fast selection path: about 42,000 synthetic plot-sized polygons per second, against 9,200 on the original path (4.6×). If the polygons arrive as a batch, the batch evaluator answers about 128,000 per second (14×, and 3.05× over the one-at-a-time fast path). It needs a batch in hand: a single new plot gains nothing, and on the 17-plot batch it is only 1.2× ahead of the fast path. It is also slower from a cold start (3.6 ms against 1.6 ms), because the first call warms NumPy and shapely.
-- **Cold start.** The decision paths never import GDAL/rasterio, and the table path needs only the Python standard library. The numpy-free re-check of registered plots is the one change that also moves end-to-end time: it halves the fresh-process time of the index path (49.7 to 24.6 ms) because it never imports NumPy. Its remaining time is interpreter start-up plus the benchmark harness's own floor, not the re-check. The other paths still spend most of their end-to-end time on interpreter start-up (about 15 ms) and importing NumPy (about 25 ms).
+- **Where the speed comes from.** The representation alone gives 1.6× hot and 7.0× fresh-process speedups, because there is one small band instead of three plus a 101-bin canopy histogram. Exact scanline selection gives about 4× on new polygons. The big hot-path gain needs the **registered-plot index**: EUDR plots are registered once and re-checked whenever a layer updates, so their cells are found once (44×). The **answer table** goes further: it holds each registered plot's precomputed answer, keyed by plot ID, geometry hash and store hash (417×).
+- **New, unregistered plots** take the decision layer + fast selection path: about 43,700 synthetic plot-sized polygons per second, against 9,200 on the original path (4.7×). If the polygons arrive as a batch, the batch evaluator answers about 141,000 per second (15×, and 3.2× over the one-at-a-time fast path). It needs a batch in hand: a single new plot gains nothing, and on the 17-plot batch it is only 1.2× ahead of the fast path. From a cold start it is now level with the fast path (1.5 ms each). Before the third pass it was slower (3.6 ms), because its first call imported a NumPy module it did not need.
+- **Cold start.** The decision paths never import GDAL/rasterio, and the table path needs only the Python standard library. The numpy-free re-check of registered plots is the one change that also moves end-to-end time: it halves the fresh-process time of the index path (49.8 to 24.8 ms) because it never imports NumPy. Its remaining time is interpreter start-up plus the benchmark harness's own floor, not the re-check. The other paths still spend most of their end-to-end time on interpreter start-up (about 15 ms) and importing NumPy (about 25 ms).
 
 ## Perf pass (15 Oct, evening)
 
-After the first benchmark we made three speed-ups that change no output, then re-ran everything. The figures quoted in this section are the evening re-run; the table above is from the later night re-run. The 15 Oct afternoon figures were 2.2× (new boundaries), 24× (registered index) and 3.5 ms fresh-process for the index.
+After the first benchmark we made three speed-ups that change no output, then re-ran everything. The figures quoted in this section are the evening re-run; the table above is from the latest re-run (third pass). The 15 Oct afternoon figures were 2.2× (new boundaries), 24× (registered index) and 3.5 ms fresh-process for the index.
 
 - **What changed.**
   - **Histogram reduction** (`summarize_counts` in `engine/decision.py`): the 20-bin histogram becomes the contract outputs in fewer Python passes (one `tolist`, shared sums, precomputed keys). It is 1.6–2.2× faster on its own.
@@ -114,6 +114,36 @@ A second pass made three more changes. None changes any output, store byte or fi
 - **End-to-end is different this time.** The first pass could not move end-to-end time, and the same is still true for the fast path, the batch path and the NumPy index. The numpy-free re-check is the exception, because skipping `import numpy` removes about 25 ms. What is left is interpreter start-up plus the benchmark harness's own floor (19.7 ms for a no-op child).
 - **Not checked by the numpy-free path.** It does not check the decoded raster's `codes_sha256`, because that needs a full decode. Pinning the store file's sha256 closes the gap: the benchmark pins it, as the table path does. Without that pin, the NumPy index path is the one that checks the decoded raster.
 - **How it was checked.** Every timed answer is bound to the same expected digests, and the proof is unchanged: 9,829 of 9,829 fuzzed polygons and 744,732 of 744,732 cells identical. The new scan was compared with a verbatim copy of the old code and with `select_cells` on 58,896 polygon and grid cases: zero mismatches in cells, dtype, exception type and message. The batch evaluator was compared with the single path on about 185,000 cases: zero mismatches. For the numpy-free re-check, about 118,000 corrupted store blobs were all rejected with `ValueError`, and its decoded cells were checked against the full-raster path at both levels.
+
+## Third perf pass (15 Oct, late night)
+
+A small third pass made two changes. Neither changes any output, store byte or file format. The benchmark was re-run (2 full runs, AC power) and the evidence in `artifacts/decision/` was regenerated.
+
+- **What changed.**
+  - **Histogram reduction** (`summarize_counts` in `engine/decision_summary.py`): the one shared reducer that turns a 20-code histogram into the contract answer now unpacks the 20 codes by name and builds the answer dicts directly, instead of slicing, zipping and calling a nested helper. It is about 2× faster on its own (about 1.6 to 0.8 µs per call). A module guard raises if the code layout constants ever change. It speeds up every path that computes answers live: the registered index, the numpy-free re-check, new boundaries and the batch.
+  - **First call of the batch evaluator** (`engine/decision_batch.py`): numpy 2.5's `np.unique` imports `numpy.ma` on first use, which costs about 2 ms. A small sort-and-dedupe helper replaces it, with an identical result.
+- **What it bought.** Hot time is per plot on the 17 plots. The multiple is against the retained v1 path (P0, 84.9 µs per plot).
+
+| Path | Second pass | Third pass |
+| --- | --- | --- |
+| Registered index (P5d) | 2.61 µs (33×) | 1.93 µs (44×) |
+| Numpy-free re-check (P5Ld) | 1.93 µs (44×) | 1.31 µs (65×) |
+| Registered index, screen level (P5s) | 3.48 µs | 2.29 µs |
+| Numpy-free re-check, screen level (P5Ls) | 2.82 µs | 1.67 µs |
+| New boundaries (P4) | 17.0 µs (5.0×) | 16.1 µs (5.3×) |
+| Batch of 17 plots (P4B) | 14.2 µs (6.0×) | 13.4 µs (6.4×) |
+| Batch, fresh-process load + query | 3.64 ms | 1.54 ms |
+| Batch, end-to-end | 59.1 ms | 56.5 ms |
+| 500 synthetic polygons, fast path (P4) | 23.8 µs (42,000 per second) | 22.9 µs (about 43,700 per second) |
+| 500 synthetic polygons, batch (P4B) | 7.8 µs (128,000 per second, 14×) | 7.08 µs (about 141,000 per second, about 15×) |
+| 100 adversarial polygons, fast path / batch | 25.9 / 9.0 µs | 25.0 / 8.1 µs |
+
+- **Everything else is unchanged within noise.** The answer table (about 417×), the other paths' end-to-end times and the stored bytes did not move. The batch path's fresh-process time is now level with one-at-a-time (1.54 ms each), so it is no longer slower from a cold start.
+- **The floors that are left.**
+  - New boundaries: about 5 µs of the remaining ~16 µs per plot is the required geometry validity check. The rest is the scan and the answer.
+  - End-to-end: interpreter start-up (about 14 ms) plus the benchmark harness's own floor (about 20 ms) dominate.
+  - The answer table did not change.
+- **How it was checked.** Every timed answer is bound to the same expected digests, and the proof is unchanged: 9,829 of 9,829 fuzzed polygons and 744,732 of 744,732 cells identical. The new reducer was compared with the old one on 300,000 random histograms: identical outputs, key order and errors. A permanent test (`engine/tests/test_decision_summary.py`) pins it to the old generic reducer on 40,000 seeded cases. Between the two benchmark runs the median spread was 1.0% and the largest 3.6%. The load average was about 2.1, slightly busier than for the second pass.
 
 ## What the decision layer says about the 17 plots
 
