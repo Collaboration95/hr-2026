@@ -98,21 +98,28 @@ def project_decision(screen_codes):
     return codes
 
 
+_YEAR_KEYS = tuple(str(y) for y in POST_YEARS)
+_PERIOD_SLICES = tuple((key, slice(lo - POST_YEARS[0], hi - POST_YEARS[0] + 1)) for key, (lo, hi) in PERIODS.items())
+
+
 def summarize_counts(counts, selected_count, outside_count, level):
     """Contract outputs from a 20-bin code histogram plus out-of-chip selections."""
     if level not in LEVELS:
         raise ValueError('unknown contract level')
-    counts = [int(v) for v in counts]
+    if isinstance(counts, np.ndarray) and counts.dtype.kind in 'iu':
+        counts = counts.tolist()
+    else:
+        counts = [int(v) for v in counts]
     if len(counts) != CODE_COUNT or selected_count != sum(counts) + outside_count or outside_count < 0:
         raise ValueError('code histogram accounting mismatch')
-    by_state = [counts[LAND + 6 * s:LAND + 6 * s + 6] for s in range(3)]
-    land = sum(map(sum, by_state))
+    s0, s1, s2 = (counts[LAND + 6 * s:LAND + 6 * s + 6] for s in range(3))  # per JRC forest state
+    nonforest, forest, funk = sum(s0), sum(s1), sum(s2)
+    land = nonforest + forest + funk
     unknown = outside_count + counts[UNKNOWN]
     analytical = land > 0
-    forest_counts = {name: sum(by_state[s]) for s, name in enumerate(FOREST_STATES)}
-    unknown_forest_loss = sum(by_state[2][1:])
-    deforested = {str(y): by_state[1][i + 1] for i, y in enumerate(POST_YEARS)}
-    total = sum(deforested.values())
+    forest_counts = {'nonforest': nonforest, 'forest': forest, 'unknown': funk}  # FOREST_STATES order
+    deforested = dict(zip(_YEAR_KEYS, s1[1:]))
+    total = sum(s1[1:])
 
     def tri(count, blockers):
         if not analytical:
@@ -123,21 +130,23 @@ def summarize_counts(counts, selected_count, outside_count, level):
            'out_of_coverage_cell_count': outside_count, 'valid_land_cell_count': land,
            'water_cell_count': counts[WATER], 'unknown_cell_count': unknown,
            'forest_2020': {'cell_counts': forest_counts if analytical else None,
-                           'present': tri(forest_counts['forest'], unknown + forest_counts['unknown'])},
+                           'present': tri(forest, unknown + funk)},
            'deforestation_after_2020': {
                'yearly_cell_counts': deforested if analytical else None,
                'cell_count': total if analytical else None,
-               'present': tri(total, unknown + unknown_forest_loss)}}
+               'present': tri(total, unknown + sum(s2[1:]))}}
     if level == SCREEN_VERSION:
-        loss = {str(y): sum(by_state[s][i + 1] for s in range(3)) for i, y in enumerate(POST_YEARS)}
+        loss = [x + y + z for x, y, z in zip(s0[1:], s1[1:], s2[1:])]
+        periods = {}
+        for key, sl in _PERIOD_SLICES:
+            n = sum(loss[sl])
+            periods[key] = {'observed_loss_cell_count': n if analytical else None,
+                            'mapped_loss_present': tri(n, unknown)}
         out['hansen_loss_after_2020'] = {
-            'yearly_cell_counts': loss if analytical else None,
-            'periods': {key: {'observed_loss_cell_count': sum(loss[str(y)] for y in range(lo, hi + 1)) if analytical else None,
-                              'mapped_loss_present': tri(sum(loss[str(y)] for y in range(lo, hi + 1)), unknown)}
-                        for key, (lo, hi) in PERIODS.items()}}
+            'yearly_cell_counts': dict(zip(_YEAR_KEYS, loss)) if analytical else None, 'periods': periods}
     # Support covers both layers: a land cell without a JRC 2020 class is partial.
     out['support'] = ('none' if selected_count == 0 or land == 0 else
-                      'partial' if unknown or forest_counts['unknown'] else 'complete')
+                      'partial' if unknown or funk else 'complete')
     return out
 
 
