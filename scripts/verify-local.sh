@@ -22,4 +22,9 @@ cd "$ROOT"
 echo "P-0003 Hansen full query: source and compact results match."
 "$PYTHON" -B -m engine --plot P-0003 --access indexed --store "$STORE" >/dev/null
 echo "P-0003 Hansen indexed query: source and compact results match."
+TMP_PROOF=$(mktemp -t plotline-decision-proof.XXXXXX)
+"$PYTHON" -B -m engine.decision_proof --output "$TMP_PROOF" >/dev/null
+"$PYTHON" -c 'import json, sys; assert json.load(open(sys.argv[1]))["summary"]["all_pass"], "decision-layer proof failed"' "$TMP_PROOF"
+rm -f "$TMP_PROOF"
+echo "Decision layers: every cell, 17 plots and the polygon fuzz match the original layers."
 npm run build --prefix app
