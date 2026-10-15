@@ -37,6 +37,7 @@ const commands = install
         ["app/checks/experience-index.mjs"],
         ["app/checks/experience-overview.mjs"],
         ["app/tests/redesign-journey.mjs"],
+        ["app/tests/decision-journey.mjs"],
       ];
 for (const args of commands) {
   const result = spawnSync(process.execPath, args, {

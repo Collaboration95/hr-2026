@@ -25,7 +25,7 @@ Build emits `app/dist/` for offline frozen review through a local HTTP server. I
 
 ## Data boundary
 
-`npm run sync-data --prefix app` copies the engine-owned `artifacts/demo-v1.json` into ignored `app/public/data/`. It copies the optional, separately labelled `artifacts/synthetic-v1.json` into a separate file. The accepted optional JRC companion is copied separately only when its file SHA-256 matches the reviewed pin in `scripts/sync-data.py`; an absent or changed file leaves it unavailable. The app never modifies those canonical artifacts or raw inputs. Dev startup and production build run the copy automatically; after a later explicit sync, Commands → Reload local evidence validates and loads the new frozen response.
+`npm run sync-data --prefix app` copies the engine-owned `artifacts/demo-v1.json` into ignored `app/public/data/`. It copies the optional, separately labelled `artifacts/synthetic-v1.json` into a separate file. The accepted optional JRC companion is copied separately only when its file SHA-256 matches the reviewed pin in `scripts/sync-data.py`; an absent or changed file leaves it unavailable. The optional decision-layer summary `artifacts/decision/summary-v1.json` (schema `plotline.decision-summary.v1`, written by `engine/decision_export.py`) is copied to `app/public/data/decision-v1.json` only when it exists, parses and carries that schema; otherwise a stale copy is removed. The app validates it again at runtime (`src/decision-data.ts`) and, if it is absent or malformed, hides the decision sections and keeps the lossless proof and the map panel exactly as before. The app never modifies those canonical artifacts or raw inputs. Dev startup and production build run the copy automatically; after a later explicit sync, Commands → Reload local evidence validates and loads the new frozen response.
 
 If the canonical export does not exist, the sync builds a declaration-only view from the actual CSV and GeoJSON. Every uncomputed source/compact/receipt/benchmark field remains null. The full-proof check deliberately does not pass that fallback.
 
@@ -42,10 +42,11 @@ The UI was redesigned on 15 October 2026 ("Night survey", see [design/DESIGN.md]
 - **Plot rail:** search (`/`), filters (*All*, *Declared indication*, *Mapped loss 2021–23*, *Declared ≠ mapped*) and J/K. Filters affect only the rail.
 - **Inspector:**
   - ◆ *Declared by supplier* and ■ *Mapped by Plotline* side by side, with a review question generated from fixed templates;
+  - an **EUDR decision layer** block in the Mapped account (when the decision summary is present): forest cells at the 31 Dec 2020 cut-off, mapped loss on that forest by year and its support, with known zeros shown as "none" and anything unknown shown hatched as Unknown. It is hidden if the plot boundary differs from the one the summary was computed for;
   - the selected-year count, which opens Proof (`#annual-proof-trigger`) and shows the compact-copy agreement;
   - disclosures for **Native cells** (keyboard table, "Show on map"), **JRC 2020 baseline (separate source)** and **Analyst note** (local only, same storage key and limits as before).
 - **Cohort:** declared-vs-mapped matrix for 2021–23, and a 17 × 25 loss barcode. Positive cells open the plot and year. **Export displayed counts · CSV** keeps the earlier escaping and context rows.
-- **Proof:** export-derived hero numbers (exact-match plots, pixel fidelity, storage change, fresh-process and hot-query timing), the field-by-field original/compact comparison, every storage candidate including the losers and the separate standard-format control, timing distributions, a research summary and the fictitious-grid query-limits lab.
+- **Proof:** when the decision summary is present the page opens with **Keep the decision, not the data**: storage, identical-answer and registered-plot speed headlines, the L0–L2 and registered-plot-table ladder (what each keeps and drops, bytes, percent smaller than the original layers), the layer analysis, the speed table, the whole-tile scale line and the standard-GeoTIFF control, and the summary's limits. Every figure is read from the summary. The lossless comparison below it is the **audit tier (v1)**. Without the summary the page is the audit tier alone. The audit tier has export-derived hero numbers (exact-match plots, pixel fidelity, storage change, fresh-process and hot-query timing), the field-by-field original/compact comparison, every storage candidate including the losers and the separate standard-format control, timing distributions, a research summary and the fictitious-grid query-limits lab.
 - **Receipt** (inspector button or ⌘K): readable fields, raw JSON disclosures and **Download receipt JSON**.
 - **Live query:** an exact plot polygon or a temporary rectangle, with every lifecycle state shown, the bound live receipt and complete native-cell evidence.
 - **Keyboard:** ⌘/Ctrl+K opens commands. Esc closes dialogs; on the map it returns to the region view.
@@ -53,7 +54,7 @@ The UI was redesigned on 15 October 2026 ("Night survey", see [design/DESIGN.md]
 ## Repeatable checks
 
 ```sh
-npm test --prefix app
+npm test --prefix app   # includes checks/decision-summary.test.mjs, which validates artifacts/decision/summary-v1.json
 node app/scripts/browser-check.mjs --file artifacts/demo-v1.json --url http://127.0.0.1:5173
 ```
 

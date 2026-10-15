@@ -4,6 +4,8 @@ import { Glyph, Icon, Info } from "../components/Primitives";
 import { JrcSummary } from "../JrcBaseline";
 import type { JrcArtifact } from "../jrc-data";
 import type { Plot } from "../types";
+import type { DecisionState } from "../shell/useDecisionSummary";
+import DecisionLayer from "./DecisionLayer";
 import { cleanLabel, declaredIndication, evidenceReference, mappedLoss, periodCount, reviewQuestion } from "./plot-facts";
 import { UnknownValue, fmtCount, unknownReason } from "./UnknownValue";
 import "../styles/review.css";
@@ -15,6 +17,8 @@ export type TwoAccountsProps = {
   jrcStatus: JrcStatus;
   jrcError?: string;
   onLoadJrc: () => void;
+  /** Optional decision-layer summary; the EUDR decision block is omitted without it. */
+  decision?: DecisionState;
 };
 
 function Fact({ label, title, children }: { label: string; title?: string; children: ReactNode }) {
@@ -93,7 +97,7 @@ function ReviewBand({ plot }: { plot: Plot }) {
  * ◆ Declared by supplier and ■ Mapped by Plotline, side by side with equal weight.
  * The two accounts are never merged into a verdict; the band asks a human a question.
  */
-export default function TwoAccounts({ plot, jrc, jrcStatus, jrcError, onLoadJrc }: TwoAccountsProps) {
+export default function TwoAccounts({ plot, jrc, jrcStatus, jrcError, onLoadJrc, decision }: TwoAccountsProps) {
   const uid = useId();
   const s = plot.supplier ?? {};
   const d = declaredIndication(plot);
@@ -159,6 +163,7 @@ export default function TwoAccounts({ plot, jrc, jrcStatus, jrcError, onLoadJrc 
             <Fact label="Support"><Support plot={plot} /></Fact>
             <Fact label="Selected cells"><SelectedCells plot={plot} /></Fact>
           </dl>
+          <DecisionLayer plot={plot} decision={decision} />
           <div className="pl-account__jrc">
             <JrcSummary data={jrc} status={jrcStatus} error={jrcError} plotId={plot.plot_id} onLoad={onLoadJrc} />
           </div>

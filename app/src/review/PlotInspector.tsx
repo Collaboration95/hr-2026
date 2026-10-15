@@ -4,6 +4,7 @@ import AnalystNotes, { noteContextKey, useNoteState } from "../AnalystNotes";
 import CellTable from "../CellTable";
 import JrcBaseline from "../JrcBaseline";
 import type { JrcArtifact } from "../jrc-data";
+import type { DecisionState } from "../shell/useDecisionSummary";
 import type { Cell, Demo, Plot } from "../types";
 import TwoAccounts from "./TwoAccounts";
 import type { JrcStatus } from "./TwoAccounts";
@@ -20,6 +21,7 @@ export type PlotInspectorProps = {
   jrcStatus: JrcStatus;
   jrcError?: string;
   onLoadJrc: () => void;
+  decision?: DecisionState;
   onProof: (origin: "count" | "header") => void;
   onReceipt: () => void;
   onPinCell: (cell: Cell) => void;
@@ -100,7 +102,7 @@ function NoteDisclosure({ plot }: { plot: Plot }) {
 }
 
 /** Right-hand panel for one selected plot: two accounts, the selected year, and the evidence behind them. */
-export default function PlotInspector({ data, plot, year, jrc, jrcStatus, jrcError, onLoadJrc, onProof, onReceipt, onPinCell }: PlotInspectorProps) {
+export default function PlotInspector({ data, plot, year, jrc, jrcStatus, jrcError, onLoadJrc, decision, onProof, onReceipt, onPinCell }: PlotInspectorProps) {
   const s = plot.supplier ?? {};
   const area = typeof s.a7_size_of_plot_ha === "string" && s.a7_size_of_plot_ha.trim() ? s.a7_size_of_plot_ha : null;
   const supplier = typeof s.a6_tier1_supplier_id === "string" && s.a6_tier1_supplier_id.trim() ? s.a6_tier1_supplier_id : null;
@@ -126,7 +128,7 @@ export default function PlotInspector({ data, plot, year, jrc, jrcStatus, jrcErr
         </div>
       </header>
 
-      <TwoAccounts plot={plot} jrc={jrc} jrcStatus={jrcStatus} jrcError={jrcError} onLoadJrc={onLoadJrc} />
+      <TwoAccounts plot={plot} jrc={jrc} jrcStatus={jrcStatus} jrcError={jrcError} onLoadJrc={onLoadJrc} decision={decision} />
 
       <div className="pl-review__year">
         <YearDetail plot={plot} year={year} onProof={onProof} />
