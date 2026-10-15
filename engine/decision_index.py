@@ -22,6 +22,7 @@ import hashlib
 import json
 import math
 import struct
+from itertools import chain
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,8 @@ SELECTION_RULE = 'engine.query.select_cells: exact GEOS covers on native cell ce
 # degrees at x~100), so this margin is >1e5 times the error and still delegates ~0 centres per row.
 TOL_ABS, TOL_REL = 1e-9, 2.0 ** -40
 MAX_ROW_PAIRS = 2_000_000  # row-chunk x edge matrix cap for bounded memory
+PREPARE_POINTS = 16  # ambiguous centres above which the polygon is prepared before exact covers
+MAX_RECT_LOOP = 64  # ambiguous rectangles up to which they are painted one by one, not via a 2-D difference array
 
 np = summarize_counts = summarize_selection = bind_level = None
 CODE_COUNT = 20
@@ -358,15 +361,60 @@ _G = {}
 
 def _geos():
     if not _G:
+        import numpy
         import shapely
         from shapely.geometry import shape
         from . import query
-        _G.update(shapely=shapely, shape=shape, query=query)
+        # HandleNaN.allow: the positions are finite, so any mode builds the same ring
+        _G.update(shapely=shapely, shape=shape, query=query, lib=shapely.lib,
+                  allow=numpy.intc(0), no_holes=numpy.empty(0, object))
     return _G
 
 
+def _flat(polygons, limit):
+    """(xy, ring lengths, rings per polygon) when the input is exact lists of [float|int, float|int] positions that
+    pass select_cells' checks, else None, leaving those checks to decide (and raise) as select_cells does."""
+    try:
+        pts, lens, counts = [], [], []
+        for rings in polygons:
+            if type(rings) is not list or not rings:
+                return None
+            counts.append(len(rings))
+            for ring in rings:
+                if type(ring) is not list or len(ring) < 4 or ring[0] != ring[-1]:
+                    return None
+                lens.append(len(ring))
+                pts += ring
+        if len(pts) > limit or set(map(type, pts)) != {list} or set(map(len, pts)) != {2}:
+            return None
+        vals = list(chain.from_iterable(pts))
+        if not set(map(type, vals)) <= {float, int}:
+            return None
+        xy = np.array(vals, float).reshape(-1, 2)  # an int beyond float range raises OverflowError, as math.isfinite does
+        return (xy, lens, counts) if np.isfinite(xy).all() else None
+    except Exception:
+        return None
+
+
+def _polygon(g, geometry, xy, lens, counts):
+    """The geometry shape() builds, from the validated array (None if GEOS refuses; shape() then reports it)."""
+    try:
+        make, lib, polygons, pos, i = g['shapely'], g['lib'], [], 0, 0
+        for count in counts:
+            rings = []
+            for n in lens[i:i+count]:
+                rings.append(lib.linearrings(xy[pos:pos+n], g['allow']))  # shapely.linearrings minus its wrappers
+                pos += n
+            i += count
+            polygons.append(make.polygons(rings[0], rings[1:]) if count > 1 else lib.polygons(rings[0], g['no_holes']))
+        return polygons[0] if geometry['type'] == 'Polygon' else make.multipolygons(polygons)
+    except Exception:
+        return None
+
+
 def _checked(g, metadata, geometry):
-    """select_cells' validation and candidate window, line for line (differential-tested)."""
+    """select_cells' validation and candidate window (differential-tested): the checks line for line, except that
+    clean input (see _flat) passes them in bulk. Also returns the positions array of clean input, else None."""
     query = g['query']
     if not isinstance(geometry, dict) or geometry.get('type') not in ('Polygon', 'MultiPolygon'):
         raise ValueError('only Polygon and MultiPolygon are supported')
@@ -374,39 +422,51 @@ def _checked(g, metadata, geometry):
     polygons = [coordinates] if geometry['type'] == 'Polygon' else coordinates
     if not isinstance(polygons, (list, tuple)) or not polygons:
         raise ValueError('geometry must contain polygons')
-    vertex_count, lens = 0, []
-    for rings in polygons:
-        if not isinstance(rings, (list, tuple)) or not rings:
-            raise ValueError('polygon must contain an exterior ring')
-        for ring in rings:
-            if not isinstance(ring, (list, tuple)) or len(ring) < 4 or ring[0] != ring[-1]:
-                raise ValueError('rings must have at least four positions and be explicitly closed')
-            vertex_count += len(ring)
-            lens.append(len(ring))
-            if vertex_count > query.MAX_GEOMETRY_VERTICES:
-                raise ValueError('geometry exceeds 100000 vertices')
-            for point in ring:
-                if type(point) is list and len(point) == 2:  # exact-type fast accept; all else takes the checks below
-                    u, v = point
-                    if (type(u) is float or type(u) is int) and (type(v) is float or type(v) is int):
-                        try:
-                            if math.isfinite(u) and math.isfinite(v):
-                                continue
-                        except OverflowError:
-                            pass
-                if not isinstance(point, (list, tuple)) or len(point) != 2:
-                    raise ValueError('positions must have exactly two coordinates')
-                try:
-                    valid = all(not isinstance(v, bool) and isinstance(v, (int, float)) and math.isfinite(v) for v in point)
-                except (OverflowError, ValueError):
-                    valid = False
-                if not valid:
-                    raise ValueError('positions must be finite numbers')
-    try:
-        polygon = g['shape'](geometry)
-    except Exception as exc:
-        raise ValueError('malformed geometry') from exc
-    if polygon.is_empty or not polygon.is_valid:
+    flat = _flat(polygons, query.MAX_GEOMETRY_VERTICES)
+    if flat:  # clean input: the checks below would all pass
+        xy, lens, counts = flat
+    else:
+        xy = None
+        vertex_count, lens = 0, []
+        for rings in polygons:
+            if not isinstance(rings, (list, tuple)) or not rings:
+                raise ValueError('polygon must contain an exterior ring')
+            for ring in rings:
+                if not isinstance(ring, (list, tuple)) or len(ring) < 4 or ring[0] != ring[-1]:
+                    raise ValueError('rings must have at least four positions and be explicitly closed')
+                vertex_count += len(ring)
+                lens.append(len(ring))
+                if vertex_count > query.MAX_GEOMETRY_VERTICES:
+                    raise ValueError('geometry exceeds 100000 vertices')
+                for point in ring:
+                    if type(point) is list and len(point) == 2:  # exact-type fast accept; all else takes the checks below
+                        u, v = point
+                        if (type(u) is float or type(u) is int) and (type(v) is float or type(v) is int):
+                            try:
+                                if math.isfinite(u) and math.isfinite(v):
+                                    continue
+                            except OverflowError:
+                                pass
+                    if not isinstance(point, (list, tuple)) or len(point) != 2:
+                        raise ValueError('positions must have exactly two coordinates')
+                    try:
+                        valid = all(not isinstance(v, bool) and isinstance(v, (int, float)) and math.isfinite(v) for v in point)
+                    except (OverflowError, ValueError):
+                        valid = False
+                    if not valid:
+                        raise ValueError('positions must be finite numbers')
+    polygon = _polygon(g, geometry, xy, lens, counts) if flat else None
+    if polygon is None:
+        try:
+            polygon = g['shape'](geometry)
+        except Exception as exc:
+            raise ValueError('malformed geometry') from exc
+    minx, miny, maxx, maxy = bounds = polygon.bounds  # NaN when empty
+    if -1e100 < minx and maxx < 1e100 and -1e100 < miny and maxy < 1e100:
+        invalid = not g['lib'].is_valid(polygon)  # nonempty, and too small to overflow, so shapely.is_valid has no warnings to suppress
+    else:
+        invalid = polygon.is_empty or not polygon.is_valid
+    if invalid:
         raise ValueError('geometry must be nonempty and valid')
     transform = metadata.get('transform', [])
     if len(transform) != 6 or not all(math.isfinite(v) for v in transform):
@@ -414,7 +474,6 @@ def _checked(g, metadata, geometry):
     a, b, c, d, e, f = transform
     if b != 0 or d != 0 or a <= 0 or e >= 0 or metadata.get('crs') != 'EPSG:4326':
         raise ValueError('only north-up EPSG:4326 grids are supported')
-    minx, miny, maxx, maxy = bounds = polygon.bounds
     if not all(math.isfinite(v) for v in bounds):
         raise ValueError('geometry bounds must be finite')
     extents = ((minx-c)/a-.5, (maxx-c)/a-.5, (maxy-f)/e-.5, (miny-f)/e-.5)
@@ -424,7 +483,7 @@ def _checked(g, metadata, geometry):
     r0, r1 = math.floor(extents[2]) - 1, math.ceil(extents[3]) + 1
     if (r1-r0+1) * (c1-c0+1) > query.MAX_CANDIDATE_CELLS:
         raise ValueError('geometry exceeds 10000000 candidate cells; partition explicitly')
-    return polygon, lens, (a, c, e, f), (r0, r1, c0, c1), max(abs(minx), abs(maxx))
+    return polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), max(abs(minx), abs(maxx))
 
 
 def fast_select_cells(metadata, geometry):
@@ -440,9 +499,10 @@ def fast_select_cells(metadata, geometry):
     if np is None:
         _numpy()
     g = _geos()
-    polygon, lens, (a, c, e, f), (r0, r1, c0, c1), reach = _checked(g, metadata, geometry)
+    polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), reach = _checked(g, metadata, geometry)
     R, C = r1 - r0 + 1, c1 - c0 + 1
-    xy = g['shapely'].get_coordinates(polygon)
+    if xy is None:
+        xy = g['shapely'].get_coordinates(polygon)
     if (len(xy) != sum(lens) or max(abs(r0), abs(r1), abs(c0), abs(c1)) > 2**50
             or max(abs(c), abs(f)) + 2**51 * max(a, -e) > 1e100):
         return g['query'].select_cells(metadata, geometry)
@@ -487,14 +547,23 @@ def fast_select_cells(metadata, geometry):
             rects.append((npy.searchsorted(ny, 'left'), npy.searchsorted(ny, 'right'),
                           px.searchsorted(hx0 - tol, 'left'), px.searchsorted(hx1 + tol, 'right')))
     if rects:
-        ra, rb, ca, cb = (np.concatenate(v) for v in zip(*rects))
-        mark = np.zeros((R + 1, C + 1), np.int32)  # 2-D difference array of ambiguous rectangles
-        for rows, cols, sign in ((ra, ca, 1), (ra, cb, -1), (rb, ca, -1), (rb, cb, 1)):
-            np.add.at(mark, (rows, cols), sign)
-        ambiguous = mark.cumsum(0).cumsum(1)[:R, :C] > 0
+        if sum(len(rect[0]) for rect in rects) <= MAX_RECT_LOOP:
+            ambiguous = np.zeros((R, C), bool)
+            for rect in rects:
+                for lo_r, hi_r, lo_c, hi_c in zip(*(v.tolist() for v in rect)):
+                    ambiguous[lo_r:hi_r, lo_c:hi_c] = True
+        else:  # 2-D difference array of the rectangles
+            ra, rb, ca, cb = (np.concatenate(v) for v in zip(*rects))
+            w = C + 1
+            mark = np.bincount(np.concatenate((ra * w + ca, rb * w + cb)), minlength=(R + 1) * w) \
+                - np.bincount(np.concatenate((ra * w + cb, rb * w + ca)), minlength=(R + 1) * w)
+            ambiguous = mark.reshape(R + 1, w).cumsum(0).cumsum(1)[:R, :C] > 0
         ar, ac = ambiguous.nonzero()
-        inside &= ~ambiguous
-        inside[ar, ac] = g['shapely'].covers(polygon, g['shapely'].points(px[ac], py[ar]))
+        coords = np.empty((len(ar), 2))
+        coords[:, 0], coords[:, 1] = px[ac], py[ar]
+        if len(ar) > PREPARE_POINTS:
+            g['lib'].prepare(polygon)  # same answers, indexed edges
+        inside[ar, ac] = g['lib'].covers(polygon, g['lib'].points(coords, g['allow']))  # shapely.covers/points minus wrappers
     rows, cols = inside.nonzero()
     return rows + r0, cols + c0
 
