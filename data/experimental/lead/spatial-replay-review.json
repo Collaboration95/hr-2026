@@ -1,0 +1,124 @@
+{
+  "exact_replay": true,
+  "content_sha256": "37ddeb70c8dfd7c0b6f8169bb1063232510ac4cfd5a26f935c73f24cd276e045",
+  "summary": {
+    "real_plot_count": 17,
+    "synthetic_plot_count_in_this_file": 0,
+    "source_compact_exact_query_count": {
+      "center_covers": 17,
+      "positive_area_overlap": 17
+    },
+    "total_selected_cell_memberships": {
+      "center_covers": 1048,
+      "positive_area_overlap": 1385
+    },
+    "positive_plot_counts": {
+      "center_covers": {
+        "2021-2023": 3,
+        "2024-2025": 5
+      },
+      "positive_area_overlap": {
+        "2021-2023": 5,
+        "2024-2025": 8
+      }
+    },
+    "period_flag_change_count": 5,
+    "plots_with_changed_period_flag": [
+      "P-0003",
+      "P-0004",
+      "P-0014",
+      "P-0015",
+      "P-0019"
+    ],
+    "center_only_cell_membership_count": 0,
+    "overlap_only_cell_membership_count": 337,
+    "zero_area_touch_cell_membership_count": 0,
+    "predicate_mismatch_count": 0,
+    "scalar_center_match_count": 17,
+    "canonical_center_match_count": 17,
+    "selected_support_totals": {
+      "center_covers": {
+        "valid_land_cell_count": 1048,
+        "unknown_cell_count": 0,
+        "out_of_coverage_cell_count": 0
+      },
+      "positive_area_overlap": {
+        "valid_land_cell_count": 1385,
+        "unknown_cell_count": 0,
+        "out_of_coverage_cell_count": 0
+      }
+    },
+    "supplier_indication_ids": [
+      "P-0003",
+      "P-0005",
+      "P-0008",
+      "P-0010",
+      "P-0013"
+    ],
+    "supplier_indication_2021_2023": [
+      {
+        "plot_id": "P-0003",
+        "center_covers": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "positive_area_overlap": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      {
+        "plot_id": "P-0005",
+        "center_covers": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "positive_area_overlap": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      {
+        "plot_id": "P-0008",
+        "center_covers": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "positive_area_overlap": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      {
+        "plot_id": "P-0010",
+        "center_covers": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "positive_area_overlap": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      },
+      {
+        "plot_id": "P-0013",
+        "center_covers": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "positive_area_overlap": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    ],
+    "supplier_indication_new_2021_2023_signal_ids": []
+  },
+  "gates": {
+    "pass": true,
+    "failures": [],
+    "input_and_code_unchanged": true,
+    "positive_encoding_fidelity_claim_allowed": true
+  },
+  "worker_files_changed": false
+}

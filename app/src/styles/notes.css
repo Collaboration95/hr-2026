@@ -1,0 +1,22 @@
+/*
+ * Analyst note editor (inside the "Analyst note" disclosure). Local-only annotation.
+ * Tokens and primitives only; see design/DESIGN.md.
+ */
+.pl-notes { display: grid; gap: var(--pl-3); min-width: 0; }
+.pl-notes__scope { font-size: var(--pl-text-sm); color: var(--pl-text-3); }
+.pl-notes label { font-size: var(--pl-text-sm); font-weight: 600; color: var(--pl-text-2); }
+.pl-notes .pl-textarea { display: block; min-height: 7rem; }
+.pl-notes__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--pl-2); margin-top: calc(var(--pl-1) * -1); color: var(--pl-text-3); font-size: var(--pl-text-xs); }
+.pl-notes__meta .is-dirty { color: var(--pl-text); }
+.pl-notes__meta > :last-child { font-family: var(--pl-font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pl-notes__actions { display: flex; flex-wrap: wrap; gap: var(--pl-2); }
+.pl-notes__feedback { min-height: 1.4em; font-size: var(--pl-text-sm); color: var(--pl-text-2); }
+.pl-notes__feedback:empty { min-height: 0; }
+.pl-notes__warning {
+  padding: var(--pl-2) var(--pl-3); border: 1px solid var(--pl-line-strong); border-left-width: 3px; border-radius: var(--pl-radius);
+  background: var(--pl-raised); color: var(--pl-text-2); font-size: var(--pl-text-sm); overflow-wrap: anywhere;
+}
+.pl-notes__warning--error { border-color: color-mix(in srgb, var(--pl-error) 50%, transparent); background: var(--pl-error-soft); color: var(--pl-text); }
+@media (max-width: 480px) {
+  .pl-notes__actions > button { flex: 1 1 auto; }
+}

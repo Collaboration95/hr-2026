@@ -1,0 +1,79 @@
+{
+  "scope": "synthetic transient sample failures; in-process worker loops; no timing-performance claim",
+  "checks": [
+    {
+      "representation": "source",
+      "mode": "full",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "source",
+      "mode": "indexed",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
+      "mode": "full",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19",
+      "mode": "indexed",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/strong-baseline-stores/exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1/gtiff_zstd19_p1_b256",
+      "mode": "full",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/strong-baseline-stores/exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1/gtiff_zstd19_p1_b256",
+      "mode": "indexed",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/strong-baseline-stores/exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1/gtiff_zstd19_p1_b512",
+      "mode": "full",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    },
+    {
+      "representation": "artifacts/strong-baseline-stores/exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1/gtiff_zstd19_p1_b512",
+      "mode": "indexed",
+      "injected": [
+        52
+      ],
+      "rejected": true,
+      "error": "timed full/indexed result digest mismatch"
+    }
+  ],
+  "mismatched_guard_rejected": true,
+  "pass": true
+}

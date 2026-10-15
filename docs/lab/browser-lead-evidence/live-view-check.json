@@ -1,0 +1,58 @@
+[
+  {
+    "width": 1440,
+    "unavailable": true,
+    "bounds": true,
+    "frozenReview": true,
+    "overflow": {
+      "body": 1440,
+      "viewport": 1440,
+      "nav": [
+        {
+          "text": "Review desk",
+          "right": 453.59375
+        },
+        {
+          "text": "Evidence index",
+          "right": 570.296875
+        },
+        {
+          "text": "Query lab",
+          "right": 655.328125
+        },
+        {
+          "text": "Encoding proof",
+          "right": 773.21875
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "unavailable": true,
+    "bounds": true,
+    "frozenReview": true,
+    "overflow": {
+      "body": 390,
+      "viewport": 390,
+      "nav": [
+        {
+          "text": "Review desk",
+          "right": 90.484375
+        },
+        {
+          "text": "Evidence index",
+          "right": 195.015625
+        },
+        {
+          "text": "Query lab",
+          "right": 268.296875
+        },
+        {
+          "text": "Encoding proof",
+          "right": 374
+        }
+      ]
+    }
+  }
+]

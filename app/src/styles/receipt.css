@@ -1,0 +1,115 @@
+/* Receipt dialog and ReceiptDetails. Tokens from tokens.css, primitives from base.css. */
+dialog.pl-dialog--receipt { width: min(880px, calc(100vw - 24px)); }
+.pl-receipt-head { display: grid; gap: var(--pl-1); min-width: 0; }
+.pl-receipt-head h2 { font-size: var(--pl-text-xl); overflow-wrap: anywhere; }
+.pl-receipt-head p { color: var(--pl-text-2); font-size: var(--pl-text-md); }
+/* The raw-JSON disclosures continue the receipt's disclosure list without a visual break. */
+.pl-receipt-raw { margin-top: calc(var(--pl-4) * -1); border-bottom: 1px solid var(--pl-line); }
+.pl-receipt-json > summary { padding-left: var(--pl-1); }
+.pl-receipt-json pre {
+  max-height: 340px; overflow: auto; padding: var(--pl-3); border: 1px solid var(--pl-line);
+  border-radius: var(--pl-radius); background: var(--pl-void); color: var(--pl-text-2);
+  font-size: var(--pl-text-sm); user-select: text;
+}
+
+.pl-receipt {
+  min-width: 0;
+  color: var(--pl-text);
+  font-size: var(--pl-text-md);
+}
+.pl-receipt h3 {
+  margin: 0 0 var(--pl-2);
+  font-size: var(--pl-text-lg);
+}
+.pl-receipt h4 {
+  margin: var(--pl-4) 0 var(--pl-2);
+  color: var(--pl-text-2);
+  font-family: var(--pl-font);
+  font-size: var(--pl-text-sm);
+  letter-spacing: 0;
+}
+.pl-receipt__note {
+  margin: var(--pl-2) 0 var(--pl-3);
+  color: var(--pl-text-2);
+  font-size: var(--pl-text-sm);
+  line-height: 1.55;
+}
+.pl-receipt dl {
+  margin: 0;
+}
+.pl-receipt__field {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr);
+  gap: var(--pl-3);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--pl-line);
+}
+.pl-receipt__field dt {
+  color: var(--pl-text-2);
+}
+.pl-receipt__field dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.pl-receipt__field code {
+  color: var(--pl-text);
+  font-family: var(--pl-font-mono);
+  font-size: var(--pl-text-xs);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  user-select: text;
+}
+.pl-receipt__overview {
+  padding-bottom: var(--pl-3);
+}
+.pl-receipt__disclosure.pl-disclosure > summary {
+  min-height: 44px;
+  padding: var(--pl-3) var(--pl-1);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.pl-receipt__disclosure.pl-disclosure > summary:hover {
+  background: var(--pl-hover);
+}
+.pl-receipt__disclosure[open] {
+  padding-bottom: var(--pl-3);
+}
+.pl-receipt__files {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.pl-receipt__files > li {
+  margin: var(--pl-3) 0;
+  padding: var(--pl-3);
+  background: var(--pl-raised);
+  border: 1px solid var(--pl-line);
+  border-radius: var(--pl-radius-sm);
+}
+.pl-receipt__files > li > h4 {
+  margin-top: 0;
+}
+.pl-receipt__files .pl-receipt__field:last-child {
+  border-bottom: 0;
+}
+.pl-receipt__table-wrap {
+  max-width: 100%;
+  margin-bottom: var(--pl-3);
+}
+.pl-receipt__table-wrap .pl-table th,
+.pl-receipt__table-wrap .pl-table td {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .pl-receipt__field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--pl-1);
+  }
+  .pl-dialog--receipt .pl-dialog__head,
+  .pl-dialog--receipt .pl-dialog__body {
+    padding: var(--pl-4) var(--pl-3);
+  }
+}

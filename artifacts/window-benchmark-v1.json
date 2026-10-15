@@ -1,0 +1,454 @@
+{
+  "environment": {
+    "child_thread_limits": 1,
+    "compression": "Python standard-library compression.zstd; codec defines settings",
+    "gdal": "3.12.2",
+    "hardware": {
+      "hw.memsize": "34359738368",
+      "hw.model": "Mac17,2",
+      "logical_cpu_count": 10,
+      "machdep.cpu.brand_string": "Apple M5",
+      "machine": "arm64",
+      "processor": "arm"
+    },
+    "numpy": "2.5.4",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "rasterio": "1.5.2",
+    "shapely": "2.1.2"
+  },
+  "identity": {
+    "experiment": "indexed-window-v1",
+    "implementation_sha256": {
+      "benchmark.py": "9bed1d0c65200b6562be0829692c58caca5580bd358e1bf70dd3cd9725b22600",
+      "codecs.py": "c48167fcb318cb627b2bca218b42920b2436d798ea172bd6bf0e3f6c820d6caa",
+      "experiments.py": "42505b109030d58a353effcc37bcee53a9b43800ce9c24a6bfb6580b6634ee9c",
+      "indexed.py": "24d0503814faaf4085c136b6cfdabfd51199f6d6a3599ed02fdaf7f49bfb69a3",
+      "model.py": "b6deb315687c47d8f884b3166608223137230b18a589efe4930b439abfe043f6",
+      "query.py": "68398bf5fa77b7e8775699a90cc72dfe86cf597e8b743907dbb2320259e8c257",
+      "source.py": "e6e52de001d4fc313937c8bdb7786a542adebe530416704c6960c231c8449b8c",
+      "window_benchmark.py": "11fca930dd00890134f5a15e712d6f7f737ea69c1a4258dac3977021b06ed7c0"
+    },
+    "queries_sha256": "b8b6184bf2717ac903cd45ce2ac00934362509e2d695d4d77acf64619f8ea40e",
+    "query_version": "hansen-centers.v1",
+    "repetitions": 7,
+    "source_metadata": {
+      "band_names": [
+        "treecover2000",
+        "lossyear",
+        "datamask"
+      ],
+      "crs": "EPSG:4326",
+      "license": "CC BY 4.0",
+      "product": "Hansen Global Forest Change 2025 v1.13",
+      "shape": [
+        604,
+        1233
+      ],
+      "source_url": "https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2025_v1_13",
+      "sources": [
+        {
+          "band": "treecover2000",
+          "bytes": 414142,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_treecover2000_sample.tif",
+          "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+        },
+        {
+          "band": "lossyear",
+          "bytes": 159863,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_lossyear_sample.tif",
+          "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+        },
+        {
+          "band": "datamask",
+          "bytes": 2994,
+          "compression": "DEFLATE",
+          "nodata": null,
+          "path": "data/public/hansen_datamask_sample.tif",
+          "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+        }
+      ],
+      "transform": [
+        0.00025,
+        0.0,
+        98.77225,
+        0.0,
+        -0.00025,
+        8.582
+      ]
+    },
+    "store_files": [
+      {
+        "bytes": 3165,
+        "name": "index.json",
+        "sha256": "33fb7c401550898853ee09c1a1e82fadb8114a234d840893cc96a2ee003b1a84"
+      },
+      {
+        "bytes": 531847,
+        "name": "payload.bin",
+        "sha256": "db7ba9295eccc2e816b73ab0ac321af05febf3cd2f2b8204b07778ba7fdd0a6c"
+      }
+    ],
+    "warmups": 2
+  },
+  "method": {
+    "cohort": "17 real company plots; identical native full-AOI stores",
+    "cold": "fresh process reader initialization+batch after symmetric imports/common geometry read",
+    "compact_cache": "no decoded chunk cache; index revalidated by codec for each read",
+    "disk_cache": "uncontrolled, likely warm; not disk-cold",
+    "hot": "initialized readers, two default warmup batches; original GDAL block cache may be warm",
+    "integrity": "both reader initializations hash whole stored inputs; compact selected chunks checked per query",
+    "query_count_per_batch": 17,
+    "resources": "isolated child lifetime peak RSS, including Python/imports; no UI",
+    "scope": "optional indexed access; full-load benchmark remains separate and is not silently replaced",
+    "selection": "original global native center lattice; fetch bbox of selected known cells",
+    "timing_unit": "ms per 17-plot batch"
+  },
+  "registry": {
+    "duplicate_result": false,
+    "experiment_id": "exp-bc4c0c75fe5d5029f06a88f3e1e3b893ddfe23707e8ab8c05af15b3b072b528b",
+    "is_repeat": false,
+    "result_path": "exp-bc4c0c75fe5d5029f06a88f3e1e3b893ddfe23707e8ab8c05af15b3b072b528b/run-abcc41e05ad03d0f780ac0755ce28e2ea8ad1eeafa43c3cdd4c10e220e0bdb10.json",
+    "run_count": 1,
+    "run_id": "run-abcc41e05ad03d0f780ac0755ce28e2ea8ad1eeafa43c3cdd4c10e220e0bdb10"
+  },
+  "results": {
+    "compact": {
+      "all_timed_answers_exact": true,
+      "hot": {
+        "answer_sha256": [
+          "30db22a7444b42a962ac9dd917400c454b0f1c544e0d149755fb7397d1f8bccd"
+        ],
+        "cpu_ms": {
+          "median": 27.829,
+          "min": 26.337,
+          "p95": 32.329,
+          "repetitions": 7,
+          "samples": [
+            27.829,
+            26.337,
+            32.329,
+            27.871,
+            27.165,
+            27.336,
+            27.953
+          ]
+        },
+        "peak_rss": {
+          "bytes": 73351168,
+          "native_unit": "bytes",
+          "native_value": 73351168,
+          "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+        },
+        "subprocess_wall_ms": 389.150042,
+        "wall_ms": {
+          "median": 28.150167,
+          "min": 26.402125,
+          "p95": 33.328041,
+          "repetitions": 7,
+          "samples": [
+            28.2675,
+            26.402125,
+            33.328041,
+            28.150167,
+            27.299333,
+            27.61225,
+            28.267458
+          ]
+        }
+      },
+      "process_cold": {
+        "cpu_ms": {
+          "median": 32.157,
+          "min": 30.515,
+          "p95": 34.884,
+          "repetitions": 7,
+          "samples": [
+            34.884,
+            31.489,
+            30.810000000000002,
+            30.515,
+            32.157,
+            33.397,
+            34.224000000000004
+          ]
+        },
+        "load_ms": {
+          "median": 2.549959,
+          "min": 2.4425,
+          "p95": 2.818167,
+          "repetitions": 7,
+          "samples": [
+            2.449667,
+            2.478,
+            2.591334,
+            2.4425,
+            2.549959,
+            2.818167,
+            2.709459
+          ]
+        },
+        "peak_rss": [
+          {
+            "bytes": 69058560,
+            "native_unit": "bytes",
+            "native_value": 69058560,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 67158016,
+            "native_unit": "bytes",
+            "native_value": 67158016,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 67354624,
+            "native_unit": "bytes",
+            "native_value": 67354624,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 67092480,
+            "native_unit": "bytes",
+            "native_value": 67092480,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 67239936,
+            "native_unit": "bytes",
+            "native_value": 67239936,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 67420160,
+            "native_unit": "bytes",
+            "native_value": 67420160,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68272128,
+            "native_unit": "bytes",
+            "native_value": 68272128,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          }
+        ],
+        "query_ms": {
+          "median": 29.642542,
+          "min": 28.098833,
+          "p95": 32.517709,
+          "repetitions": 7,
+          "samples": [
+            32.517709,
+            29.03975,
+            28.237666,
+            28.098833,
+            29.642542,
+            30.608916,
+            31.805709
+          ]
+        },
+        "subprocess_wall_ms": {
+          "median": 152.35975,
+          "min": 147.413167,
+          "p95": 183.288209,
+          "repetitions": 7,
+          "samples": [
+            152.35975,
+            154.951208,
+            152.12225,
+            148.423542,
+            147.413167,
+            183.288209,
+            156.451458
+          ]
+        },
+        "wall_ms": {
+          "median": 32.192501,
+          "min": 30.541332999999998,
+          "p95": 34.967376,
+          "repetitions": 7,
+          "samples": [
+            34.967376,
+            31.517750000000003,
+            30.829,
+            30.541332999999998,
+            32.192501,
+            33.427083,
+            34.515168
+          ]
+        }
+      }
+    },
+    "source": {
+      "all_timed_answers_exact": true,
+      "hot": {
+        "answer_sha256": [
+          "30db22a7444b42a962ac9dd917400c454b0f1c544e0d149755fb7397d1f8bccd"
+        ],
+        "cpu_ms": {
+          "median": 2.401,
+          "min": 2.342,
+          "p95": 2.818,
+          "repetitions": 7,
+          "samples": [
+            2.349,
+            2.818,
+            2.512,
+            2.342,
+            2.481,
+            2.401,
+            2.343
+          ]
+        },
+        "peak_rss": {
+          "bytes": 68583424,
+          "native_unit": "bytes",
+          "native_value": 68583424,
+          "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+        },
+        "subprocess_wall_ms": 181.337042,
+        "wall_ms": {
+          "median": 2.40425,
+          "min": 2.34125,
+          "p95": 2.825208,
+          "repetitions": 7,
+          "samples": [
+            2.34975,
+            2.825208,
+            2.514584,
+            2.347417,
+            2.514917,
+            2.40425,
+            2.34125
+          ]
+        }
+      },
+      "process_cold": {
+        "cpu_ms": {
+          "median": 8.946,
+          "min": 8.526,
+          "p95": 20.734,
+          "repetitions": 7,
+          "samples": [
+            8.66,
+            8.526,
+            9.658000000000001,
+            8.946,
+            9.713000000000001,
+            20.734,
+            8.89
+          ]
+        },
+        "load_ms": {
+          "median": 4.334083,
+          "min": 4.187875,
+          "p95": 9.469667,
+          "repetitions": 7,
+          "samples": [
+            4.222791,
+            4.238292,
+            5.099583,
+            4.334083,
+            4.790167,
+            9.469667,
+            4.187875
+          ]
+        },
+        "peak_rss": [
+          {
+            "bytes": 68009984,
+            "native_unit": "bytes",
+            "native_value": 68009984,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68108288,
+            "native_unit": "bytes",
+            "native_value": 68108288,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68304896,
+            "native_unit": "bytes",
+            "native_value": 68304896,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68026368,
+            "native_unit": "bytes",
+            "native_value": 68026368,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68550656,
+            "native_unit": "bytes",
+            "native_value": 68550656,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68501504,
+            "native_unit": "bytes",
+            "native_value": 68501504,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          },
+          {
+            "bytes": 68141056,
+            "native_unit": "bytes",
+            "native_value": 68141056,
+            "scope": "child lifetime high-water mark including Python/imports, inputs and operation"
+          }
+        ],
+        "query_ms": {
+          "median": 4.643792,
+          "min": 4.314958,
+          "p95": 13.252708,
+          "repetitions": 7,
+          "samples": [
+            4.473208,
+            4.314958,
+            4.643792,
+            4.641792,
+            4.921625,
+            13.252708,
+            4.709042
+          ]
+        },
+        "subprocess_wall_ms": {
+          "median": 131.84825,
+          "min": 123.220667,
+          "p95": 158.286916,
+          "repetitions": 7,
+          "samples": [
+            126.019209,
+            130.895625,
+            136.932083,
+            123.220667,
+            158.286916,
+            156.7515,
+            131.84825
+          ]
+        },
+        "wall_ms": {
+          "median": 8.975874999999998,
+          "min": 8.55325,
+          "p95": 22.722375,
+          "repetitions": 7,
+          "samples": [
+            8.695999,
+            8.55325,
+            9.743375,
+            8.975874999999998,
+            9.711791999999999,
+            22.722375,
+            8.896917
+          ]
+        }
+      }
+    }
+  },
+  "schema_version": "plotline.window-benchmark.v1"
+}

@@ -1,0 +1,188 @@
+{
+  "experiment_id": "exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1",
+  "run": {
+    "path": "artifacts/strong-baseline-stores/exp-4f50de5cd9b90b2d6399cbd0835bc40ad9566b17b9406287a4194aff97f0e3d1/runs/run-ed80ce7537ca5ae1c97745c40944dfe88de192772b707e78a3ab386245826adc.json",
+    "sha256": "58196324069673203cff2e354cd68cce7c64975bdaec0d9fc26c047b3e96643e"
+  },
+  "controls": [
+    {
+      "candidate": "gtiff_zstd19_p1_b256",
+      "files": [
+        {
+          "path": "bands.tif",
+          "bytes": 531006,
+          "sha256": "d298e366fb7eecd20a9ca7019a2ee350983b3f537e0a0dd29a482d9e7dbb3d2a"
+        },
+        {
+          "path": "manifest.json",
+          "bytes": 1438,
+          "sha256": "fcb86902162a0ba597bff56432fccdfee46491c0801ae8f597185bc72063be58"
+        }
+      ],
+      "total_bytes": 532444,
+      "all_raw_masks_metadata_grid_exact": true,
+      "queries": [
+        {
+          "plot_id": "P-0001",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0003",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0004",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0005",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0006",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0008",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0009",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0010",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0011",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0013",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0014",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0015",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0016",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0017",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0018",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0019",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0020",
+          "exact": true
+        }
+      ]
+    },
+    {
+      "candidate": "gtiff_zstd19_p1_b512",
+      "files": [
+        {
+          "path": "bands.tif",
+          "bytes": 536482,
+          "sha256": "d96db31b665665c0f14b60b14f721fbef1d5e58b0302402c3b6244e60e155505"
+        },
+        {
+          "path": "manifest.json",
+          "bytes": 1438,
+          "sha256": "ca7d22cf64ad8881efa0d7759a81e88467372710f0ec966454d28021060b9723"
+        }
+      ],
+      "total_bytes": 537920,
+      "all_raw_masks_metadata_grid_exact": true,
+      "queries": [
+        {
+          "plot_id": "P-0001",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0003",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0004",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0005",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0006",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0008",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0009",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0010",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0011",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0013",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0014",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0015",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0016",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0017",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0018",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0019",
+          "exact": true
+        },
+        {
+          "plot_id": "P-0020",
+          "exact": true
+        }
+      ]
+    }
+  ],
+  "accepted_custom_bytes": 535012,
+  "best_control_bytes": 532444,
+  "delta_bytes": -2568,
+  "smaller_percent": 0.4799892338863465,
+  "scope": "Independent actual TIFF read with rasterio; source arrays and scalar query oracle; real masks all valid; not independent GDAL decoding or general parser certification."
+}

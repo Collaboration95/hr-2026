@@ -17,9 +17,39 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.venv-data/
+
+# Reproducible data acquisition cache (derived sample chips remain tracked)
+data/public/raw/
+
+# Regenerable lab stores and private negative-test scratch
+# A deliberately retained release bundle can be tracked explicitly after review.
+artifacts/stores/
+data/experimental/**/measure-stores*/
+data/experimental/**/legacy-v1/
+data/experimental/jrc/JRC_GFC2020_V4_N10_E90.tif
+validation/repro-proof/
+validation/fix-verification/
+validation/tmp/
 
 # Editor and tooling state
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Reproducible research caches; retain scripts, results and measured packages.
+data/experimental/selector/patches/
+data/experimental/selector/stores/
+data/experimental/selector/aoi-controls/
+data/experimental/w1/smoke/
+data/experimental/w1/test-runs/
+validation/jrc/
+artifacts/experiments/.registry.lock
+
+# Historical public source acquisition cache.
+data/experimental/hansen-vintage/raw/
+
+# Disposable independent validation bundles.
+validation/jrc-fix/
+validation/strong/

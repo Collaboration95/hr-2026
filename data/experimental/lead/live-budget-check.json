@@ -1,0 +1,74 @@
+{
+  "max_candidate_cells": 4096,
+  "cohort": [
+    {
+      "plot_id": "P-0001",
+      "candidate_cells": 340
+    },
+    {
+      "plot_id": "P-0003",
+      "candidate_cells": 255
+    },
+    {
+      "plot_id": "P-0004",
+      "candidate_cells": 182
+    },
+    {
+      "plot_id": "P-0005",
+      "candidate_cells": 728
+    },
+    {
+      "plot_id": "P-0006",
+      "candidate_cells": 594
+    },
+    {
+      "plot_id": "P-0008",
+      "candidate_cells": 110
+    },
+    {
+      "plot_id": "P-0009",
+      "candidate_cells": 90
+    },
+    {
+      "plot_id": "P-0010",
+      "candidate_cells": 110
+    },
+    {
+      "plot_id": "P-0011",
+      "candidate_cells": 140
+    },
+    {
+      "plot_id": "P-0013",
+      "candidate_cells": 121
+    },
+    {
+      "plot_id": "P-0014",
+      "candidate_cells": 56
+    },
+    {
+      "plot_id": "P-0015",
+      "candidate_cells": 120
+    },
+    {
+      "plot_id": "P-0016",
+      "candidate_cells": 90
+    },
+    {
+      "plot_id": "P-0017",
+      "candidate_cells": 65
+    },
+    {
+      "plot_id": "P-0018",
+      "candidate_cells": 110
+    },
+    {
+      "plot_id": "P-0019",
+      "candidate_cells": 64
+    },
+    {
+      "plot_id": "P-0020",
+      "candidate_cells": 66
+    }
+  ],
+  "all_17_fit": true
+}

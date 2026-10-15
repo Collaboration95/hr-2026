@@ -1,0 +1,31 @@
+{
+  "name": "plotline-local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync-data": "python3 scripts/sync-data.py",
+    "dev": "npm run sync-data && vite --host 127.0.0.1",
+    "build": "npm run sync-data && tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test tests/contract-check.test.mjs checks/*.test.mjs",
+    "qa:install-browser": "node scripts/browser-qa.mjs --install",
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "dev:local": "node scripts/dev-local.mjs",
+    "qa:jrc": "node scripts/browser-qa.mjs --jrc",
+    "qa:live": "node scripts/browser-qa.mjs --live",
+    "demo:record": "node scripts/record-demo.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "playwright": "1.63.0",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0"
+  }
+}

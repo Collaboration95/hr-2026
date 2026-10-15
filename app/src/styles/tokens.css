@@ -1,0 +1,133 @@
+/*
+ * Plotline design tokens — the single source of truth for the app, the style
+ * guide (design/style-guide.html) and future writeups, slides and video frames.
+ * See design/DESIGN.md for meaning and usage rules. No external fonts.
+ *
+ * Default theme: "Night survey" (dark, map-first).
+ * [data-theme="paper"]: light variant for printed/HTML writeups.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces: deep forest-night inks, lightest last */
+  --pl-void: #050b09;         /* map void, behind raster */
+  --pl-bg: #08110e;           /* app background */
+  --pl-panel: #0c1814;        /* rails, inspector */
+  --pl-raised: #11201b;       /* cards inside panels */
+  --pl-hover: #172a23;        /* hover/active rows */
+  --pl-line: #1d3229;         /* hairlines */
+  --pl-line-strong: #2b463b;  /* control borders */
+
+  /* Text */
+  --pl-text: #e6eee8;
+  --pl-text-2: #a3b4ab;
+  --pl-text-3: #81958b;       /* >= 4.5:1 on panel, raised and hover surfaces */
+  --pl-text-inverse: #07100d;
+
+  /* Data semantics — each meaning owns one hue. Never reuse a hue for another meaning. */
+  --pl-loss: #ff7a3d;          /* tree-cover loss in the selected year / post-cut-off */
+  --pl-loss-past: #5f3626;     /* loss in earlier years (context) */
+  --pl-loss-soft: rgb(255 122 61 / 0.16);
+  --pl-forest: #6fe3a0;        /* JRC 2020 forest class */
+  --pl-forest-soft: rgb(111 227 160 / 0.16);
+  --pl-canopy-0: #0b1713;      /* treecover2000 = 0% */
+  --pl-canopy-100: #2c7a52;    /* treecover2000 = 100% */
+  --pl-water: #1c4a66;
+  --pl-declared: #c3a6ff;      /* supplier declarations (what the supplier said) */
+  --pl-declared-soft: rgb(195 166 255 / 0.14);
+  --pl-proof: #c8f04f;         /* representation proof, exact match, primary action */
+  --pl-proof-soft: rgb(200 240 79 / 0.13);
+  --pl-review: #ffc94a;        /* a human review question / mismatch to look at */
+  --pl-review-soft: rgb(255 201 74 / 0.13);
+  --pl-error: #ff6464;         /* failures: load, integrity, encoding mismatch */
+  --pl-error-soft: rgb(255 100 100 / 0.14);
+  --pl-unknown: #7f918a;       /* unknown / unavailable — always paired with hatching */
+  --pl-plot-line: #f3f7f2;     /* exact supplied boundary */
+  --pl-focus: #8fd8ff;         /* keyboard focus ring */
+
+  /* Hatching for unknown support (use as background-image) */
+  --pl-hatch: repeating-linear-gradient(135deg, rgb(127 145 138 / 0.55) 0 1.5px, transparent 1.5px 6px);
+
+  /* Type — system stacks only (offline demo) */
+  --pl-font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --pl-font-display: ui-sans-serif, -apple-system, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --pl-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --pl-text-xs: 11px;
+  --pl-text-sm: 12px;
+  --pl-text-md: 13px;
+  --pl-text-base: 14px;
+  --pl-text-lg: 16px;
+  --pl-text-xl: 20px;
+  --pl-text-2xl: 28px;
+  --pl-text-3xl: 40px;
+  --pl-text-4xl: 56px;
+  --pl-leading: 1.45;
+  --pl-tracking-label: 0.08em; /* uppercase eyebrow labels */
+
+  /* Space (4px base) */
+  --pl-1: 4px;
+  --pl-2: 8px;
+  --pl-3: 12px;
+  --pl-4: 16px;
+  --pl-5: 20px;
+  --pl-6: 24px;
+  --pl-8: 32px;
+  --pl-10: 40px;
+  --pl-12: 48px;
+
+  /* Shape */
+  --pl-radius-sm: 4px;
+  --pl-radius: 8px;
+  --pl-radius-lg: 12px;
+  --pl-radius-pill: 999px;
+  --pl-shadow: 0 12px 32px rgb(0 0 0 / 0.45), 0 1px 0 rgb(255 255 255 / 0.03) inset;
+  --pl-shadow-float: 0 8px 24px rgb(0 0 0 / 0.55);
+
+  /* Layout */
+  --pl-topbar-h: 52px;
+  --pl-rail-w: 232px;
+  --pl-inspector-w: 420px;
+  --pl-scrubber-h: 104px;
+
+  /* Motion */
+  --pl-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --pl-fast: 140ms;
+  --pl-med: 240ms;
+  --pl-slow: 600ms; /* map camera */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --pl-fast: 0ms;
+    --pl-med: 0ms;
+    --pl-slow: 0ms;
+  }
+}
+
+/* Light variant for writeups and print. Data hues are darkened for contrast on paper. */
+[data-theme="paper"] {
+  color-scheme: light;
+  --pl-void: #e9ede8;
+  --pl-bg: #f6f7f3;
+  --pl-panel: #ffffff;
+  --pl-raised: #f1f4ef;
+  --pl-hover: #e7ece5;
+  --pl-line: #dde3db;
+  --pl-line-strong: #c3ccc0;
+  --pl-text: #0d1a15;
+  --pl-text-2: #43554c;
+  --pl-text-3: #6d7d75;
+  --pl-text-inverse: #ffffff;
+  --pl-loss: #d9531a;
+  --pl-loss-past: #c9967c;
+  --pl-forest: #1f9a5a;
+  --pl-declared: #7650d8;
+  --pl-proof: #5f8a00;
+  --pl-review: #b57d00;
+  --pl-error: #c62f2f;
+  --pl-unknown: #7a8781;
+  --pl-plot-line: #0d1a15;
+  --pl-focus: #1a73c9;
+  --pl-shadow: 0 8px 24px rgb(20 40 30 / 0.12);
+  --pl-shadow-float: 0 8px 24px rgb(20 40 30 / 0.16);
+}

@@ -1,0 +1,871 @@
+{
+  "scope": "independent first-pass checks",
+  "checks": [
+    {
+      "pass": true,
+      "description": "treecover2000: acquisition chip digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "treecover2000: original source tile digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "treecover2000: independent original-window pixel equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "treecover2000: original-window validity equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "treecover2000: grid exactly aligns with source window",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "treecover2000: independent full pixel histogram",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: acquisition chip digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: original source tile digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: independent original-window pixel equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: original-window validity equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: grid exactly aligns with source window",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "lossyear: independent full pixel histogram",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: acquisition chip digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: original source tile digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: independent original-window pixel equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: original-window validity equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: grid exactly aligns with source window",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "datamask: independent full pixel histogram",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0001: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0001: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 38
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0001: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0001: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0001: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0003: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0003: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0003: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0003: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0003: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0004: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0004: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0004: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0004: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0004: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0005: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0005: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 18
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0005: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0005: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0005: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0006: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0006: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 18
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0006: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0006: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0006: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0008: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0008: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0008: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0008: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0008: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0009: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0009: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0009: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0009: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0009: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0010: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0010: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0010: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0010: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0010: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0011: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0011: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0011: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0011: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0011: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0013: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0013: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 3
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0013: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0013: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0013: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0014: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0014: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 7
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0014: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0014: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0014: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0015: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0015: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0015: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0015: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0015: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0016: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0016: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 1
+        },
+        "2024-2025": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 1
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0016: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0016: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0016: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0017: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0017: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0017: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0017: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0017: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0018: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0018: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": true,
+          "observed_loss_cell_count": 1
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0018: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0018: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0018: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0019: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0019: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0019: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0019: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0019: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0020: exact independent supplier/geometry join",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0020: independent scalar complete query agreement",
+      "evidence": {
+        "2021-2023": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+          "mapped_loss_present": false,
+          "observed_loss_cell_count": 0
+        }
+      }
+    },
+    {
+      "pass": true,
+      "description": "P-0020: independent native evidence selected set/order",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0020: every native evidence value/mask/center/footprint checked independently",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "P-0020: receipt digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "artifact complete content digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "summary selected support sum",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic tiny_no_centers: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic partial_absence_unknown: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic partial_positive_known: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic water_only: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic nodata: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "synthetic missing_loss_band: independently reduced unknown contract",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "benchmark timed answers bind to independent real cohort",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: complete actual stored bytes",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: measured file index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: measured file payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: hot timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: hot reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: process_cold timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd: process_cold reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: complete actual stored bytes",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: measured file index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: measured file payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: hot timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: hot reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: process_cold timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l9: process_cold reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: complete actual stored bytes",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: measured file index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: measured file payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: hot timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: hot reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: process_cold timed answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "separate_zstd_l19: process_cold reported statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "baseline complete storage independently sums",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd: independent all-pixel/mask/metadata decode",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19: independent all-pixel/mask/metadata decode",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l9: independent all-pixel/mask/metadata decode",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "loopback served artifact equals independently checked canonical demo",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "description": "artifact/implementation stable during audit",
+      "evidence": []
+    }
+  ],
+  "failures": [],
+  "freshness": {
+    "embedded_equals_canonical_benchmark": true,
+    "embedded_experiment": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+    "canonical_experiment": "exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea",
+    "embedded_changed_implementation": []
+  },
+  "source_hashes": {
+    "data/public/hansen_datamask_sample.tif": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458",
+    "data/public/hansen_lossyear_sample.tif": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf",
+    "data/public/hansen_treecover2000_sample.tif": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc",
+    "data/public/provenance.json": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed"
+  },
+  "raw_values_checked_per_store": 2234196,
+  "plots": 17,
+  "selected_count_sum": 1048,
+  "wall_seconds": 0.3624564169876976,
+  "pass": true
+}

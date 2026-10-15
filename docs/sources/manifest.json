@@ -10,5 +10,32 @@
     "path": "docs/sources/Hack & Hire Sustainability Kickoff (10 Oct).pdf",
     "bytes": 13405654,
     "sha256": "459c047ccf24cf0b56f4143bf6e47269c284490cf50c59a015e5996c90f67910"
+  },
+  {
+    "filename": "200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+    "path": "data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+    "source_type": "user_supplied_attachment",
+    "attachment_id": "b3e0712e-b7a4-435d-b51e-95d2744ef880-a3745b7d-9f8f-4209-bc11-cc8f560fc705-csv",
+    "attachment_path": "/Users/speedpowermac/.t3/userdata/attachments/b3e0712e-b7a4-435d-b51e-95d2744ef880-a3745b7d-9f8f-4209-bc11-cc8f560fc705-csv.csv",
+    "bytes": 13381,
+    "sha256": "43b47916d4900d4bf2f86a8a3ca3ee107f22b1fb80702174bbb9b55403c0fca2"
+  },
+  {
+    "filename": "200001-17plots-valid.geojson",
+    "path": "data/company-sample/2026-10-12/200001-17plots-valid.geojson",
+    "source_type": "user_supplied_attachment",
+    "attachment_id": "b3e0712e-b7a4-435d-b51e-95d2744ef880-a171bf79-70c8-436c-8cc0-ad5729836e6d-geojson",
+    "attachment_path": "/Users/speedpowermac/.t3/userdata/attachments/b3e0712e-b7a4-435d-b51e-95d2744ef880-a171bf79-70c8-436c-8cc0-ad5729836e6d-geojson.geojson",
+    "bytes": 5884,
+    "sha256": "8922eef5040120b180a86f6002f52e090ee9bb8273c3c1cf71f984b68648662b"
+  },
+  {
+    "filename": "organizer-reply.jpg",
+    "path": "docs/updates/2026-10-12/organizer-reply.jpg",
+    "source_type": "user_supplied_attachment",
+    "attachment_id": "b3e0712e-b7a4-435d-b51e-95d2744ef880-80373e95-32a7-4588-92ac-c01a77013910",
+    "attachment_path": "/Users/speedpowermac/.t3/userdata/attachments/b3e0712e-b7a4-435d-b51e-95d2744ef880-80373e95-32a7-4588-92ac-c01a77013910.jpg",
+    "bytes": 184108,
+    "sha256": "8f4953b6d60f53e1086a2c6b05f8cbce4ae1acbd80667e039ebb4afce92bf588"
   }
 ]

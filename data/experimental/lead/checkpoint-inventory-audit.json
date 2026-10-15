@@ -1,0 +1,32 @@
+{
+  "final_bundles": [
+    {
+      "manifest": "retained-bundle-manifest.json",
+      "files": 50,
+      "bytes": 4290185,
+      "mismatches": []
+    },
+    {
+      "manifest": "jrc-bundle-manifest.json",
+      "files": 46,
+      "bytes": 1329996,
+      "mismatches": []
+    },
+    {
+      "manifest": "live-bundle-manifest.json",
+      "files": 37,
+      "bytes": 4086868,
+      "mismatches": []
+    },
+    {
+      "manifest": "strong-baseline-bundle-manifest.json",
+      "files": 44,
+      "bytes": 3739772,
+      "mismatches": []
+    }
+  ],
+  "all_hashes_current": true,
+  "control_lead_focused_gate": "pass: fresh positive, all six validator cases within12 negatives, own copied-bundle typed forgery rejected",
+  "fresh_independent_validator_rerun_claimed": false,
+  "lead_stopped": true
+}

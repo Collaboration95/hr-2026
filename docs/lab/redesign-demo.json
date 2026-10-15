@@ -1,0 +1,131 @@
+{
+  "recorded_at": "2026-10-14T23:20:53.735Z",
+  "origin": "http://127.0.0.1:5193",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "recording": "plotline-demo.webm",
+  "narration": false,
+  "note": "Actual local browser walkthrough following docs/writeups/04-pitch.md. No successful service responses were injected.",
+  "ui_replacements": [
+    {
+      "old": "Review desk opening",
+      "new": "#/map region + Play years through 2025",
+      "why": "Follow the pitch opening and show the actual multi-year raster."
+    },
+    {
+      "old": "Evidence index",
+      "new": "Cohort matrix + loss barcode",
+      "why": "Keep the 17-plot annual index and declared-vs-mapped comparison visible."
+    },
+    {
+      "old": "Show proof",
+      "new": "#annual-proof-trigger → #/proof/P-0005/2025",
+      "why": "Keep the selected annual count connected to its bound proof."
+    },
+    {
+      "old": "Separate forest baseline via companion-panel",
+      "new": "JRC 2020 forest overlay + P-0001 Mapped-column JRC summary",
+      "why": "Show the real separate layer in the pitch order, with independent grid counts."
+    },
+    {
+      "old": "Encoding proof hold",
+      "new": "Hero statistics + storage chart + Receipt dialog",
+      "why": "Keep equality and honest measured tradeoffs, and expose the bound provenance."
+    },
+    {
+      "old": "Query lab / P-0003",
+      "new": "Live query / P-0005 → Run region → Original = compact",
+      "why": "Continue the same plot context with a real fresh request and complete evidence."
+    }
+  ],
+  "chapters": [
+    {
+      "seconds": 0.3,
+      "title": "Region overview",
+      "description": "The actual Hansen display raster and all 17 supplied plot boundaries.",
+      "route": "#/map",
+      "end_seconds": 4.3
+    },
+    {
+      "seconds": 4.3,
+      "title": "Play 2001–2025",
+      "description": "Actual annual loss playback on the region raster, ending at 2025.",
+      "route": "#/map",
+      "end_seconds": 17.4
+    },
+    {
+      "seconds": 17.6,
+      "title": "Stack the forest baseline",
+      "description": "JRC 2020 forest is a separate real raster overlay, with its own grid and definitions.",
+      "route": "#/map",
+      "end_seconds": 21.6
+    },
+    {
+      "seconds": 21.9,
+      "title": "Two accounts · P-0001 / 2022",
+      "description": "Supplier declaration and mapped observations stay separate: 38 loss cells in 2022, with a separately loaded JRC baseline.",
+      "route": "#/map/P-0001/2022",
+      "end_seconds": 25.9
+    },
+    {
+      "seconds": 25.9,
+      "title": "Native cells behind the count",
+      "description": "All 38 actual valid-land 2022 event rows remain inspectable; the map shows native footprints and centers.",
+      "route": "#/map/P-0001/2022",
+      "end_seconds": 29.9
+    },
+    {
+      "seconds": 30,
+      "title": "Cohort matrix and barcode",
+      "description": "17 supplied plots across 25 years: five declared indications, three mapped plots in 2021–23, zero overlap.",
+      "route": "#/cohort",
+      "end_seconds": 34
+    },
+    {
+      "seconds": 34.3,
+      "title": "Follow a count · P-0005 / 2025",
+      "description": "Eleven selected 2025 loss cells lead directly to the bound original-versus-compact proof.",
+      "route": "#/map/P-0005/2025",
+      "end_seconds": 38.3
+    },
+    {
+      "seconds": 38.4,
+      "title": "Same question, two representations",
+      "description": "17/17 identical plot outputs, 100% raw pixel and mask fidelity, honest storage and timing measurements.",
+      "route": "#/proof/P-0005/2025",
+      "end_seconds": 42.4
+    },
+    {
+      "seconds": 42.4,
+      "title": "Storage chart · losers included",
+      "description": "The measured standard GeoTIFF control beats the retained custom store by 0.48%; the losing candidates remain visible.",
+      "route": "#/proof/P-0005/2025",
+      "end_seconds": 46.4
+    },
+    {
+      "seconds": 46.5,
+      "title": "Bound receipt",
+      "description": "P-0005 source versions, native grid, query rule and hashes: a reproducibility record, not a certification.",
+      "route": "#/proof/P-0005/2025",
+      "end_seconds": 50.5
+    },
+    {
+      "seconds": 50.7,
+      "title": "Live query · Original = compact",
+      "description": "A new real read-only request for P-0005 reproduces both answers with all selected native cells and a bound receipt.",
+      "route": "#/live",
+      "end_seconds": 54.7
+    }
+  ],
+  "live_request": {
+    "request_id": "local_e64f6940240340dd93665408116d31c3",
+    "snapshot_id": "84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06",
+    "receipt_sha256": "cc4e0b615d2f6b52b6457e20e93784a9c165d3f077201eb0f2cf679da0b6d711",
+    "selected_cells": 262
+  },
+  "errors": [],
+  "blocked": null,
+  "failure": null
+}

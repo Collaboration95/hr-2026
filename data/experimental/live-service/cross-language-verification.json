@@ -1,0 +1,21 @@
+{
+  "method": "Unmodified C5-B validators consumed saved actual-loopback HTTP responses; no added fields or serializer substitution.",
+  "snapshot_id": "84219023e64fad041d5b063353a8fd0cb1543802b094c28f3b6b009dc0525e06",
+  "cases": [
+    {
+      "name": "known-plot",
+      "verified": true,
+      "selected": 121
+    },
+    {
+      "name": "temporary-tiny",
+      "verified": true,
+      "selected": 0
+    },
+    {
+      "name": "outside",
+      "verified": true,
+      "selected": 1
+    }
+  ]
+}
