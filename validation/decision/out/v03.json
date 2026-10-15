@@ -1,0 +1,12 @@
+{
+ "sweeps": [
+  "all_codes_up_to_3_cells",
+  "class_representatives_up_to_6_cells"
+ ],
+ "cases": 59904,
+ "violations": 0,
+ "first_violations": [],
+ "documented_gating_cases_water_only": {
+  "water_only_none_vs_possible_worlds_false": 18
+ }
+}

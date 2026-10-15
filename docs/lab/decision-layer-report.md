@@ -99,7 +99,18 @@ These are mapped observations from public layers under a written rule. They are 
 
 ## Validation
 
-The independent validator confirmed fidelity, independence, semantics, storage accounting, fast-selection exactness and the whole-tile figures. It also found hardening issues: an unprotected store header, an `OverflowError` path, level/raster mix-ups, allocation amplification from crafted input, missing content binding on the table and registry, and an overstated cost-model read time. Each was fixed with a test, and the evidence was rebuilt; see [validation/decision/report.md](../../validation/decision/report.md).
+The independent validator confirmed fidelity, independence, semantics, storage accounting, fast-selection exactness and the whole-tile figures.
+
+It also found hardening issues:
+
+- an unprotected store header;
+- an `OverflowError` path;
+- level/raster mix-ups;
+- allocation amplification from crafted input;
+- missing content binding on the table and registry;
+- an overstated cost-model read time.
+
+Each was fixed with a test that fails on the old code. After the fixes and a full evidence rebuild, the validator updated its scripts to the new formats and re-ran them: all 17 now pass. One residual it found, an aggregate memory bound in the registry parser, was then closed too. The remaining accepted risk is deliberate forgery with recomputed hashes, which is out of scope for integrity checks; callers that need authenticity pin the genuine file hash. See [validation/decision/report.md](../../validation/decision/report.md).
 
 ## Reproduce
 

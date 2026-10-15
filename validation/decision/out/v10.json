@@ -1,0 +1,42 @@
+{
+ "A_no_stores": {
+  "all_pass": false,
+  "store_comparison": false,
+  "allow_missing_stores": false,
+  "stores_present_and_readable": false
+ },
+ "B_screen_only": {
+  "all_pass": false,
+  "store_comparison": true,
+  "allow_missing_stores": false,
+  "stores_present_and_readable": false
+ },
+ "C_both_present": {
+  "all_pass": true,
+  "store_comparison": true,
+  "allow_missing_stores": false,
+  "stores_present_and_readable": true
+ },
+ "D_allow_missing": {
+  "all_pass": true,
+  "store_comparison": false,
+  "allow_missing_stores": true,
+  "stores_present_and_readable": true
+ },
+ "E_corrupt_header": {
+  "exception": "ValueError: store header checksum mismatch"
+ },
+ "F_forged_consistent_store": {
+  "all_pass": false,
+  "store_comparison": true,
+  "allow_missing_stores": false,
+  "stores_present_and_readable": true
+ },
+ "G_cli_exit_codes": {
+  "A_missing": 1,
+  "D_allow_missing": 0,
+  "C_present": 0,
+  "E_corrupt": 1
+ },
+ "fail": []
+}

@@ -1,0 +1,34 @@
+{
+ "decision.plds": {
+  "prefix_plus_header_bits": 5560,
+  "single_bit_flips_accepted": 0,
+  "minimum_distance_of_header_crc_code": ">=4",
+  "undetected_2bit_patterns": 0,
+  "undetected_3bit_patterns": 0,
+  "min_popcount_of_single_bit_syndrome": 7,
+  "random_multibit_trials": 6000,
+  "random_multibit_accepted": 0,
+  "bursts_up_to_32_bits": 3000,
+  "bursts_accepted": 0
+ },
+ "screen.plds": {
+  "prefix_plus_header_bits": 5552,
+  "single_bit_flips_accepted": 0,
+  "minimum_distance_of_header_crc_code": ">=4",
+  "undetected_2bit_patterns": 0,
+  "undetected_3bit_patterns": 0,
+  "min_popcount_of_single_bit_syndrome": 7,
+  "random_multibit_trials": 6000,
+  "random_multibit_accepted": 0,
+  "bursts_up_to_32_bits": 3000,
+  "bursts_accepted": 0
+ },
+ "targeted_digit_edit_98.77225_to_98.77235_accepted": false,
+ "deliberate_edit_with_recomputed_crc": {
+  "read_store": "accepted",
+  "edited_transform_origin": 98.77235,
+  "P-0001_forest_cells_true_60": 64,
+  "note": "in-scope only if forgery is in the threat model; mitigation is expected_sha256 from a trusted record"
+ },
+ "fail": []
+}

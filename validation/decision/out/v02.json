@@ -1,0 +1,98 @@
+{
+ "imports": {
+  "decision": [
+   ".query:select_cells",
+   "numpy"
+  ],
+  "decision_original": [
+   ".query:select_cells",
+   "numpy"
+  ],
+  "decision_proof": [
+   ".:decision",
+   ".:decision_original",
+   ".decision_store:read_store",
+   ".jrc:CHIP,JrcDataset,load_jrc",
+   ".model:Dataset",
+   ".query:evaluate,select_cells",
+   ".source:ROOT,CSV_NAME,GEOJSON_NAME,SAMPLE,canonical_bytes,load_plots,load_source,object_hash,sha256_file",
+   "argparse",
+   "hashlib",
+   "json",
+   "math",
+   "numpy",
+   "pathlib:Path",
+   "platform",
+   "random",
+   "rasterio",
+   "shapely",
+   "shapely.geometry:MultiPoint",
+   "sys",
+   "time"
+  ]
+ },
+ "mutations": {
+  "M0_no_mutation": {
+   "all_pass": true,
+   "failed_checks": []
+  },
+  "M1_cutoff_21": {
+   "all_pass": false,
+   "failed_checks": [
+    "exhaustive_original_vs_derived",
+    "fuzz_equal",
+    "negative_controls_detected",
+    "plots_original_vs_derived"
+   ]
+  },
+  "M2_col_offset_plus_1": {
+   "all_pass": false,
+   "failed_checks": [
+    "exhaustive_original_vs_derived",
+    "fuzz_equal",
+    "negative_controls_detected",
+    "plots_original_vs_derived"
+   ]
+  },
+  "M3_projection_erases_2021_forest_loss": {
+   "all_pass": false,
+   "failed_checks": [
+    "exhaustive_original_vs_derived",
+    "fuzz_equal",
+    "negative_controls_detected"
+   ]
+  },
+  "M4_forest_unknown_not_blocking": {
+   "all_pass": false,
+   "failed_checks": [
+    "fuzz_equal",
+    "fuzz_store_equal"
+   ]
+  },
+  "M5_outside_not_counted": {
+   "all_pass": false,
+   "failed_checks": [
+    "fuzz_equal",
+    "fuzz_store_equal"
+   ]
+  },
+  "M6_support_ignores_forest_unknown": {
+   "all_pass": false,
+   "failed_checks": [
+    "fuzz_equal",
+    "fuzz_store_equal"
+   ]
+  },
+  "M7_shared_selection_uses_contains": {
+   "all_pass": true,
+   "failed_checks": []
+  }
+ },
+ "note_M7": "M7 is expected to still pass: selection is a deliberately shared rule, validated outside the proof (exact rational ray casting in v01_fidelity.py and the earlier validator).",
+ "rerun_exit_code": 0,
+ "rerun_vs_artifact": {
+  "differing_top_level_keys": [],
+  "artifact_all_pass": true,
+  "rerun_all_pass": true
+ }
+}

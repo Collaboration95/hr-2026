@@ -1,0 +1,59 @@
+{
+ "roundtrip_edge_and_random": true,
+ "fuzz_20000_random_streams": {
+  "ValueError": 19878,
+  "accepted": 122
+ },
+ "peak_zero_bytes_16MB": {
+  "outcome": "ValueError",
+  "peak_bytes": 16000696,
+  "first_pass_would_allocate_about_bytes": 128000000
+ },
+ "peak_continuation_bytes_16MB": {
+  "outcome": "ValueError",
+  "peak_bytes": 16000696,
+  "first_pass_would_allocate_about_bytes": 0
+ },
+ "tight_honest_data": {
+  "rle_run_length_128": true,
+  "rle_run_length_129": true,
+  "rle_run_length_16384": true,
+  "rle_run_length_16385": true,
+  "rle_run_length_2097152": true,
+  "rle_run_length_2097153": true,
+  "split_gap_127_plane": true,
+  "split_gap_127_gaps0": true,
+  "split_gap_127_gaps1": true,
+  "split_gap_127_auto": true,
+  "split_gap_128_plane": true,
+  "split_gap_128_gaps0": true,
+  "split_gap_128_gaps1": true,
+  "split_gap_128_auto": true,
+  "split_gap_129_plane": true,
+  "split_gap_129_gaps0": true,
+  "split_gap_129_gaps1": true,
+  "split_gap_129_auto": true,
+  "split_gap_16383_plane": true,
+  "split_gap_16383_gaps0": true,
+  "split_gap_16383_gaps1": true,
+  "split_gap_16383_auto": true,
+  "split_gap_16384_plane": true,
+  "split_gap_16384_gaps0": true,
+  "split_gap_16384_gaps1": true,
+  "split_gap_16384_auto": true,
+  "split_gap_16385_plane": true,
+  "split_gap_16385_gaps0": true,
+  "split_gap_16385_gaps1": true,
+  "split_gap_16385_auto": true
+ },
+ "declared_size_boundary": {
+  "limit": 2032,
+  "at_limit": "malformed varint stream",
+  "limit_plus_1": "stream size out of bounds"
+ },
+ "random_legit_sequences": {
+  "violations_of_bound": 0,
+  "worst_bytes_over_limit": 0.9869
+ },
+ "fail": []
+}

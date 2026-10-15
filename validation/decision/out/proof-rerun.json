@@ -1,0 +1,2035 @@
+{
+ "contracts": [
+  "eudr-screen.v1",
+  "eudr-decision.v1"
+ ],
+ "derived_codes": {
+  "eudr-decision.v1": {
+   "code_sha256": "4d0bcbe44912cf488f9ef0c74d6ddf7860d91fb546fff5b5875ea26a442c36a6",
+   "shape": [
+    604,
+    1233
+   ]
+  },
+  "eudr-screen.v1": {
+   "code_sha256": "3eb6099fc2bba316524caf910f78fa243967a7962520162eebcdeb575ad61d8f",
+   "shape": [
+    604,
+    1233
+   ]
+  }
+ },
+ "environment": {
+  "numpy": "2.5.4",
+  "python": "3.14.7",
+  "rasterio": "1.5.2",
+  "shapely": "2.1.2"
+ },
+ "exhaustive_cell_proof": {
+  "eudr-decision.v1": {
+   "cells_compared": 744732,
+   "code_histogram": [
+    0,
+    1314,
+    622567,
+    0,
+    0,
+    0,
+    0,
+    0,
+    118071,
+    64,
+    50,
+    73,
+    85,
+    69,
+    2222,
+    32,
+    47,
+    57,
+    30,
+    51
+   ],
+   "original_code_sha256": "4d0bcbe44912cf488f9ef0c74d6ddf7860d91fb546fff5b5875ea26a442c36a6",
+   "original_vs_derived": {
+    "mismatches": 0,
+    "status": "compared"
+   },
+   "original_vs_store": {
+    "mismatches": 0,
+    "status": "compared"
+   }
+  },
+  "eudr-screen.v1": {
+   "cells_compared": 744732,
+   "code_histogram": [
+    0,
+    1314,
+    542696,
+    15423,
+    11026,
+    16747,
+    22307,
+    14368,
+    118071,
+    64,
+    50,
+    73,
+    85,
+    69,
+    2222,
+    32,
+    47,
+    57,
+    30,
+    51
+   ],
+   "original_code_sha256": "3eb6099fc2bba316524caf910f78fa243967a7962520162eebcdeb575ad61d8f",
+   "original_vs_derived": {
+    "mismatches": 0,
+    "status": "compared"
+   },
+   "original_vs_store": {
+    "mismatches": 0,
+    "status": "compared"
+   }
+  }
+ },
+ "fuzz": {
+  "branch_coverage": {
+   "eudr-decision.v1": {
+    "deforestation=False": 7119,
+    "deforestation=None": 2579,
+    "deforestation=True": 131,
+    "forest=False": 5699,
+    "forest=None": 2635,
+    "forest=True": 1495,
+    "forest_unknown>0": 802,
+    "outside>0": 1543,
+    "selected=0": 879,
+    "selected=1": 886,
+    "support=complete": 7125,
+    "support=none": 1680,
+    "support=partial": 1024,
+    "water>0": 839
+   },
+   "eudr-screen.v1": {
+    "2021-2023=False": 4893,
+    "2021-2023=None": 2310,
+    "2021-2023=True": 2626,
+    "2024-2025=False": 5064,
+    "2024-2025=None": 2349,
+    "2024-2025=True": 2416,
+    "deforestation=False": 7119,
+    "deforestation=None": 2579,
+    "deforestation=True": 131,
+    "forest=False": 5699,
+    "forest=None": 2635,
+    "forest=True": 1495,
+    "forest_unknown>0": 802,
+    "outside>0": 1543,
+    "selected=0": 879,
+    "selected=1": 886,
+    "support=complete": 7125,
+    "support=none": 1680,
+    "support=partial": 1024,
+    "water>0": 839
+   }
+  },
+  "categories": {
+   "centre_rect": 1323,
+   "convex": 1393,
+   "holes": 966,
+   "invalid": 171,
+   "jrc_edge": 815,
+   "large": 97,
+   "mixed_rect": 613,
+   "multi": 1015,
+   "outside": 492,
+   "star": 1410,
+   "tiny": 953,
+   "water": 752
+  },
+  "compared": 9829,
+  "equal": 9829,
+  "generated": 10000,
+  "geometry_set_sha256": "6bd4ff1dfa2a12fd5105a177b0f5ebb9c312fccec9264112671023b464a9397b",
+  "levels": {
+   "eudr-decision.v1": {
+    "compared": 9829,
+    "equal_derived": 9829,
+    "equal_store": 9829
+   },
+   "eudr-screen.v1": {
+    "compared": 9829,
+    "equal_derived": 9829,
+    "equal_store": 9829
+   }
+  },
+  "mismatch_count": 0,
+  "mismatches": [],
+  "output_digest_sha256": "22674ddee74370acd2861b7b1bdbb47fd6cfcab6faee1340e5c59edf90613c82",
+  "rejected_by_category": {
+   "invalid": 171
+  },
+  "rejected_invalid": 171,
+  "runtime_seconds": 8.78,
+  "seed": 20261015,
+  "store_compared": true
+ },
+ "grid_rule": "JRC 2020 class read at each Hansen cell centre; the JRC lattice nests the Hansen lattice by an odd integer ratio, so the centre is a JRC cell centre",
+ "inputs": {
+  "hansen_chips": [
+   {
+    "band": "treecover2000",
+    "bytes": 414142,
+    "path": "data/public/hansen_treecover2000_sample.tif",
+    "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+   },
+   {
+    "band": "lossyear",
+    "bytes": 159863,
+    "path": "data/public/hansen_lossyear_sample.tif",
+    "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+   },
+   {
+    "band": "datamask",
+    "bytes": 2994,
+    "path": "data/public/hansen_datamask_sample.tif",
+    "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+   }
+  ],
+  "jrc_chip": {
+   "bytes": 46238,
+   "path": "data/experimental/jrc/JRC_GFC2020_V4_N10_E90_company-bbox.tif",
+   "sha256": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+  },
+  "supplier_files": [
+   {
+    "path": "data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv",
+    "sha256": "43b47916d4900d4bf2f86a8a3ca3ee107f22b1fb80702174bbb9b55403c0fca2"
+   },
+   {
+    "path": "data/company-sample/2026-10-12/200001-17plots-valid.geojson",
+    "sha256": "8922eef5040120b180a86f6002f52e090ee9bb8273c3c1cf71f984b68648662b"
+   }
+  ]
+ },
+ "limitations": [
+  "The rule is JRC 2020 read at each Hansen cell centre, the middle cell of a 3x3 block; JRC sub-cell detail is dropped, not reproduced.",
+  "Dropped attributes are listed, not called lossless: treecover2000, loss years 2001-2020 and, at eudr-decision.v1, loss years on JRC non-forest land.",
+  "Counts are Hansen cells, not hectares; no area is inferred.",
+  "Outputs are mapped observations from public layers, not legal compliance findings.",
+  "Equality is proved against the original layers under the shared selection rule, not against satellite ground truth.",
+  "The real chip has no datamask-0 cells and no invalid masks; nodata and mask-invalid branches are covered by the synthetic unit tests."
+ ],
+ "negative_controls": {
+  "dropped_detail": {
+   "changed_code_cells": {
+    "jrc_noncentre_inversion": 0,
+    "lossyear_2001_2020_reversal": 0,
+    "treecover_inversion": 0
+   },
+   "ignored_as_designed": true,
+   "jrc_noncentre_cells_inverted": 5941962,
+   "lossyear_cells_changed": 238583,
+   "note": "not in either contract, so changing them must change no code"
+  },
+  "flipped_code": {
+   "detected": true,
+   "expected_mismatches": 1,
+   "levels": {
+    "eudr-decision.v1": {
+     "cell": [
+      51,
+      69
+     ],
+     "code_after": 0,
+     "code_before": 8,
+     "exhaustive_mismatches": 1,
+     "plot_output_differs": true
+    },
+    "eudr-screen.v1": {
+     "cell": [
+      51,
+      69
+     ],
+     "code_after": 0,
+     "code_before": 8,
+     "exhaustive_mismatches": 1,
+     "plot_output_differs": true
+    }
+   },
+   "plot_id": "P-0001"
+  },
+  "flipped_jrc_forest_bit": {
+   "detected": true,
+   "forest_counts_after": {
+    "forest": 59,
+    "nonforest": 62,
+    "unknown": 0
+   },
+   "forest_counts_before": {
+    "forest": 60,
+    "nonforest": 61,
+    "unknown": 0
+   },
+   "jrc_cell": [
+    153,
+    206
+   ],
+   "plot_id": "P-0001"
+  },
+  "moved_vertex": {
+   "detected": true,
+   "output_sha256_after": "b3695a2327fc41bed2f1f79746dc7f62e5a8611ec4329e40ff882876084b9ce4",
+   "output_sha256_before": "ed7df46c9f613d352603c393e22feb3d2fa2fba8351546f10817e00243c671f2",
+   "plot_id": "P-0001",
+   "selected_after": 116,
+   "selected_before": 121,
+   "shift_degrees_x": 0.0004,
+   "vertex_index": 0
+  }
+ },
+ "plot_proof": {
+  "eudr-decision.v1": {
+   "equal_derived": 17,
+   "equal_store": 17,
+   "outputs_sha256": "bb77ce6e462f35693b4566674a15558afa00748bc6f3efd873ddf683960ee624",
+   "plot_count": 17,
+   "plots": [
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "4d79c69a6fb4c6ece8a20dfe71b2b3b20b6cb838aca3d9ba222dad9584e14078",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 2,
+       "present": true,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 2,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 60,
+        "nonforest": 61,
+        "unknown": 0
+       },
+       "present": true
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 121,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 121,
+      "water_cell_count": 0
+     },
+     "output_sha256": "b10fe0573325a9ef10432eb8c62736af5178df33d024c82881103ef9b122409a",
+     "plot_id": "P-0001"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "85b9e5e1411c14a6a41bb6ed2008cd30771821b6fd433a4b70a05bd16f47bfec",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 87,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 87,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 87,
+      "water_cell_count": 0
+     },
+     "output_sha256": "edd590b136cf7f9c46d58a2d4bc9826a44512085bc8033728ce038cf52c2404d",
+     "plot_id": "P-0003"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "139110c18c870ee7e64abe7b8153b7dbf8b417a34cc8412d04a1f8f109244a92",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 47,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 47,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 47,
+      "water_cell_count": 0
+     },
+     "output_sha256": "debc2e5ae55b760f95c930cf636541fba0cf97ed590de52ed5889682c17fa111",
+     "plot_id": "P-0004"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ea099021f0ad8e35ffd2f78603555a7e950e0c35c98c8680c5692c2a43985218",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 262,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 262,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 262,
+      "water_cell_count": 0
+     },
+     "output_sha256": "2ccddb6dbc80d5be7aad248daedab06386c5ea1950c775dec2b573c3dc4912da",
+     "plot_id": "P-0005"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ff9c7e7d3dbaf79930dcf921a2eac7b18ea18a994efd6d59a4b6593dfeae0605",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 256,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 256,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 256,
+      "water_cell_count": 0
+     },
+     "output_sha256": "733fca004a54ba02956fb4f7bbed4e1931ea13787d9038afa49d608efb8d4065",
+     "plot_id": "P-0006"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "2a0a1b15f6d3e3d5488bb8b017b6b11c576c0f41c42c09fb921a88e1d3458641",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 27,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 27,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 27,
+      "water_cell_count": 0
+     },
+     "output_sha256": "e5d241b71bab495b0a34b3e8924994628a46dd1d34bfebed7af2b0050e335f86",
+     "plot_id": "P-0008"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "a0b631abfab7d3e14fc113e23c11be5ffdb3e41177729f846628fd77547a5185",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 28,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 28,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 28,
+      "water_cell_count": 0
+     },
+     "output_sha256": "12db4f84d2048172c75b6580d72df5c758e8753307eb47ab62c615f27542b600",
+     "plot_id": "P-0009"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "5a0f62a49eb44e9b72f882348510b6ec2b5c0bab252fa1d0b8873a706a21cbe0",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 27,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 27,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 27,
+      "water_cell_count": 0
+     },
+     "output_sha256": "e5d241b71bab495b0a34b3e8924994628a46dd1d34bfebed7af2b0050e335f86",
+     "plot_id": "P-0010"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ad6f0852a7424c5ae12502621932d29e743aee3271ea23cc70437aea83d775bf",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 42,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 42,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 42,
+      "water_cell_count": 0
+     },
+     "output_sha256": "802a88dd99f5ef7299180176b33e470a01a704f242af3479d172db9511e4001b",
+     "plot_id": "P-0011"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "12972fc7700e8a9fcc7218ae4bcc5bdd5e5861a4ab2c5e53673638d7a9e97288",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 25,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 25,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 25,
+      "water_cell_count": 0
+     },
+     "output_sha256": "adac87470a850ed124c4d99a9a9e50e366cc963696b03341994623fe908e7f1f",
+     "plot_id": "P-0013"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 7,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 7,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 7,
+      "water_cell_count": 0
+     },
+     "output_sha256": "88f4084f75df18d5c8826dcc26c1e0ab718608ea134a7832abd904eb0aefb043",
+     "plot_id": "P-0014"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 39,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 39,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 39,
+      "water_cell_count": 0
+     },
+     "output_sha256": "34c851689eaa78c3581bc065d153667ad9f6902cdc81de95be79994c13df90bc",
+     "plot_id": "P-0015"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "28e42c092db64fdb2f90ab0ad466bedab272e4f299cc74eb54d9183ff6c5d272",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 14,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 14,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 14,
+      "water_cell_count": 0
+     },
+     "output_sha256": "1149bce02d4663c2cb5a4c4fcc63396f3306f1e4b664ce500b0efa34e16ba577",
+     "plot_id": "P-0016"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "4764b4e81851b2adba44a396a94e3b8b5ee0c4ed0e569bf6fd7518bbbc22d980",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 9,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 9,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 9,
+      "water_cell_count": 0
+     },
+     "output_sha256": "b64b96ef5bd006bc1e1932669ca2714b150b8f3360733e2f78a6b84f6ad1b920",
+     "plot_id": "P-0017"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "777881dd51ed479140b3f254f7201f62630e1d136e82fa6cf7d15f15e0ab40ba",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 34,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 34,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 34,
+      "water_cell_count": 0
+     },
+     "output_sha256": "bd93a62b230f1eb72ca3b3652c9f68b0a12f303e662bed5c5d2967c1dde8d565",
+     "plot_id": "P-0018"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "a38144e5d391d2a6d7c957d98f478c45a8e5dba92b5ee6ec1c684a304fec5331",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 15,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 15,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 15,
+      "water_cell_count": 0
+     },
+     "output_sha256": "167ccedd862b8584436c19e4994813dc1287cfd243e1658e0578fc0431df25a2",
+     "plot_id": "P-0019"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "80f6236856dbde54edf91252a77319811932340fa722f1ac6a68097a33c19f9d",
+     "output": {
+      "contract": "eudr-decision.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 8,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 8,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 8,
+      "water_cell_count": 0
+     },
+     "output_sha256": "7fe40e3717a4dbabe5a73a4c88212ddebb9ddcf30bbdd5b8b1f5020a0d877d89",
+     "plot_id": "P-0020"
+    }
+   ]
+  },
+  "eudr-screen.v1": {
+   "equal_derived": 17,
+   "equal_store": 17,
+   "outputs_sha256": "c6b11aa7570eb297376d24f87def2af4198840f573172795aebca97d7765ffd5",
+   "plot_count": 17,
+   "plots": [
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "4d79c69a6fb4c6ece8a20dfe71b2b3b20b6cb838aca3d9ba222dad9584e14078",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 2,
+       "present": true,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 2,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 60,
+        "nonforest": 61,
+        "unknown": 0
+       },
+       "present": true
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 38
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 38,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 121,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 121,
+      "water_cell_count": 0
+     },
+     "output_sha256": "ed7df46c9f613d352603c393e22feb3d2fa2fba8351546f10817e00243c671f2",
+     "plot_id": "P-0001"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "85b9e5e1411c14a6a41bb6ed2008cd30771821b6fd433a4b70a05bd16f47bfec",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 87,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 87,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 87,
+      "water_cell_count": 0
+     },
+     "output_sha256": "7ad4c4340d94ad4e15236586501625c751f9fe102a45b0814de3ec3e0ec8d34d",
+     "plot_id": "P-0003"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "139110c18c870ee7e64abe7b8153b7dbf8b417a34cc8412d04a1f8f109244a92",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 47,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 47,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 47,
+      "water_cell_count": 0
+     },
+     "output_sha256": "640aec298a026e9d881f4db6c97388da28614d6341d0516af1adfba909f90d22",
+     "plot_id": "P-0004"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ea099021f0ad8e35ffd2f78603555a7e950e0c35c98c8680c5692c2a43985218",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 262,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 18
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 7,
+        "2025": 11
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 262,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 262,
+      "water_cell_count": 0
+     },
+     "output_sha256": "2edd0ce3679224ebb74d641d92e059e2b6f0509337d28574215cd58c982d1de0",
+     "plot_id": "P-0005"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ff9c7e7d3dbaf79930dcf921a2eac7b18ea18a994efd6d59a4b6593dfeae0605",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 256,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 18
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 18
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 256,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 256,
+      "water_cell_count": 0
+     },
+     "output_sha256": "ad0fef02a96d272baf70b77822adf839b8fe43e631f523588f4c8c1e2bb85f3d",
+     "plot_id": "P-0006"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "2a0a1b15f6d3e3d5488bb8b017b6b11c576c0f41c42c09fb921a88e1d3458641",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 27,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 27,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 27,
+      "water_cell_count": 0
+     },
+     "output_sha256": "c614d956bd6a0176ab59387abbba172c6aabf7a6e93b6fe6ede35740fe179987",
+     "plot_id": "P-0008"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "a0b631abfab7d3e14fc113e23c11be5ffdb3e41177729f846628fd77547a5185",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 28,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 28,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 28,
+      "water_cell_count": 0
+     },
+     "output_sha256": "0ac652672939d4c5b9b99c55312237e034ad4ae2cf7a03a5c9f181111814ad98",
+     "plot_id": "P-0009"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "5a0f62a49eb44e9b72f882348510b6ec2b5c0bab252fa1d0b8873a706a21cbe0",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 27,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 27,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 27,
+      "water_cell_count": 0
+     },
+     "output_sha256": "c614d956bd6a0176ab59387abbba172c6aabf7a6e93b6fe6ede35740fe179987",
+     "plot_id": "P-0010"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "ad6f0852a7424c5ae12502621932d29e743aee3271ea23cc70437aea83d775bf",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 42,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 42,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 42,
+      "water_cell_count": 0
+     },
+     "output_sha256": "76d057824bba0949fe19bf54c98a3a876a27e68d5109a917b4e66db19e735fc9",
+     "plot_id": "P-0011"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "12972fc7700e8a9fcc7218ae4bcc5bdd5e5861a4ab2c5e53673638d7a9e97288",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 25,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 3
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 3
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 25,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 25,
+      "water_cell_count": 0
+     },
+     "output_sha256": "07a07180ea8d295264d02d9115fab1f57ce01aa57bbdfbab4602466672cff464",
+     "plot_id": "P-0013"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "b8156eb418297f1be98cf7e7ff059343692629b3019e7f4a8fc55b8453e484a0",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 7,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 7
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 7,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 7,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 7,
+      "water_cell_count": 0
+     },
+     "output_sha256": "1c526e4f80038dfa869aa468a9d5fd1c7125f2732dd8be9d1aa3b82d36c3ad41",
+     "plot_id": "P-0014"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "c05dd6b58ad8a5d8baa55b8ffd7a1c00bf856fa8ae2fbab30bd998fae5587e05",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 39,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 39,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 39,
+      "water_cell_count": 0
+     },
+     "output_sha256": "804b25f89879939374b0e196a53567c62a0636a1b4e2a4afd59927b2c656fb91",
+     "plot_id": "P-0015"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "28e42c092db64fdb2f90ab0ad466bedab272e4f299cc74eb54d9183ff6c5d272",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 14,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 1
+        },
+        "2024-2025": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 1
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 1,
+        "2024": 1,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 14,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 14,
+      "water_cell_count": 0
+     },
+     "output_sha256": "07f34a5a4db8e3a95f456c8c31e761147aaf7d72e350028f744ebf0711e85f4a",
+     "plot_id": "P-0016"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "4764b4e81851b2adba44a396a94e3b8b5ee0c4ed0e569bf6fd7518bbbc22d980",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 9,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 9,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 9,
+      "water_cell_count": 0
+     },
+     "output_sha256": "35e0ac2be2354de5f2cc8fafb01855225e583ca3e9745d817149a9c2075fee79",
+     "plot_id": "P-0017"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "777881dd51ed479140b3f254f7201f62630e1d136e82fa6cf7d15f15e0ab40ba",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 34,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": true,
+         "observed_loss_cell_count": 1
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 1,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 34,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 34,
+      "water_cell_count": 0
+     },
+     "output_sha256": "bd50383bff6572650eca7c2a67f6e1beaa4ded3b9f8453ff400453213b5453ee",
+     "plot_id": "P-0018"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "a38144e5d391d2a6d7c957d98f478c45a8e5dba92b5ee6ec1c684a304fec5331",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 15,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 15,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 15,
+      "water_cell_count": 0
+     },
+     "output_sha256": "747707818484f6e43e3bd6b93a1ef510702281bf3d68eed80e9b106304da6f34",
+     "plot_id": "P-0019"
+    },
+    {
+     "equal_derived": true,
+     "equal_store": true,
+     "geometry_sha256": "80f6236856dbde54edf91252a77319811932340fa722f1ac6a68097a33c19f9d",
+     "output": {
+      "contract": "eudr-screen.v1",
+      "deforestation_after_2020": {
+       "cell_count": 0,
+       "present": false,
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "forest_2020": {
+       "cell_counts": {
+        "forest": 0,
+        "nonforest": 8,
+        "unknown": 0
+       },
+       "present": false
+      },
+      "hansen_loss_after_2020": {
+       "periods": {
+        "2021-2023": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        },
+        "2024-2025": {
+         "mapped_loss_present": false,
+         "observed_loss_cell_count": 0
+        }
+       },
+       "yearly_cell_counts": {
+        "2021": 0,
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0
+       }
+      },
+      "out_of_coverage_cell_count": 0,
+      "selected_cell_count": 8,
+      "support": "complete",
+      "unknown_cell_count": 0,
+      "valid_land_cell_count": 8,
+      "water_cell_count": 0
+     },
+     "output_sha256": "7807e045b5e42960166a19890b2fafc745b8965e26312d24de70f401375c3861",
+     "plot_id": "P-0020"
+    }
+   ]
+  }
+ },
+ "schema": "plotline.decision-proof.v1",
+ "selection_rule": "engine.query.select_cells (covered centres, boundaries included)",
+ "stores": {
+  "eudr-decision.v1": {
+   "bytes": 6146,
+   "decoded_code_sha256": "4d0bcbe44912cf488f9ef0c74d6ddf7860d91fb546fff5b5875ea26a442c36a6",
+   "decoded_shape": [
+    604,
+    1233
+   ],
+   "header": {
+    "codes_sha256": "c3fd1dc65235dfcd804ca803b84a6f7b8d9281cfbecc9507b11c9c27f9c4435e",
+    "crs": "EPSG:4326",
+    "encoding": "split",
+    "level": "eudr-decision.v1",
+    "payload_bytes": 5451,
+    "payload_sha256": "06396602931e39edd878e79ffa05815c6633576c9c1a06f66dc4a9a0592e1f36",
+    "shape": [
+     604,
+     1233
+    ],
+    "sources": {
+     "hansen_datamask": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458",
+     "hansen_lossyear": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf",
+     "hansen_treecover2000": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc",
+     "jrc_chip": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+    },
+    "transform": [
+     0.00025,
+     0.0,
+     98.77225,
+     0.0,
+     -0.00025,
+     8.582
+    ]
+   },
+   "path": "artifacts/decision/decision.plds",
+   "sha256": "bf6368445b609dc335ee6ad4422fc927e391ad48da722c3f613a9b5b4526b839",
+   "status": "decoded"
+  },
+  "eudr-screen.v1": {
+   "bytes": 38513,
+   "decoded_code_sha256": "3eb6099fc2bba316524caf910f78fa243967a7962520162eebcdeb575ad61d8f",
+   "decoded_shape": [
+    604,
+    1233
+   ],
+   "header": {
+    "codes_sha256": "970fbbeac265825522ca42f26f303c9a161a97b39d775158f030e2a5459a64d5",
+    "crs": "EPSG:4326",
+    "encoding": "split",
+    "level": "eudr-screen.v1",
+    "payload_bytes": 37819,
+    "payload_sha256": "70175b70d5165b9d5fae389c759bb3b7fa0e54c7ee03db56011ea44a1da3c357",
+    "shape": [
+     604,
+     1233
+    ],
+    "sources": {
+     "hansen_datamask": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458",
+     "hansen_lossyear": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf",
+     "hansen_treecover2000": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc",
+     "jrc_chip": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+    },
+    "transform": [
+     0.00025,
+     0.0,
+     98.77225,
+     0.0,
+     -0.00025,
+     8.582
+    ]
+   },
+   "path": "artifacts/decision/screen.plds",
+   "sha256": "107b61e9aeca8ae60163865865006111a27dc661f1e66af4678b2f5dbf430538",
+   "status": "decoded"
+  }
+ },
+ "summary": {
+  "all_pass": true,
+  "allow_missing_stores": false,
+  "cells_compared": 744732,
+  "checks": {
+   "dropped_detail_ignored": true,
+   "exhaustive_original_vs_derived": true,
+   "exhaustive_original_vs_store": true,
+   "fuzz_equal": true,
+   "fuzz_generator_sane": true,
+   "fuzz_store_equal": true,
+   "negative_controls_detected": true,
+   "plots_original_vs_derived": true,
+   "plots_original_vs_store": true,
+   "stores_present_and_readable": true,
+   "v1_crosscheck": true
+  },
+  "fuzz_compared": 9829,
+  "plots": 17,
+  "store_comparison": true
+ },
+ "theorem": "Each contract output is a function of (the multiset of selected in-chip cell codes, the out-of-chip selected count). If the code of every Hansen cell derived from the original layers equals the stored code, then for every valid Polygon or MultiPolygon the stored path returns exactly the original-layers output under the shared centre rule (engine.query.select_cells). Exhaustive cell equality therefore implies equality for all polygons, not just the 17 plots.",
+ "v1_crosscheck": {
+  "accounting_equal": true,
+  "equal": true,
+  "note": "v1 and the decision layers both treat a cell as known only if all three Hansen masks are valid (the real chip has no invalid masks).",
+  "per_plot": [
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0001",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0003",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0004",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0005",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0006",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0008",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0009",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0010",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0011",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0013",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0014",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0015",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0016",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0017",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0018",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0019",
+    "yearly_equal": true
+   },
+   {
+    "accounting_equal": true,
+    "periods_equal": true,
+    "plot_id": "P-0020",
+    "yearly_equal": true
+   }
+  ],
+  "plots": 17
+ }
+}
