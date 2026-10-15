@@ -37,7 +37,7 @@ Update this section when a decision is made so subsequent work starts from the c
 
 The user authorized implementation and original UI/UX design on 13 October, superseding the earlier planning-only/Claude-only limits. The lab began at 09:52 SGT and was wrapped early at the user’s request around 12:28 SGT; [master log](docs/lab/master-log.md) records the actual agent dispatch and milestones. Prototype code is in `engine/` and `app/`; canonical computed exports and measured experiment records are in `artifacts/`.
 
-For a new checkout, install Python 3.14 and Node/npm, then run `scripts/setup-local.sh` and `scripts/verify-local.sh`. The setup installs dependencies explicitly; verification checks the retained proofs and builds the app without rebenchmarking. The clean-export audit used a new environment on this machine, with no full-tile caches.
+For a new checkout, install Python 3.14 and Node/npm, restore the private sample bundle (see [Repository publication and private data](#repository-publication-and-private-data)), then run `scripts/setup-local.sh` and `scripts/verify-local.sh`. The setup installs dependencies explicitly; verification checks the retained proofs and builds the app without rebenchmarking. The clean-export audit used a new environment on this machine, with no full-tile caches.
 
 With dependencies ready, reproduce a query and start both the app and live API:
 
@@ -90,9 +90,16 @@ Some instructions need confirmation. Bizsu's printed lead-generation brief targe
 
 The two original PDFs in [docs/sources](docs/sources/) are available for checking exact printed wording. The source manifest records their provenance. Use the current references for ordinary project work.
 
-## Repository publication
+## Repository publication and private data
 
-After the local checkpoint, the user explicitly authorized pushing the tracked project, research evidence and documentation to the existing public GitHub repository on `guru/plotline-research-lab`. Raw acquisition caches, dependencies and disposable test bundles retain their existing exclusions. This records the user’s repository publication instruction; it does not invent additional company data-use terms or alter the sources’ licenses.
+The repository was public until 15 October 2026 and is now private. SystemEarth shared its sample for local work, and no external publication was authorized. On 15 October, at the user's request:
+
+- The raw sample and every file that copied its plot boundaries, cell footprints or declaration rows were removed from git and from the whole history of every branch. They are listed in [`data/PRIVATE_FILES.txt`](data/PRIVATE_FILES.txt) and ignored.
+- Docs keep prose analysis, the region's bounding box and aggregate per-plot results.
+
+A fresh clone therefore cannot run the app or the checks until the private bundle is restored. Get the bundle from a teammate through a private channel, then run `scripts/private-data.sh unpack <bundle.tar.gz>`. To make a bundle, run `scripts/private-data.sh pack <bundle.tar.gz>`. Never commit or upload it.
+
+Screenshots and the walkthrough video still show plot outlines on the map, so review them before making the repository public again. Raw acquisition caches, dependencies and disposable test bundles keep their existing exclusions. This record does not invent company data-use terms or alter the sources' licences.
 
 ## Working with an agent
 

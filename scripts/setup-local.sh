@@ -26,3 +26,4 @@ fi
 "$ROOT/.venv-data/bin/python" -m pip install -r "$ROOT/engine/requirements.txt"
 npm ci --prefix "$ROOT/app"
 echo "Local Python and app dependencies are ready. Run scripts/verify-local.sh from the repository root."
+"$ROOT/scripts/private-data.sh" check || true

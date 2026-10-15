@@ -48,7 +48,7 @@ These are good scope cuts and can be said proudly.
 - The submission channel and deadline (the challenge page says 17 Oct 00:00 SGT, but it's unclear whether that is the application or project deadline)
 - Pitch length and format, whether it's in person or online, and who presents
 
-**Data use:** confirm that the supplied sample may appear in a public repo or slides.
+**Data use:** confirm that the supplied sample may appear in slides. It is no longer in the repository: on 15 Oct the repository was made private and the sample and its derived copies were removed from git history (see the README).
 
 ## How to run it
 
