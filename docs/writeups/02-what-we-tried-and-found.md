@@ -9,6 +9,7 @@
 | 13 Oct | A **2 h 35 min autonomous "research lab"**: an AI agent swarm of 14 sessions (one GPT-6 Astra master, two leads, Sol/Luna specialists) with a separate **independent validator** whose only job was to break things. This produced the first working prototype and most of the experiments. |
 | 14 Oct | Completion pass: rebuilt from a clean checkout, independent browser review, recorded walkthrough. |
 | 15 Oct | UI redesign and these writeups. Then the **decision layers**: layer analysis, a 6 KB decision layer, an exhaustive cell proof, a registered-plot index and a whole-tile measurement, validated independently. Then three speed-up phases that evening and night. |
+| 16 Oct | A fourth and last speed-up phase (early morning), plus a research pass over papers, forums and engineering options. |
 
 The working loop was: **question → freeze the inputs → small experiment → someone else tries to break it → keep or reject on the measurement**. Losing experiments were kept and written up, not hidden.
 
@@ -96,20 +97,20 @@ SystemEarth's slide title was *"Keep the decision, not the data"*. The retained 
 | --- | --- | --- |
 | Storage, sample region | 535,012 B (8.6% smaller) | **6,146 B: 99.0% smaller than the 623 KB original layers (101×)** |
 | Storage, whole 10° tile | — | 422 MB → 8.2 MB (98% smaller; 94.5% vs a zstd recompression) |
-| Hot, 17 registered plots | 1.44 ms, no gain | **0.033 ms (44×)** with the plot index (0.022 ms, 65×, numpy-free); 0.0035 ms (417×) from the answer table |
-| New boundaries | — | 5.3× faster (decision layer + exact scanline selection); about 15× if they arrive as a batch of hundreds |
+| Hot, 17 registered plots | 1.44 ms, no gain | **0.032 ms (44×)** with the plot index (0.017 ms, 83×, numpy-free); 0.0035 ms (410×) from the answer table |
+| New boundaries | — | 5.2× faster (decision layer + exact scanline selection); about 16× if they arrive as a batch of hundreds |
 | Fresh-process load + query | 11.1 ms | 1.3 ms (index), 1.0 ms (numpy-free index), 0.24 ms (table) |
 | Peak memory | 75 MB | 37 MB (index), 23 MB (numpy-free index), 21 MB (table) |
 
-These are hot-query and fresh-process load + query times for registered plots, on one region, one laptop and a warm cache. Time from a cold interpreter to an answer is mostly Python and NumPy start-up (115 ms for the original path against 50 ms for the index and about 21 ms for the table). The exception is the numpy-free re-check of registered plots, which never imports NumPy: it answers from a fresh process in 24.8 ms against 49.8 ms for the NumPy index (2.0×, or 4.6× against the original path). What remains is interpreter start-up plus the benchmark harness's own floor. The batch figure needs a batch in hand: one new plot gains nothing, and on a 17-plot batch it is only 1.2× ahead of the one-at-a-time path. Three speed-up phases that evening and night lifted the new-boundary speed-up from 2.2× to 3.0×, then 5.0×, then 5.3×, and the index from 24× to 31×, then 33×, then 44×, without changing any output; the story is in the next section and the figures are in the [report](../lab/decision-layer-report.md#speed-up-phases).
+These are hot-query and fresh-process load + query times for registered plots, on one region, one laptop and a warm cache. Time from a cold interpreter to an answer is mostly Python and NumPy start-up (115 ms for the original path against 50 ms for the index and about 22 ms for the table). The exception is the numpy-free re-check of registered plots, which never imports NumPy: it answers from a fresh process in 24.9 ms against 50.0 ms for the NumPy index (2.0×, or 4.6× against the original path). What remains is interpreter start-up plus the benchmark harness's own floor. The batch figure needs a batch in hand: one new plot gains nothing, and on a 17-plot batch it is only 1.2× ahead of the one-at-a-time path. Four speed-up phases (15 and 16 Oct) lifted the new-boundary speed-up from 2.2× to 3.0×, then 5.0×, then 5.3×, and the index from 24× to 31×, then 33×, then 44×, without changing any output. The last phase read 5.2× for new boundaries only because the baseline re-measured slightly lower, and it took the numpy-free re-check from 65× to 83×. The story is in the next sections and the figures are in the [report](../lab/decision-layer-report.md#speed-up-phases).
 
 The honest part: a plain GeoTIFF of the decision codes is already 98.6% smaller. The win is knowing what to keep and proving it is enough; our encoding adds the last 28%. Swapping the JRC sampling rule (centre cell, 3×3 majority, or "any forest") changes no plot decision.
 
 **New finding:** Hansen alone shows loss after 2020 on 7 of the 17 plots. Only **P-0001** has mapped loss on mapped 2020 forest: **2 cells in 2022**, out of its 38 Hansen loss cells.
 
-## 15 Oct: three speed-up phases
+## 15–16 Oct: four speed-up phases
 
-After the decision layers were proven, we spent the evening and night making them faster. The rule for every phase: no output, store byte or file format may change, and the proof, validators and tests must stay green. Each phase ended with a full benchmark re-run. All multiples are against the original retained query, on one region, one laptop and a warm cache. The table is in the [report](../lab/decision-layer-report.md#speed-up-phases).
+After the decision layers were proven, we spent the evening, the night and the early morning making them faster. The rule for every phase: no output, store byte or file format may change, and the proof, validators and tests must stay green. Each phase ended with a full benchmark re-run. All multiples are against the original retained query, on one region, one laptop and a warm cache. The table is in the [report](../lab/decision-layer-report.md#speed-up-phases).
 
 **Phase 1 (evening): faster decode, reduction and selection.**
 - *Tried:* decode the store on its packed bit-planes instead of expanding all 744,732 cells; trim the histogram reduction; validate clean GeoJSON in bulk and build the polygon from one array.
@@ -125,7 +126,36 @@ After the decision layers were proven, we spent the evening and night making the
 - *Tried:* make the shared histogram reducer unpack its 20 codes by name; replace `np.unique` in the batch path.
 - *Worked:* the reducer became about 2× faster (1.6 to 0.8 µs per call), which lifted the registered index from 33× to 44× and the numpy-free re-check from 44× to 65×. The batch path's cold start fell from 3.6 to 1.5 ms, because NumPy 2.5's `np.unique` imports `numpy.ma` on first use (about 2 ms).
 - *Didn't:* anything else. The answer table stayed at about 417×.
-- *Floors that are left:* about 5 µs of the remaining ~16 µs per new plot is the required geometry validity check; end-to-end time is interpreter start-up (about 14 ms) plus the benchmark harness's own floor (about 20 ms).
+- *Floors that are left:* about 5 µs of the remaining ~16 µs per new plot is the required geometry validity check (**corrected in Phase 4: this was wrong, the check itself is about 0.8 µs; see Phase 4**); end-to-end time is interpreter start-up (about 14 ms) plus the benchmark harness's own floor (about 20 ms).
+
+**Phase 4 (early morning, 16 Oct): two small changes, then a research pass.**
+- *Tried:* give the shared reducer a second entry for callers that already hold a list of Python ints, so it skips one list conversion per call; use the pure-Python scan for mid-size new polygons (500 to 2,000 rows × edges) unless the boundary is a sawtooth; remove one unused variable; keep the `pathlib` import off the numpy-free path.
+- *Worked:* the numpy-free re-check went from 1.31 to 1.02 µs per plot (65× to 83×). The 500-polygon synthetic set went from about 43,700 to about 46,000 per second, and the batch from about 141,000 to about 146,000 per second (15.8×). The proof, the validators and all 361 engine tests stayed green.
+- *Didn't:* new boundaries on the 17 plots (16.1 and 16.15 µs, unchanged). The multiple reads 5.2× instead of 5.3× only because the baseline re-measured 0.5% lower. The answer table reads 410× instead of 417× for the same reason plus noise, and is not slower. The `pathlib` deferral saves about 2 ms in a bare numpy-free process, but the benchmark's own harness imports `pathlib`, so it cannot show up there, and it added code. We dropped it.
+- *Where the 16 µs goes (this corrects Phase 3):* an independent audit split a new plot's 16.35 µs into parsing 1.38, building the shape 1.59, the validity check 0.84, scanning rows 4.93, gathering cells and the histogram 3.14, building the answer 0.63 and other overhead 3.83 µs. No single big cost is left. The scan is the largest piece, at about 30%.
+
+## 16 Oct: the research pass
+
+Alongside Phase 4, we checked papers, forums and engineering options for anything that would beat the current approach. The short answer: nothing does, for small plots with an exact centre rule on a CPU. The details and tables are in the [report](../lab/decision-layer-report.md#research-pass).
+
+**What the literature says.**
+- The centre rule is the standard default in zonal-statistics tools (GDAL, rasterstats), so our rule is the usual one.
+- Raster Join (Zacharatou et al.) does GPU aggregation over polygons. Its exact form does what we do (a fast interior pass and exact border checks). Its bounded form gives up exactness, which we cannot do.
+- Raptor targets huge rasters and polygons. k²-raster, for querying compressed rasters, does not apply because our store decodes once in about 0.7 ms. Integral histograms do not apply because plots are not rectangles and row spans of about 10 cells are cheaper to scan directly. exactextract computes coverage fractions, not the centre rule.
+- Other EUDR tools (Whisp, the Global Forest Watch Data API, Earth Engine `reduceRegion`) publish no per-plot latency. So the honest claim is "per-plot cost once the layer is local", not "faster than Whisp".
+
+**What did not work or was not worth it.**
+- *GPU for queries:* a plot is about 120 cells, a GPU launch costs around 10 µs (about the whole query), Apple GPUs have no float64 so the exact centre maths would change, and GEOS runs on the CPU.
+- *GPU for building the layer:* a scratch measurement on 6 of the 160 strips of the real tile (not a committed artifact) put 92% of the time in our own compression, 6% in deriving the codes and 2% in reading. The compression tries 10 compressor settings per stream and mostly keeps LZMA, which has no GPU version. A GPU could speed the whole build by at most about 1.06×. The build is about 7 CPU-minutes per tile, so roughly 30 to 60 CPU-hours for about 280 land tiles. That is an estimate: this tile is coastal and inland tiles encode more slowly. It splits cleanly across ordinary CPUs, and Hansen updates yearly.
+- *Compilers and runtimes:* the Python 3.14 JIT is not in the Homebrew build and is 2–3% slower where available. A tail-calling interpreter gains 2–5% but needs a different interpreter. Cython gains about 6% but needs per-platform builds. mypyc failed to import. numba costs 0.2–0.7 s to compile on the first call. PyPy has no shapely or numpy wheels. GEOS 3.14 with shapely 2.2 gains about 3%. Python start-up flags save about 0.5 ms.
+- *A hand-written validity check:* about 8× slower than GEOS in Python, with risky edge cases. We kept GEOS.
+- *Switching to the public shapely API:* we keep calling `shapely.lib` directly (shapely pinned at 2.1.2). Using the public API for every call was measured at +5.2 µs per plot (about 31% slower) on new boundaries and about 1% on the batch path, with identical answers.
+- *Two ideas rejected as benchmark gaming:* caching each plot's histogram across calls, and moving the per-plot counting into load time. In real use each plot is re-checked once per layer update, so neither would help.
+- *Dead code:* the audit found almost none. One unused variable was removed. Two diagnostic timing commands stay on purpose.
+
+**What is left on the roadmap (not built).**
+- *Change-only re-checks:* when a layer updates, re-check only the plots whose cells changed. This needs an inverted cell-to-plot index (incremental view maintenance; DBSP, VLDB 2023).
+- *Call GEOS directly through `ctypes` for new polygons,* skipping NumPy and shapely. A prototype cut a fresh new-plot process from about 48 to about 20 ms and saved about 2.7 µs per plot, with 0 mismatches on 60,000 degenerate polygons. It is 3 to 5 hours of careful work.
 
 ## Sources
 

@@ -67,10 +67,10 @@ Malformed, unclosed, self-intersecting, non-polygon, nonfinite or oversized geom
 The derived EUDR screening and decision layers, their proof and their speed paths. Results and the speed-up phases are in the [decision-layer report](../docs/lab/decision-layer-report.md).
 
 - `decision.py` defines the semantics: derives one code per Hansen cell from the original layers (screen and decision levels) and evaluates a polygon's contract outputs from those codes. It re-exports `decision_summary`.
-- `decision_summary.py` holds the code space and the shared reducer (`summarize_counts`), standard library only.
+- `decision_summary.py` holds the code space and the shared reducer, standard library only. `summarize_counts` accepts any histogram; `summarize_ints` is the same reducer for callers that already hold a list of Python ints, and skips the conversion.
 - `decision_store.py` writes and reads the single-file lossless stores (screen and decision levels), with bounded decoders and controls.
 - `decision_format.py` holds the store file format without NumPy (constants, header rules, stream decoders), shared by `decision_store.py` and `decision_lite.py`.
-- `decision_index.py` has the registered-plot index, the answer table and exact fast polygon selection (`fast_select_cells`).
+- `decision_index.py` has the registered-plot index, the answer table and exact fast polygon selection (`fast_select_cells`). New polygons use a pure-Python scan up to 500 rows × edges, and up to 2,000 unless the boundary changes rows more than 150 times in total; larger shapes (over 2,000 rows × edges or 4,096 cells) and sawtooth shapes use the NumPy scan.
 - `decision_batch.py` answers many new polygons in one vectorized pass (`evaluate_many`, path P4B).
 - `decision_lite.py` re-checks registered plots without NumPy, straight from the compressed bit-planes (paths P5Ls and P5Ld).
 - `decision_proof.py` checks fidelity: every cell, the 17 plots and a polygon fuzz, plus deliberately broken inputs.

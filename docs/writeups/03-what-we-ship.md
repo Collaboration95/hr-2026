@@ -21,7 +21,7 @@ It is one local app (React + TypeScript, Python engine). It runs offline with no
 - An infrastructure cost estimate (bonus) at list-price assumptions for one tile, the tropical belt and global land: [`cost-v1.json`](../../artifacts/decision/cost-v1.json)
 - A local live-query API with bounded limits
 - Tests and verifiers, reproducible setup (`scripts/setup-local.sh`, `scripts/verify-local.sh`) and a recorded walkthrough
-- **Decision layers (15 Oct):** layer analysis; screening and decision layers with an exhaustive cell proof, fuzzing, a registered-plot index and answer table; whole-tile storage; a cost estimate; independent validation. Three speed-up phases followed the same day (faster decode, reduction and selection; a batch evaluator and a numpy-free re-check; a faster shared reducer) with no change to any output. See the [report](../lab/decision-layer-report.md).
+- **Decision layers (15 Oct):** layer analysis; screening and decision layers with an exhaustive cell proof, fuzzing, a registered-plot index and answer table; whole-tile storage; a cost estimate; independent validation. Four speed-up phases followed over 15 and 16 Oct (faster decode, reduction and selection; a batch evaluator and a numpy-free re-check; a faster shared reducer; a leaner reducer entry and a better scan rule), plus a research pass, with no change to any output. See the [report](../lab/decision-layer-report.md).
 - **New today:** the redesigned UI (see [design decisions](05-redesign-decisions.md)) and a reusable design system for slides, videos and HTML writeups ([`design/`](../../design/DESIGN.md))
 
 ## Deliberately out of scope
