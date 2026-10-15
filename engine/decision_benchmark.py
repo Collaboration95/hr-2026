@@ -12,14 +12,19 @@ Paths (each in its own child process):
   P2  screen_store       read_store(screen.plds) + evaluate_store
   P3  decision_store     read_store(decision.plds) + evaluate_store
   P4  fast_select        decision store + evaluate_store(select=fast_select_cells)
+  P4B batch_select       decision store + engine.decision_batch.evaluate_many: the whole workload in ONE call, one
+                         vectorized pass (answers unregistered polygons like P4; needs the whole batch in hand)
   P5  registry           store + registry.bin + registry_evaluate_store (registered plots only)
   P5L lite re-check      store + registry.bin read without numpy, codes decoded at the registered cells straight from
                          the packed bit-planes (engine.decision_lite; registered plots only, stdlib only)
   P6  table              table.json + table_lookup (registered plots only, stdlib only)
 
 Workloads: W1 the 17 supplied plots; W2 the same 17 geometries treated as unregistered (the same
-computation as W1 for P0-P4, which ignore registration); W3 500 seeded synthetic plot-like polygons
+computation as W1 for P0-P4B, which ignore registration); W3 500 seeded synthetic plot-like polygons
 (synthetic, not company data); W4 100 boundary-stressing polygons from the test fuzz generator.
+
+A path flagged `batch` (P4B) is called once per workload with the whole item list instead of once per
+item; its per-plot figures are batch time / items, like every other path's.
 
 Metrics: hot batches (two fresh children per path per run), process-cold (load + query after
 imports), end-to-end fresh interpreter including imports, peak RSS, bytes held in memory, bytes
@@ -53,6 +58,8 @@ PATHS = {
            'what': 'read_store(decision.plds) + evaluate_store'},
     'P4': {'name': 'decision_store_fast_select', 'level': 'decision', 'kind': 'decision', 'registered': False,
            'what': 'read_store(decision.plds) + evaluate_store with fast_select_cells'},
+    'P4B': {'name': 'decision_store_batch_select', 'level': 'decision', 'kind': 'decision', 'registered': False, 'batch': True,
+            'what': 'read_store(decision.plds) + evaluate_many (whole workload in one call, one vectorized pass)'},
     'P5s': {'name': 'screen_registry', 'level': 'screen', 'kind': 'screen', 'registered': True,
             'what': 'read_store(screen.plds) + load_registry + registry_evaluate_store, registered plots only'},
     'P5d': {'name': 'decision_registry', 'level': 'decision', 'kind': 'decision', 'registered': True,
@@ -66,12 +73,12 @@ PATHS = {
     'P6d': {'name': 'decision_table', 'level': 'decision', 'kind': 'decision', 'registered': True,
             'what': 'load_table + table_lookup (decision level), registered plots only, stdlib only'}}
 ORDER = tuple(PATHS)
-GEOMETRY_PATHS = ('P0', 'P1s', 'P1d', 'P2', 'P3', 'P4')  # answer unregistered polygons
-HOT_W4_PATHS = ('P3', 'P4')
+GEOMETRY_PATHS = ('P0', 'P1s', 'P1d', 'P2', 'P3', 'P4', 'P4B')  # answer unregistered polygons
+HOT_W4_PATHS = ('P3', 'P4', 'P4B')
 CHILD_ENV = {'PYTHONDONTWRITEBYTECODE': '1', 'OMP_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1',
              'MKL_NUM_THREADS': '1', 'VECLIB_MAXIMUM_THREADS': '1'}
 PYC_MODULES = ('model', 'source', 'query', 'jrc', 'decision', 'decision_original', 'decision_store',
-               'decision_index', 'decision_summary', 'decision_format', 'decision_lite', 'decision_benchmark')
+               'decision_index', 'decision_batch', 'decision_summary', 'decision_format', 'decision_lite', 'decision_benchmark')
 
 
 class BenchmarkError(RuntimeError):
@@ -140,6 +147,15 @@ def _bind(pid, ctx):
         return (lambda: read_store(store),
                 {'default': lambda s, it: evaluate_store(s[0], s[1], it['geometry'], level)},
                 lambda s: int(s[0].nbytes))
+    if pid == 'P4B':
+        from . import decision_batch, decision_index as di
+        from .decision_store import read_store
+        di._numpy()
+        di._geos()
+        store = out / STORE_FILE[spec['level']]
+        return (lambda: read_store(store),
+                {'default': lambda s, items: decision_batch.evaluate_many(s[0], s[1], [it['geometry'] for it in items], level)},
+                lambda s: int(s[0].nbytes))
     if pid in ('P4', 'P5s', 'P5d'):
         from . import decision_index as di
         from .decision import evaluate_store
@@ -186,6 +202,11 @@ def _bind(pid, ctx):
     raise ValueError(f'unknown path {pid}')
 
 
+def _answers(pid, fn, state, items):
+    """The answers for `items`: one call per item, or for a batch path (PATHS[pid]['batch']) one call for all of them."""
+    return fn(state, items) if PATHS[pid].get('batch') else [fn(state, it) for it in items]
+
+
 def _timed(fn, cpu_clock=time.process_time_ns):
     wall, cpu = time.perf_counter_ns(), cpu_clock()
     value = fn()
@@ -202,7 +223,7 @@ def _hot(req):
             warmups, repetitions = req['plan'][workload]
 
             def batch(fn=fn, items=items):
-                return [fn(state, it) for it in items]
+                return _answers(req['path'], fn, state, items)
             for _ in range(warmups):
                 batch()
             walls, cpus, digests = [], [], set()
@@ -223,7 +244,7 @@ def _cold(req):
     load, variants, held = _bind(req['path'], req)
     fn = next(iter(variants.values()))
     state, load_wall, load_cpu = _timed(load)
-    answers, query_wall, query_cpu = _timed(lambda: [fn(state, it) for it in req['items']])
+    answers, query_wall, query_cpu = _timed(lambda: _answers(req['path'], fn, state, req['items']))
     return {'load_ms': load_wall, 'query_ms': query_wall, 'wall_ms': load_wall + query_wall,
             'cpu_ms': load_cpu + query_cpu, 'answer_sha256': digest(answers), 'peak_rss': rss_record(),
             'held_bytes': held(state)}
@@ -240,7 +261,7 @@ def _memory(req):
     state = load()
     gc.collect()
     after_load, peak_load = tracemalloc.get_traced_memory()
-    answers = [fn(state, it) for it in req['items']]
+    answers = _answers(req['path'], fn, state, req['items'])
     gc.collect()
     after_query, peak_query = tracemalloc.get_traced_memory()
     tracemalloc.stop()
@@ -270,7 +291,7 @@ def _e2e(pid):
         t1 = time.perf_counter()
         state = load()
         t2 = time.perf_counter()
-        answers = [fn(state, it) for it in request['items']]
+        answers = _answers(pid, fn, state, request['items'])
         t3 = time.perf_counter()
     sys.stdout.write(json.dumps({
         'answer_sha256': digest(answers), 'peak_rss': rss_record(),
@@ -454,7 +475,7 @@ def _equal(label, left, right, binding):
 def build_context(cfg):
     """Load pinned inputs, build every workload, and bind expected answers before any timing."""
     import numpy as np
-    from . import decision, decision_index as di
+    from . import decision, decision_batch, decision_index as di
     from . import decision_lite
     from .decision_original import evaluate_original
     from .decision_store import read_store
@@ -498,13 +519,15 @@ def build_context(cfg):
     def stored(geoms):
         return {'screen': [decision.evaluate_store(codes_s, head_s, g, SCREEN) for g in geoms],
                 'decision': [decision.evaluate_store(codes_d, head_d, g, DECISION) for g in geoms],
-                'fast': [decision.evaluate_store(codes_d, head_d, g, DECISION, di.fast_select_cells) for g in geoms]}
+                'fast': [decision.evaluate_store(codes_d, head_d, g, DECISION, di.fast_select_cells) for g in geoms],
+                'batch': decision_batch.evaluate_many(codes_d, head_d, geoms, DECISION)}  # the whole workload, one call
 
     def bind(workload, geoms, with_v1=True):
         o, s = original(geoms), stored(geoms)
         _equal(f'{workload}: P1s original == P2 screen store', o['screen'], s['screen'], binding)
         _equal(f'{workload}: P1d original == P3 decision store', o['decision'], s['decision'], binding)
         _equal(f'{workload}: P3 select_cells == P4 fast_select_cells', s['decision'], s['fast'], binding)
+        _equal(f'{workload}: P4 fast_select_cells loop == P4B evaluate_many', s['fast'], s['batch'], binding)
         for kind in ('screen', 'decision'):
             expected[workload].setdefault(kind, digest(o[kind]))
         expected[workload]['v1'] = digest(o['v1'])
@@ -537,6 +560,7 @@ def build_context(cfg):
     s4, o4 = stored([p['geometry'] for p in w4]), [evaluate_original(hansen, jrc, p['geometry'], DECISION) for p in w4]
     _equal('W4: P1d original == P3 decision store', o4, s4['decision'], binding)
     _equal('W4: P3 select_cells == P4 fast_select_cells', s4['decision'], s4['fast'], binding)
+    _equal('W4: P4 fast_select_cells loop == P4B evaluate_many', s4['fast'], s4['batch'], binding)
     expected['W4'] = {'decision': digest(o4)}
 
     def spread(values):
@@ -546,7 +570,7 @@ def build_context(cfg):
     stats = {
         'W1': {'what': 'the 17 supplied company plots (real geometry)', 'plots': 17,
                'selected_cells': spread([o['selected_cell_count'] for o in o1['decision']])},
-        'W2': {'what': 'the same 17 geometries treated as unregistered (no registry or table): for P0-P4 this is '
+        'W2': {'what': 'the same 17 geometries treated as unregistered (no registry or table): for P0-P4B this is '
                        'computationally identical to W1, which never uses registration, so it is measured once '
                        'and reported under both names; P5/P6 cannot answer it'},
         'W3': {'what': 'SYNTHETIC plot-like polygons (not company data), seeded', 'polygons': len(w3), 'seed': cfg['seed'],
@@ -558,7 +582,7 @@ def build_context(cfg):
                'deforestation_present_share': sum(o['deforestation_after_2020']['present'] is True for o in d3) / len(d3),
                'generator': synthetic_polygons.__doc__.strip()},
         'W4': {'what': 'adversarial boundary-stressing polygons from the test fuzz generator (aligned edges, vertices '
-                       'on cell centres, ulp offsets, slivers, lattices); P3 and P4 only',
+                       'on cell centres, ulp offsets, slivers, lattices); P3, P4 and P4B only',
                'polygons': len(w4), 'kinds': w4_kinds, 'selected_cells': spread([o['selected_cell_count'] for o in o4])}}
     return {'root': str(ROOT), 'store_sha256': store_sha, 'items': items, 'expected': expected, 'binding': binding,
             'workload_stats': stats, 'np_version': np.__version__}
@@ -572,7 +596,7 @@ def storage_record():
     v1 = [data / 'provenance.json', *hansen]
     jrc_files = [ROOT / n for n in (jrc.CHIP, jrc.PROVENANCE, jrc.QML, jrc.XML)]
     files = {'P0': v1, 'P1s': v1 + jrc_files, 'P1d': v1 + jrc_files, 'P2': [out / 'screen.plds'],
-             'P3': [out / 'decision.plds'], 'P4': [out / 'decision.plds'],
+             'P3': [out / 'decision.plds'], 'P4': [out / 'decision.plds'], 'P4B': [out / 'decision.plds'],
              'P5s': [out / 'screen.plds', out / 'registry.bin'], 'P5d': [out / 'decision.plds', out / 'registry.bin'],
              'P5Ls': [out / 'screen.plds', out / 'registry.bin'], 'P5Ld': [out / 'decision.plds', out / 'registry.bin'],
              'P6s': [out / 'table.json'], 'P6d': [out / 'table.json']}
@@ -793,6 +817,7 @@ DECOMPOSITION = {
     'decision_level': [
         ('representation: derived decision codes instead of original layers, same selection', 'P1d', 'P3'),
         ('selection algorithm: fast_select_cells instead of select_cells', 'P3', 'P4'),
+        ('P4 → P4B (one vectorized pass per batch)', 'P4', 'P4B'),
         ('registry index: precomputed cells instead of selection', 'P3', 'P5d'),
         ('P5d → P5Ld (no numpy, packed planes)', 'P5d', 'P5Ld'),
         ('decision table: stored outputs instead of a bincount and reduction', 'P5d', 'P6d'),
@@ -862,7 +887,7 @@ METHOD = {
     'pooling': 'the whole benchmark runs `runs` times back to back in this one parent; every child is a fresh process. The '
                'headline median and p95 pool the samples of all runs; per-run medians and the spread between them are reported.',
     'binding': 'before timing, the parent recomputes every path in-process and requires equality: original vs screen store vs '
-               'decision store vs fast selection on W1, W3 and W4, and the registry, the numpy-free lite re-check and the table '
+               'decision store vs fast selection vs the one-call batch evaluator on W1, W3 and W4, and the registry, the numpy-free lite re-check and the table '
                'against the proof outputs on W1. '
                'Every timed child returns an answer digest that must equal the pinned one, or nothing is published. W1 '
                'expected outputs are proof-v1.json\'s; P0 is checked against engine.query.evaluate and the retained '
@@ -875,6 +900,10 @@ LIMITATIONS = [
     'header\'s decoded-raster hash (the request supplies the pinned store sha256 instead). It reads only split-encoded stores.',
     'The registry and the table exist only for registered plots. A plot that is new or whose geometry changed has no entry '
     'and takes the P3/P4 path.',
+    'P4B answers a whole batch in one call, so it needs the batch in hand: a single new plot gains nothing (below '
+    'decision_batch.MIN_BATCH = 4 it just runs the P4 loop), and the 17-plot W1 batch is small, so the roughly 100 us '
+    'fixed per-call cost of its numpy passes is spread over few plots. Its per-plot figures are batch time / items; the '
+    'gain is larger on the 500-plot W3 batch.',
     'Fast selection is exact (fuzz-equal to select_cells) but faster only on ordinary plot shapes; on boundary-heavy '
     'adversarial polygons (W4) it can be slower, because many centres go to exact GEOS.',
     'The OS file cache is warm and uncontrolled: nothing here is disk-cold, object-store or network latency.',
