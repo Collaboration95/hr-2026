@@ -117,7 +117,7 @@ def summarize_counts(counts, selected_count, outside_count, level):
     land = nonforest + forest + funk
     unknown = outside_count + counts[UNKNOWN]
     analytical = land > 0
-    forest_counts = {'nonforest': nonforest, 'forest': forest, 'unknown': funk}  # FOREST_STATES order
+    forest_counts = dict(zip(FOREST_STATES, (nonforest, forest, funk)))
     deforested = dict(zip(_YEAR_KEYS, s1[1:]))
     total = sum(s1[1:])
 
