@@ -470,7 +470,7 @@ def _checked(g, metadata, geometry):
             polygon = g['shape'](geometry)
         except Exception as exc:
             raise ValueError('malformed geometry') from exc
-    minx, miny, maxx, maxy = bounds = g['lib'].bounds(polygon).tolist()  # polygon.bounds: NaN when empty
+    minx, miny, maxx, maxy = g['lib'].bounds(polygon).tolist()  # polygon.bounds: NaN when empty
     if -1e100 < minx and maxx < 1e100 and -1e100 < miny and maxy < 1e100:
         invalid = not g['lib'].is_valid(polygon)  # nonempty, and too small to overflow, so shapely.is_valid has no warnings to suppress
     else:
