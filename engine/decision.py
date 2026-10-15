@@ -112,7 +112,7 @@ def summarize_counts(counts, selected_count, outside_count, level):
         counts = [int(v) for v in counts]
     if len(counts) != CODE_COUNT or selected_count != sum(counts) + outside_count or outside_count < 0:
         raise ValueError('code histogram accounting mismatch')
-    s0, s1, s2 = (counts[LAND + 6 * s:LAND + 6 * s + 6] for s in range(3))  # per JRC forest state
+    s0, s1, s2 = counts[LAND:LAND + 6], counts[LAND + 6:LAND + 12], counts[LAND + 12:LAND + 18]  # per JRC forest state
     nonforest, forest, funk = sum(s0), sum(s1), sum(s2)
     land = nonforest + forest + funk
     unknown = outside_count + counts[UNKNOWN]
@@ -175,13 +175,18 @@ def evaluate_store(codes, header, geometry, level=None, select=None):
     """Answer one polygon from a read_store result, at the level its header records.
 
     level, if given, must equal header['level']. select(header, geometry) -> (rows, cols)
-    defaults to engine.query.select_cells; the raster must have the header's shape.
+    defaults to engine.query.select_cells; the raster must have the header's shape. A select with a
+    `summarize(codes, header, geometry, level)` attribute is reduced through it, which must return what
+    summarize_selection would for the same selection.
     """
     held = bind_level(header, level)
     if list(codes.shape) != list(header['shape']):
         raise ValueError('code raster shape differs from the store header')
     if select is None:
         from .query import select_cells as select  # Lazy: registered-plot paths never need GEOS.
+    reduce = getattr(select, 'summarize', None)  # a selector may bring a reducer that skips the row and column arrays
+    if reduce is not None:
+        return reduce(codes, header, geometry, held)
     return summarize_selection(codes, *select(header, geometry), held)
 
 

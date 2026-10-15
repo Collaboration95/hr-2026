@@ -14,6 +14,8 @@ Three levers, each keyed by hashes so a changed input can never answer from a st
   also needs the live grid, because those bytes do not bind it.
 - Fast selection (new polygons): scanline even-odd parity on native centre rows, with exact
   GEOS covers only for centres near an edge, vertex or horizontal edge. Exact w.r.t. select_cells.
+  Small windows run the same scan in pure Python (numpy's per-call cost dominates there), and
+  evaluate_store reduces them to the code histogram straight from the runs of selected centres.
 
 `import engine.decision_index` pulls in only the stdlib. numpy loads on first registry use;
 shapely/GEOS only for building a registry/table or selecting new polygons.
@@ -22,7 +24,9 @@ import hashlib
 import json
 import math
 import struct
+from bisect import bisect_left, bisect_right
 from itertools import chain
+from math import ceil, floor, inf, isfinite
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,7 +46,10 @@ SELECTION_RULE = 'engine.query.select_cells: exact GEOS covers on native cell ce
 TOL_ABS, TOL_REL = 1e-9, 2.0 ** -40
 MAX_ROW_PAIRS = 2_000_000  # row-chunk x edge matrix cap for bounded memory
 PREPARE_POINTS = 16  # ambiguous centres above which the polygon is prepared before exact covers
+LATTICE_LIMIT = 2.0 ** 62
 MAX_RECT_LOOP = 64  # ambiguous rectangles up to which they are painted one by one, not via a 2-D difference array
+SCALAR_EDGE_ROWS = 500  # candidate rows x edges up to which a pure-Python scan beats numpy's per-call overhead
+SCALAR_CELLS = 4096  # and candidate cells up to which it stays cheaper
 
 np = summarize_counts = summarize_selection = bind_level = None
 CODE_COUNT = 20
@@ -391,7 +398,7 @@ def _flat(polygons, limit):
         if not set(map(type, vals)) <= {float, int}:
             return None
         xy = np.array(vals, float).reshape(-1, 2)  # an int beyond float range raises OverflowError, as math.isfinite does
-        return (xy, lens, counts) if np.isfinite(xy).all() else None
+        return (xy, lens, counts) if math.isfinite(sum(vals)) else None  # a finite sum means every value is finite
     except Exception:
         return None
 
@@ -399,6 +406,8 @@ def _flat(polygons, limit):
 def _polygon(g, geometry, xy, lens, counts):
     """The geometry shape() builds, from the validated array (None if GEOS refuses; shape() then reports it)."""
     try:
+        if len(lens) == 1 and geometry['type'] == 'Polygon':  # one shell
+            return g['lib'].polygons(g['lib'].linearrings(xy, g['allow']), g['no_holes'])
         make, lib, polygons, pos, i = g['shapely'], g['lib'], [], 0, 0
         for count in counts:
             rings = []
@@ -461,7 +470,7 @@ def _checked(g, metadata, geometry):
             polygon = g['shape'](geometry)
         except Exception as exc:
             raise ValueError('malformed geometry') from exc
-    minx, miny, maxx, maxy = bounds = polygon.bounds  # NaN when empty
+    minx, miny, maxx, maxy = bounds = g['lib'].bounds(polygon).tolist()  # polygon.bounds: NaN when empty
     if -1e100 < minx and maxx < 1e100 and -1e100 < miny and maxy < 1e100:
         invalid = not g['lib'].is_valid(polygon)  # nonempty, and too small to overflow, so shapely.is_valid has no warnings to suppress
     else:
@@ -469,18 +478,25 @@ def _checked(g, metadata, geometry):
     if invalid:
         raise ValueError('geometry must be nonempty and valid')
     transform = metadata.get('transform', [])
-    if len(transform) != 6 or not all(math.isfinite(v) for v in transform):
+    if type(transform) is list and len(transform) == 6:  # the checks below, unrolled
+        a, b, c, d, e, f = transform
+        finite = isfinite(a) and isfinite(b) and isfinite(c) and isfinite(d) and isfinite(e) and isfinite(f)
+    else:
+        finite = len(transform) == 6 and all(isfinite(v) for v in transform)
+        if finite:
+            a, b, c, d, e, f = transform
+    if not finite:
         raise ValueError('finite six-value transform required')
-    a, b, c, d, e, f = transform
     if b != 0 or d != 0 or a <= 0 or e >= 0 or metadata.get('crs') != 'EPSG:4326':
         raise ValueError('only north-up EPSG:4326 grids are supported')
-    if not all(math.isfinite(v) for v in bounds):
+    if not (isfinite(minx) and isfinite(miny) and isfinite(maxx) and isfinite(maxy)):
         raise ValueError('geometry bounds must be finite')
-    extents = ((minx-c)/a-.5, (maxx-c)/a-.5, (maxy-f)/e-.5, (miny-f)/e-.5)
-    if not all(math.isfinite(v) and abs(v) < 2**62 for v in extents):
+    x0, x1, y0, y1 = (minx-c)/a-.5, (maxx-c)/a-.5, (maxy-f)/e-.5, (miny-f)/e-.5
+    if not (-LATTICE_LIMIT < x0 < LATTICE_LIMIT and -LATTICE_LIMIT < x1 < LATTICE_LIMIT  # finite and below 2**62
+            and -LATTICE_LIMIT < y0 < LATTICE_LIMIT and -LATTICE_LIMIT < y1 < LATTICE_LIMIT):
         raise ValueError('geometry exceeds supported native lattice index range')
-    c0, c1 = math.floor(extents[0]) - 1, math.ceil(extents[1]) + 1
-    r0, r1 = math.floor(extents[2]) - 1, math.ceil(extents[3]) + 1
+    c0, c1 = floor(x0) - 1, ceil(x1) + 1
+    r0, r1 = floor(y0) - 1, ceil(y1) + 1
     if (r1-r0+1) * (c1-c0+1) > query.MAX_CANDIDATE_CELLS:
         raise ValueError('geometry exceeds 10000000 candidate cells; partition explicitly')
     return polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), max(abs(minx), abs(maxx))
@@ -494,18 +510,137 @@ def fast_select_cells(metadata, geometry):
     class could differ from exact predicates go to shapely.covers: those within the tolerance of a
     crossing (exact ties included), within it of a vertex lying exactly on a centre row (which
     includes local extrema that count no crossing), or on a horizontal edge lying on one.
-    Anything outside the tested numeric envelope falls back to select_cells itself.
+    Anything outside the tested numeric envelope falls back to select_cells itself. Small windows
+    run the same scan in pure Python (_scalar_runs), because numpy's per-call cost dominates there.
     """
+    selection = _select(metadata, geometry)
+    return selection if len(selection) == 2 else _run_cells(*selection)
+
+
+def _run_cells(runs, stride, base, r0, c0):
+    rows, cols = [], []
+    for s, e in zip(runs[::2], runs[1::2]):
+        i, k = divmod(s - (base or 0), stride)
+        rows += [i + r0] * (e - s)
+        cols += range(k + c0, k + c0 + e - s)
+    return np.array(rows, np.intp), np.array(cols, np.intp)
+
+
+def _select(metadata, geometry, shape=None):
+    """(rows, cols) from the array scan, or (runs, stride, base, r0, c0) from the scalar scan.
+
+    runs is [start, end, start, end, ...] for runs of selected centres (possibly empty), each within one row, ascending,
+    where a centre in local window row i and column k has position base + i * stride + k. With the chip's `shape` given
+    and the window inside it, positions are indices into the flattened raster."""
     if np is None:
         _numpy()
     g = _geos()
     polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), reach = _checked(g, metadata, geometry)
     R, C = r1 - r0 + 1, c1 - c0 + 1
-    if xy is None:
+    flat = xy is not None
+    if not flat:
         xy = g['shapely'].get_coordinates(polygon)
-    if (len(xy) != sum(lens) or max(abs(r0), abs(r1), abs(c0), abs(c1)) > 2**50
-            or max(abs(c), abs(f)) + 2**51 * max(a, -e) > 1e100):
+    small_grid = abs(c) < 1e90 and abs(f) < 1e90 and a < 1e80 and -e < 1e80  # quick sufficient test for the last condition
+    if (len(xy) != sum(lens) or not (-2**50 <= r0 and r1 <= 2**50 and -2**50 <= c0 and c1 <= 2**50)  # r0 < r1, c0 < c1
+            or not small_grid and max(abs(c), abs(f)) + 2**51 * max(a, -e) > 1e100):
         return g['query'].select_cells(metadata, geometry)
+    if flat and R * C <= SCALAR_CELLS and R * (len(xy) - len(lens)) <= SCALAR_EDGE_ROWS:
+        stride = base = None
+        if shape is not None and 0 <= r0 and r1 < shape[0] and 0 <= c0 and c1 < shape[1]:
+            stride, base = shape[1], r0 * shape[1] + c0
+        runs = _scalar_runs(g, polygon, xy, lens, (a, c, e, f), (r0, c0, R, C), reach, stride, base)
+        if runs is not None:
+            return runs, stride or C + 1, base, r0, c0
+    return _array_select(g, polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), reach)
+
+
+def _scalar_runs(g, polygon, xy, lens, grid, window, reach, stride, base):
+    """The array scan below in plain Python, edge by edge: same arithmetic, same ambiguity rule, same answers.
+
+    Rows and columns are located by bisect on lists of the centre coordinates, computed with the
+    same expressions as the array scan (bisect and searchsorted agree on any sorted list). A
+    crossing is clean when no centre lies within tol of it, which is exactly when its tolerance
+    band holds no centre; otherwise the centres in the band, and those near vertices on centre
+    rows and horizontal edges on them, are decided by exact covers. Returns None if the crossing
+    parity were odd, which closed rings rule out, so the caller falls back to the array scan.
+    """
+    a, c, e, f = grid
+    r0, c0, R, C = window
+    xs, ys = xy.T.tolist()
+    tol = TOL_ABS + TOL_REL * reach
+    c0h, r0h, L = c0 + .5, r0 + .5, C + 1
+    W, off = (stride, base - 1) if stride else (L, -1)  # event = off + 1 + row * W + count of centres left of a crossing
+    pp = [-inf, *[c + (j + c0h) * a for j in range(C)], inf]  # centre x, padded: bisect - 1 counts the centres
+    py = [f + (i + r0h) * e for i in range(R)]
+    npy = [-v for v in py]  # ascending, so exact row equality is a bisect
+    events, rects = [], []  # rects: ambiguous (row lo, row hi, col lo, col hi)
+    above = [bisect_right(npy, -y) for y in ys]  # centre rows with py >= y
+    edges = list(zip(xs, ys, xs[1:], ys[1:], above, above[1:]))
+    if len(lens) > 1:
+        end = 0
+        for n in lens[:-1]:
+            end += n
+            edges[end-1] = None  # joins two rings
+        edges = [edge for edge in edges if edge]
+    for x1, y1, x2, y2, ra, rb in edges:
+        if ra == rb:  # no centre row in [ylo, yhi): horizontal edges included
+            continue
+        if ra > rb:
+            ra, rb = rb, ra
+        dy, dx = y2 - y1, x2 - x1
+        for i in range(ra, rb):  # rows with ylo <= py < yhi
+            xc = x1 + (py[i] - y1) / dy * dx
+            k = bisect_right(pp, xc)
+            events.append(off + i * W + k)
+            if not (pp[k-1] < xc - tol and pp[k] > xc + tol):  # centres within tol of the crossing
+                rects.append((i, i + 1, bisect_left(pp, xc - tol) - 1, bisect_right(pp, xc + tol) - 1))
+    events.sort()
+    if len(events) & 1:
+        return None
+    on_rows = set(py).intersection(ys)  # y values exactly on a centre row
+    if on_rows:
+        for x, y in zip(xs, ys):  # a vertex on a centre row: the centres near it are ambiguous
+            if y in on_rows:
+                rects.append((bisect_left(npy, -y), bisect_right(npy, -y),
+                              bisect_left(pp, x - tol) - 1, bisect_right(pp, x + tol) - 1))
+        for x1, y1, x2, y2, _, _ in edges:
+            if y1 == y2 and y1 in on_rows:  # horizontal edge on a centre row: its whole span is boundary
+                rects.append((bisect_left(npy, -y1), bisect_right(npy, -y1),
+                              bisect_left(pp, min(x1, x2) - tol) - 1, bisect_right(pp, max(x1, x2) + tol) - 1))
+    ambiguous = set()
+    for ra, rb, lo, hi in rects:
+        for i in range(ra, rb):
+            ambiguous.update(range(i * L + lo, i * L + hi))
+    if not ambiguous:
+        return events
+    cells = set()
+    for s, e in zip(events[::2], events[1::2]):
+        i, k = divmod(s - off - 1, W)
+        cells.update(range(i * L + k, i * L + k + e - s))
+    cells -= ambiguous
+    order = sorted(ambiguous)
+    coords = np.array([(pp[o % L + 1], py[o // L]) for o in order])
+    if len(order) > PREPARE_POINTS:
+        g['lib'].prepare(polygon)
+    covered = g['lib'].covers(polygon, g['lib'].points(coords, g['allow'])).tolist()
+    cells.update(o for o, hit in zip(order, covered) if hit)
+    runs, last = [], -2
+    for o in sorted(cells):
+        i, k = divmod(o, L)
+        o = off + 1 + i * W + k
+        if o == last:  # the next centre in the same row
+            runs[-1] += 1
+        else:
+            runs += [o, o + 1]
+        last = o + 1
+    return runs
+
+
+def _array_select(g, polygon, xy, lens, grid, window, reach):
+    """The numpy scan: whole candidate window at once."""
+    a, c, e, f = grid
+    r0, r1, c0, c1 = window
+    R, C = r1 - r0 + 1, c1 - c0 + 1
     # Centre coordinates computed exactly as select_cells does: c + (col + .5) * a.
     px = c + (np.arange(C) + (c0 + .5)) * a
     py = f + (np.arange(R) + (r0 + .5)) * e
@@ -566,6 +701,36 @@ def fast_select_cells(metadata, geometry):
         inside[ar, ac] = g['lib'].covers(polygon, g['lib'].points(coords, g['allow']))  # shapely.covers/points minus wrappers
     rows, cols = inside.nonzero()
     return rows + r0, cols + c0
+
+
+def fast_summarize(codes, header, geometry, level):
+    """summarize_selection(codes, *fast_select_cells(header, geometry), level), reduced from the runs of selected
+    centres directly: one slice of the raster per run and one bincount, no row and column arrays. evaluate_store
+    uses it when handed fast_select_cells, so the answers and the rejections are the same."""
+    if np is None:
+        _numpy()
+    try:
+        flat = memoryview(codes) if type(codes) is np.ndarray else None
+        direct = flat is not None and flat.format == 'B' and flat.ndim == 2 and flat.c_contiguous
+    except (TypeError, ValueError):
+        direct = False
+    if not direct:
+        return summarize_selection(codes, *fast_select_cells(header, geometry), level)
+    selection = _select(header, geometry, codes.shape)
+    if len(selection) == 2:
+        return summarize_selection(codes, *selection, level)
+    if selection[2] is None:  # the window is not inside the chip: runs are in window coordinates
+        return summarize_selection(codes, *_run_cells(*selection), level)
+    runs = selection[0]  # positions in the flattened raster
+    flat = flat.cast('B')
+    selected = b''.join([flat[s:e] for s, e in zip(runs[::2], runs[1::2])])
+    counts = np.bincount(np.frombuffer(selected, np.uint8), minlength=CODE_COUNT)
+    if counts.size != CODE_COUNT:
+        raise ValueError('code raster holds values outside the contract code space')
+    return summarize_counts(counts, len(selected), 0, level)
+
+
+fast_select_cells.summarize = fast_summarize  # evaluate_store reduces through it
 
 
 # ---- measurement and artifacts CLI --------------------------------------------------------
