@@ -150,14 +150,14 @@
  },
  "cost_inputs_from_benchmark": {
   "benchmark_cost_inputs": {
-   "original_us": 84.91,
-   "registry_us": 2.61,
-   "new_polygon_us": 17.0
+   "original_us": 84.92,
+   "registry_us": 1.93,
+   "new_polygon_us": 16.1
   },
   "cost_v1_per_plot_us": {
-   "original_v1": 84.91,
-   "decision_registry": 2.61,
-   "decision_new_polygon": 17.0
+   "original_v1": 84.92,
+   "decision_registry": 1.93,
+   "decision_new_polygon": 16.1
   },
   "equal": true,
   "registry_placeholder_flag_present": false
@@ -175,10 +175,10 @@
   "equal": true
  },
  "cost_original_recheck": {
-  "per_plot_seconds": 849.1,
+  "per_plot_seconds": 849.2,
   "tile_decode_seconds_total": 209.1,
-  "recomputed_total_seconds": 1058.2,
-  "recorded": 1058.2,
+  "recomputed_total_seconds": 1058.3,
+  "recorded": 1058.3,
   "recomputed_usd": 0.0197,
   "recorded_usd": 0.0197,
   "gets": [
@@ -187,12 +187,12 @@
   ]
  },
  "cost_l2_registry_recheck": {
-  "recomputed_total_seconds": 49.5,
-  "recorded": 49.5
+  "recomputed_total_seconds": 42.7,
+  "recorded": 42.7
  },
  "cost_l2_new_polygon_recheck": {
-  "recomputed_total_seconds": 193.4,
-  "recorded": 193.4
+  "recomputed_total_seconds": 184.4,
+  "recorded": 184.4
  },
  "container_caveat": {
   "present": true,

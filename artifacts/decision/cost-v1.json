@@ -55,11 +55,11 @@
     ],
     "registered_plots": 10000000,
     "per_plot_microseconds": {
-      "original_v1": 84.91,
+      "original_v1": 84.92,
       "original_v1_source": "artifacts/decision/benchmark-v1.json cost_inputs.original_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4",
-      "decision_registry": 2.61,
+      "decision_registry": 1.93,
       "decision_registry_source": "artifacts/decision/benchmark-v1.json cost_inputs.registry_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4",
-      "decision_new_polygon": 17.0,
+      "decision_new_polygon": 16.1,
       "decision_new_polygon_source": "artifacts/decision/benchmark-v1.json cost_inputs.new_polygon_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4"
     },
     "lambda": {
@@ -539,18 +539,18 @@
     "original_layers_geotiff": {
       "measured_tile": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 209.1,
-          "total_compute_seconds": 1058.2,
+          "total_compute_seconds": 1058.3,
           "gets": 5100,
           "lambda_usd": 0.01766,
           "get_usd": 0.00204,
           "total_usd": 0.0197
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 585.48,
-          "total_compute_seconds": 1434.58,
+          "total_compute_seconds": 1434.68,
           "gets": 14280,
           "lambda_usd": 0.02397,
           "get_usd": 0.005712,
@@ -559,18 +559,18 @@
       },
       "half_land_assumption": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 761.63,
-          "total_compute_seconds": 1610.73,
+          "total_compute_seconds": 1610.83,
           "gets": 18400,
           "lambda_usd": 0.02687,
           "get_usd": 0.00736,
           "total_usd": 0.03423
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 2132.56,
-          "total_compute_seconds": 2981.66,
+          "total_compute_seconds": 2981.76,
           "gets": 51520,
           "lambda_usd": 0.04975,
           "get_usd": 0.020608,
@@ -579,18 +579,18 @@
       },
       "all_land_scenario": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 1523.25,
-          "total_compute_seconds": 2372.35,
+          "total_compute_seconds": 2372.45,
           "gets": 36700,
           "lambda_usd": 0.03956,
           "get_usd": 0.01468,
           "total_usd": 0.05424
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 4265.11,
-          "total_compute_seconds": 5114.21,
+          "total_compute_seconds": 5114.31,
           "gets": 102760,
           "lambda_usd": 0.08529,
           "get_usd": 0.041104,
@@ -601,18 +601,18 @@
     "L0_yardstick_zstd19": {
       "measured_tile": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 124.1,
-          "total_compute_seconds": 973.2,
+          "total_compute_seconds": 973.3,
           "gets": 1800,
           "lambda_usd": 0.01624,
           "get_usd": 0.00072,
           "total_usd": 0.01696
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 347.48,
-          "total_compute_seconds": 1196.58,
+          "total_compute_seconds": 1196.68,
           "gets": 5040,
           "lambda_usd": 0.02,
           "get_usd": 0.002016,
@@ -621,18 +621,18 @@
       },
       "half_land_assumption": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 452.02,
-          "total_compute_seconds": 1301.12,
+          "total_compute_seconds": 1301.22,
           "gets": 6500,
           "lambda_usd": 0.02171,
           "get_usd": 0.0026,
           "total_usd": 0.02431
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 1265.66,
-          "total_compute_seconds": 2114.76,
+          "total_compute_seconds": 2114.86,
           "gets": 18200,
           "lambda_usd": 0.0353,
           "get_usd": 0.00728,
@@ -641,18 +641,18 @@
       },
       "all_land_scenario": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 904.05,
-          "total_compute_seconds": 1753.15,
+          "total_compute_seconds": 1753.25,
           "gets": 13000,
           "lambda_usd": 0.02924,
           "get_usd": 0.0052,
           "total_usd": 0.03444
         },
         "global_land": {
-          "per_plot_compute_seconds": 849.1,
+          "per_plot_compute_seconds": 849.2,
           "tile_decode_seconds": 2531.33,
-          "total_compute_seconds": 3380.43,
+          "total_compute_seconds": 3380.53,
           "gets": 36400,
           "lambda_usd": 0.0564,
           "get_usd": 0.01456,
@@ -663,188 +663,188 @@
     "L1_screen": {
       "measured_tile": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 30.0,
-          "total_compute_seconds": 56.1,
+          "total_compute_seconds": 49.3,
           "gets": 200,
-          "lambda_usd": 0.00096,
+          "lambda_usd": 0.00084,
           "get_usd": 8e-05,
-          "total_usd": 0.00104
+          "total_usd": 0.00092
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 84.0,
-          "total_compute_seconds": 110.1,
+          "total_compute_seconds": 103.3,
           "gets": 560,
-          "lambda_usd": 0.00189,
+          "lambda_usd": 0.00178,
           "get_usd": 0.000224,
-          "total_usd": 0.00212
+          "total_usd": 0.002
         }
       },
       "half_land_assumption": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 109.27,
-          "total_compute_seconds": 135.37,
+          "total_compute_seconds": 128.57,
           "gets": 600,
-          "lambda_usd": 0.00228,
+          "lambda_usd": 0.00216,
           "get_usd": 0.00024,
-          "total_usd": 0.00252
+          "total_usd": 0.0024
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 305.96,
-          "total_compute_seconds": 332.06,
+          "total_compute_seconds": 325.26,
           "gets": 1680,
-          "lambda_usd": 0.00559,
+          "lambda_usd": 0.00548,
           "get_usd": 0.000672,
-          "total_usd": 0.00626
+          "total_usd": 0.00615
         }
       },
       "all_land_scenario": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 218.54,
-          "total_compute_seconds": 244.64,
+          "total_compute_seconds": 237.84,
           "gets": 1200,
-          "lambda_usd": 0.0041,
+          "lambda_usd": 0.00398,
           "get_usd": 0.00048,
-          "total_usd": 0.00458
+          "total_usd": 0.00446
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 611.92,
-          "total_compute_seconds": 638.02,
+          "total_compute_seconds": 631.22,
           "gets": 3360,
-          "lambda_usd": 0.01069,
+          "lambda_usd": 0.01058,
           "get_usd": 0.001344,
-          "total_usd": 0.01203
+          "total_usd": 0.01192
         }
       }
     },
     "L2_decision": {
       "measured_tile": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 23.4,
-          "total_compute_seconds": 49.5,
+          "total_compute_seconds": 42.7,
           "gets": 100,
-          "lambda_usd": 0.00085,
+          "lambda_usd": 0.00073,
           "get_usd": 4e-05,
-          "total_usd": 0.00089
+          "total_usd": 0.00077
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 65.52,
-          "total_compute_seconds": 91.62,
+          "total_compute_seconds": 84.82,
           "gets": 280,
-          "lambda_usd": 0.00158,
+          "lambda_usd": 0.00147,
           "get_usd": 0.000112,
-          "total_usd": 0.0017
+          "total_usd": 0.00158
         }
       },
       "half_land_assumption": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 85.23,
-          "total_compute_seconds": 111.33,
+          "total_compute_seconds": 104.53,
           "gets": 400,
-          "lambda_usd": 0.00188,
+          "lambda_usd": 0.00176,
           "get_usd": 0.00016,
-          "total_usd": 0.00204
+          "total_usd": 0.00192
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 238.65,
-          "total_compute_seconds": 264.75,
+          "total_compute_seconds": 257.95,
           "gets": 1120,
-          "lambda_usd": 0.00447,
+          "lambda_usd": 0.00436,
           "get_usd": 0.000448,
-          "total_usd": 0.00492
+          "total_usd": 0.0048
         }
       },
       "all_land_scenario": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 170.46,
-          "total_compute_seconds": 196.56,
+          "total_compute_seconds": 189.76,
           "gets": 800,
-          "lambda_usd": 0.0033,
+          "lambda_usd": 0.00318,
           "get_usd": 0.00032,
-          "total_usd": 0.00362
+          "total_usd": 0.0035
         },
         "global_land": {
-          "per_plot_compute_seconds": 26.1,
+          "per_plot_compute_seconds": 19.3,
           "tile_decode_seconds": 477.3,
-          "total_compute_seconds": 503.4,
+          "total_compute_seconds": 496.6,
           "gets": 2240,
-          "lambda_usd": 0.00845,
+          "lambda_usd": 0.00833,
           "get_usd": 0.000896,
-          "total_usd": 0.00934
+          "total_usd": 0.00923
         }
       }
     },
     "L2_decision_new_polygons": {
       "note": "L2 codes but the polygon cells are selected on demand (not a registered plot): per-plot time is the decision_new_polygon figure (artifacts/decision/benchmark-v1.json cost_inputs.new_polygon_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4)",
-      "per_plot_us": 17.0,
+      "per_plot_us": 16.1,
       "measured_tile": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 23.4,
-          "total_compute_seconds": 193.4,
+          "total_compute_seconds": 184.4,
           "gets": 100,
-          "lambda_usd": 0.00324,
+          "lambda_usd": 0.00309,
           "get_usd": 4e-05,
-          "total_usd": 0.00328
+          "total_usd": 0.00313
         },
         "global_land": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 65.52,
-          "total_compute_seconds": 235.52,
+          "total_compute_seconds": 226.52,
           "gets": 280,
-          "lambda_usd": 0.00398,
+          "lambda_usd": 0.00383,
           "get_usd": 0.000112,
-          "total_usd": 0.00409
+          "total_usd": 0.00394
         }
       },
       "half_land_assumption": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 85.23,
-          "total_compute_seconds": 255.23,
+          "total_compute_seconds": 246.23,
           "gets": 400,
-          "lambda_usd": 0.00427,
+          "lambda_usd": 0.00412,
           "get_usd": 0.00016,
-          "total_usd": 0.00443
+          "total_usd": 0.00428
         },
         "global_land": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 238.65,
-          "total_compute_seconds": 408.65,
+          "total_compute_seconds": 399.65,
           "gets": 1120,
-          "lambda_usd": 0.00687,
+          "lambda_usd": 0.00672,
           "get_usd": 0.000448,
-          "total_usd": 0.00731
+          "total_usd": 0.00716
         }
       },
       "all_land_scenario": {
         "tropical_belt": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 170.46,
-          "total_compute_seconds": 340.46,
+          "total_compute_seconds": 331.46,
           "gets": 800,
-          "lambda_usd": 0.00569,
+          "lambda_usd": 0.00554,
           "get_usd": 0.00032,
-          "total_usd": 0.00601
+          "total_usd": 0.00586
         },
         "global_land": {
-          "per_plot_compute_seconds": 170.0,
+          "per_plot_compute_seconds": 161.0,
           "tile_decode_seconds": 477.3,
-          "total_compute_seconds": 647.3,
+          "total_compute_seconds": 638.3,
           "gets": 2240,
-          "lambda_usd": 0.01084,
+          "lambda_usd": 0.01069,
           "get_usd": 0.000896,
-          "total_usd": 0.01174
+          "total_usd": 0.01159
         }
       }
     }
