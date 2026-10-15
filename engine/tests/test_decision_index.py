@@ -702,7 +702,7 @@ class DecisionIndexTests(unittest.TestCase):
         geometries = [self.square(150, 250, half=.5, rows=30, cols=30), self.plots[4]['geometry'],
                       *fuzz_geometries(self.metadata, 300, seed=5)]
         for pairs in (4, 12):  # forces many row chunks per polygon
-            with mock.patch.object(di, 'MAX_ROW_PAIRS', pairs):
+            with mock.patch.object(di, 'MAX_ROW_PAIRS', pairs), mock.patch.object(di, 'SCALAR_EDGE_ROWS', 0):  # the array scan only
                 for geometry in geometries:
                     self.assertSameSelection(geometry)
 

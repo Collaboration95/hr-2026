@@ -27,7 +27,7 @@ def summarize_counts(counts, selected_count, outside_count, level):
         counts = [int(v) for v in counts]
     if len(counts) != CODE_COUNT or selected_count != sum(counts) + outside_count or outside_count < 0:
         raise ValueError('code histogram accounting mismatch')
-    s0, s1, s2 = (counts[LAND + 6 * s:LAND + 6 * s + 6] for s in range(3))  # per JRC forest state
+    s0, s1, s2 = counts[LAND:LAND + 6], counts[LAND + 6:LAND + 12], counts[LAND + 12:LAND + 18]  # per JRC forest state
     nonforest, forest, funk = sum(s0), sum(s1), sum(s2)
     land = nonforest + forest + funk
     unknown = outside_count + counts[UNKNOWN]
