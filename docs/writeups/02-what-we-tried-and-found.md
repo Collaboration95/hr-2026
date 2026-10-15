@@ -96,10 +96,12 @@ SystemEarth's slide title was *"Keep the decision, not the data"*. The retained 
 | --- | --- | --- |
 | Storage, sample region | 535,012 B (8.6% smaller) | **6,146 B: 99.0% smaller than the 623 KB original layers (101×)** |
 | Storage, whole 10° tile | — | 422 MB → 8.2 MB (98% smaller; 94.5% vs a zstd recompression) |
-| Hot, 17 registered plots | 1.45 ms, no gain | **0.060 ms (24×)** with the plot index; 0.0035 ms (420×) from the answer table |
-| New boundaries | — | 2.2× faster (exact scanline selection) |
-| Fresh-process load + query | 11.3 ms | 3.5 ms (index), 0.25 ms (table) |
-| Peak memory | 75 MB | 43 MB (index), 21 MB (table) |
+| Hot, 17 registered plots | 1.45 ms, no gain | **0.048 ms (31×)** with the plot index; 0.0034 ms (430×) from the answer table |
+| New boundaries | — | 3.0× faster (decision layer + exact scanline selection) |
+| Fresh-process load + query | 11.3 ms | 1.3 ms (index), 0.25 ms (table) |
+| Peak memory | 75 MB | 37 MB (index), 21 MB (table) |
+
+These are hot-query and fresh-process load + query times for registered plots, on one region, one laptop and a warm cache. Time from a cold interpreter to an answer is mostly Python and NumPy start-up and barely changed (116 ms for the original path against 50 ms for the index, about 22 ms for the table). A same-day perf pass lifted the new-boundary speed-up from 2.2× to 3.0× and the index from 24× to 31× without changing any output; details are in the [report](../lab/decision-layer-report.md#perf-pass-15-oct-evening).
 
 The honest part: a plain GeoTIFF of the decision codes is already 98.6% smaller. The win is knowing what to keep and proving it is enough; our encoding adds the last 28%. Swapping the JRC sampling rule (centre cell, 3×3 majority, or "any forest") changes no plot decision.
 

@@ -97,11 +97,11 @@ Re-checking 10 million registered plots after a layer update, belt, measured bas
 
 | Path | Per-plot time | CPU seconds | Cost |
 | --- | --- | --- | --- |
-| Original v1 | 85.36 µs | 1,063 (854 per plot, 209 reading tiles) | $0.020 |
-| L2 registry | 3.55 µs | 59 | $0.0010 |
-| L2, new polygons (not registered) | 38.94 µs (selection plus reduction) | 413 | $0.0069 |
+| Original v1 | 85.98 µs | 1,069 (860 per plot, 209 reading tiles) | $0.020 |
+| L2 registry | 2.80 µs | 51 | $0.0009 |
+| L2, new polygons (not registered) | 29.09 µs (selection plus reduction) | 314 | $0.0053 |
 
 - **Measured inputs and their sources.** `--cost` reads the per-plot times from [`benchmark-v1.json`](../../artifacts/decision/benchmark-v1.json) (`cost_inputs`: pooled hot medians on the 17 supplied plots), so they cannot drift: original v1 is P0, the registry is P5 decision with the precomputed hash, and new polygons is P4 fast selection. The original layers' tile read is the 2.091 s single-process figure from `tile-read-v1.json` (arm64, 10 cores). The L0, L1 and L2 decode times (1.24, 0.30 and 0.23 s per tile) come from the zstd decode timing in `scale-v1.json`: single thread, warm cache, 20 strips scaled to 160. The formulas are in `cost-v1.json`.
 - **Container assumption.** Ranged GETs and per-strip working memory assume a strip-indexed container that is not implemented. The shipped store (`engine.decision_store`) holds at most 16,384 cells per side and 16,777,216 cells, far below this tile's 1,600,000,000. Tile sizes here are zstd-19 per-strip sums (the yardstick), and the GET count is the byte size divided by 8 MiB, rounded up. Both hold only for such a container.
-- **Plain reading.** L2 storage is about 98% smaller, and the re-check of registered plots is about 95% cheaper ($0.0010 against $0.020; 59 s of compute against 1,063 s). New polygons are 65% cheaper, because polygon selection dominates once a plot is not registered. At these prices storage is cents to tens of dollars a month and a full re-check costs cents. The case for the work is time to answer, memory per worker and being able to re-run, not the bill.
+- **Plain reading.** L2 storage is about 98% smaller, and the re-check of registered plots is about 95% cheaper ($0.0009 against $0.020; 51 s of compute against 1,069 s). New polygons are about 73% cheaper, because polygon selection dominates once a plot is not registered. At these prices storage is cents to tens of dollars a month and a full re-check costs cents. The case for the work is time to answer, memory per worker and being able to re-run, not the bill.
 - **Not priced.** Cold object-store latency, network time, the original path's extra JRC sampling step, and the 15-minute Lambda limit.

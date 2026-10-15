@@ -70,16 +70,28 @@ The 17 supplied plots, isolated child processes, two full runs, and every timed 
 | --- | --- | --- | --- | --- |
 | Original layers, retained v1 query | 1.45 ms | 11.3 ms | 116 ms | 75 MB |
 | Original layers, same EUDR question | 1.87 ms | 19.3 ms | 125 ms | 97 MB |
-| Decision layer | 1.21 ms | 4.9 ms | 60 ms | 46 MB |
-| Decision layer + exact fast selection | 0.66 ms (**2.2×**) | 4.3 ms | 59 ms | 46 MB |
-| Decision layer + registered-plot index | **0.060 ms (24×)** | 3.5 ms (3.2×) | 52 ms | 43 MB |
-| Registered-plot answer table | **0.0035 ms (420×)** | 0.25 ms (45×) | 22 ms (5.4×) | 21 MB |
+| Decision layer | 1.20 ms | 2.7 ms | 58 ms | 40 MB |
+| Decision layer + exact fast selection | 0.49 ms (**3.0×**) | 1.9 ms | 58 ms | 40 MB |
+| Decision layer + registered-plot index | **0.048 ms (31×)** | 1.3 ms (8.6×) | 50 ms | 37 MB |
+| Registered-plot answer table | **0.0034 ms (430×)** | 0.25 ms (45×) | 22 ms (5.4×) | 21 MB |
 
 Multiples are against the retained v1 path.
 
-- **Where the speed comes from.** The representation alone gives 1.5× hot and 3.9× fresh-process speedups, because there is one small band instead of three plus a 101-bin canopy histogram. Exact scanline selection gives 1.8–2.1× on new polygons. The big hot-path gain needs the **registered-plot index**: EUDR plots are registered once and re-checked whenever a layer updates, so their cells are found once (24×). The **answer table** goes further: it holds each registered plot's precomputed answer, keyed by plot ID, geometry hash and store hash (420×).
-- **New, unregistered plots** take the decision layer + fast selection path: about 22,100 synthetic plot-sized polygons per second, against 9,100 on the original path (2.4×).
-- **Cold start.** The decision paths never import GDAL/rasterio, and the table path needs only the Python standard library. Most of the remaining end-to-end time is interpreter start-up (about 15 ms).
+- **Where the speed comes from.** The representation alone gives 1.6× hot and 7.1× fresh-process speedups, because there is one small band instead of three plus a 101-bin canopy histogram. Exact scanline selection gives 2.4–2.7× on new polygons. The big hot-path gain needs the **registered-plot index**: EUDR plots are registered once and re-checked whenever a layer updates, so their cells are found once (31×). The **answer table** goes further: it holds each registered plot's precomputed answer, keyed by plot ID, geometry hash and store hash (430×).
+- **New, unregistered plots** take the decision layer + fast selection path: about 28,500 synthetic plot-sized polygons per second, against 9,100 on the original path (3.1×).
+- **Cold start.** The decision paths never import GDAL/rasterio, and the table path needs only the Python standard library. Most of the remaining end-to-end time is interpreter start-up (about 15 ms) and importing NumPy (about 25 ms), which is why the 15 Oct perf pass below barely moved end-to-end.
+
+## Perf pass (15 Oct, evening)
+
+After the first benchmark we made three speed-ups that change no output, then re-ran everything. The numbers above are from the re-run; the 15 Oct afternoon figures were 2.2× (new boundaries), 24× (registered index) and 3.5 ms fresh-process for the index.
+
+- **What changed.**
+  - **Histogram reduction** (`summarize_counts` in `engine/decision.py`): the 20-bin histogram becomes the contract outputs in fewer Python passes (one `tolist`, shared sums, precomputed keys). It is 1.6–2.2× faster on its own.
+  - **Store decoding** (`_decode_split` and `read_store` in `engine/decision_store.py`): the store is decoded on the packed bit-planes (93 KB) instead of expanding every plane to 744,732 cells. The sparse loss years are applied only at event positions, and ranked event cells are found by popcount. The file format and bytes are unchanged. Reading the decision store went from 2.5 to 0.67 ms (3.8×) and the screen store from 3.7 to 1.65 ms. A side effect: the validator's crafted-blob memory case now peaks near 6 MB instead of about 50 MB.
+  - **Polygon selection** (`fast_select_cells` and `_checked` in `engine/decision_index.py`): clean GeoJSON is validated in bulk and the polygon is built straight from one coordinate array, ambiguous-cell rectangles are painted without `np.add.at`, and the polygon is prepared before exact covers when many centres are ambiguous. It calls a few `shapely.lib` functions directly, so it depends on the pinned shapely 2.1.2; input that is not clean falls back to the original per-point checks.
+- **What it bought (against the unchanged retained v1 path).** New boundaries 2.2× → 3.0× (synthetic set 2.4× → 3.1×). Registered index 24× → 31×, with fresh-process load + query 3.5 → 1.3 ms and peak memory 43 → 37 MB. Decision layer alone: fresh-process load + query 4.9 → 2.7 ms, peak memory 46 → 40 MB. On the adversarial boundary-heavy set, fast selection against the reference selector went from 0.81× (slower) to 1.16×. The answer table did not change.
+- **Looked at, not changed.** Fresh-interpreter end-to-end time is dominated by `import numpy` (about 25 of roughly 50 ms) and interpreter start-up (about 14 ms). The honest trims left (pathlib, hashlib) are under 2 ms each, so end-to-end barely moved (index path 52.4 → 50.0 ms). Do not quote the pass as an end-to-end gain. The answer-table path was already about 0.2 µs per plot.
+- **How it was checked.** The official benchmark was re-run (2 full runs, every timed answer bound to the same expected digests, baselines unchanged). The proof is unchanged: 9,829 of 9,829 fuzzed polygons and 744,732 of 744,732 cells identical. All 17 independent validator scripts exit 0. 300 engine tests and 311 app tests pass. The new code was also compared with the old code on corrupted and random inputs: identical decodes and rejection messages over about 16,000 corrupted store blobs, 180,000 differential comparisons of the histogram reduction, and zero mismatches against both the old fast path and `select_cells` over about 9,000 polygons plus the validator's fast-selection check.
 
 ## What the decision layer says about the 17 plots
 
