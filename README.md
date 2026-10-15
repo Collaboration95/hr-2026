@@ -4,7 +4,17 @@ A week-long project for Hack & Hire, organized by Projet with NUS CAT. Participa
 
 This repository holds the project context and working local implementation for the selected SystemEarth track. The aim is a practical, demonstrable outcome with clear reasoning and evidence.
 
-**Start here:** [Plain-English writeups](docs/writeups/README.md) (brief, data, findings, scope, pitch) · [Design system](design/DESIGN.md) · [Style guide](design/style-guide.html) · [Pitch and 3-minute demo](docs/writeups/04-pitch.md) · [Reproduce from a clean checkout](docs/lab/completion-reproducibility.md) · [Detailed handover](docs/HANDOVER.md) · [Redesign brief](HANDOFF.md) · [Agent-swarm methodology](docs/lab/research-methodology.md) · [Final mock judge review](docs/lab/final-judge-review.md)
+## Plotline in one minute
+
+**Plotline keeps the decision, not the data.** It reduces multi-layer, multi-year forest maps to the facts an EUDR screen reads, and proves that every plot gets the same answer as from the original layers.
+
+- **Same answers:** 744,732 of 744,732 map cells identical to the original Hansen + JRC layers, so every plot boundary in the region gets identical outputs under the written rule. The 17 supplied plots are 17/17.
+- **Smaller:** a 6.1 KB decision layer replaces 623 KB of original layers (99% smaller). On a whole 10° tile, 422 MB becomes 8.2 MB.
+- **Faster:** registered plots are re-checked 24× faster (420× from a stored answer table), and new plot boundaries 2.2× faster.
+
+**Watch** the [55-second walkthrough](docs/lab/redesign-demo.webm) → **Inspect** the evidence in the app (`npm run dev:local --prefix app`, then `#/proof`) or the [decision-layer report](docs/lab/decision-layer-report.md) → **Reproduce** with `scripts/setup-local.sh` and the commands in that report.
+
+More: [plain-English writeups](docs/writeups/README.md) · [pitch and demo script](docs/writeups/04-pitch.md) · [design system](design/DESIGN.md) · [detailed handover](docs/HANDOVER.md)
 
 ## Current status
 
@@ -17,6 +27,7 @@ This repository holds the project context and working local implementation for t
 - **Implementation:** A working local prototype now combines a Python 3.14 geospatial engine with a React/TypeScript/Vite evidence workspace. Original and compact queries agree across the 17 supplied plots; an independent scalar oracle and separate synthetic cases test the declared computational rules. The lab is checkpointed with live local queries, independent proof checks, measured representation controls and a detailed handover. These are encoding/query results, not independently verified supplier compliance. See [engine report](docs/lab/engine-report.md) and [experience report](docs/lab/experience-report.md).
 - **Completed local slice (14 October):** The existing SystemEarth prototype is verified from tracked files with new dependencies, the integrated JRC experience is independently checked, and a recorded walkthrough plus current demo narration are packaged. The user authorized this completion pass after the earlier stop. Company-approved rules, missing mitigation files, a production workload, and submission logistics remain external decisions. Optional RuleLens is outside this completed slice; its research remains available.
 - **UI redesign (15 October):** Plotline was rebuilt as a map-first evidence workspace on `guru/plotline-ui-redesign`. The map draws the pinned Hansen and JRC rasters losslessly in the browser, with a 2001–2025 year scrubber, stacked layers and native cells. Supplier declarations sit beside the mapped observations, and every difference is posed as a review question. The views are Cohort (loss barcode + declared-vs-mapped matrix), Proof (export-derived fidelity, storage and timing) and Live query. The design system in [`design/`](design/DESIGN.md) is meant to be reused for slides, videos and HTML writeups. Engine, artifacts and validation boundaries are unchanged. See [redesign decisions](docs/writeups/05-redesign-decisions.md).
+- **Decision layers (15 October):** Layer analysis grounded in the EUDR cut-off definitions; derived screening (38.5 KB) and decision (6.1 KB) layers with an exhaustive 744,732-cell proof, fuzzing, a registered-plot index and answer table, whole-tile scale and cost estimates, and an independent validation whose fixes were applied. The lossless v1 store remains the audit tier. See the [decision-layer report](docs/lab/decision-layer-report.md).
 - **Planning window:** Use 13–16 October for the first complete slice, batch comparison, and demo preparation; conservatively aim to be ready on 16 October. See [track work sequence](SystemEarth-track.md#proposed-work-sequence).
 - **Deadline clarification:** The challenge-page screenshot provided on 11 October shows an end time of 17 October at 00:00 SGT. Confirm whether this is the application closing time or project submission deadline; finals remain recorded as 17 October.
 
