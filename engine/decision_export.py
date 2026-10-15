@@ -13,12 +13,15 @@ DIR = ROOT / 'artifacts/decision'
 OUT = DIR / 'summary-v1.json'
 SCHEMA = 'plotline.decision-summary.v1'
 LEVELS = ('eudr-screen.v1', 'eudr-decision.v1')
-PATHS = ('P0', 'P1d', 'P3', 'P4', 'P5d', 'P6d')
+PATHS = ('P0', 'P1d', 'P3', 'P4', 'P4B', 'P5d', 'P5Ld', 'P6d')
+REGISTERED = ('P5d', 'P5Ld', 'P6d')
 LABELS = {'P0': 'Original layers, retained v1 query',
           'P1d': 'Original layers, same EUDR question',
           'P3': 'Decision layer',
           'P4': 'Decision layer + exact fast selection',
+          'P4B': 'Decision layer + fast selection, whole batch in one call',
           'P5d': 'Decision layer + registered-plot index',
+          'P5Ld': 'Registered-plot index, no numpy, read from the packed layer',
           'P6d': 'Registered-plot answer table'}
 
 
@@ -38,7 +41,7 @@ def build_summary():
         raise ValueError('refusing to export: proof or benchmark answer binding did not pass')
     rows = {r['path']: r for r in bench['headline_table']}
     p0 = rows['P0']
-    speed = [{'path': p, 'label': LABELS[p], 'registered_plots_only': p in ('P5d', 'P6d'),
+    speed = [{'path': p, 'label': LABELS[p], 'registered_plots_only': p in REGISTERED,
               'hot_17_plots_ms': rows[p]['hot_17_plots_ms']['median'],
               'hot_per_plot_us': rows[p]['hot_per_plot_us'],
               'process_cold_ms': rows[p]['process_cold_ms']['median'],
