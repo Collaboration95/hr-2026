@@ -69,7 +69,9 @@ def _digest(value):
 def codes_digest(codes):
     """sha256 over height and width (little-endian u32) then the row-major cells."""
     codes = np.ascontiguousarray(codes)
-    return _hash(struct.pack('<II', *codes.shape) + codes.tobytes())
+    digest = hashlib.sha256(struct.pack('<II', *codes.shape))
+    digest.update(codes.data)  # the buffer itself: no copy of the raster
+    return digest.hexdigest()
 
 
 def _finite(value):
@@ -96,11 +98,15 @@ def _checked(codes, level=None):
     if codes.max() >= CODE_COUNT:
         raise ValueError(f'code outside 0..{CODE_COUNT - 1}')
     if level is not None:
-        if level not in LEVELS:
-            raise ValueError('unknown contract level')
-        if level == DECISION_VERSION and np.any((codes >= NO_DECISION_CODES.start) & (codes < NO_DECISION_CODES.stop)):
-            raise ValueError('decision level cannot hold nonforest land with loss (codes 3..7)')
+        _level_checked(codes, level)
     return codes
+
+
+def _level_checked(codes, level):
+    if level not in LEVELS:
+        raise ValueError('unknown contract level')
+    if level == DECISION_VERSION and np.any((codes - np.uint8(NO_DECISION_CODES.start)) < len(NO_DECISION_CODES)):
+        raise ValueError('decision level cannot hold nonforest land with loss (codes 3..7)')
 
 
 # --- byte-level helpers -------------------------------------------------------
@@ -327,16 +333,50 @@ def _put_plane(bits):
 
 
 def _get_plane(reader, shape):
-    """A plane as flat 0/1 uint8 in strip order, or None when all zero."""
+    """A plane as packed strip-order bytes (index band * h + row), or None when all zero."""
     h, w = shape
     raw, _ = _get_stream(reader, _bands(w) * h, empty_ok=True)
     if raw is None:
         return None
-    bits = np.unpackbits(np.frombuffer(raw, np.uint8))
+    packed = np.frombuffer(raw, np.uint8)
     valid = w - 8 * (_bands(w) - 1)
-    if valid < 8 and bits.reshape(-1, h, 8)[-1, :, valid:].any():
+    if valid < 8 and (packed[-h:] & (0xFF >> valid)).any():  # the last band's unused low bits
         raise ValueError('nonzero padding bits in plane')
-    return bits
+    return packed
+
+
+# A byte's eight cells as 0/1 uint8 lanes of one uint64, first cell in the lowest lane.
+_LANES = np.unpackbits(np.arange(256, dtype=np.uint8)[:, None], axis=1).view(np.uint64).reshape(256)
+
+
+def _set_cells(packed):
+    """Strip positions of a packed plane's set cells, ascending."""
+    nz = np.flatnonzero(packed != 0)
+    bit = np.flatnonzero(np.unpackbits(packed[nz]).view(bool))  # a bool view: nonzero is 4x faster than on uint8
+    return bit + ((nz - np.arange(nz.size)) * 8)[bit >> 3]  # index in the unpacked bytes, plus the skipped zero bytes
+
+
+def _ranked_cells(forest, ufor, count, ranks):
+    """Strip positions of the cells at ascending `ranks` among forest | ufor cells (None: empty plane)."""
+    cells = np.zeros(-(-count // 8) * 8, np.uint8)
+    for plane in (forest, ufor):
+        if plane is not None:
+            cells[:count] |= plane
+    words = cells.view('>u8').astype(np.uint64)  # first cell in the top bit
+    counts = np.bitwise_count(words)
+    upto = np.cumsum(counts, dtype=np.int64)
+    if ranks[-1] >= upto[-1]:
+        raise ValueError('event outside eligible cells')
+    word = np.searchsorted(upto, ranks, side='right')
+    k = ranks - (upto[word] - counts[word])  # rank within the word
+    bits, at = words[word], np.zeros(ranks.size, np.int64)
+    for width in (32, 16, 8, 4, 2, 1):  # narrow to the k-th set bit from the top
+        have = np.bitwise_count(bits >> np.uint64(64 - width))
+        past = k >= have
+        k -= past * have
+        at += past * width
+        bits = np.where(past, bits << np.uint64(width), bits)
+    return word * 64 + at
 
 
 # --- encodings ------------------------------------------------------------------
@@ -376,18 +416,20 @@ def _split_parts(codes, mode=None):
 
 
 def _decode_split(blob, shape):
+    """Works on the packed strip-order planes (an 8-cell row segment per byte): checks, the code
+    raster and the event positions never expand a plane except the dense forest one."""
     h, w = shape
-    size = _bands(w) * 8 * h
+    bands = _bands(w)
+    size = bands * 8 * h
     reader = _Reader(blob)
     flag = reader.byte()
     if flag not in (0, 1, 3):
         raise ValueError('unknown split flags')
-    zero = np.zeros(size, np.uint8)
-    unknown, water, forest, ufor = (zero if p is None else p for p in [_get_plane(reader, shape) for _ in range(4)])
-    nonland = unknown | water
-    if (unknown & water).any() or ((forest | ufor) & nonland).any() or (forest & ufor).any():
+    unknown, water, forest, ufor = (_get_plane(reader, shape) for _ in range(4))
+    zero = np.zeros(bands * h, np.uint8)
+    u, wa, f, uf = (zero if p is None else p for p in (unknown, water, forest, ufor))
+    if (u & wa).any() or ((f | uf) & (u | wa)).any() or (f & uf).any():
         raise ValueError('inconsistent split planes')
-    land = nonland ^ 1
     if flag:
         n = reader.varint()
         if n > h * w:
@@ -396,31 +438,43 @@ def _decode_split(blob, shape):
         if n:
             ranks = np.cumsum(_unvarints(_get_stream(reader, limit=_varint_limit(n, size))[0], n) + 1) - 1
             if flag == 3:
-                eligible = np.flatnonzero(forest | ufor)
-                if ranks[-1] >= eligible.size:
-                    raise ValueError('event outside eligible cells')
-                pos = eligible[ranks]
+                pos = _ranked_cells(forest, ufor, bands * h, ranks)
             elif ranks[-1] >= size:
                 raise ValueError('event outside grid')
             else:
                 pos = ranks
     else:
         plane = _get_plane(reader, shape)
-        pos = np.zeros(0, np.int64) if plane is None else np.flatnonzero(plane)
+        pos = np.zeros(0, np.int64) if plane is None else _set_cells(plane)
         n = int(pos.size)
-    year = zero.copy()
+    # 2 + 6 forest + 12 unknown-forest, less 2 for unknown and 1 for water: one 8-cell lane word per byte
+    if forest is None:
+        out = np.full(bands * h, 0x0202020202020202, np.uint64)
+    else:
+        out = np.unpackbits(forest).view(np.uint64)
+        out *= np.uint64(6)
+        out += np.uint64(0x0202020202020202)
+    for plane, scale, apply in ((ufor, 12, np.add), (unknown, 2, np.subtract), (water, 1, np.subtract)):
+        if plane is not None:  # sparse: only the nonzero bytes
+            nz = np.flatnonzero(plane != 0)
+            out[nz] = apply(out[nz], _LANES[plane[nz]] * np.uint64(scale))
+    cells = out.view(np.uint8)
     if n:
         raw, flags = _get_stream(reader, n, flags_ok=1)
         years = np.frombuffer(raw, np.uint8)
         if years.max() > 4:
             raise ValueError('year symbol outside 0..4')
         if flags & 1:
-            years = np.cumsum(years.astype(np.int64)) % 5
-        if np.any((pos // (8 * h)) * 8 + pos % 8 >= w) or not land[pos].all():
+            years = (np.cumsum(years.astype(np.int64)) % 5).astype(np.uint8)
+        valid = w - 8 * (bands - 1)
+        tail = pos[np.searchsorted(pos, size - 8 * h):]  # ascending; only the last band has cells past the width
+        base = cells[pos]
+        if (valid < 8 and ((tail & 7) >= valid).any()) or (base < 2).any():  # codes 0 and 1 are not land
             raise ValueError('loss event outside land')
-        year[pos] = years + 1
+        cells[pos] = base + years + 1
     reader.end()
-    return _from_strip((2 + 6 * forest + 12 * ufor + year) * land + water, shape)
+    rows = np.ascontiguousarray(out.reshape(bands, h).T).view(np.uint8).reshape(h, -1)
+    return np.ascontiguousarray(rows[:, :w])
 
 
 def _encode_rle(codes):
@@ -635,7 +689,7 @@ def read_store(path, *, expected_sha256=None):
     codes = decode_codes(payload, header['shape'], header['encoding'])
     if codes_digest(codes) != header['codes_sha256']:
         raise ValueError('decoded raster differs from the header hash')
-    _checked(codes, header['level'])
+    _level_checked(codes, header['level'])  # decode_codes already holds type, shape and code range
     return codes, header
 
 
