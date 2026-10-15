@@ -189,11 +189,17 @@ def _clean_parse(geoms, idxs, limit):
         else:
             ok = (np.abs(xy) < 1e100).all(axis=1)
             if not ok.all():
-                bad = set(np.unique(np.repeat(np.arange(len(kept)), npts)[~ok]).tolist())
+                bad = set(np.repeat(np.arange(len(kept)), npts)[~ok].tolist())
         if not bad:
             return parsed, xy
         order = [i for q, i in enumerate(kept) if q not in bad]
 
+
+
+def _unique(a):
+    """np.unique of a 1-D integer array without np.unique: numpy 2.5's version imports numpy.ma (~2 ms) on first use."""
+    a = np.sort(a)
+    return a[np.concatenate(([True], a[1:] != a[:-1]))] if a.size else a
 
 # ---- exact lattice inverse ------------------------------------------------------------------------
 
@@ -458,7 +464,7 @@ def _chunk(lat, codes, flat_codes, polys, win, edges, rect, i0, i1, counts, sele
         lo_f, hi_f = np.concatenate(lo_f), np.concatenate(hi_f)
         ln_f = hi_f - lo_f
         cf = np.cumsum(ln_f) - ln_f
-        af = np.unique(np.repeat(lo_f - cf, ln_f) + np.arange(int(ln_f.sum())))
+        af = _unique(np.repeat(lo_f - cf, ln_f) + np.arange(int(ln_f.sum())))
     else:
         af = np.empty(0, np.int64)
     if af.size:
