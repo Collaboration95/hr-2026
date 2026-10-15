@@ -1,0 +1,995 @@
+{
+  "schema": "plotline.decision-layer-analysis.v1",
+  "as_of": "2026-10-15",
+  "inputs": {
+    "hansen_chip": {
+      "treecover2000": {
+        "bytes": 414142,
+        "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+      },
+      "lossyear": {
+        "bytes": 159863,
+        "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+      },
+      "datamask": {
+        "bytes": 2994,
+        "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+      }
+    },
+    "jrc_chip": {
+      "bytes": 46238,
+      "sha256": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+    },
+    "hansen_shape": [
+      604,
+      1233
+    ],
+    "jrc_shape": [
+      1809,
+      3695
+    ],
+    "nesting": {
+      "ratio": 3,
+      "row_offset": 0,
+      "col_offset": -1,
+      "note": "Hansen centre (r, c) is the middle of JRC cell (3r+row_offset, 3c+col_offset)"
+    }
+  },
+  "yardstick": "zstd level 19 and xz preset 9e of the raw row-major uint8 plane (whole plane, no chunking, no header); not a container format. geotiff_file_bytes are the source files.",
+  "contract_questions": {
+    "Q1": "forest at the 31 Dec 2020 cut-off",
+    "Q2": "deforestation since the cut-off (mapped loss on 2020 forest)",
+    "Q3": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+  },
+  "attribution": [
+    {
+      "plane": "treecover2000_exact",
+      "label": "treecover2000, exact canopy %",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 397973,
+      "xz_bytes": 381748,
+      "zstd19_bits_per_cell": 4.2751,
+      "geotiff_file_bytes": 414142,
+      "needed_for": [],
+      "needed_by_no_contract_question": true,
+      "verdict": "drop",
+      "kept_in": [
+        "L0"
+      ],
+      "reason": "JRC 2020 supplies forest at the cut-off, so no contract question reads the exact percentage. Only if Hansen alone had to supply the baseline would a single canopy >10% bit be needed.",
+      "eudr_grounding": "EUDR canopy cover >10% is a threshold, not a percentage. Hansen treecover2000 measures canopy of vegetation taller than 5 m in 2000, so it would be the layer for that test; JRC embeds it."
+    },
+    {
+      "plane": "lossyear_full",
+      "label": "lossyear, full (2001-2025)",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 133810,
+      "xz_bytes": 122132,
+      "zstd19_bits_per_cell": 1.4374,
+      "geotiff_file_bytes": 159863,
+      "needed_for": [
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        },
+        {
+          "id": "Q3",
+          "question": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "split",
+      "kept_in": [
+        "L0"
+      ],
+      "reason": "Full plane for reference; the pre-2021 and post-2020 parts are separated below.",
+      "eudr_grounding": "Loss years after 2020 fall after the cut-off; years up to 2020 fall before it."
+    },
+    {
+      "plane": "lossyear_2001_2020",
+      "label": "lossyear detail 2001-2020",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 107371,
+      "xz_bytes": 98684,
+      "zstd19_bits_per_cell": 1.1534,
+      "geotiff_file_bytes": null,
+      "needed_for": [],
+      "needed_by_no_contract_question": true,
+      "verdict": "drop",
+      "kept_in": [
+        "L0"
+      ],
+      "reason": "Loss before the cut-off does not change forest at the cut-off once JRC 2020 is the baseline. It would matter only for a Hansen-only baseline (canopy >10% and no loss up to 2020).",
+      "eudr_grounding": "Cut-off 31 Dec 2020: events before it are not deforestation under the regulation."
+    },
+    {
+      "plane": "lossyear_2021_2025",
+      "label": "lossyear 2021-2025",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 40688,
+      "xz_bytes": 36608,
+      "zstd19_bits_per_cell": 0.4371,
+      "geotiff_file_bytes": null,
+      "needed_for": [
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        },
+        {
+          "id": "Q3",
+          "question": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "keep",
+      "kept_in": [
+        "L0",
+        "L1",
+        "L2"
+      ],
+      "reason": "The only attribute that dates change after the cut-off.",
+      "eudr_grounding": "Deforestation after 31 Dec 2020. Annual resolution only: loss during 2020 cannot be told from loss on 31 Dec 2020."
+    },
+    {
+      "plane": "datamask",
+      "label": "datamask (land / water / no data)",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 853,
+      "xz_bytes": 904,
+      "zstd19_bits_per_cell": 0.0092,
+      "geotiff_file_bytes": 2994,
+      "needed_for": [
+        {
+          "id": "Q1",
+          "question": "forest at the 31 Dec 2020 cut-off"
+        },
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        },
+        {
+          "id": "Q3",
+          "question": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "keep",
+      "kept_in": [
+        "L0",
+        "L1",
+        "L2"
+      ],
+      "reason": "Separates land from water from no data, so an unmapped cell stays \"unknown\", never \"no loss\".",
+      "eudr_grounding": "Only land can carry forest or deforestation; unknown must not read as compliant."
+    },
+    {
+      "plane": "jrc_native_9m",
+      "label": "JRC 2020 forest, native ~9 m",
+      "shape": [
+        1809,
+        3695
+      ],
+      "cells": 6684255,
+      "raw_bytes": 6684255,
+      "zstd19_bytes": 26558,
+      "xz_bytes": 23432,
+      "zstd19_bits_per_cell": 0.0318,
+      "geotiff_file_bytes": 46238,
+      "needed_for": [
+        {
+          "id": "Q1",
+          "question": "forest at the 31 Dec 2020 cut-off"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "reduce",
+      "kept_in": [
+        "L0"
+      ],
+      "reason": "The contract reads one JRC cell per Hansen cell (the centre of the nested 3x3 block); 8 of every 9 JRC cells are never read.",
+      "eudr_grounding": "JRC states its forest class follows the EUDR definition and excludes rubber, oil palm and other agricultural plantations; this is its own claim, its technical report is pending."
+    },
+    {
+      "plane": "jrc_sampled_at_hansen_centres",
+      "label": "JRC 2020 forest sampled at Hansen centres",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 8726,
+      "xz_bytes": 7636,
+      "zstd19_bits_per_cell": 0.0937,
+      "geotiff_file_bytes": null,
+      "needed_for": [
+        {
+          "id": "Q1",
+          "question": "forest at the 31 Dec 2020 cut-off"
+        },
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "keep",
+      "kept_in": [
+        "L1",
+        "L2"
+      ],
+      "reason": "Forest at the cut-off on the grid the decision is evaluated on.",
+      "eudr_grounding": "Forest in 2020 is the baseline against which later loss counts as deforestation."
+    },
+    {
+      "plane": "post2020_loss_on_jrc_nonforest",
+      "label": "post-2020 loss on JRC non-forest land",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 40865,
+      "xz_bytes": 36304,
+      "zstd19_bits_per_cell": 0.439,
+      "geotiff_file_bytes": null,
+      "needed_for": [
+        {
+          "id": "Q3",
+          "question": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "L1 only",
+      "kept_in": [
+        "L1"
+      ],
+      "reason": "Rotation harvests on land that was not forest in 2020. Needed only to reproduce the supplier's Hansen-only check; EUDR deforestation needs forest at the cut-off, so L2 forgets it.",
+      "eudr_grounding": "Loss on land that was predominantly agricultural (e.g. rubber, oil palm) in 2020 is not conversion of forest."
+    },
+    {
+      "plane": "screen_codes_L1",
+      "label": "screen codes (eudr-screen.v1)",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 45745,
+      "xz_bytes": 42008,
+      "zstd19_bits_per_cell": 0.4914,
+      "geotiff_file_bytes": null,
+      "needed_for": [
+        {
+          "id": "Q1",
+          "question": "forest at the 31 Dec 2020 cut-off"
+        },
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        },
+        {
+          "id": "Q3",
+          "question": "supplier's own Hansen 2021-23 check (and the 2024-25 continuation)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "ship",
+      "kept_in": [
+        "L1"
+      ],
+      "reason": "One uint8 code per Hansen cell answers all three questions.",
+      "eudr_grounding": "Combines the 2020 forest baseline with annual loss after the cut-off."
+    },
+    {
+      "plane": "decision_codes_L2",
+      "label": "decision codes (eudr-decision.v1)",
+      "shape": [
+        604,
+        1233
+      ],
+      "cells": 744732,
+      "raw_bytes": 744732,
+      "zstd19_bytes": 9874,
+      "xz_bytes": 8548,
+      "zstd19_bits_per_cell": 0.1061,
+      "geotiff_file_bytes": null,
+      "needed_for": [
+        {
+          "id": "Q1",
+          "question": "forest at the 31 Dec 2020 cut-off"
+        },
+        {
+          "id": "Q2",
+          "question": "deforestation since the cut-off (mapped loss on 2020 forest)"
+        }
+      ],
+      "needed_by_no_contract_question": false,
+      "verdict": "ship",
+      "kept_in": [
+        "L2"
+      ],
+      "reason": "Forest at the cut-off and deforestation since, nothing else.",
+      "eudr_grounding": "The two regulatory questions only; the supplier-specific check is dropped."
+    }
+  ],
+  "totals": {
+    "original_geotiff_bytes_hansen3": 576999,
+    "original_geotiff_bytes_hansen3_plus_jrc": 623237,
+    "original_layers_zstd19_bytes_hansen3_plus_jrc": 559194,
+    "original_layers_zstd19_bytes_hansen3": 532636,
+    "screen_L1_zstd19_bytes": 45745,
+    "decision_L2_zstd19_bytes": 9874,
+    "retained_v1_lossless_store_bytes_cited_by_plan": 535012,
+    "L1_vs_original_geotiff_percent_smaller": 92.66,
+    "L2_vs_original_geotiff_percent_smaller": 98.42,
+    "L1_vs_zstd19_yardstick_percent_smaller": 91.82,
+    "L2_vs_zstd19_yardstick_percent_smaller": 98.23,
+    "share_of_hansen3_zstd19_bytes": {
+      "treecover2000_exact": 74.72,
+      "lossyear_full": 25.12,
+      "datamask": 0.16
+    }
+  },
+  "sampled_centre_trick_equals_pinned_codes": true,
+  "L2_equals_projection_of_L1": true,
+  "region_facts": {
+    "hansen_cells": 744732,
+    "land_cells": 743418,
+    "water_cells": 1314,
+    "unknown_cells": 0,
+    "land_cells_with_any_hansen_loss": 319011,
+    "land_cells_with_any_hansen_loss_percent": 42.9114,
+    "post2020_loss_cells": 80429,
+    "post2020_loss_percent_of_land": 10.8188,
+    "post2020_loss_on_jrc_forest_cells_deforested": 341,
+    "post2020_loss_on_jrc_nonforest_cells": 79871,
+    "post2020_loss_on_unknown_forest_state_cells": 217,
+    "deforested_share_of_post2020_loss_percent": 0.424,
+    "deforested_by_year": {
+      "2021": 64,
+      "2022": 50,
+      "2023": 73,
+      "2024": 85,
+      "2025": 69
+    },
+    "post2020_loss_by_year_all_land": {
+      "2021": 15519,
+      "2022": 11123,
+      "2023": 16877,
+      "2024": 22422,
+      "2025": 14488
+    },
+    "jrc_native_forest_share_percent": 15.9508,
+    "jrc_forest_cells_at_hansen_centres_on_land": 118412,
+    "jrc_forest_share_of_land_percent": 15.9281,
+    "land_cells_with_unknown_forest_state": 2439,
+    "unknown_forest_state_note": "JRC chip is the company bbox chip and is slightly smaller than the Hansen chip; the edge cells have no JRC value and stay unknown",
+    "hansen_only_proxy_forest_2020": {
+      "rule": "land, treecover2000 > 10, no loss up to 2020 (no plantation exclusion; a proxy, not EUDR forest)",
+      "cells": 433825,
+      "share_of_land_percent": 58.3555,
+      "post2020_loss_cells_on_proxy_forest": 71030,
+      "overlap_with_jrc_forest_cells": 113351
+    },
+    "cell_area_hectares_at_chip_centre": {
+      "hansen": 0.0761,
+      "jrc": 0.00846,
+      "half_hectare_in_hansen_cells": 6.57,
+      "half_hectare_in_jrc_cells": 59.1
+    },
+    "forest_state_by_code_histogram": {
+      "unknown": 0,
+      "water": 1314,
+      "land/nonforest/no post-2020 loss": 542696,
+      "land/nonforest/loss 2021": 15423,
+      "land/nonforest/loss 2022": 11026,
+      "land/nonforest/loss 2023": 16747,
+      "land/nonforest/loss 2024": 22307,
+      "land/nonforest/loss 2025": 14368,
+      "land/forest/no post-2020 loss": 118071,
+      "land/forest/loss 2021": 64,
+      "land/forest/loss 2022": 50,
+      "land/forest/loss 2023": 73,
+      "land/forest/loss 2024": 85,
+      "land/forest/loss 2025": 69,
+      "land/unknown/no post-2020 loss": 2222,
+      "land/unknown/loss 2021": 32,
+      "land/unknown/loss 2022": 47,
+      "land/unknown/loss 2023": 57,
+      "land/unknown/loss 2024": 30,
+      "land/unknown/loss 2025": 51
+    }
+  },
+  "eudr_definition_coverage": [
+    {
+      "element": "forest: land spanning more than 0.5 ha",
+      "captured": "no",
+      "note": "No layer or step here applies a contiguity or minimum-area test. The unit is one cell (0.076 ha Hansen, 0.0085 ha JRC at the chip latitude); 0.5 ha is about 6.6 Hansen cells or 59 JRC cells. JRC says its map follows the definition; that is unverified here."
+    },
+    {
+      "element": "trees higher than 5 m",
+      "captured": "partly",
+      "note": "Hansen treecover2000 is canopy closure of vegetation taller than 5 m (dropped from L1/L2). JRC states the same threshold for its class. The decision layers carry no height information."
+    },
+    {
+      "element": "canopy cover above 10%",
+      "captured": "partly",
+      "note": "Hansen treecover2000 > 10 would test it directly (a one-bit plane). The pipeline instead relies on the JRC class, so the threshold is applied only inside JRC, not by this code."
+    },
+    {
+      "element": "or trees able to reach those thresholds in situ",
+      "captured": "no",
+      "note": "Young, recently cleared or regrowing stands are not distinguishable in a single-date map; Hansen gain is not used."
+    },
+    {
+      "element": "excluding land predominantly under agricultural or urban use (agricultural plantations such as rubber and oil palm)",
+      "captured": "only through JRC",
+      "note": "JRC states it excludes plantations of relevant commodities other than wood. Hansen treats rubber and oil palm as tree cover, which is why Hansen loss alone fires on rotation harvests."
+    },
+    {
+      "element": "cut-off 31 December 2020",
+      "captured": "at year resolution",
+      "note": "Hansen lossyear 21+ is after the cut-off; JRC is a 2020 reference year. Neither dates events within a year."
+    },
+    {
+      "element": "deforestation = conversion of forest to agricultural use",
+      "captured": "proxy",
+      "note": "The count is mapped tree-cover loss on mapped 2020 forest. Hansen loss includes fire, logging and natural disturbance and says nothing about what the land becomes next."
+    },
+    {
+      "element": "forest degradation, legality, protected areas",
+      "captured": "no",
+      "note": "Out of scope for these layers."
+    }
+  ],
+  "eudr_sources": "Forest, cut-off and plantation wording follows the JRC GFC2020 v4 metadata pinned in the repo (data/experimental/lead/jrc-semantics/JRC_GFC2020_V4.xml), which restates Regulation (EU) 2023/1115; verify against the regulation text before quoting. Hansen thresholds are from the Hansen et al. 2013 product description.",
+  "aggregation_sensitivity": {
+    "rule": "JRC read at the Hansen cell centre = middle cell of each exactly nested 3x3 block (pinned; engine.decision.nested_offsets). Variants read the whole block.",
+    "variants": {
+      "centre_cell": "forest iff the middle JRC cell is forest (the shipped rule)",
+      "any_forest_in_block": "forest iff at least 1 of the 9 JRC cells is forest",
+      "majority_forest_in_block": "forest iff at least 5 of the 9 JRC cells are forest"
+    },
+    "universe": {
+      "rule": "Hansen cells whose whole 3x3 JRC block lies inside the JRC chip; the other cells (chip edge) are unknown in all block variants and excluded from the totals",
+      "hansen_cells": 744732,
+      "cells_in_universe": 741062,
+      "plot_cells_outside_universe": 0
+    },
+    "pre_sampled_trick_equals_pinned_centre_path": true,
+    "region": {
+      "centre_cell": {
+        "land_cells": 739748,
+        "forest_cells": 118343,
+        "nonforest_cells": 621405,
+        "unknown_forest_cells": 0,
+        "forest_share_of_land_percent": 15.9977,
+        "deforested_cells": 341,
+        "deforested_by_year": {
+          "2021": 64,
+          "2022": 50,
+          "2023": 73,
+          "2024": 85,
+          "2025": 69
+        }
+      },
+      "any_forest_in_block": {
+        "land_cells": 739748,
+        "forest_cells": 122615,
+        "nonforest_cells": 617133,
+        "unknown_forest_cells": 0,
+        "forest_share_of_land_percent": 16.5752,
+        "deforested_cells": 506,
+        "deforested_by_year": {
+          "2021": 97,
+          "2022": 72,
+          "2023": 97,
+          "2024": 128,
+          "2025": 112
+        }
+      },
+      "majority_forest_in_block": {
+        "land_cells": 739748,
+        "forest_cells": 118393,
+        "nonforest_cells": 621355,
+        "unknown_forest_cells": 0,
+        "forest_share_of_land_percent": 16.0045,
+        "deforested_cells": 332,
+        "deforested_by_year": {
+          "2021": 60,
+          "2022": 51,
+          "2023": 70,
+          "2024": 83,
+          "2025": 68
+        }
+      },
+      "pinned_L1_centre_all_cells": {
+        "land_cells": 743418,
+        "forest_cells": 118412,
+        "nonforest_cells": 622567,
+        "unknown_forest_cells": 2439,
+        "forest_share_of_land_percent": 15.9281,
+        "deforested_cells": 341,
+        "deforested_by_year": {
+          "2021": 64,
+          "2022": 50,
+          "2023": 73,
+          "2024": 85,
+          "2025": 69
+        }
+      }
+    },
+    "cell_flips_vs_centre": {
+      "any_forest_in_block": {
+        "nonforest_to_forest_cells": 4272,
+        "forest_to_nonforest_cells": 0
+      },
+      "majority_forest_in_block": {
+        "nonforest_to_forest_cells": 461,
+        "forest_to_nonforest_cells": 411
+      }
+    },
+    "block_forest_count_histogram_land_cells": [
+      617133,
+      639,
+      904,
+      1962,
+      717,
+      716,
+      2002,
+      943,
+      798,
+      113934
+    ],
+    "block_forest_count_histogram_post2020_loss_cells": [
+      79535,
+      30,
+      41,
+      68,
+      35,
+      25,
+      64,
+      21,
+      22,
+      200
+    ],
+    "plots": [
+      {
+        "plot_id": "P-0001",
+        "selected_cells": 121,
+        "centre_cell": {
+          "forest_cells": 60,
+          "forest_2020_present": true,
+          "deforested_cells": 2,
+          "deforestation_present": true
+        },
+        "any_forest_in_block": {
+          "forest_cells": 65,
+          "forest_2020_present": true,
+          "deforested_cells": 4,
+          "deforestation_present": true
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 60,
+          "forest_2020_present": true,
+          "deforested_cells": 2,
+          "deforestation_present": true
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0003",
+        "selected_cells": 87,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0004",
+        "selected_cells": 47,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0005",
+        "selected_cells": 262,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0006",
+        "selected_cells": 256,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0008",
+        "selected_cells": 27,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0009",
+        "selected_cells": 28,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0010",
+        "selected_cells": 27,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0011",
+        "selected_cells": 42,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0013",
+        "selected_cells": 25,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0014",
+        "selected_cells": 7,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0015",
+        "selected_cells": 39,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0016",
+        "selected_cells": 14,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0017",
+        "selected_cells": 9,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0018",
+        "selected_cells": 34,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0019",
+        "selected_cells": 15,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      },
+      {
+        "plot_id": "P-0020",
+        "selected_cells": 8,
+        "centre_cell": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "any_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "majority_forest_in_block": {
+          "forest_cells": 0,
+          "forest_2020_present": false,
+          "deforested_cells": 0,
+          "deforestation_present": false
+        },
+        "pinned_L1_centre_matches_centre_variant": true
+      }
+    ],
+    "plot_decision_changes": [],
+    "plot_cell_count_changes": [
+      {
+        "plot_id": "P-0001",
+        "variant": "any_forest_in_block",
+        "forest_cells_centre": 60,
+        "forest_cells_variant": 65,
+        "deforested_cells_centre": 2,
+        "deforested_cells_variant": 4
+      }
+    ],
+    "plot_decisions_changed": false
+  },
+  "limitations": [
+    "Sizes are of this 744,732-cell chip only. Whole-tile numbers are in scale-v1.json.",
+    "Marginal byte costs of separable planes are not additive: compressing a plane together with another would share structure.",
+    "Counts are mapped cells under the centre rule, not hectares and not a legal finding."
+  ]
+}

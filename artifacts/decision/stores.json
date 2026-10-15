@@ -1,0 +1,940 @@
+{
+  "baselines": {
+    "original_all_layers": {
+      "bytes": 623237,
+      "files": [
+        {
+          "bytes": 414142,
+          "path": "data/public/hansen_treecover2000_sample.tif"
+        },
+        {
+          "bytes": 159863,
+          "path": "data/public/hansen_lossyear_sample.tif"
+        },
+        {
+          "bytes": 2994,
+          "path": "data/public/hansen_datamask_sample.tif"
+        },
+        {
+          "bytes": 46238,
+          "path": "data/experimental/jrc/JRC_GFC2020_V4_N10_E90_company-bbox.tif"
+        }
+      ]
+    },
+    "original_contract_inputs": {
+      "bytes": 209095,
+      "files": [
+        {
+          "bytes": 159863,
+          "path": "data/public/hansen_lossyear_sample.tif"
+        },
+        {
+          "bytes": 2994,
+          "path": "data/public/hansen_datamask_sample.tif"
+        },
+        {
+          "bytes": 46238,
+          "path": "data/experimental/jrc/JRC_GFC2020_V4_N10_E90_company-bbox.tif"
+        }
+      ]
+    },
+    "retained_lossless_l0": {
+      "bytes": 535012,
+      "candidate": "separate_zstd_l19",
+      "source": "artifacts/benchmark-v1.json winner.total_bytes"
+    }
+  },
+  "decode_budget_ms": 5.0,
+  "environment": {
+    "cell_count": 744732,
+    "gdal": "3.12.2",
+    "numpy": "2.5.4",
+    "python": "3.14.7",
+    "rasterio": "1.5.2",
+    "zstd": "1.5.7"
+  },
+  "format": {
+    "magic": "PLDECID1",
+    "version": 2
+  },
+  "grid": {
+    "crs": "EPSG:4326",
+    "shape": [
+      604,
+      1233
+    ],
+    "transform": [
+      0.00025,
+      0.0,
+      98.77225,
+      0.0,
+      -0.00025,
+      8.582
+    ]
+  },
+  "levels": {
+    "eudr-decision.v1": {
+      "best_control": {
+        "bytes": 8532,
+        "lossless": true,
+        "name": "GTiff ZSTD22 one-strip"
+      },
+      "candidates": [
+        {
+          "decode_ms_median": 0.075,
+          "encode_ms": 58.5,
+          "encoding": "zstd19",
+          "file_bytes": 10570,
+          "lossless": true,
+          "payload_bytes": 9874
+        },
+        {
+          "decode_ms_median": 0.074,
+          "encode_ms": 434.2,
+          "encoding": "zstd22",
+          "file_bytes": 8872,
+          "lossless": true,
+          "payload_bytes": 8176
+        },
+        {
+          "decode_ms_median": 0.23,
+          "encode_ms": 244.0,
+          "encoding": "xz",
+          "file_bytes": 9232,
+          "lossless": true,
+          "payload_bytes": 8540
+        },
+        {
+          "decode_ms_median": 0.414,
+          "encode_ms": 1351.1,
+          "encoding": "lzma2",
+          "file_bytes": 8328,
+          "lossless": true,
+          "payload_bytes": 7633
+        },
+        {
+          "decode_ms_median": 0.545,
+          "encode_ms": 20.1,
+          "encoding": "rle",
+          "file_bytes": 8471,
+          "lossless": true,
+          "payload_bytes": 7778
+        },
+        {
+          "decode_ms_median": 2.13,
+          "encode_ms": 579.5,
+          "encoding": "split",
+          "file_bytes": 6146,
+          "lossless": true,
+          "payload_bytes": 5451,
+          "sections": {
+            "events": 366,
+            "flags": 1,
+            "forest": 4453,
+            "unknown": 1,
+            "unknown_forest": 36,
+            "water": 449,
+            "years": 145
+          }
+        }
+      ],
+      "chosen": "split",
+      "code_histogram": [
+        0,
+        1314,
+        622567,
+        0,
+        0,
+        0,
+        0,
+        0,
+        118071,
+        64,
+        50,
+        73,
+        85,
+        69,
+        2222,
+        32,
+        47,
+        57,
+        30,
+        51
+      ],
+      "controls": [
+        {
+          "bytes": 8532,
+          "lossless": true,
+          "name": "GTiff ZSTD22 one-strip"
+        },
+        {
+          "bytes": 8642,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled256"
+        },
+        {
+          "bytes": 9743,
+          "lossless": true,
+          "name": "GTiff ZSTD22 one-strip NBITS=5"
+        },
+        {
+          "bytes": 9790,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 one-strip"
+        },
+        {
+          "bytes": 9822,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled128"
+        },
+        {
+          "bytes": 10077,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 tiled256"
+        },
+        {
+          "bytes": 10512,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled256 NBITS=5"
+        },
+        {
+          "bytes": 11438,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 one-strip"
+        },
+        {
+          "bytes": 11517,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 tiled128"
+        },
+        {
+          "bytes": 11650,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled256"
+        },
+        {
+          "bytes": 11851,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled128 NBITS=5"
+        },
+        {
+          "bytes": 12011,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled128"
+        },
+        {
+          "bytes": 12589,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 one-strip NBITS=5"
+        },
+        {
+          "bytes": 12836,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 one-strip"
+        },
+        {
+          "bytes": 13260,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled256 NBITS=5"
+        },
+        {
+          "bytes": 13333,
+          "lossless": true,
+          "name": "GTiff LZW one-strip"
+        },
+        {
+          "bytes": 13390,
+          "lossless": true,
+          "name": "GTiff ZSTD22 striped"
+        },
+        {
+          "bytes": 14210,
+          "lossless": true,
+          "name": "GTiff ZSTD22 striped NBITS=5"
+        },
+        {
+          "bytes": 14247,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 tiled256"
+        },
+        {
+          "bytes": 14280,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled128 NBITS=5"
+        },
+        {
+          "bytes": 14559,
+          "lossless": true,
+          "name": "GTiff LZW-p2 one-strip"
+        },
+        {
+          "bytes": 15429,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 tiled128"
+        },
+        {
+          "bytes": 15758,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 striped"
+        },
+        {
+          "bytes": 16056,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 striped"
+        },
+        {
+          "bytes": 16700,
+          "lossless": true,
+          "name": "GTiff LZW one-strip NBITS=5"
+        },
+        {
+          "bytes": 17123,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 striped NBITS=5"
+        },
+        {
+          "bytes": 18076,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 striped"
+        },
+        {
+          "bytes": 19909,
+          "lossless": true,
+          "name": "GTiff LZW tiled256"
+        },
+        {
+          "bytes": 22291,
+          "lossless": true,
+          "name": "GTiff LZW-p2 tiled256"
+        },
+        {
+          "bytes": 23513,
+          "lossless": true,
+          "name": "GTiff LZW tiled128"
+        },
+        {
+          "bytes": 25062,
+          "lossless": true,
+          "name": "GTiff LZW tiled256 NBITS=5"
+        },
+        {
+          "bytes": 27460,
+          "lossless": true,
+          "name": "GTiff LZW-p2 striped"
+        },
+        {
+          "bytes": 27689,
+          "lossless": true,
+          "name": "GTiff LZW striped"
+        },
+        {
+          "bytes": 28399,
+          "lossless": true,
+          "name": "GTiff PACKBITS one-strip"
+        },
+        {
+          "bytes": 29207,
+          "lossless": true,
+          "name": "GTiff PACKBITS striped"
+        },
+        {
+          "bytes": 29757,
+          "lossless": true,
+          "name": "GTiff LZW-p2 tiled128"
+        },
+        {
+          "bytes": 32130,
+          "lossless": true,
+          "name": "GTiff LZW striped NBITS=5"
+        },
+        {
+          "bytes": 32410,
+          "lossless": true,
+          "name": "GTiff LZW tiled128 NBITS=5"
+        },
+        {
+          "bytes": 33100,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled128"
+        },
+        {
+          "bytes": 34724,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled256"
+        },
+        {
+          "bytes": 470278,
+          "lossless": true,
+          "name": "GTiff PACKBITS one-strip NBITS=5"
+        },
+        {
+          "bytes": 470766,
+          "lossless": true,
+          "name": "GTiff PACKBITS striped NBITS=5"
+        },
+        {
+          "bytes": 474430,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled128 NBITS=5"
+        },
+        {
+          "bytes": 476710,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled256 NBITS=5"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        }
+      ],
+      "file": "artifacts/decision/decision.plds",
+      "reason": "smallest encoding (split) decodes in 2.13 ms, within the 5.0 ms budget",
+      "smallest": "split",
+      "store": {
+        "codes_sha256": "c3fd1dc65235dfcd804ca803b84a6f7b8d9281cfbecc9507b11c9c27f9c4435e",
+        "file_bytes": 6146,
+        "file_sha256": "bf6368445b609dc335ee6ad4422fc927e391ad48da722c3f613a9b5b4526b839",
+        "header_bytes": 675,
+        "payload_bytes": 5451,
+        "payload_sha256": "06396602931e39edd878e79ffa05815c6633576c9c1a06f66dc4a9a0592e1f36"
+      },
+      "vs_baselines": {
+        "original_all_layers": {
+          "baseline_bytes": 623237,
+          "percent_smaller": 99.014,
+          "ratio": 101.41
+        },
+        "original_contract_inputs": {
+          "baseline_bytes": 209095,
+          "percent_smaller": 97.061,
+          "ratio": 34.02
+        },
+        "retained_lossless_l0": {
+          "baseline_bytes": 535012,
+          "percent_smaller": 98.851,
+          "ratio": 87.05
+        }
+      },
+      "vs_baselines_payload_only": {
+        "original_all_layers": {
+          "baseline_bytes": 623237,
+          "percent_smaller": 99.125,
+          "ratio": 114.33
+        },
+        "original_contract_inputs": {
+          "baseline_bytes": 209095,
+          "percent_smaller": 97.393,
+          "ratio": 38.36
+        },
+        "retained_lossless_l0": {
+          "baseline_bytes": 535012,
+          "percent_smaller": 98.981,
+          "ratio": 98.15
+        }
+      }
+    },
+    "eudr-screen.v1": {
+      "best_control": {
+        "bytes": 45859,
+        "lossless": true,
+        "name": "GTiff ZSTD22 one-strip"
+      },
+      "candidates": [
+        {
+          "decode_ms_median": 0.231,
+          "encode_ms": 167.2,
+          "encoding": "zstd19",
+          "file_bytes": 46440,
+          "lossless": true,
+          "payload_bytes": 45745
+        },
+        {
+          "decode_ms_median": 0.191,
+          "encode_ms": 170.2,
+          "encoding": "zstd22",
+          "file_bytes": 46214,
+          "lossless": true,
+          "payload_bytes": 45519
+        },
+        {
+          "decode_ms_median": 1.473,
+          "encode_ms": 250.5,
+          "encoding": "xz",
+          "file_bytes": 42691,
+          "lossless": true,
+          "payload_bytes": 42000
+        },
+        {
+          "decode_ms_median": 1.594,
+          "encode_ms": 1473.0,
+          "encoding": "lzma2",
+          "file_bytes": 41844,
+          "lossless": true,
+          "payload_bytes": 41150
+        },
+        {
+          "decode_ms_median": 2.313,
+          "encode_ms": 108.7,
+          "encoding": "rle",
+          "file_bytes": 45477,
+          "lossless": true,
+          "payload_bytes": 44785
+        },
+        {
+          "decode_ms_median": 3.375,
+          "encode_ms": 1047.0,
+          "encoding": "split",
+          "file_bytes": 38513,
+          "lossless": true,
+          "payload_bytes": 37819,
+          "sections": {
+            "events": 21742,
+            "flags": 1,
+            "forest": 4453,
+            "unknown": 1,
+            "unknown_forest": 36,
+            "water": 449,
+            "years": 11137
+          }
+        }
+      ],
+      "chosen": "split",
+      "code_histogram": [
+        0,
+        1314,
+        542696,
+        15423,
+        11026,
+        16747,
+        22307,
+        14368,
+        118071,
+        64,
+        50,
+        73,
+        85,
+        69,
+        2222,
+        32,
+        47,
+        57,
+        30,
+        51
+      ],
+      "controls": [
+        {
+          "bytes": 45859,
+          "lossless": true,
+          "name": "GTiff ZSTD22 one-strip"
+        },
+        {
+          "bytes": 46330,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled256"
+        },
+        {
+          "bytes": 48543,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled128"
+        },
+        {
+          "bytes": 54363,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 one-strip"
+        },
+        {
+          "bytes": 55058,
+          "lossless": true,
+          "name": "GTiff ZSTD22 one-strip NBITS=5"
+        },
+        {
+          "bytes": 55305,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 tiled256"
+        },
+        {
+          "bytes": 55309,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 one-strip"
+        },
+        {
+          "bytes": 55377,
+          "lossless": true,
+          "name": "GTiff ZSTD22 striped"
+        },
+        {
+          "bytes": 56248,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled256"
+        },
+        {
+          "bytes": 56752,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled128"
+        },
+        {
+          "bytes": 57552,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled256 NBITS=5"
+        },
+        {
+          "bytes": 58296,
+          "lossless": true,
+          "name": "GTiff LZW one-strip"
+        },
+        {
+          "bytes": 58378,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 tiled128"
+        },
+        {
+          "bytes": 61708,
+          "lossless": true,
+          "name": "GTiff ZSTD22 tiled128 NBITS=5"
+        },
+        {
+          "bytes": 62309,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 striped"
+        },
+        {
+          "bytes": 62633,
+          "lossless": true,
+          "name": "GTiff LZW tiled256"
+        },
+        {
+          "bytes": 63906,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 one-strip NBITS=5"
+        },
+        {
+          "bytes": 64229,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 one-strip"
+        },
+        {
+          "bytes": 65627,
+          "lossless": true,
+          "name": "GTiff ZSTD22-p2 striped"
+        },
+        {
+          "bytes": 66031,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 tiled256"
+        },
+        {
+          "bytes": 66235,
+          "lossless": true,
+          "name": "GTiff LZW-p2 one-strip"
+        },
+        {
+          "bytes": 66249,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled256 NBITS=5"
+        },
+        {
+          "bytes": 67062,
+          "lossless": true,
+          "name": "GTiff ZSTD22 striped NBITS=5"
+        },
+        {
+          "bytes": 67788,
+          "lossless": true,
+          "name": "GTiff LZW tiled128"
+        },
+        {
+          "bytes": 68388,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 tiled128"
+        },
+        {
+          "bytes": 69436,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 tiled128 NBITS=5"
+        },
+        {
+          "bytes": 72473,
+          "lossless": true,
+          "name": "GTiff LZW-p2 tiled256"
+        },
+        {
+          "bytes": 73011,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9-p2 striped"
+        },
+        {
+          "bytes": 74066,
+          "lossless": true,
+          "name": "GTiff LZW striped"
+        },
+        {
+          "bytes": 75174,
+          "lossless": true,
+          "name": "GTiff DEFLATE-z9 striped NBITS=5"
+        },
+        {
+          "bytes": 76289,
+          "lossless": true,
+          "name": "GTiff LZW one-strip NBITS=5"
+        },
+        {
+          "bytes": 80122,
+          "lossless": true,
+          "name": "GTiff LZW-p2 tiled128"
+        },
+        {
+          "bytes": 81580,
+          "lossless": true,
+          "name": "GTiff LZW tiled256 NBITS=5"
+        },
+        {
+          "bytes": 81883,
+          "lossless": true,
+          "name": "GTiff LZW-p2 striped"
+        },
+        {
+          "bytes": 87453,
+          "lossless": true,
+          "name": "GTiff LZW tiled128 NBITS=5"
+        },
+        {
+          "bytes": 88882,
+          "lossless": true,
+          "name": "GTiff LZW striped NBITS=5"
+        },
+        {
+          "bytes": 109429,
+          "lossless": true,
+          "name": "GTiff PACKBITS one-strip"
+        },
+        {
+          "bytes": 110237,
+          "lossless": true,
+          "name": "GTiff PACKBITS striped"
+        },
+        {
+          "bytes": 118258,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled256"
+        },
+        {
+          "bytes": 120433,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled128"
+        },
+        {
+          "bytes": 470278,
+          "lossless": true,
+          "name": "GTiff PACKBITS one-strip NBITS=5"
+        },
+        {
+          "bytes": 470766,
+          "lossless": true,
+          "name": "GTiff PACKBITS striped NBITS=5"
+        },
+        {
+          "bytes": 474430,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled128 NBITS=5"
+        },
+        {
+          "bytes": 476710,
+          "lossless": true,
+          "name": "GTiff PACKBITS tiled256 NBITS=5"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff DEFLATE-z9-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff LZW-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 one-strip NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 striped NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 tiled128 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        },
+        {
+          "bytes": null,
+          "lossless": null,
+          "name": "GTiff ZSTD22-p2 tiled256 NBITS=5",
+          "rejected": "PREDICTOR=2 is only supported with 8/16/32/64 bit samples. You can specify the NBITS=8 cre"
+        }
+      ],
+      "file": "artifacts/decision/screen.plds",
+      "reason": "smallest encoding (split) decodes in 3.375 ms, within the 5.0 ms budget",
+      "smallest": "split",
+      "store": {
+        "codes_sha256": "970fbbeac265825522ca42f26f303c9a161a97b39d775158f030e2a5459a64d5",
+        "file_bytes": 38513,
+        "file_sha256": "107b61e9aeca8ae60163865865006111a27dc661f1e66af4678b2f5dbf430538",
+        "header_bytes": 674,
+        "payload_bytes": 37819,
+        "payload_sha256": "70175b70d5165b9d5fae389c759bb3b7fa0e54c7ee03db56011ea44a1da3c357"
+      },
+      "vs_baselines": {
+        "original_all_layers": {
+          "baseline_bytes": 623237,
+          "percent_smaller": 93.82,
+          "ratio": 16.18
+        },
+        "original_contract_inputs": {
+          "baseline_bytes": 209095,
+          "percent_smaller": 81.581,
+          "ratio": 5.43
+        },
+        "retained_lossless_l0": {
+          "baseline_bytes": 535012,
+          "percent_smaller": 92.801,
+          "ratio": 13.89
+        }
+      },
+      "vs_baselines_payload_only": {
+        "original_all_layers": {
+          "baseline_bytes": 623237,
+          "percent_smaller": 93.932,
+          "ratio": 16.48
+        },
+        "original_contract_inputs": {
+          "baseline_bytes": 209095,
+          "percent_smaller": 81.913,
+          "ratio": 5.53
+        },
+        "retained_lossless_l0": {
+          "baseline_bytes": 535012,
+          "percent_smaller": 92.931,
+          "ratio": 14.15
+        }
+      }
+    }
+  },
+  "schema": "plotline.decision-stores.v1",
+  "sources": {
+    "hansen_datamask": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458",
+    "hansen_lossyear": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf",
+    "hansen_treecover2000": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc",
+    "jrc_chip": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5"
+  }
+}
