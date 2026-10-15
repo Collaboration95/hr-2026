@@ -44,11 +44,13 @@ def result(fn, *args):
 
 def forced(edge_rows, cells):
     def select(metadata, geometry):
-        with mock.patch.object(di, 'SCALAR_EDGE_ROWS', edge_rows), mock.patch.object(di, 'SCALAR_CELLS', cells):
+        with mock.patch.object(di, 'SCALAR_EDGE_ROWS', edge_rows), mock.patch.object(di, 'SCALAR_CELLS', cells), \
+                mock.patch.object(di, 'SCALAR_CROSSINGS', 10 ** 9):  # and no sawtooth guard
             return di.fast_select_cells(metadata, geometry)
 
     def summarize(codes, header, geometry, level):
-        with mock.patch.object(di, 'SCALAR_EDGE_ROWS', edge_rows), mock.patch.object(di, 'SCALAR_CELLS', cells):
+        with mock.patch.object(di, 'SCALAR_EDGE_ROWS', edge_rows), mock.patch.object(di, 'SCALAR_CELLS', cells), \
+                mock.patch.object(di, 'SCALAR_CROSSINGS', 10 ** 9):
             return di.fast_summarize(codes, header, geometry, level)
     select.summarize = summarize
     return select
@@ -341,6 +343,69 @@ class ScalarScanTests(unittest.TestCase):
             self.assertEqual(result(decision.evaluate_store, self.codes, self.meta, small, LEVEL, di.fast_select_cells),
                              result(decision.evaluate_store, self.codes, self.meta, small, LEVEL))
         spy.assert_not_called()
+
+
+    def cell_polygon(self, points, row=100, col=200, hole=None):
+        """A polygon with vertices at (x, y) offsets in cells from the centre of cell (row, col)."""
+        a, _, c, _, e, f = self.meta['transform']
+
+        def ring(pts):
+            out = [[c + (col + .5 + x) * a, f + (row + .5 + y) * e] for x, y in pts]
+            return out + [out[0]]
+        return {'type': 'Polygon', 'coordinates': [ring(points)] + ([ring(hole)] if hole else [])}
+
+    @staticmethod
+    def ngon(n, radius, turn=.1):
+        return [(radius * math.cos(turn + 2 * math.pi * k / n), radius * math.sin(turn + 2 * math.pi * k / n)) for k in range(n)]
+
+    @staticmethod
+    def sawtooth(teeth, width, height, depth):
+        """A flat bottom and a top edge of tall slanted teeth: every slanted edge crosses many rows."""
+        top = [(width / 2 - width * k / (2 * teeth), -(height if k % 2 == 0 else height - depth)) for k in range(2 * teeth + 1)]
+        return [(-width / 2, 0), (width / 2, 0), *top]
+
+    def test_sawtooth_boundaries_stay_on_the_array_scan_and_gentle_ones_move_to_the_scalar_scan(self):
+        gentle = self.cell_polygon(self.ngon(60, 6.3))  # ~14 rows x 60 edges: past SCALAR_SURE_ROWS, ~30 rows crossed
+        teeth = self.cell_polygon(self.sawtooth(8, 40, 30, 24))  # ~32 rows x 19 edges, ~380 rows crossed
+        for name, geometry, scalar_runs, array_scans in (('gentle', gentle, 1, 0), ('sawtooth', teeth, 1, 1)):
+            with mock.patch.object(di, '_scalar_runs', wraps=di._scalar_runs) as scalar, \
+                    mock.patch.object(di, '_array_select', wraps=di._array_select) as array:
+                got = result(di.fast_select_cells, self.meta, geometry)
+            self.assertEqual(got, result(select_cells, self.meta, geometry), name)
+            self.assertEqual((scalar.call_count, array.call_count), (scalar_runs, array_scans), name)
+            self.assertEqual(scalar.call_args.args[-1], di.SCALAR_CROSSINGS, name)  # past SCALAR_SURE_ROWS the guard is on
+        # at or under SCALAR_SURE_ROWS (rows x edges) there is no guard, whatever the shape
+        small = self.cell_polygon(self.sawtooth(2, 16, 12, 9))
+        with mock.patch.object(di, '_scalar_runs', wraps=di._scalar_runs) as scalar:
+            self.assertEqual(result(di.fast_select_cells, self.meta, small), result(select_cells, self.meta, small))
+        self.assertIsNone(scalar.call_args.args[-1])
+        # the outer bound is unchanged in kind: more rows x edges than SCALAR_EDGE_ROWS goes straight to the array scan
+        many = self.cell_polygon(self.ngon(400, 12))
+        with mock.patch.object(di, '_scalar_runs', wraps=di._scalar_runs) as scalar:
+            self.assertEqual(result(di.fast_select_cells, self.meta, many), result(select_cells, self.meta, many))
+        scalar.assert_not_called()
+
+    def test_every_crossing_budget_gives_the_same_selection(self):
+        rng = np.random.default_rng(20261016)
+        geometries = []
+        for turn in rng.uniform(0, 1, 6):
+            for n in (24, 60, 150):
+                geometries.append(self.cell_polygon(self.ngon(n, float(rng.uniform(4, 14)), float(turn))))
+        for teeth in (2, 5, 9, 16):
+            for height in (6, 14, 30):
+                geometries.append(self.cell_polygon(self.sawtooth(teeth, 3 * teeth + 10, height, .8 * height),
+                                                    row=int(rng.integers(60, 300)), col=int(rng.integers(60, 500))))
+        angles = np.sort(rng.uniform(0, 2 * np.pi, 120))
+        radii = rng.uniform(.4, 1, 120) * 9  # a spiky star with a hole
+        geometries.append(self.cell_polygon(list(zip(radii * np.cos(angles), radii * np.sin(angles))), hole=self.ngon(8, 1.5)[::-1]))
+        for geometry in geometries:
+            want = result(select_cells, self.meta, geometry)
+            answer = result(decision.evaluate_store, self.codes, self.meta, geometry, LEVEL)
+            for budget in (0, 40, di.SCALAR_CROSSINGS, 10 ** 9):
+                with mock.patch.object(di, 'SCALAR_CROSSINGS', budget), mock.patch.object(di, 'SCALAR_EDGE_ROWS', 10 ** 9):
+                    self.assertEqual(result(di.fast_select_cells, self.meta, geometry), want, budget)
+                    self.assertEqual(result(decision.evaluate_store, self.codes, self.meta, geometry, LEVEL, di.fast_select_cells),
+                                     answer, budget)
 
 
 if __name__ == '__main__':

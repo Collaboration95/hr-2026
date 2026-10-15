@@ -27,6 +27,7 @@ import struct
 from bisect import bisect_left, bisect_right
 from itertools import chain
 from math import ceil, floor, inf, isfinite
+from operator import sub
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,7 +49,9 @@ MAX_ROW_PAIRS = 2_000_000  # row-chunk x edge matrix cap for bounded memory
 PREPARE_POINTS = 16  # ambiguous centres above which the polygon is prepared before exact covers
 LATTICE_LIMIT = 2.0 ** 62
 MAX_RECT_LOOP = 64  # ambiguous rectangles up to which they are painted one by one, not via a 2-D difference array
-SCALAR_EDGE_ROWS = 500  # candidate rows x edges up to which a pure-Python scan beats numpy's per-call overhead
+SCALAR_SURE_ROWS = 500  # candidate rows x edges up to which a pure-Python scan beats numpy's per-call overhead, whatever the shape
+SCALAR_EDGE_ROWS = 2000  # up to which it still does if the boundary changes rows at most SCALAR_CROSSINGS times in all
+SCALAR_CROSSINGS = 150  # the Python scan pays ~0.17 us per row an edge crosses (rows x edges is only a bound on that), numpy's does not
 SCALAR_CELLS = 4096  # and candidate cells up to which it stays cheaper
 
 np = summarize_ints = summarize_selection = bind_level = None
@@ -544,17 +547,19 @@ def _select(metadata, geometry, shape=None):
     if (len(xy) != sum(lens) or not (-2**50 <= r0 and r1 <= 2**50 and -2**50 <= c0 and c1 <= 2**50)  # r0 < r1, c0 < c1
             or not small_grid and max(abs(c), abs(f)) + 2**51 * max(a, -e) > 1e100):
         return g['query'].select_cells(metadata, geometry)
-    if flat and R * C <= SCALAR_CELLS and R * (len(xy) - len(lens)) <= SCALAR_EDGE_ROWS:
+    rows_edges = R * (len(xy) - len(lens))
+    if flat and R * C <= SCALAR_CELLS and rows_edges <= SCALAR_EDGE_ROWS:
         stride = base = None
         if shape is not None and 0 <= r0 and r1 < shape[0] and 0 <= c0 and c1 < shape[1]:
             stride, base = shape[1], r0 * shape[1] + c0
-        runs = _scalar_runs(g, polygon, xy, lens, (a, c, e, f), (r0, c0, R, C), reach, stride, base)
+        runs = _scalar_runs(g, polygon, xy, lens, (a, c, e, f), (r0, c0, R, C), reach, stride, base,
+                            None if rows_edges <= SCALAR_SURE_ROWS else SCALAR_CROSSINGS)
         if runs is not None:
             return runs, stride or C + 1, base, r0, c0
     return _array_select(g, polygon, xy, lens, (a, c, e, f), (r0, r1, c0, c1), reach)
 
 
-def _scalar_runs(g, polygon, xy, lens, grid, window, reach, stride, base):
+def _scalar_runs(g, polygon, xy, lens, grid, window, reach, stride, base, max_crossings=None):
     """The array scan below in plain Python, edge by edge: same arithmetic, same ambiguity rule, same answers.
 
     Rows and columns are located by bisect on lists of the centre coordinates, computed with the
@@ -562,7 +567,8 @@ def _scalar_runs(g, polygon, xy, lens, grid, window, reach, stride, base):
     crossing is clean when no centre lies within tol of it, which is exactly when its tolerance
     band holds no centre; otherwise the centres in the band, and those near vertices on centre
     rows and horizontal edges on them, are decided by exact covers. Returns None if the crossing
-    parity were odd, which closed rings rule out, so the caller falls back to the array scan.
+    parity were odd, which closed rings rule out, or if the boundary changes rows more than max_crossings
+    times in all (a sawtooth: the loop below costs per crossing), so the caller falls back to the array scan.
     """
     a, c, e, f = grid
     r0, c0, R, C = window
@@ -570,11 +576,13 @@ def _scalar_runs(g, polygon, xy, lens, grid, window, reach, stride, base):
     tol = TOL_ABS + TOL_REL * reach
     c0h, r0h, L = c0 + .5, r0 + .5, C + 1
     W, off = (stride, base - 1) if stride else (L, -1)  # event = off + 1 + row * W + count of centres left of a crossing
-    pp = [-inf, *[c + (j + c0h) * a for j in range(C)], inf]  # centre x, padded: bisect - 1 counts the centres
     py = [f + (i + r0h) * e for i in range(R)]
     npy = [-v for v in py]  # ascending, so exact row equality is a bisect
-    events, rects = [], []  # rects: ambiguous (row lo, row hi, col lo, col hi)
     above = [bisect_right(npy, -y) for y in ys]  # centre rows with py >= y
+    if max_crossings is not None and sum(map(abs, map(sub, above, above[1:]))) > max_crossings:  # ring joins included
+        return None
+    pp = [-inf, *[c + (j + c0h) * a for j in range(C)], inf]  # centre x, padded: bisect - 1 counts the centres
+    events, rects = [], []  # rects: ambiguous (row lo, row hi, col lo, col hi)
     edges = list(zip(xs, ys, xs[1:], ys[1:], above, above[1:]))
     if len(lens) > 1:
         end = 0
