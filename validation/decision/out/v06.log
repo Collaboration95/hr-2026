@@ -1,0 +1,121 @@
+{
+ "registry_lookup": {
+  "genuine_hit": true,
+  "one_ulp_vertex_change_misses": true,
+  "reversed_ring_misses": true,
+  "key_order_only_still_hits": true,
+  "extra_key_misses": true,
+  "wrong_plot_id_misses": true,
+  "shifted_grid_misses": true,
+  "different_shape_misses": true,
+  "registry_lookup_without_metadata": "TypeError: registry_lookup() missing 1 required positional argument: 'metadata'",
+  "registry_evaluate_without_level": "TypeError: registry_evaluate() missing 1 required positional argument: 'level'",
+  "registry_evaluate_smaller_raster": "ValueError: code raster shape differs from the registry grid",
+  "raw_registry_evaluate_other_grid_same_shape": {
+   "answers_silently": true,
+   "differs_from_true": false,
+   "verdict": "raw path trusts the caller (accepted risk)"
+  },
+  "registry_evaluate_store_other_grid_same_shape": "ValueError: store grid differs from the registry grid"
+ },
+ "table": {
+  "genuine_hit_file_basis_no_grid": true,
+  "genuine_hit_with_header_grid": true,
+  "shifted_grid_with_file_basis_misses": true,
+  "wrong_store_sha_misses": true,
+  "screen_hash_for_decision_level_misses": true,
+  "one_ulp_geometry_misses": true,
+  "content_sha256_independent_recompute_equal": true,
+  "shipped_table_equals_fresh_build": true,
+  "edited_output_stale_hash": "ValueError: decision table content hash mismatch",
+  "content_sha256_removed": "ValueError: decision table content hash mismatch",
+  "old_schema": "ValueError: not a decision table",
+  "store_sha_edited_stale_hash": "ValueError: decision table content hash mismatch",
+  "grid_edited_stale_hash": "ValueError: decision table content hash mismatch",
+  "truncated_file": "JSONDecodeError: Unterminated string starting at: line 1 column 20583 (char 20582)",
+  "deep_nesting": "JSONDecodeError: Expecting value: line 1 column 30001 (char 30000)",
+  "nan_constant": "ValueError: decision table content hash mismatch",
+  "bad_utf8": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+  "list_root": "ValueError: not a decision table",
+  "number_root": "ValueError: not a decision table",
+  "null_root": "ValueError: not a decision table",
+  "edited_output_with_recomputed_content_hash": {
+   "accepted_by_load_table": true,
+   "lookup_value": false,
+   "true_value": true,
+   "verdict": "consistent forgery: the hash detects accidental edits only; pin load_table output to a trusted digest to exclude it"
+  },
+  "table_content_sha256_recorded_in_artifacts": {
+   "stores.json": false,
+   "proof-v1.json": false,
+   "summary-v1.json": false,
+   "benchmark-v1.json": false,
+   "cost-v1.json": false
+  },
+  "raster_basis_without_grid_raises": "ValueError: a table keyed by raster bytes needs the live grid",
+  "raster_basis_with_live_grid_hits": true,
+  "raster_basis_with_shifted_grid_misses": true,
+  "raster_basis_content_sha_verified": true
+ },
+ "registry_file_parser": {
+  "flip_fuzz_2500_and_truncations": {
+   "ValueError": 2500
+  },
+  "old_PLDREG1_magic_refused": true,
+  "forged_with_correct_hashes_must_be_refused": {
+   "run_length_2^24_grid_4096x4097": "ValueError",
+   "run_length_int32_max": "ValueError",
+   "run_beyond_grid": "ValueError",
+   "start_plus_length_beyond_grid": "ValueError",
+   "negative_start": "ValueError",
+   "zero_length": "ValueError",
+   "negative_length": "ValueError",
+   "unsorted_runs": "ValueError",
+   "overlapping_runs": "ValueError",
+   "adjacent_runs_unmerged": "ValueError",
+   "accounting_mismatch": "ValueError",
+   "outside_exceeds_selected": "ValueError",
+   "runs_total_vs_payload_mismatch": "ValueError",
+   "duplicate_plot_ids": "ValueError",
+   "runs_is_bool": "ValueError",
+   "runs_is_float": "ValueError",
+   "negative_runs": "ValueError",
+   "huge_int_runs": "ValueError",
+   "grid_shape_bool": "ValueError",
+   "grid_cells_2^31": "ValueError",
+   "grid_transform_huge_int": "ValueError",
+   "grid_transform_nan": "ValueError",
+   "grid_shape_string": "ValueError",
+   "extra_header_key": "ValueError",
+   "plots_not_list": "ValueError",
+   "geometry_sha_uppercase": "ValueError",
+   "old_schema": "ValueError",
+   "stale_header_hash": "ValueError"
+  },
+  "deep_json": "ValueError",
+  "not_json": "ValueError",
+  "json_list": "ValueError",
+  "memory": {
+   "one_plot_one_run_3M_cells": {
+    "file_bytes": 449,
+    "outcome": "accepted",
+    "peak_bytes": 48003019,
+    "amplification": 106911
+   },
+   "per_cell_bytes_peak": 16.0,
+   "twenty_plots_each_3M_cells": {
+    "file_bytes": 3445,
+    "outcome": "accepted",
+    "peak_bytes": 300019577,
+    "amplification": 87088
+   },
+   "extrapolated_cap_per_plot": "MAX_PLOT_CELLS = 10,000,000 cells per plot (about 160 MB retained + temporaries per plot); no cap on the sum over plots",
+   "extrapolated_1000_plots_each_chip_sized_744k": {
+    "estimated_peak_gb": 2.98,
+    "file_bytes_estimate": 230000,
+    "note": "well-formed (every plot covers the whole chip); bounded per plot, not in aggregate"
+   }
+  }
+ },
+ "findings": []
+}

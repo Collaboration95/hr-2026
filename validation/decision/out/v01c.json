@@ -1,0 +1,26 @@
+{
+ "cells[eudr-screen.v1]": {
+  "derive_vs_original_mismatch": 0,
+  "derive_vs_independent_mismatch": 0,
+  "unknown_cells": 65205,
+  "forest_unknown_land": 25182,
+  "water": 1208
+ },
+ "cells[eudr-decision.v1]": {
+  "derive_vs_original_mismatch": 0,
+  "derive_vs_independent_mismatch": 0,
+  "unknown_cells": 65205,
+  "forest_unknown_land": 25182,
+  "water": 1208
+ },
+ "polygons": {
+  "compared": 600,
+  "three_way_equal": 600
+ },
+ "v1_crosscheck_on_damaged_data": {
+  "compared": 300,
+  "equal": 300,
+  "note": "valid land, unknown, selected, outside, 2021-2025 yearly loss and period flags equal frozen v1 evaluate when treecover/lossyear/datamask masks are damaged"
+ },
+ "fails": []
+}

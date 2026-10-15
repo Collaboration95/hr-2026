@@ -1,0 +1,264 @@
+{
+ "baselines": {
+  "recomputed_all_layers": 623237,
+  "recorded": 623237,
+  "recomputed_contract_inputs": 209095,
+  "recorded_contract": 209095,
+  "extra_files_the_original_pipeline_also_loads": {
+   "data/public/provenance.json": 8294,
+   "data/experimental/jrc/provenance.json": 4680,
+   "data/experimental/lead/jrc-semantics/JRC_GFC2020_V4.qml": 976,
+   "data/experimental/lead/jrc-semantics/JRC_GFC2020_V4.xml": 5759
+  },
+  "extra_total": 19709
+ },
+ "store_eudr-screen.v1": {
+  "on_disk": 38513,
+  "recorded_file_bytes": 38513,
+  "prefix": 20,
+  "header": 674,
+  "payload": 37819,
+  "recorded_payload": 37819,
+  "percent_smaller_vs_all_layers": 93.82,
+  "percent_smaller_vs_contract_inputs": 81.581,
+  "percent_smaller_vs_all_layers_plus_provenance_files": 94.01,
+  "header_keys": [
+   "codes_sha256",
+   "crs",
+   "encoding",
+   "level",
+   "payload_bytes",
+   "payload_sha256",
+   "shape",
+   "sources",
+   "transform"
+  ]
+ },
+ "store_eudr-decision.v1": {
+  "on_disk": 6146,
+  "recorded_file_bytes": 6146,
+  "prefix": 20,
+  "header": 675,
+  "payload": 5451,
+  "recorded_payload": 5451,
+  "percent_smaller_vs_all_layers": 99.014,
+  "percent_smaller_vs_contract_inputs": 97.061,
+  "percent_smaller_vs_all_layers_plus_provenance_files": 99.044,
+  "header_keys": [
+   "codes_sha256",
+   "crs",
+   "encoding",
+   "level",
+   "payload_bytes",
+   "payload_sha256",
+   "shape",
+   "sources",
+   "transform"
+  ]
+ },
+ "sidecars": {
+  "registry.bin": 4096,
+  "table.json": 20650,
+  "plan_estimate_for_table": "1-2 KB (docs/lab/decision-layer-plan.md, L4 row)"
+ },
+ "controls": {
+  "eudr-decision.v1": {
+   "A_separate_1bit_planes_plus_year_uint8": {
+    "bit_planes": {
+     "unknown": "empty (all-zero plane omitted, as the project does)",
+     "water": [
+      889,
+      "ZSTD p=None tiled=False"
+     ],
+     "forest": [
+      6185,
+      "ZSTD p=None tiled=False"
+     ],
+     "unknown_forest": [
+      406,
+      "ZSTD p=None tiled=False"
+     ]
+    },
+    "bit_planes_total": 7480,
+    "year_uint8": [
+     1654,
+     "ZSTD p=None tiled=False"
+    ],
+    "year_nbits4": [
+     1440,
+     "ZSTD p=None tiled=False"
+    ],
+    "total_with_uint8_year": 9134,
+    "total_with_nbits4_year": 8920
+   },
+   "B_year_as_5_bitplanes": {
+    "years": {
+     "2021": [
+      604,
+      "ZSTD p=None tiled=False"
+     ],
+     "2022": [
+      577,
+      "ZSTD p=None tiled=False"
+     ],
+     "2023": [
+      612,
+      "ZSTD p=None tiled=False"
+     ],
+     "2024": [
+      615,
+      "ZSTD p=None tiled=False"
+     ],
+     "2025": [
+      653,
+      "ZSTD p=None tiled=False"
+     ]
+    },
+    "total_years": 3061,
+    "total_with_bit_planes": 10541
+   },
+   "C_single_multiband_1bit_file": {
+    "bands": [
+     1,
+     2,
+     3
+    ],
+    "bytes": [
+     7688,
+     "ZSTD p=None tiled=False"
+    ],
+    "plus_year_uint8": 9342
+   },
+   "D_class_plane_plus_year_plane": {
+    "class_nbits4": [
+     7218,
+     "ZSTD p=None tiled=False"
+    ],
+    "class_uint8": [
+     7874,
+     "ZSTD p=None tiled=False"
+    ],
+    "year_uint8": [
+     1654,
+     "ZSTD p=None tiled=False"
+    ],
+    "total_nbits4": 8872,
+    "total_uint8": 9528
+   },
+   "E_plain_rowmajor_packbits_plus_coo_events": {
+    "bit_planes_rowmajor": 5990,
+    "events": 558,
+    "coo_bytes": 932,
+    "total_no_georef": 6922
+   },
+   "project_store": {
+    "file_bytes": 6146,
+    "payload_bytes": 5451,
+    "project_best_control": {
+     "bytes": 8532,
+     "lossless": true,
+     "name": "GTiff ZSTD22 one-strip"
+    }
+   }
+  },
+  "eudr-screen.v1": {
+   "A_separate_1bit_planes_plus_year_uint8": {
+    "bit_planes": {
+     "unknown": "empty (all-zero plane omitted, as the project does)",
+     "water": [
+      889,
+      "ZSTD p=None tiled=False"
+     ],
+     "forest": [
+      6185,
+      "ZSTD p=None tiled=False"
+     ],
+     "unknown_forest": [
+      406,
+      "ZSTD p=None tiled=False"
+     ]
+    },
+    "bit_planes_total": 7480,
+    "year_uint8": [
+     39892,
+     "ZSTD p=None tiled=True"
+    ],
+    "year_nbits4": [
+     40012,
+     "ZSTD p=None tiled=False"
+    ],
+    "total_with_uint8_year": 47372,
+    "total_with_nbits4_year": 47492
+   },
+   "B_year_as_5_bitplanes": {
+    "years": {
+     "2021": [
+      8276,
+      "ZSTD p=None tiled=False"
+     ],
+     "2022": [
+      6973,
+      "ZSTD p=None tiled=False"
+     ],
+     "2023": [
+      9568,
+      "ZSTD p=None tiled=False"
+     ],
+     "2024": [
+      10593,
+      "ZSTD p=None tiled=False"
+     ],
+     "2025": [
+      8192,
+      "ZSTD p=None tiled=False"
+     ]
+    },
+    "total_years": 43602,
+    "total_with_bit_planes": 51082
+   },
+   "C_single_multiband_1bit_file": {
+    "bands": [
+     1,
+     2,
+     3
+    ],
+    "bytes": [
+     7688,
+     "ZSTD p=None tiled=False"
+    ],
+    "plus_year_uint8": 47580
+   },
+   "D_class_plane_plus_year_plane": {
+    "class_nbits4": [
+     7218,
+     "ZSTD p=None tiled=False"
+    ],
+    "class_uint8": [
+     7874,
+     "ZSTD p=None tiled=False"
+    ],
+    "year_uint8": [
+     39892,
+     "ZSTD p=None tiled=True"
+    ],
+    "total_nbits4": 47110,
+    "total_uint8": 47766
+   },
+   "E_plain_rowmajor_packbits_plus_coo_events": {
+    "bit_planes_rowmajor": 5990,
+    "events": 80429,
+    "coo_bytes": 43252,
+    "total_no_georef": 49242
+   },
+   "project_store": {
+    "file_bytes": 38513,
+    "payload_bytes": 37819,
+    "project_best_control": {
+     "bytes": 45859,
+     "lossless": true,
+     "name": "GTiff ZSTD22 one-strip"
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,211 @@
+{
+ "region_facts": {
+  "land_cells": {
+   "mine": 743418,
+   "recorded": 743418,
+   "ok": true
+  },
+  "water_cells": {
+   "mine": 1314,
+   "recorded": 1314,
+   "ok": true
+  },
+  "any_loss_land": {
+   "mine": 319011,
+   "recorded": 319011,
+   "ok": true
+  },
+  "post2020_loss": {
+   "mine": 80429,
+   "recorded": 80429,
+   "ok": true
+  },
+  "deforested": {
+   "mine": 341,
+   "recorded": 341,
+   "ok": true
+  },
+  "loss_on_nonforest": {
+   "mine": 79871,
+   "recorded": 79871,
+   "ok": true
+  },
+  "loss_on_unknown_forest": {
+   "mine": 217,
+   "recorded": 217,
+   "ok": true
+  },
+  "deforested_by_year": {
+   "mine": {
+    "2021": 64,
+    "2022": 50,
+    "2023": 73,
+    "2024": 85,
+    "2025": 69
+   },
+   "recorded": {
+    "2021": 64,
+    "2022": 50,
+    "2023": 73,
+    "2024": 85,
+    "2025": 69
+   },
+   "ok": true
+  },
+  "jrc_forest_at_centres_on_land": {
+   "mine": 118412,
+   "recorded": 118412,
+   "ok": true
+  },
+  "unknown_forest_land": {
+   "mine": 2439,
+   "recorded": 2439,
+   "ok": true
+  },
+  "proxy_forest_cells": {
+   "mine": 433825,
+   "recorded": 433825,
+   "ok": true
+  },
+  "proxy_post_loss": {
+   "mine": 71030,
+   "recorded": 71030,
+   "ok": true
+  },
+  "proxy_overlap_jrc": {
+   "mine": 113351,
+   "recorded": 113351,
+   "ok": true
+  },
+  "jrc_native_forest_share": {
+   "mine": 15.9508,
+   "recorded": 15.9508,
+   "ok": true
+  }
+ },
+ "plane_sizes": {
+  "treecover2000_exact": {
+   "mine_z19": 397973,
+   "rec_z19": 397973,
+   "mine_xz": 381748,
+   "rec_xz": 381748
+  },
+  "lossyear_full": {
+   "mine_z19": 133810,
+   "rec_z19": 133810,
+   "mine_xz": 122132,
+   "rec_xz": 122132
+  },
+  "datamask": {
+   "mine_z19": 853,
+   "rec_z19": 853,
+   "mine_xz": 904,
+   "rec_xz": 904
+  },
+  "jrc_native_9m": {
+   "mine_z19": 26558,
+   "rec_z19": 26558,
+   "mine_xz": 23432,
+   "rec_xz": 23432
+  },
+  "screen_codes_L1": {
+   "mine_z19": 45745,
+   "rec_z19": 45745,
+   "mine_xz": 42008,
+   "rec_xz": 42008
+  },
+  "decision_codes_L2": {
+   "mine_z19": 9874,
+   "rec_z19": 9874,
+   "mine_xz": 8548,
+   "rec_xz": 8548
+  }
+ },
+ "sensitivity_3x3": {
+  "centre": {
+   "land": 739748,
+   "forest": 118343,
+   "deforested": 341,
+   "matches_recorded": true
+  },
+  "any": {
+   "land": 739748,
+   "forest": 122615,
+   "deforested": 506,
+   "matches_recorded": true
+  },
+  "majority": {
+   "land": 739748,
+   "forest": 118393,
+   "deforested": 332,
+   "matches_recorded": true
+  },
+  "universe_hansen_cells": [
+   741062,
+   741062
+  ]
+ },
+ "sensitivity_discriminating_plots": {
+  "P-0001": 60
+ },
+ "static_derive_source_mentions": {
+  "bands[0] (treecover values)": false,
+  "masks.all(axis=0)": true,
+  "MAX_LOSSYEAR guard": true
+ },
+ "real_data_masks": {
+  "all_true_hansen_masks": true,
+  "jrc_mask_all_true": true,
+  "datamask_zero_cells": 0
+ },
+ "treecover2000_mask_invalid_at_10_cells": {
+  "v1_unknown": 10,
+  "v1_support": "partial",
+  "v1_valid_land": 111,
+  "decision_unknown": 10,
+  "decision_support": "partial",
+  "decision_valid_land": 111,
+  "equal_to_v1": true
+ },
+ "lossyear_mask_invalid_at_10_cells": {
+  "v1_unknown": 10,
+  "v1_support": "partial",
+  "v1_valid_land": 111,
+  "decision_unknown": 10,
+  "decision_support": "partial",
+  "decision_valid_land": 111,
+  "equal_to_v1": true
+ },
+ "datamask_mask_invalid_at_10_cells": {
+  "v1_unknown": 10,
+  "v1_support": "partial",
+  "v1_valid_land": 111,
+  "decision_unknown": 10,
+  "decision_support": "partial",
+  "decision_valid_land": 111,
+  "equal_to_v1": true
+ },
+ "lossyear_26_valid_cell": {
+  "accepted": false,
+  "error": "Hansen lossyear above 25 or datamask above 2 on a valid cell"
+ },
+ "lossyear_255_valid_cell": {
+  "accepted": false,
+  "error": "Hansen lossyear above 25 or datamask above 2 on a valid cell"
+ },
+ "datamask_3_valid_cell": {
+  "accepted": false,
+  "error": "Hansen lossyear above 25 or datamask above 2 on a valid cell"
+ },
+ "lossyear_26_masked_cell": {
+  "accepted": true,
+  "code_before": 8,
+  "code_after": 0
+ },
+ "lossyear_25_valid_cell": {
+  "accepted": true,
+  "code_before": 8,
+  "code_after": 13
+ },
+ "bad": []
+}

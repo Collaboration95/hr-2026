@@ -1,0 +1,55 @@
+{
+  "note": "exploratory; Hansen cell centres sampled on the JRC grid",
+  "region": {
+    "land_cells": 743418,
+    "share_land_cells_jrc_forest_2020": 0.1593,
+    "loss_any_year": {
+      "cells": 319011,
+      "share_of_land": 0.4291,
+      "in_jrc_forest_2020": 5154,
+      "share_in_jrc_forest_2020": 0.0162
+    },
+    "loss_2021_on": {
+      "cells": 80429,
+      "share_of_land": 0.1082,
+      "in_jrc_forest_2020": 341,
+      "share_in_jrc_forest_2020": 0.0042
+    },
+    "loss_2001_2020": {
+      "cells": 238582,
+      "share_of_land": 0.3209,
+      "in_jrc_forest_2020": 4813,
+      "share_in_jrc_forest_2020": 0.0202
+    }
+  },
+  "plots": {
+    "P-0001": {
+      "post_2020_loss_cells": 38,
+      "centres_in_jrc_forest_2020": 2
+    },
+    "P-0005": {
+      "post_2020_loss_cells": 18,
+      "centres_in_jrc_forest_2020": 0
+    },
+    "P-0006": {
+      "post_2020_loss_cells": 18,
+      "centres_in_jrc_forest_2020": 0
+    },
+    "P-0013": {
+      "post_2020_loss_cells": 3,
+      "centres_in_jrc_forest_2020": 0
+    },
+    "P-0014": {
+      "post_2020_loss_cells": 7,
+      "centres_in_jrc_forest_2020": 0
+    },
+    "P-0016": {
+      "post_2020_loss_cells": 2,
+      "centres_in_jrc_forest_2020": 0
+    },
+    "P-0018": {
+      "post_2020_loss_cells": 1,
+      "centres_in_jrc_forest_2020": 0
+    }
+  }
+}
