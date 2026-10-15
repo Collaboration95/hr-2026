@@ -1,0 +1,188 @@
+{
+ "seed": 424242,
+ "grids": [
+  "chip",
+  "origin_unit",
+  "fine_1e-6",
+  "fine_1e-9",
+  "fine_1e-12",
+  "far_1e5",
+  "far_1e8",
+  "anisotropic",
+  "coarse_0.1",
+  "odd_binary"
+ ],
+ "per_category": {
+  "ulp_tri": {
+   "generated": 410,
+   "accepted": 409,
+   "rejected_identically": 1,
+   "mismatches": 0,
+   "selected_cells": 4493,
+   "exc": 0
+  },
+  "ulp_quad": {
+   "generated": 410,
+   "accepted": 410,
+   "rejected_identically": 0,
+   "mismatches": 0,
+   "selected_cells": 10808,
+   "exc": 0
+  },
+  "ulp_hole": {
+   "generated": 410,
+   "accepted": 410,
+   "rejected_identically": 0,
+   "mismatches": 0,
+   "selected_cells": 35162,
+   "exc": 0
+  },
+  "needle": {
+   "generated": 410,
+   "accepted": 339,
+   "rejected_identically": 71,
+   "mismatches": 0,
+   "selected_cells": 573348,
+   "exc": 0
+  },
+  "sliver": {
+   "generated": 410,
+   "accepted": 205,
+   "rejected_identically": 205,
+   "mismatches": 0,
+   "selected_cells": 1364,
+   "exc": 0
+  },
+  "collinear": {
+   "generated": 410,
+   "accepted": 410,
+   "rejected_identically": 0,
+   "mismatches": 0,
+   "selected_cells": 509146,
+   "exc": 0
+  },
+  "dups": {
+   "generated": 410,
+   "accepted": 390,
+   "rejected_identically": 20,
+   "mismatches": 0,
+   "selected_cells": 122419,
+   "exc": 0
+  },
+  "multi_touch": {
+   "generated": 410,
+   "accepted": 292,
+   "rejected_identically": 118,
+   "mismatches": 0,
+   "selected_cells": 11123,
+   "exc": 0
+  },
+  "hole_touch": {
+   "generated": 410,
+   "accepted": 385,
+   "rejected_identically": 25,
+   "mismatches": 0,
+   "selected_cells": 59825,
+   "exc": 0
+  },
+  "spike": {
+   "generated": 410,
+   "accepted": 410,
+   "rejected_identically": 0,
+   "mismatches": 0,
+   "selected_cells": 46181,
+   "exc": 0
+  },
+  "random_lattice": {
+   "generated": 410,
+   "accepted": 256,
+   "rejected_identically": 154,
+   "mismatches": 0,
+   "selected_cells": 7280,
+   "exc": 0
+  },
+  "staircase": {
+   "generated": 410,
+   "accepted": 410,
+   "rejected_identically": 0,
+   "mismatches": 0,
+   "selected_cells": 147533,
+   "exc": 0
+  }
+ },
+ "per_grid": {
+  "chip": {
+   "generated": 492,
+   "accepted": 438,
+   "selected_cells": 94221,
+   "mismatches": 0
+  },
+  "origin_unit": {
+   "generated": 492,
+   "accepted": 439,
+   "selected_cells": 67669,
+   "mismatches": 0
+  },
+  "fine_1e-6": {
+   "generated": 492,
+   "accepted": 436,
+   "selected_cells": 75881,
+   "mismatches": 0
+  },
+  "fine_1e-9": {
+   "generated": 492,
+   "accepted": 433,
+   "selected_cells": 86708,
+   "mismatches": 0
+  },
+  "fine_1e-12": {
+   "generated": 492,
+   "accepted": 427,
+   "selected_cells": 752364,
+   "mismatches": 0
+  },
+  "far_1e5": {
+   "generated": 492,
+   "accepted": 430,
+   "selected_cells": 91582,
+   "mismatches": 0
+  },
+  "far_1e8": {
+   "generated": 492,
+   "accepted": 413,
+   "selected_cells": 86149,
+   "mismatches": 0
+  },
+  "anisotropic": {
+   "generated": 492,
+   "accepted": 434,
+   "selected_cells": 95318,
+   "mismatches": 0
+  },
+  "coarse_0.1": {
+   "generated": 492,
+   "accepted": 443,
+   "selected_cells": 101562,
+   "mismatches": 0
+  },
+  "odd_binary": {
+   "generated": 492,
+   "accepted": 433,
+   "selected_cells": 77228,
+   "mismatches": 0
+  }
+ },
+ "totals": {
+  "generated": 4920,
+  "accepted": 4326,
+  "rejected_identically": 594,
+  "mismatches": 0,
+  "exc": 0,
+  "selected_cells": 1528682
+ },
+ "row_chunk_1_pair": {
+  "compared": 300,
+  "mismatches": 0
+ },
+ "seconds": 1.8
+}

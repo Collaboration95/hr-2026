@@ -1,0 +1,19 @@
+{
+ "tile_read_seconds_validator": [
+  2.216,
+  2.101
+ ],
+ "tile_read_seconds_recorded": 2.091,
+ "first_pass_contended_cpu_sum_seconds": 7.1,
+ "per_plot_us_validator": {
+  "original_us": 85.14,
+  "registry_us": 3.42,
+  "new_polygon_us": 38.28
+ },
+ "per_plot_us_recorded": {
+  "original_us": 85.36,
+  "registry_us": 3.55,
+  "new_polygon_us": 38.94
+ },
+ "within_tolerance": true
+}

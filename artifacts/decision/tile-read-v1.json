@@ -1,0 +1,21 @@
+{
+  "schema": "plotline.decision-tile-read.v1",
+  "as_of": "2026-10-15",
+  "method": "single process, no worker pool; 4 files read fully through GDAL in strips of 250 Hansen rows (read_strip geometry); 3 back-to-back passes",
+  "files": [
+    "data/public/raw/Hansen_GFC-2025-v1.13_treecover2000_10N_090E.tif",
+    "data/public/raw/Hansen_GFC-2025-v1.13_lossyear_10N_090E.tif",
+    "data/public/raw/Hansen_GFC-2025-v1.13_datamask_10N_090E.tif",
+    "data/experimental/jrc/JRC_GFC2020_V4_N10_E90.tif"
+  ],
+  "cells_read": 19200000000,
+  "pass_seconds": [
+    2.242,
+    2.091,
+    2.091
+  ],
+  "single_process_tile_read_seconds": 2.091,
+  "machine": "arm64 Darwin 10 cores",
+  "rasterio": "1.5.2",
+  "gdal": "3.12.2"
+}

@@ -7,6 +7,7 @@ import PlotInspector from "../review/PlotInspector";
 import RegionBrief from "../review/RegionBrief";
 import type { Cell, Demo, Plot } from "../types";
 import PlotRail, { type RailState } from "./PlotRail";
+import type { DecisionState } from "./useDecisionSummary";
 import type { JrcStatus } from "./useJrcCompanion";
 import type { JrcArtifact } from "../jrc-data";
 
@@ -19,7 +20,7 @@ type StageProps = ComponentProps<typeof MapStage>;
 export default function MapView({
   data, plots, rail, plot, year,
   layer, onLayerChange, showJrc, onShowJrcChange, pinnedCell, onPinCell,
-  jrc, onSelectPlot, onYear, onProof, onReceipt,
+  jrc, decision, onSelectPlot, onYear, onProof, onReceipt,
 }: {
   data: Demo;
   plots: Plot[];
@@ -33,6 +34,7 @@ export default function MapView({
   pinnedCell: Cell | null;
   onPinCell: (cell: Cell | null) => void;
   jrc: { jrc: JrcArtifact | null; status: JrcStatus; error?: string; load: () => void };
+  decision?: DecisionState;
   onSelectPlot: (id: string | null) => void;
   onYear: (year: number) => void;
   onProof: (origin: "count" | "header") => void;
@@ -94,6 +96,7 @@ export default function MapView({
             jrcStatus={jrc.status}
             jrcError={jrc.error}
             onLoadJrc={jrc.load}
+            decision={decision}
             onProof={onProof}
             onReceipt={onReceipt}
             onPinCell={onPinCell}

@@ -15,6 +15,7 @@ if [ ! -d "$ROOT/app/node_modules" ]; then
 fi
 
 cd "$ROOT"
+scripts/private-data.sh check
 "$PYTHON" -c 'import sys; assert sys.version_info[:2] == (3, 14), f"Python 3.14 required, found {sys.version.split()[0]}"'
 "$PYTHON" -B -m engine.verify
 "$PYTHON" -B -m engine.jrc --verify artifacts/jrc-baseline-v1.json
@@ -22,4 +23,9 @@ cd "$ROOT"
 echo "P-0003 Hansen full query: source and compact results match."
 "$PYTHON" -B -m engine --plot P-0003 --access indexed --store "$STORE" >/dev/null
 echo "P-0003 Hansen indexed query: source and compact results match."
+TMP_PROOF=$(mktemp -t plotline-decision-proof.XXXXXX)
+"$PYTHON" -B -m engine.decision_proof --output "$TMP_PROOF" >/dev/null
+"$PYTHON" -c 'import json, sys; assert json.load(open(sys.argv[1]))["summary"]["all_pass"], "decision-layer proof failed"' "$TMP_PROOF"
+rm -f "$TMP_PROOF"
+echo "Decision layers: every cell, 17 plots and the polygon fuzz match the original layers."
 npm run build --prefix app

@@ -1,5 +1,7 @@
 # Plotline — complete project handover
 
+> **Current status (15 October 2026):** The UI redesign described below as the "next authorized task" is complete. It is merged to `Main` (PR #1); see [redesign decisions](writeups/05-redesign-decisions.md). Decision layers were then added on `guru/decision-layer`: a 6.1 KB decision layer, 99% smaller than the original layers, with identical answers proven for all 744,732 cells and registered plots re-checked 24× faster. See the [decision-layer report](lab/decision-layer-report.md). Start from the [writeups](writeups/README.md). The material below is the historical 13–14 October handover.
+
 **Completion checkpoint: 14 October 2026.** The user resumed work to finish the existing local prototype. The scientific/engine checkpoint below is preserved; this pass closes delivery and verification gaps without changing retained measurements or production query semantics.
 
 - Clean tracked-file exports reproduced the retained Hansen and JRC proofs, both P-0003 query access paths and the frontend build with new dependencies and no full-tile caches. This was on the same machine, not a cross-platform test.

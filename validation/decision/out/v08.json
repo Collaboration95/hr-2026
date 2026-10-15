@@ -1,0 +1,211 @@
+{
+ "sums_vs_headline": {
+  "L1": [
+   13647704,
+   13647704
+  ],
+  "L2": [
+   8242423,
+   8242423
+  ],
+  "hansen3_zstd19": [
+   130828454,
+   130828454
+  ],
+  "land_cells": [
+   219635028,
+   219635028
+  ]
+ },
+ "original_total_bytes": [
+  421910035,
+  421910035
+ ],
+ "percents_recomputed": {
+  "L1_vs_original": 96.77,
+  "L2_vs_original": 98.05,
+  "L1_vs_yardstick": 90.83,
+  "L2_vs_yardstick": 94.46,
+  "recorded": {
+   "L1_percent_smaller_than_original_total": 96.77,
+   "L2_percent_smaller_than_original_total": 98.05,
+   "L1_percent_smaller_than_zstd19_yardstick": 90.83,
+   "L2_percent_smaller_than_zstd19_yardstick": 94.46
+  }
+ },
+ "tile_nesting_rational_check": {
+  "indices_checked": 203,
+  "violations_of_3k+1": 0,
+  "max_centre_deviation_cells": 6.50513171975009e-12
+ },
+ "strip_5500": {
+  "independent_vs_recorded": {
+   "L1_zstd19": [
+    139304,
+    139304
+   ],
+   "L2_zstd19": [
+    52388,
+    52388
+   ],
+   "treecover_zstd19": [
+    944215,
+    944215
+   ],
+   "lossyear_zstd19": [
+    306148,
+    306148
+   ],
+   "datamask_zstd19": [
+    16562,
+    16562
+   ],
+   "jrc_native_zstd19": [
+    113511,
+    113511
+   ],
+   "land_cells": [
+    1741583,
+    1741583
+   ]
+  },
+  "all_equal": true,
+  "read_seconds_single_strip_single_process": 0.03,
+  "jrc_values": [
+   0,
+   1
+  ],
+  "datamask_values": [
+   0,
+   1,
+   2
+  ],
+  "max_lossyear": 25
+ },
+ "strip_20000": {
+  "independent_vs_recorded": {
+   "L1_zstd19": [
+    113175,
+    113175
+   ],
+   "L2_zstd19": [
+    71847,
+    71847
+   ],
+   "treecover_zstd19": [
+    1089547,
+    1089547
+   ],
+   "lossyear_zstd19": [
+    193237,
+    193237
+   ],
+   "datamask_zstd19": [
+    12870,
+    12870
+   ],
+   "jrc_native_zstd19": [
+    156187,
+    156187
+   ],
+   "land_cells": [
+    2395073,
+    2395073
+   ]
+  },
+  "all_equal": true,
+  "read_seconds_single_strip_single_process": 0.02,
+  "jrc_values": [
+   0,
+   1
+  ],
+  "datamask_values": [
+   0,
+   1,
+   2
+  ],
+  "max_lossyear": 25
+ },
+ "cost_storage_recomputed": {
+  "original_layers_geotiff": {
+   "belt_1_version_usd_recomputed": 0.9037,
+   "recorded": 0.9037,
+   "equal": true
+  },
+  "L0_yardstick_zstd19": {
+   "belt_1_version_usd_recomputed": 0.3189,
+   "recorded": 0.3189,
+   "equal": true
+  },
+  "L1_screen": {
+   "belt_1_version_usd_recomputed": 0.0292,
+   "recorded": 0.0292,
+   "equal": true
+  },
+  "L2_decision": {
+   "belt_1_version_usd_recomputed": 0.0177,
+   "recorded": 0.0177,
+   "equal": true
+  }
+ },
+ "cost_inputs_from_benchmark": {
+  "benchmark_cost_inputs": {
+   "original_us": 85.36,
+   "registry_us": 3.55,
+   "new_polygon_us": 38.94
+  },
+  "cost_v1_per_plot_us": {
+   "original_v1": 85.36,
+   "decision_registry": 3.55,
+   "decision_new_polygon": 38.94
+  },
+  "equal": true,
+  "registry_placeholder_flag_present": false
+ },
+ "tile_read": {
+  "pass_seconds": [
+   2.242,
+   2.091,
+   2.091
+  ],
+  "median_recomputed": 2.091,
+  "recorded_single_process": 2.091,
+  "cost_v1_original_tile_decode": 2.091,
+  "cells_read": 19200000000,
+  "equal": true
+ },
+ "cost_original_recheck": {
+  "per_plot_seconds": 853.6,
+  "tile_decode_seconds_total": 209.1,
+  "recomputed_total_seconds": 1062.7,
+  "recorded": 1062.7,
+  "recomputed_usd": 0.01977,
+  "recorded_usd": 0.01977,
+  "gets": [
+   5100,
+   5100
+  ]
+ },
+ "cost_l2_registry_recheck": {
+  "recomputed_total_seconds": 58.9,
+  "recorded": 58.9
+ },
+ "cost_l2_new_polygon_recheck": {
+  "recomputed_total_seconds": 412.8,
+  "recorded": 412.8
+ },
+ "container_caveat": {
+  "present": true,
+  "says_not_implemented": true,
+  "store_max_cells": 16777216,
+  "store_max_dimension": 16384
+ },
+ "memory_feasibility": {
+  "decoded_tile_bytes_uint8": 1600000000,
+  "lambda_memory_bytes": 1073741824,
+  "whole_tile_fits": false,
+  "tile_width": 40000,
+  "note": "cost-v1 now states the strip-indexed container is not implemented; strips of 250 rows (10 MB) fit"
+ },
+ "bad": []
+}

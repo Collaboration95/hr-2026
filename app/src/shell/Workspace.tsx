@@ -15,6 +15,7 @@ import {
   type Route, type View,
 } from "./route";
 import TopBar from "./TopBar";
+import { useDecisionSummary } from "./useDecisionSummary";
 import { useJrcCompanion } from "./useJrcCompanion";
 
 type Dialog = { kind: "commands" } | { kind: "receipt"; plotId: string } | null;
@@ -47,6 +48,7 @@ export default function Workspace({ data, reloadError, reloading, onReload }: {
   const byId = useMemo(() => new Map(plots.map((p) => [p.plot_id, p])), [plots]);
   const rail = useRailFilter(plots);
   const jrc = useJrcCompanion(data);
+  const decision = useDecisionSummary(data);
 
   // ---- Route: the hash is the source of truth for view, plot and year ----
   const hash = useHash();
@@ -370,6 +372,7 @@ export default function Workspace({ data, reloadError, reloading, onReload }: {
             pinnedCell={pinnedCell}
             onPinCell={setPinnedCell}
             jrc={jrc}
+            decision={decision}
             onSelectPlot={selectPlot}
             onYear={setYear}
             onProof={onProof}
@@ -402,6 +405,7 @@ export default function Workspace({ data, reloadError, reloading, onReload }: {
             plots={plots}
             plot={routePlot}
             year={year}
+            decision={decision}
             onBack={backToMap}
             onOpen={switchProof}
             onYear={proofYear}

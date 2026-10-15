@@ -1,0 +1,234 @@
+{
+ "A_flips_truncations": {
+  "decision.plds": {
+   "outcomes": {
+    "ValueError": 1500,
+    "trunc_ValueError": 351,
+    "trailing_ValueError": 2
+   },
+   "accepted_with_different_header_or_codes": 0
+  },
+  "screen.plds": {
+   "outcomes": {
+    "ValueError": 1500,
+    "trunc_ValueError": 351,
+    "trailing_ValueError": 2
+   },
+   "accepted_with_different_header_or_codes": 0
+  }
+ },
+ "B_header_forgeries": {
+  "control_unmodified_rebuild": "accepted",
+  "transform_huge_int_1e400": "ValueError",
+  "transform_huge_negative_int": "ValueError",
+  "transform_bool": "ValueError",
+  "transform_float_overflow_string": "ValueError",
+  "shape_huge": "ValueError",
+  "shape_16384x1024": "ValueError",
+  "shape_zero": "ValueError",
+  "shape_float": "ValueError",
+  "payload_bytes_wrong": "ValueError",
+  "payload_bytes_huge_int": "ValueError",
+  "level_unknown": "ValueError",
+  "encoding_unknown": "ValueError",
+  "extra_key": "ValueError",
+  "source_hash_uppercase": "ValueError",
+  "crs_non_string": "ValueError",
+  "noncanonical_whitespace": "ValueError",
+  "deep_nesting_header": "ValueError",
+  "header_utf16": "ValueError",
+  "header_not_object": "ValueError",
+  "duplicate_key": "ValueError",
+  "nan_constant": "ValueError",
+  "big_digit_string_5000": "ValueError",
+  "tiny_header_2_bytes": "ValueError"
+ },
+ "C_payload_fuzz": {
+  "eudr-screen.v1:zstd19": {
+   "outcomes": {
+    "ValueError": 195,
+    "accepted": 55
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 55
+  },
+  "eudr-screen.v1:zstd22": {
+   "outcomes": {
+    "ValueError": 193,
+    "accepted": 57
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 57
+  },
+  "eudr-screen.v1:xz": {
+   "outcomes": {
+    "ValueError": 250
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 0
+  },
+  "eudr-screen.v1:lzma2": {
+   "outcomes": {
+    "ValueError": 250
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 0
+  },
+  "eudr-screen.v1:rle": {
+   "outcomes": {
+    "ValueError": 250
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 0
+  },
+  "eudr-screen.v1:split": {
+   "outcomes": {
+    "ValueError": 243,
+    "accepted": 7
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 7
+  },
+  "eudr-decision.v1:zstd19": {
+   "outcomes": {
+    "ValueError": 202,
+    "accepted": 48
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 48
+  },
+  "eudr-decision.v1:zstd22": {
+   "outcomes": {
+    "ValueError": 208,
+    "accepted": 42
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 41
+  },
+  "eudr-decision.v1:xz": {
+   "outcomes": {
+    "ValueError": 250
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 0
+  },
+  "eudr-decision.v1:lzma2": {
+   "outcomes": {
+    "ValueError": 250
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 0
+  },
+  "eudr-decision.v1:rle": {
+   "outcomes": {
+    "ValueError": 244,
+    "accepted": 6
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 6
+  },
+  "eudr-decision.v1:split": {
+   "outcomes": {
+    "ValueError": 192,
+    "accepted": 58
+   },
+   "decoder_accepted_different_codes_before_header_hash_check": 57
+  }
+ },
+ "D_memory_amplification": {
+  "first_pass_blob_4n_bytes:n=250000": {
+   "file_bytes": 63,
+   "outcome": "ValueError: stream size out of bounds",
+   "peak_bytes": 50341138,
+   "amplification": 799066
+  },
+  "largest_blob_new_bound_admits:n=250000": {
+   "file_bytes": 39,
+   "outcome": "ValueError: truncated stream",
+   "peak_bytes": 69112152,
+   "amplification": 1772106
+  },
+  "first_pass_blob_4n_bytes:n=1000000": {
+   "file_bytes": 158,
+   "outcome": "ValueError: stream size out of bounds",
+   "peak_bytes": 50341138,
+   "amplification": 318615
+  },
+  "largest_blob_new_bound_admits:n=1000000": {
+   "file_bytes": 63,
+   "outcome": "ValueError: truncated stream",
+   "peak_bytes": 75112152,
+   "amplification": 1192256
+  },
+  "first_pass_blob_4n_bytes:n=2000000": {
+   "file_bytes": 282,
+   "outcome": "ValueError: stream size out of bounds",
+   "peak_bytes": 50341138,
+   "amplification": 178515
+  },
+  "largest_blob_new_bound_admits:n=2000000": {
+   "file_bytes": 95,
+   "outcome": "ValueError: truncated stream",
+   "peak_bytes": 83112152,
+   "amplification": 874865
+  },
+  "honest_dense_events_1414x1414": {
+   "file_bytes": 163,
+   "outcome": "accepted",
+   "peak_bytes": 61999613,
+   "cells": 1999396,
+   "decoded_bytes": 1999396
+  },
+  "extrapolated_at_MAX_CELLS": {
+   "bytes_per_event": 8.0,
+   "estimated_peak_mb": 201,
+   "first_pass_estimate_mb": 1093,
+   "note": "linear in n; MAX_CELLS bounds n"
+  }
+ },
+ "E_consistent_forgery": {
+  "read_store": "accepted",
+  "P-0001 deforestation_after_2020": 0,
+  "present": false,
+  "true_value": 2,
+  "header_sources_equal_pinned": true,
+  "table_lookup_with_forged_store_hash": null,
+  "table_lookup_with_genuine_hash": 2,
+  "proof_records_file_sha": true,
+  "stores_json_records_file_sha": true,
+  "expected_sha256_of_genuine_rejects_forgery": "ValueError: store file hash differs from the expected digest"
+ },
+ "F_level_binding": {
+  "P-0005_true_screen_2024_25": {
+   "observed_loss_cell_count": 18,
+   "mapped_loss_present": true
+  },
+  "evaluate_store_conflicting_level": "ValueError: store holds eudr-decision.v1, not eudr-screen.v1",
+  "registry_evaluate_store_conflicting_level": "ValueError: store holds eudr-decision.v1, not eudr-screen.v1",
+  "evaluate_codes_without_level": "TypeError: evaluate_codes() missing 1 required positional argument: 'level'",
+  "registry_evaluate_without_level": "TypeError: registry_evaluate() missing 1 required positional argument: 'level'",
+  "summarize_counts_without_level": "TypeError: summarize_counts() missing 1 required positional argument: 'level'",
+  "summarize_selection_without_level": "TypeError: summarize_selection() missing 1 required positional argument: 'level'",
+  "evaluate_store_raster_shape_differs": "ValueError: code raster shape differs from the store header",
+  "registry_evaluate_smaller_raster": "ValueError: code raster shape differs from the registry grid",
+  "registry_evaluate_unknown_level": "ValueError: unknown contract level",
+  "bind_level_header_without_level": "ValueError: store header does not name a contract level",
+  "registry_evaluate_store_shifted_grid_same_shape": "ValueError: store grid differs from the registry grid",
+  "raw_path_explicit_wrong_level_still_silent": {
+   "periods_2024_25": {
+    "observed_loss_cell_count": 0,
+    "mapped_loss_present": false
+   },
+   "note": "by design: evaluate_codes/registry_evaluate trust the caller-supplied level; only the store-aware APIs bind it"
+  },
+  "store_aware_pair_swap_silent": {
+   "contract": "eudr-decision.v1",
+   "note": "evaluate_store trusts that (codes, header) came from one read_store call"
+  }
+ },
+ "G_crc_placement": {
+  "header_length_values_tried": 755,
+  "header_length_values_accepted": [
+   675
+  ],
+  "crc_field_wrong_values_accepted": [],
+  "crc_over_wrong_span_accepted": [],
+  "v1_layout_file": "ValueError",
+  "v2_version_with_v1_body": "ValueError",
+  "version_3": "ValueError",
+  "boundary_shift_plus_1": "ValueError",
+  "boundary_shift_minus_1": "ValueError",
+  "note_forgery": "a header edit with a recomputed CRC32 is a consistent forgery (see E); CRC32 is not an authenticator"
+ },
+ "non_valueerror_or_silent_acceptance": []
+}
+FINDINGS: 0

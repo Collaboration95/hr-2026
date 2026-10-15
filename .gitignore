@@ -53,3 +53,30 @@ data/experimental/hansen-vintage/raw/
 # Disposable independent validation bundles.
 validation/jrc-fix/
 validation/strong/
+
+# SystemEarth's sample and files that copy its plot boundaries, footprints or declarations.
+# Shared for local work only; data/PRIVATE_FILES.txt lists them, scripts/private-data.sh restores them.
+data/company-sample/
+artifacts/demo-v1.json
+artifacts/example-v1.json
+artifacts/jrc-baseline-v1.json
+artifacts/spatial-rule-witness-v1.json
+artifacts/decision/registry.bin
+data/experimental/jrc-standard/exp-*/2026*/identity.json
+data/experimental/jrc-standard/exp-*/2026*/run-*.json
+data/experimental/live-service/known-plot-request.json
+data/experimental/live-service/known-plot-response.json
+data/experimental/spatial-sensitivity/results.json
+data/experimental/spatial-sensitivity/witnesses.json
+data/experimental/hansen-vintage/selected-cells.json
+data/experimental/hansen-vintage/comparison.json
+docs/lab/completion-browser-jrc-receipt-P-0001.json
+docs/lab/browser-evidence/14c5e3eb-a628-4bff-b5ed-3b62cb62c893
+docs/lab/browser-evidence/5fbfb13f-c199-4cbf-afbd-13b0bd03f922
+docs/lab/browser-evidence/79c6c78c-fdce-482b-b314-22d8cb669e63
+docs/lab/browser-evidence/868c067e-cc96-4a70-9fd1-bb8d34f5722b
+docs/lab/browser-evidence/96a5fa33-af7c-40d4-b59a-13f53153a2d2
+docs/lab/browser-evidence/w3-P-0005-receipt.json
+docs/lab/browser-evidence/w3-index-receipt-P-0001.json
+docs/lab/browser-evidence/w3-live-service-exact-receipt.json
+docs/research/company-sample-audit.json

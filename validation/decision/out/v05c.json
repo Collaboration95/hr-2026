@@ -1,0 +1,18 @@
+{
+ "cases": 140,
+ "encodings": [
+  "zstd19",
+  "zstd22",
+  "xz",
+  "lzma2",
+  "rle",
+  "split"
+ ],
+ "forced_split_modes_exercised": {
+  "plane": 140,
+  "gaps0": 140,
+  "gaps1": 97
+ },
+ "failures": [],
+ "failure_count": 0
+}

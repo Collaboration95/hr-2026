@@ -1,0 +1,186 @@
+{
+ "failed": [],
+ "checks": {
+  "grid_size": {
+   "ok": true,
+   "cells": 744732
+  },
+  "jrc_lookup_hansen_centre_is_jrc_centre": {
+   "ok": true,
+   "max_deviation_from_jrc_cell_centre_in_jrc_cells": 6.639311322942376e-11
+  },
+  "cells_store_vs_independent[eudr-screen.v1]": {
+   "ok": true,
+   "mismatches": 0,
+   "cells": 744732
+  },
+  "cells_store_vs_independent[eudr-decision.v1]": {
+   "ok": true,
+   "mismatches": 0,
+   "cells": 744732
+  },
+  "decision_is_projection_of_screen": {
+   "ok": true
+  },
+  "engine_derive_equals_independent": {
+   "ok": true
+  },
+  "jrc_index_three_way": {
+   "ok": true,
+   "ratio": 3,
+   "row_offset": 0,
+   "col_offset": -1
+  },
+  "jrc_float_vs_exact_inside": {
+   "ok": true
+  },
+  "jrc_inside_set_equal": {
+   "ok": true,
+   "cells_without_jrc": 2439,
+   "fringe_rows": [
+    0,
+    1,
+    2,
+    "..."
+   ],
+   "fringe_cols": [
+    0,
+    1,
+    2,
+    "..."
+   ]
+  },
+  "jrc_chip_inside_hansen_chip": {
+   "ok": true,
+   "note": "JRC chip extent is strictly inside the Hansen chip extent, so no out-of-Hansen-chip centre can have a JRC value",
+   "margins_in_jrc_cells": {
+    "west": 2.000000000066393,
+    "east": 1.9999999999338074,
+    "north": 1.0000000000118803,
+    "south": 1.9999999999882179
+   }
+  },
+  "no_outside_hansen_centre_in_jrc_chip": {
+   "ok": true,
+   "violations": 0
+  },
+  "plots_17": {
+   "ok": true
+  },
+  "plots_exact_selection_equals_select_cells": {
+   "ok": true,
+   "equal": 17,
+   "of": 17
+  },
+  "plots_independent_output_equals_store_path": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_output_via_header_grid": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_independent_output_equals_table_json": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_independent_output_equals_registry_evaluate": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_independent_output_equals_evaluate_store": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_independent_output_equals_registry_evaluate_store": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "plots_independent_output_equals_proof_json": {
+   "ok": true,
+   "equal": 34,
+   "of": 34
+  },
+  "independent_fuzz_equal": {
+   "ok": true,
+   "compared": 800,
+   "equal": 800,
+   "seconds": 1.3,
+   "branch_coverage": {
+    "defo=False": 287,
+    "defo=None": 110,
+    "defo=True": 3,
+    "forest=False": 233,
+    "forest=None": 123,
+    "forest=True": 44,
+    "outside>0=False": 318,
+    "outside>0=True": 82,
+    "support=complete": 274,
+    "support=none": 60,
+    "support=partial": 66,
+    "water>0=False": 354,
+    "water>0=True": 46
+   }
+  },
+  "perturb_treecover_values": {
+   "ok": true
+  },
+  "perturb_lossyear_2001_2020": {
+   "ok": true
+  },
+  "perturb_jrc_noncentre": {
+   "ok": true,
+   "noncentre_cells_randomised": 5941962
+  },
+  "treecover_mask_invalid_makes_cells_unknown": {
+   "ok": true,
+   "cells_changed": 100
+  },
+  "perturb_jrc_mask_noncentre": {
+   "ok": true
+  },
+  "p0001_numbers": {
+   "ok": true,
+   "deforestation_cells": 2,
+   "hansen_2021_23": 38,
+   "yearly_hansen_loss": {
+    "2021": 0,
+    "2022": 38,
+    "2023": 0,
+    "2024": 0,
+    "2025": 0
+   },
+   "yearly_deforestation": {
+    "2021": 0,
+    "2022": 2,
+    "2023": 0,
+    "2024": 0,
+    "2025": 0
+   }
+  },
+  "semantics_jrc_forest_with_hansen_loss_before_cutoff": {
+   "cells": 4813,
+   "of_jrc_forest_land_cells": 118412,
+   "note": "JRC 2020 forest cells where Hansen records loss in 2001-2020; contract keeps them as forest at the cut-off (JRC is the baseline)"
+  },
+  "semantics_p0001_plot_cells": {
+   "selected": 121,
+   "forest_counts": {
+    "nonforest": 61,
+    "forest": 60,
+    "unknown": 0
+   }
+  },
+  "tristate_probes": {
+   "ok": true,
+   "mismatches": {},
+   "cases": 12
+  }
+ }
+}

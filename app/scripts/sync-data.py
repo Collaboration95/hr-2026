@@ -39,3 +39,18 @@ if jrc.exists() and hashlib.sha256(jrc.read_bytes()).hexdigest() == accepted_jrc
 else:
     jrc_output.unlink(missing_ok=True)
     print('JRC companion unavailable: canonical file absent or changed from reviewed acceptance. Hansen remains usable.')
+
+# Optional decision-layer summary (engine/decision_export.py). Copied only when present, parseable
+# and carrying the expected schema; otherwise any stale copy is removed and the app hides the section.
+decision = root / 'artifacts/decision/summary-v1.json'
+decision_output = out / 'decision-v1.json'
+try:
+    decision_ok = decision.exists() and json.loads(decision.read_text()).get('schema') == 'plotline.decision-summary.v1'
+except (OSError, ValueError, AttributeError):
+    decision_ok = False
+if decision_ok:
+    shutil.copyfile(decision, decision_output)
+    print('Copied decision-layer summary.')
+else:
+    decision_output.unlink(missing_ok=True)
+    print('Decision summary unavailable: file absent, unreadable or not plotline.decision-summary.v1. Proof and map still work.')

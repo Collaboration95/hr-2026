@@ -1,0 +1,859 @@
+{
+  "schema": "plotline.decision-cost.v1",
+  "as_of": "2026-10-15",
+  "status": "estimate; every price is a list price assumption (no web lookup), verify before quoting",
+  "assumptions": {
+    "prices": {
+      "s3_standard_storage": {
+        "value": 0.023,
+        "unit": "USD per GB-month",
+        "label": "list price assumption, verify before quoting",
+        "as_of": "2026-10-15"
+      },
+      "s3_get_requests": {
+        "value": 0.0004,
+        "unit": "USD per 1,000 GET requests",
+        "label": "list price assumption, verify before quoting",
+        "as_of": "2026-10-15"
+      },
+      "lambda_compute": {
+        "value": 1.66667e-05,
+        "unit": "USD per GB-second",
+        "label": "list price assumption, verify before quoting",
+        "as_of": "2026-10-15"
+      },
+      "lambda_requests": {
+        "value": 0.2,
+        "unit": "USD per 1,000,000 invocations",
+        "label": "list price assumption, verify before quoting",
+        "as_of": "2026-10-15"
+      },
+      "egress": {
+        "value": 0,
+        "unit": "ignored",
+        "label": "assumed same-region, not charged",
+        "as_of": "2026-10-15"
+      }
+    },
+    "gb_definition": "1 GB = 2^30 bytes (S3 billing convention); decimal MB shown only for readability",
+    "tiles": {
+      "grid_cells_between_30N_and_30S": 216,
+      "grid_cells_method": "36 longitude columns x 6 ten-degree latitude bands (30N-20N ... 20S-30S)",
+      "tropical_belt_land_tiles": 100,
+      "tropical_belt_method": "assumption, not a count: about 100 of the 216 grid cells hold substantial land. No land-mask dataset was used.",
+      "global_land_tiles": 280,
+      "global_method": "assumption (~280 Hansen land tiles)",
+      "scaling": "linear in tile count. The measured tile is 13.7% land, so storage and re-check are shown on three bases: measured_tile (bytes as measured), half_land_assumption (bytes per land cell x 50% land) and all_land_scenario (bytes per land cell x every cell; a rough ceiling that assumes all land is as complex as this tile's)"
+    },
+    "measured_tile": {
+      "name": "Hansen 10N_090E (0-10N, 90-100E) and JRC GFC2020 v4 N10_E90",
+      "land_fraction_percent": 13.73
+    },
+    "versions_kept_rows": [
+      1,
+      5
+    ],
+    "registered_plots": 10000000,
+    "per_plot_microseconds": {
+      "original_v1": 85.36,
+      "original_v1_source": "artifacts/decision/benchmark-v1.json cost_inputs.original_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4",
+      "decision_registry": 3.55,
+      "decision_registry_source": "artifacts/decision/benchmark-v1.json cost_inputs.registry_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4",
+      "decision_new_polygon": 38.94,
+      "decision_new_polygon_source": "artifacts/decision/benchmark-v1.json cost_inputs.new_polygon_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4"
+    },
+    "lambda": {
+      "memory_gb": 1.0,
+      "note": "same memory for every representation (no credit taken for the smaller working set)",
+      "one_invocation_per_tile": true
+    },
+    "get_request_range_bytes": 8388608,
+    "tile_decode_seconds": {
+      "source": "original layers: artifacts/decision/tile-read-v1.json single_process_tile_read_seconds: median of 3 back-to-back single-process GDAL passes over the four tile files (2026-10-15, arm64 Darwin 10 cores). L0/L1/L2: scale-v1.json decode_timing (zstd decompress of the level-19 frames, single thread, warm cache, sampled strips scaled up)",
+      "caveat": "warm-cache decode only: cold object-store latency and network time are not modelled; the original path would also need the JRC sampling step",
+      "values": {
+        "original_layers_geotiff": 2.091,
+        "L0_yardstick_zstd19": 1.241,
+        "L1_screen": 0.3,
+        "L2_decision": 0.234
+      }
+    },
+    "container": {
+      "assumption": "ranged GETs and per-strip working memory assume a strip-indexed container that is NOT implemented. The shipped store (engine.decision_store) holds at most 16,384 cells per side and 16,777,216 cells, far below this tile's 1,600,000,000 cells; tile sizes here are zstd-19 per-strip sums (a yardstick) and ranged_gets_to_read_one_measured_tile is ceil(bytes / get_request_range_bytes), valid only for such a container.",
+      "store_max_dimension": 16384,
+      "store_max_cells": 16777216
+    },
+    "plots_per_tile": "the same 10 million plots are re-checked in both scopes; every tile in scope is read once per re-check (upper bound on tiles touched)"
+  },
+  "formulas": {
+    "basis_factor": "measured_tile 1; half_land_assumption 0.5 * tile_cells / land_cells; all_land_scenario tile_cells / land_cells (bytes_per_tile = measured bytes * factor)",
+    "storage_usd_per_month": "bytes_per_tile * tiles * versions / 2^30 * s3_standard_storage",
+    "recheck_per_plot_seconds": "plots * per_plot_microseconds / 1e6",
+    "recheck_lambda_usd": "(per_plot_seconds + tiles * tile_decode_seconds * factor) * memory_gb * lambda_per_gb_second + tiles * lambda_per_invocation",
+    "recheck_get_usd": "tiles * ceil(bytes_per_tile / get_range_bytes) / 1000 * s3_get_per_1000"
+  },
+  "inputs_from_scale": {
+    "path": "artifacts/decision/scale-v1.json",
+    "tile_land_cells": 219635028,
+    "tile_cells": 1600000000
+  },
+  "representations": {
+    "original_layers_geotiff": {
+      "what": "Hansen 3 bands + JRC tile, as downloaded (LZW GeoTIFF)",
+      "bytes_per_tile_measured": 421910035,
+      "mb_per_tile_measured": 421.91,
+      "bytes_per_land_cell": 1.921,
+      "percent_of_original": 100.0,
+      "ranged_gets_to_read_one_measured_tile": 51,
+      "storage_by_basis": {
+        "measured_tile": {
+          "bytes_per_tile": 421910035,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.3929,
+              "usd_per_month": 0.009
+            },
+            "versions_5": {
+              "gb": 1.9647,
+              "usd_per_month": 0.0452
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 39.2934,
+              "usd_per_month": 0.9037
+            },
+            "versions_5": {
+              "gb": 196.4672,
+              "usd_per_month": 4.5187
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 110.0216,
+              "usd_per_month": 2.5305
+            },
+            "versions_5": {
+              "gb": 550.1081,
+              "usd_per_month": 12.6525
+            }
+          }
+        },
+        "half_land_assumption": {
+          "bytes_per_tile": 1536767750,
+          "one_tile": {
+            "versions_1": {
+              "gb": 1.4312,
+              "usd_per_month": 0.0329
+            },
+            "versions_5": {
+              "gb": 7.1561,
+              "usd_per_month": 0.1646
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 143.1226,
+              "usd_per_month": 3.2918
+            },
+            "versions_5": {
+              "gb": 715.6132,
+              "usd_per_month": 16.4591
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 400.7434,
+              "usd_per_month": 9.2171
+            },
+            "versions_5": {
+              "gb": 2003.7171,
+              "usd_per_month": 46.0855
+            }
+          }
+        },
+        "all_land_scenario": {
+          "bytes_per_tile": 3073535501,
+          "one_tile": {
+            "versions_1": {
+              "gb": 2.8625,
+              "usd_per_month": 0.0658
+            },
+            "versions_5": {
+              "gb": 14.3123,
+              "usd_per_month": 0.3292
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 286.2453,
+              "usd_per_month": 6.5836
+            },
+            "versions_5": {
+              "gb": 1431.2265,
+              "usd_per_month": 32.9182
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 801.4868,
+              "usd_per_month": 18.4342
+            },
+            "versions_5": {
+              "gb": 4007.4342,
+              "usd_per_month": 92.171
+            }
+          }
+        }
+      }
+    },
+    "L0_yardstick_zstd19": {
+      "what": "same layers, lossless, zstd-19 yardstick",
+      "bytes_per_tile_measured": 148892092,
+      "mb_per_tile_measured": 148.892,
+      "bytes_per_land_cell": 0.6779,
+      "percent_of_original": 35.29,
+      "ranged_gets_to_read_one_measured_tile": 18,
+      "storage_by_basis": {
+        "measured_tile": {
+          "bytes_per_tile": 148892092,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.1387,
+              "usd_per_month": 0.0032
+            },
+            "versions_5": {
+              "gb": 0.6933,
+              "usd_per_month": 0.0159
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 13.8667,
+              "usd_per_month": 0.3189
+            },
+            "versions_5": {
+              "gb": 69.3333,
+              "usd_per_month": 1.5947
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 38.8266,
+              "usd_per_month": 0.893
+            },
+            "versions_5": {
+              "gb": 194.1332,
+              "usd_per_month": 4.4651
+            }
+          }
+        },
+        "half_land_assumption": {
+          "bytes_per_tile": 542325487,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.5051,
+              "usd_per_month": 0.0116
+            },
+            "versions_5": {
+              "gb": 2.5254,
+              "usd_per_month": 0.0581
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 50.508,
+              "usd_per_month": 1.1617
+            },
+            "versions_5": {
+              "gb": 252.54,
+              "usd_per_month": 5.8084
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 141.4224,
+              "usd_per_month": 3.2527
+            },
+            "versions_5": {
+              "gb": 707.112,
+              "usd_per_month": 16.2636
+            }
+          }
+        },
+        "all_land_scenario": {
+          "bytes_per_tile": 1084650974,
+          "one_tile": {
+            "versions_1": {
+              "gb": 1.0102,
+              "usd_per_month": 0.0232
+            },
+            "versions_5": {
+              "gb": 5.0508,
+              "usd_per_month": 0.1162
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 101.016,
+              "usd_per_month": 2.3234
+            },
+            "versions_5": {
+              "gb": 505.08,
+              "usd_per_month": 11.6168
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 282.8448,
+              "usd_per_month": 6.5054
+            },
+            "versions_5": {
+              "gb": 1414.2239,
+              "usd_per_month": 32.5272
+            }
+          }
+        }
+      }
+    },
+    "L1_screen": {
+      "what": "eudr-screen.v1 codes, zstd-19",
+      "bytes_per_tile_measured": 13647704,
+      "mb_per_tile_measured": 13.648,
+      "bytes_per_land_cell": 0.0621,
+      "percent_of_original": 3.235,
+      "ranged_gets_to_read_one_measured_tile": 2,
+      "storage_by_basis": {
+        "measured_tile": {
+          "bytes_per_tile": 13647704,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.0127,
+              "usd_per_month": 0.0003
+            },
+            "versions_5": {
+              "gb": 0.0636,
+              "usd_per_month": 0.0015
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 1.271,
+              "usd_per_month": 0.0292
+            },
+            "versions_5": {
+              "gb": 6.3552,
+              "usd_per_month": 0.1462
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 3.5589,
+              "usd_per_month": 0.0819
+            },
+            "versions_5": {
+              "gb": 17.7946,
+              "usd_per_month": 0.4093
+            }
+          }
+        },
+        "half_land_assumption": {
+          "bytes_per_tile": 49710482,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.0463,
+              "usd_per_month": 0.0011
+            },
+            "versions_5": {
+              "gb": 0.2315,
+              "usd_per_month": 0.0053
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 4.6296,
+              "usd_per_month": 0.1065
+            },
+            "versions_5": {
+              "gb": 23.1482,
+              "usd_per_month": 0.5324
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 12.963,
+              "usd_per_month": 0.2981
+            },
+            "versions_5": {
+              "gb": 64.8151,
+              "usd_per_month": 1.4907
+            }
+          }
+        },
+        "all_land_scenario": {
+          "bytes_per_tile": 99420964,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.0926,
+              "usd_per_month": 0.0021
+            },
+            "versions_5": {
+              "gb": 0.463,
+              "usd_per_month": 0.0106
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 9.2593,
+              "usd_per_month": 0.213
+            },
+            "versions_5": {
+              "gb": 46.2965,
+              "usd_per_month": 1.0648
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 25.926,
+              "usd_per_month": 0.5963
+            },
+            "versions_5": {
+              "gb": 129.6302,
+              "usd_per_month": 2.9815
+            }
+          }
+        }
+      }
+    },
+    "L2_decision": {
+      "what": "eudr-decision.v1 codes, zstd-19",
+      "bytes_per_tile_measured": 8242423,
+      "mb_per_tile_measured": 8.242,
+      "bytes_per_land_cell": 0.0375,
+      "percent_of_original": 1.954,
+      "ranged_gets_to_read_one_measured_tile": 1,
+      "storage_by_basis": {
+        "measured_tile": {
+          "bytes_per_tile": 8242423,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.0077,
+              "usd_per_month": 0.0002
+            },
+            "versions_5": {
+              "gb": 0.0384,
+              "usd_per_month": 0.0009
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 0.7676,
+              "usd_per_month": 0.0177
+            },
+            "versions_5": {
+              "gb": 3.8382,
+              "usd_per_month": 0.0883
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 2.1494,
+              "usd_per_month": 0.0494
+            },
+            "versions_5": {
+              "gb": 10.7469,
+              "usd_per_month": 0.2472
+            }
+          }
+        },
+        "half_land_assumption": {
+          "bytes_per_tile": 30022253,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.028,
+              "usd_per_month": 0.0006
+            },
+            "versions_5": {
+              "gb": 0.1398,
+              "usd_per_month": 0.0032
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 2.796,
+              "usd_per_month": 0.0643
+            },
+            "versions_5": {
+              "gb": 13.9802,
+              "usd_per_month": 0.3215
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 7.8289,
+              "usd_per_month": 0.1801
+            },
+            "versions_5": {
+              "gb": 39.1446,
+              "usd_per_month": 0.9003
+            }
+          }
+        },
+        "all_land_scenario": {
+          "bytes_per_tile": 60044506,
+          "one_tile": {
+            "versions_1": {
+              "gb": 0.0559,
+              "usd_per_month": 0.0013
+            },
+            "versions_5": {
+              "gb": 0.2796,
+              "usd_per_month": 0.0064
+            }
+          },
+          "tropical_belt": {
+            "versions_1": {
+              "gb": 5.5921,
+              "usd_per_month": 0.1286
+            },
+            "versions_5": {
+              "gb": 27.9604,
+              "usd_per_month": 0.6431
+            }
+          },
+          "global_land": {
+            "versions_1": {
+              "gb": 15.6578,
+              "usd_per_month": 0.3601
+            },
+            "versions_5": {
+              "gb": 78.2891,
+              "usd_per_month": 1.8006
+            }
+          }
+        }
+      }
+    }
+  },
+  "recheck_10m_plots": {
+    "original_layers_geotiff": {
+      "measured_tile": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 209.1,
+          "total_compute_seconds": 1062.7,
+          "gets": 5100,
+          "lambda_usd": 0.01773,
+          "get_usd": 0.00204,
+          "total_usd": 0.01977
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 585.48,
+          "total_compute_seconds": 1439.08,
+          "gets": 14280,
+          "lambda_usd": 0.02404,
+          "get_usd": 0.005712,
+          "total_usd": 0.02975
+        }
+      },
+      "half_land_assumption": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 761.63,
+          "total_compute_seconds": 1615.23,
+          "gets": 18400,
+          "lambda_usd": 0.02694,
+          "get_usd": 0.00736,
+          "total_usd": 0.0343
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 2132.56,
+          "total_compute_seconds": 2986.16,
+          "gets": 51520,
+          "lambda_usd": 0.04983,
+          "get_usd": 0.020608,
+          "total_usd": 0.07043
+        }
+      },
+      "all_land_scenario": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 1523.25,
+          "total_compute_seconds": 2376.85,
+          "gets": 36700,
+          "lambda_usd": 0.03963,
+          "get_usd": 0.01468,
+          "total_usd": 0.05431
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 4265.11,
+          "total_compute_seconds": 5118.71,
+          "gets": 102760,
+          "lambda_usd": 0.08537,
+          "get_usd": 0.041104,
+          "total_usd": 0.12647
+        }
+      }
+    },
+    "L0_yardstick_zstd19": {
+      "measured_tile": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 124.1,
+          "total_compute_seconds": 977.7,
+          "gets": 1800,
+          "lambda_usd": 0.01632,
+          "get_usd": 0.00072,
+          "total_usd": 0.01704
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 347.48,
+          "total_compute_seconds": 1201.08,
+          "gets": 5040,
+          "lambda_usd": 0.02007,
+          "get_usd": 0.002016,
+          "total_usd": 0.02209
+        }
+      },
+      "half_land_assumption": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 452.02,
+          "total_compute_seconds": 1305.62,
+          "gets": 6500,
+          "lambda_usd": 0.02178,
+          "get_usd": 0.0026,
+          "total_usd": 0.02438
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 1265.66,
+          "total_compute_seconds": 2119.26,
+          "gets": 18200,
+          "lambda_usd": 0.03538,
+          "get_usd": 0.00728,
+          "total_usd": 0.04266
+        }
+      },
+      "all_land_scenario": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 904.05,
+          "total_compute_seconds": 1757.65,
+          "gets": 13000,
+          "lambda_usd": 0.02931,
+          "get_usd": 0.0052,
+          "total_usd": 0.03451
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 853.6,
+          "tile_decode_seconds": 2531.33,
+          "total_compute_seconds": 3384.93,
+          "gets": 36400,
+          "lambda_usd": 0.05647,
+          "get_usd": 0.01456,
+          "total_usd": 0.07103
+        }
+      }
+    },
+    "L1_screen": {
+      "measured_tile": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 30.0,
+          "total_compute_seconds": 65.5,
+          "gets": 200,
+          "lambda_usd": 0.00111,
+          "get_usd": 8e-05,
+          "total_usd": 0.00119
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 84.0,
+          "total_compute_seconds": 119.5,
+          "gets": 560,
+          "lambda_usd": 0.00205,
+          "get_usd": 0.000224,
+          "total_usd": 0.00227
+        }
+      },
+      "half_land_assumption": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 109.27,
+          "total_compute_seconds": 144.77,
+          "gets": 600,
+          "lambda_usd": 0.00243,
+          "get_usd": 0.00024,
+          "total_usd": 0.00267
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 305.96,
+          "total_compute_seconds": 341.46,
+          "gets": 1680,
+          "lambda_usd": 0.00575,
+          "get_usd": 0.000672,
+          "total_usd": 0.00642
+        }
+      },
+      "all_land_scenario": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 218.54,
+          "total_compute_seconds": 254.04,
+          "gets": 1200,
+          "lambda_usd": 0.00425,
+          "get_usd": 0.00048,
+          "total_usd": 0.00473
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 611.92,
+          "total_compute_seconds": 647.42,
+          "gets": 3360,
+          "lambda_usd": 0.01085,
+          "get_usd": 0.001344,
+          "total_usd": 0.01219
+        }
+      }
+    },
+    "L2_decision": {
+      "measured_tile": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 23.4,
+          "total_compute_seconds": 58.9,
+          "gets": 100,
+          "lambda_usd": 0.001,
+          "get_usd": 4e-05,
+          "total_usd": 0.00104
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 65.52,
+          "total_compute_seconds": 101.02,
+          "gets": 280,
+          "lambda_usd": 0.00174,
+          "get_usd": 0.000112,
+          "total_usd": 0.00185
+        }
+      },
+      "half_land_assumption": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 85.23,
+          "total_compute_seconds": 120.73,
+          "gets": 400,
+          "lambda_usd": 0.00203,
+          "get_usd": 0.00016,
+          "total_usd": 0.00219
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 238.65,
+          "total_compute_seconds": 274.15,
+          "gets": 1120,
+          "lambda_usd": 0.00463,
+          "get_usd": 0.000448,
+          "total_usd": 0.00507
+        }
+      },
+      "all_land_scenario": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 170.46,
+          "total_compute_seconds": 205.96,
+          "gets": 800,
+          "lambda_usd": 0.00345,
+          "get_usd": 0.00032,
+          "total_usd": 0.00377
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 35.5,
+          "tile_decode_seconds": 477.3,
+          "total_compute_seconds": 512.8,
+          "gets": 2240,
+          "lambda_usd": 0.0086,
+          "get_usd": 0.000896,
+          "total_usd": 0.0095
+        }
+      }
+    },
+    "L2_decision_new_polygons": {
+      "note": "L2 codes but the polygon cells are selected on demand (not a registered plot): per-plot time is the decision_new_polygon figure (artifacts/decision/benchmark-v1.json cost_inputs.new_polygon_us: pooled hot medians, 17 supplied plots (W1): P5d precomputed-hash variant, P0, P4)",
+      "per_plot_us": 38.94,
+      "measured_tile": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 23.4,
+          "total_compute_seconds": 412.8,
+          "gets": 100,
+          "lambda_usd": 0.0069,
+          "get_usd": 4e-05,
+          "total_usd": 0.00694
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 65.52,
+          "total_compute_seconds": 454.92,
+          "gets": 280,
+          "lambda_usd": 0.00764,
+          "get_usd": 0.000112,
+          "total_usd": 0.00775
+        }
+      },
+      "half_land_assumption": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 85.23,
+          "total_compute_seconds": 474.63,
+          "gets": 400,
+          "lambda_usd": 0.00793,
+          "get_usd": 0.00016,
+          "total_usd": 0.00809
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 238.65,
+          "total_compute_seconds": 628.05,
+          "gets": 1120,
+          "lambda_usd": 0.01052,
+          "get_usd": 0.000448,
+          "total_usd": 0.01097
+        }
+      },
+      "all_land_scenario": {
+        "tropical_belt": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 170.46,
+          "total_compute_seconds": 559.86,
+          "gets": 800,
+          "lambda_usd": 0.00935,
+          "get_usd": 0.00032,
+          "total_usd": 0.00967
+        },
+        "global_land": {
+          "per_plot_compute_seconds": 389.4,
+          "tile_decode_seconds": 477.3,
+          "total_compute_seconds": 866.7,
+          "gets": 2240,
+          "lambda_usd": 0.0145,
+          "get_usd": 0.000896,
+          "total_usd": 0.0154
+        }
+      }
+    }
+  },
+  "notes": [
+    "At these list prices the figures are cents to a few tens of dollars a month: the layer-size saving is large in proportion and small in absolute cost. The bigger operational gain is time to answer and memory per worker, which this table does not price.",
+    "The ocean-heavy measured tile flatters every representation; the all_land_scenario row is the ceiling.",
+    "Storage assumes one copy of the layers; versions_5 keeps five annual layer vintages.",
+    "Per-plot compute is a hot-path argument. Reading data, cold start and polygon selection for new geometries are separate; the new-polygon row shows that selection dominates once the plot is unregistered.",
+    "Prices are widely known historical list prices assumed for 2026-10-15; no live pricing was consulted."
+  ]
+}
