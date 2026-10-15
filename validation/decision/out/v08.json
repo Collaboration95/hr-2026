@@ -114,7 +114,7 @@
    ]
   },
   "all_equal": true,
-  "read_seconds_single_strip_single_process": 0.02,
+  "read_seconds_single_strip_single_process": 0.03,
   "jrc_values": [
    0,
    1
@@ -150,14 +150,14 @@
  },
  "cost_inputs_from_benchmark": {
   "benchmark_cost_inputs": {
-   "original_us": 84.92,
-   "registry_us": 1.93,
-   "new_polygon_us": 16.1
+   "original_us": 84.51,
+   "registry_us": 1.9,
+   "new_polygon_us": 16.15
   },
   "cost_v1_per_plot_us": {
-   "original_v1": 84.92,
-   "decision_registry": 1.93,
-   "decision_new_polygon": 16.1
+   "original_v1": 84.51,
+   "decision_registry": 1.9,
+   "decision_new_polygon": 16.15
   },
   "equal": true,
   "registry_placeholder_flag_present": false
@@ -175,24 +175,24 @@
   "equal": true
  },
  "cost_original_recheck": {
-  "per_plot_seconds": 849.2,
+  "per_plot_seconds": 845.1,
   "tile_decode_seconds_total": 209.1,
-  "recomputed_total_seconds": 1058.3,
-  "recorded": 1058.3,
-  "recomputed_usd": 0.0197,
-  "recorded_usd": 0.0197,
+  "recomputed_total_seconds": 1054.2,
+  "recorded": 1054.2,
+  "recomputed_usd": 0.01963,
+  "recorded_usd": 0.01963,
   "gets": [
    5100,
    5100
   ]
  },
  "cost_l2_registry_recheck": {
-  "recomputed_total_seconds": 42.7,
-  "recorded": 42.7
+  "recomputed_total_seconds": 42.4,
+  "recorded": 42.4
  },
  "cost_l2_new_polygon_recheck": {
-  "recomputed_total_seconds": 184.4,
-  "recorded": 184.4
+  "recomputed_total_seconds": 184.9,
+  "recorded": 184.9
  },
  "container_caveat": {
   "present": true,
