@@ -409,6 +409,14 @@ class DecisionIndexTests(unittest.TestCase):
         ok = forge_registry([plot_record(2, 8, 2)], [0, 100], [3, 3], grid)
         np.testing.assert_array_equal(di.registry_from_bytes(ok)['plots']['X']['flat_index'], [0, 1, 2, 100, 101, 102])
         self.assertEqual(di.MAX_PLOT_CELLS, __import__('engine.query', fromlist=['x']).MAX_CANDIDATE_CELLS)
+        big = dict(grid, shape=[4000, 4000])  # 4 plots of 3M cells: each within the per-plot cap, 12M in total
+        many = forge_registry([plot_record(1, 3_000_000, plot_id=f'P{i}') for i in range(4)], [0] * 4, [3_000_000] * 4, big)
+        self.assertLess(len(many), 2000)
+        with self.assertRaises(ValueError):
+            di.registry_from_bytes(many)
+        started = time.perf_counter()
+        self.assertLess(peak_bytes(lambda: di.registry_from_bytes(many)), 1_000_000)  # 12M int32 cells if expanded
+        self.assertLess(time.perf_counter() - started, 1.0)
 
     def test_registry_header_types_and_grid_are_validated(self):
         grid = di.grid_identity(self.metadata)

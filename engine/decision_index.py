@@ -32,6 +32,7 @@ MAGIC = b'PLDREG2\n'  # MAGIC | u32 header length | sha256 of header | header | 
 PREFIX_BYTES = len(MAGIC) + 4 + 32
 HEX = frozenset('0123456789abcdef')
 MAX_PLOT_CELLS = 10_000_000  # engine.query.MAX_CANDIDATE_CELLS: no registered selection can be larger
+MAX_REGISTRY_CELLS = 10_000_000  # aggregate across plots, so many small runs cannot add up to an unbounded expansion
 STORE_FILES = {'eudr-screen.v1': 'screen.plds', 'eudr-decision.v1': 'decision.plds'}
 SELECTION_RULE = 'engine.query.select_cells: exact GEOS covers on native cell centres, boundary-inclusive'
 # Scanline tolerance: any centre within TOL_ABS + TOL_REL*max|x| of an edge crossing is decided by
@@ -217,6 +218,8 @@ def _parse_registry(data):
     values = np.frombuffer(payload, '<i4')
     starts, lengths = values[:total].astype(np.int64), values[total:].astype(np.int64)
     cells = grid['shape'][0] * grid['shape'][1]
+    if int(np.clip(lengths, 0, None).sum()) > MAX_REGISTRY_CELLS:
+        raise ValueError('registry selections exceed the aggregate cell budget')
     entries, offset = {}, 0
     for p in plots:
         s, n = starts[offset:offset + p['runs']], lengths[offset:offset + p['runs']]
