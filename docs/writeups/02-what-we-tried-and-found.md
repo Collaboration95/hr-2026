@@ -8,7 +8,7 @@
 | 12 Oct | Company sample arrived. Audit: 17 plots, clean join, Thailand. Public layers fetched. |
 | 13 Oct | A **2 h 35 min autonomous "research lab"**: an AI agent swarm of 14 sessions (one GPT-6 Astra master, two leads, Sol/Luna specialists) with a separate **independent validator** whose only job was to break things. This produced the first working prototype and most of the experiments. |
 | 14 Oct | Completion pass: rebuilt from a clean checkout, independent browser review, recorded walkthrough. |
-| 15 Oct | UI redesign and these writeups. Then the **decision layers**: layer analysis, a 6 KB decision layer, an exhaustive cell proof, a registered-plot index and a whole-tile measurement, validated independently. |
+| 15 Oct | UI redesign and these writeups. Then the **decision layers**: layer analysis, a 6 KB decision layer, an exhaustive cell proof, a registered-plot index and a whole-tile measurement, validated independently. Then three speed-up phases that evening and night. |
 
 The working loop was: **question → freeze the inputs → small experiment → someone else tries to break it → keep or reject on the measurement**. Losing experiments were kept and written up, not hidden.
 
@@ -101,11 +101,31 @@ SystemEarth's slide title was *"Keep the decision, not the data"*. The retained 
 | Fresh-process load + query | 11.1 ms | 1.3 ms (index), 1.0 ms (numpy-free index), 0.24 ms (table) |
 | Peak memory | 75 MB | 37 MB (index), 23 MB (numpy-free index), 21 MB (table) |
 
-These are hot-query and fresh-process load + query times for registered plots, on one region, one laptop and a warm cache. Time from a cold interpreter to an answer is mostly Python and NumPy start-up (115 ms for the original path against 50 ms for the index and about 21 ms for the table). The exception is the numpy-free re-check of registered plots, which never imports NumPy: it answers from a fresh process in 24.8 ms against 49.8 ms for the NumPy index (2.0×, or 4.6× against the original path). What remains is interpreter start-up plus the benchmark harness's own floor. The batch figure needs a batch in hand: one new plot gains nothing, and on a 17-plot batch it is only 1.2× ahead of the one-at-a-time path. Three same-day perf passes lifted the new-boundary speed-up from 2.2× to 3.0×, then 5.0×, then 5.3×, and the index from 24× to 31×, then 33×, then 44×, without changing any output; details are in the [report](../lab/decision-layer-report.md#third-perf-pass-15-oct-late-night).
+These are hot-query and fresh-process load + query times for registered plots, on one region, one laptop and a warm cache. Time from a cold interpreter to an answer is mostly Python and NumPy start-up (115 ms for the original path against 50 ms for the index and about 21 ms for the table). The exception is the numpy-free re-check of registered plots, which never imports NumPy: it answers from a fresh process in 24.8 ms against 49.8 ms for the NumPy index (2.0×, or 4.6× against the original path). What remains is interpreter start-up plus the benchmark harness's own floor. The batch figure needs a batch in hand: one new plot gains nothing, and on a 17-plot batch it is only 1.2× ahead of the one-at-a-time path. Three speed-up phases that evening and night lifted the new-boundary speed-up from 2.2× to 3.0×, then 5.0×, then 5.3×, and the index from 24× to 31×, then 33×, then 44×, without changing any output; the story is in the next section and the figures are in the [report](../lab/decision-layer-report.md#speed-up-phases).
 
 The honest part: a plain GeoTIFF of the decision codes is already 98.6% smaller. The win is knowing what to keep and proving it is enough; our encoding adds the last 28%. Swapping the JRC sampling rule (centre cell, 3×3 majority, or "any forest") changes no plot decision.
 
 **New finding:** Hansen alone shows loss after 2020 on 7 of the 17 plots. Only **P-0001** has mapped loss on mapped 2020 forest: **2 cells in 2022**, out of its 38 Hansen loss cells.
+
+## 15 Oct: three speed-up phases
+
+After the decision layers were proven, we spent the evening and night making them faster. The rule for every phase: no output, store byte or file format may change, and the proof, validators and tests must stay green. Each phase ended with a full benchmark re-run. All multiples are against the original retained query, on one region, one laptop and a warm cache. The table is in the [report](../lab/decision-layer-report.md#speed-up-phases).
+
+**Phase 1 (evening): faster decode, reduction and selection.**
+- *Tried:* decode the store on its packed bit-planes instead of expanding all 744,732 cells; trim the histogram reduction; validate clean GeoJSON in bulk and build the polygon from one array.
+- *Worked:* new boundaries 2.2× → 3.0×; registered index 24× → 31×; fresh-process load + query for the index 3.5 → 1.3 ms; peak memory 43 → 37 MB.
+- *Didn't:* end-to-end time. Importing NumPy (about 25 ms of roughly 50) and starting Python (about 14 ms) dominate, so it moved only from 52 to 50 ms. We do not quote Phase 1 as an end-to-end gain.
+
+**Phase 2 (night): co-design experiments.**
+- *Tried:* fit the code to the workload. A pure-Python scalar scan for small new polygons; a batch evaluator for many new polygons at once; and a re-check of registered plots straight from the packed bit-planes with only the standard library.
+- *Worked:* new boundaries 3.0× → 5.0×; 500 synthetic polygons from 28,500 to 42,000 per second, or about 128,000 per second as a batch (14×); the numpy-free re-check at 44× hot, with end-to-end falling from 50 to 24.6 ms because it never imports NumPy.
+- *Didn't:* the scalar scan aimed for about 12 µs per plot and landed at about 17 µs. Batching is only 1.2× ahead on the 17 supplied plots (the gain needs hundreds), and the batch path was slower from a cold start (3.6 against 1.6 ms). The numpy-free path cannot check the decoded raster's hash without a full decode, so it relies on a pinned store file hash.
+
+**Phase 3 (late night): two small wins.**
+- *Tried:* make the shared histogram reducer unpack its 20 codes by name; replace `np.unique` in the batch path.
+- *Worked:* the reducer became about 2× faster (1.6 to 0.8 µs per call), which lifted the registered index from 33× to 44× and the numpy-free re-check from 44× to 65×. The batch path's cold start fell from 3.6 to 1.5 ms, because NumPy 2.5's `np.unique` imports `numpy.ma` on first use (about 2 ms).
+- *Didn't:* anything else. The answer table stayed at about 417×.
+- *Floors that are left:* about 5 µs of the remaining ~16 µs per new plot is the required geometry validity check; end-to-end time is interpreter start-up (about 14 ms) plus the benchmark harness's own floor (about 20 ms).
 
 ## Sources
 

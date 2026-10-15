@@ -1,6 +1,6 @@
 # Decision-layer benchmark (draft, 15 Oct 2026)
 
-Updated after the third (late night) perf pass (see the [decision-layer report](decision-layer-report.md#third-perf-pass-15-oct-late-night); the [night pass](decision-layer-report.md#second-perf-pass-15-oct-night) and the earlier [evening pass](decision-layer-report.md#perf-pass-15-oct-evening) are history): the figures below are the latest re-run. The retained path P0 and the answer table P6 are unchanged within noise. The night pass added three paths: P4B (batch evaluator), P5Ls and P5Ld (numpy-free registered-plot re-check). The third pass speeds up the shared histogram reducer (every live-answer path) and the batch evaluator's first call. The second-pass figures are kept in the [comparison table](#third-pass-against-second-pass) below the headline table.
+Updated after Phase 3 (15 Oct, late night) of the speed-up work. The consolidated phase table is in the [decision-layer report](decision-layer-report.md#speed-up-phases); the phases are [Phase 1](decision-layer-report.md#phase-1-15-oct-evening-faster-decode-reduction-and-selection) (faster decode, reduction and selection), [Phase 2](decision-layer-report.md#phase-2-15-oct-night-co-design-experiments) (co-design experiments) and [Phase 3](decision-layer-report.md#phase-3-15-oct-late-night-two-small-wins) (two small wins). The figures below are the latest re-run (Phase 3). The retained path P0 and the answer table P6 are unchanged within noise. Phase 2 added three paths: P4B (batch evaluator), P5Ls and P5Ld (numpy-free registered-plot re-check). Phase 3 speeds up the shared histogram reducer (every live-answer path) and the batch evaluator's first call. The Phase 2 figures are kept in the [comparison table](#phase-3-against-phase-2) below the headline table.
 
 Draft section for the main agent to integrate. Code: [`engine/decision_benchmark.py`](../../engine/decision_benchmark.py). Result: [`benchmark-v1.json`](../../artifacts/decision/benchmark-v1.json) (raw samples, summaries, decomposition, binding checks). Rerun with `.venv-data/bin/python -B -m engine.decision_benchmark` (about 2.6 minutes; `--quick` is a 6-second smoke test that writes to the temp directory).
 
@@ -26,11 +26,11 @@ Median, with p95 in brackets. Pooled over 2 whole runs. Each run uses 2 fresh ho
 | P6 screen table | 0.0036 (0.0038) | 0.246 (0.27) | 21.5 (23.2) | 20.7 | 20,650 | 0 |
 | P6 decision table | 0.0035 (0.0036) | 0.243 (0.26) | 21.3 (23.4) | 20.7 | 20,650 | 0 |
 
-### Third pass against second pass
+### Phase 3 against Phase 2
 
-Same 17 plots. "Second pass" is the night re-run that the headline table showed before. Multiples are against P0.
+Same 17 plots. "Phase 2" is the night re-run that the headline table showed before. Multiples are against P0.
 
-| Path | Hot per plot, second pass | Hot per plot, third pass | Fresh process, second pass | Fresh process, third pass | End-to-end, second pass | End-to-end, third pass |
+| Path | Hot per plot, Phase 2 | Hot per plot, Phase 3 | Fresh process, Phase 2 | Fresh process, Phase 3 | End-to-end, Phase 2 | End-to-end, Phase 3 |
 | --- | --- | --- | --- | --- | --- | --- |
 | P4 fast selection | 17.0 µs (5.0×) | 16.1 µs (5.3×) | 1.55 ms | 1.54 ms | 56.5 ms | 56.8 ms |
 | P4B batch evaluator | 14.2 µs (6.0×) | 13.4 µs (6.4×) | 3.64 ms | 1.54 ms | 59.1 ms | 56.5 ms |
@@ -60,7 +60,7 @@ Speedup is the slower path's median divided by the faster path's. Same questions
 | --- | --- | --- | --- | --- |
 | Representation, P1 to P3: derived codes instead of original layers, same selection | 1.60× | 1.47× | 7.04× | 2.17× |
 | Selection, P3 to P4: `fast_select_cells` (scalar scan and fused reduction) instead of `select_cells` | 4.27× | 3.96× | 1.74× | 1.01× |
-| Batch, P4 to P4B: one vectorized pass for the whole workload | 1.20× | 3.23× | 1.00× (was 0.43×, slower, before the third pass) | 1.00× |
+| Batch, P4 to P4B: one vectorized pass for the whole workload | 1.20× | 3.23× | 1.00× (was 0.43×, slower, before Phase 3) | 1.00× |
 | Registry index, P3 to P5: precomputed cells instead of selection | 35.6× | not applicable | 2.10× | 1.15× |
 | No numpy, P5 to P5L: standard library only, packed planes | 1.47× | not applicable | 1.27× | 2.01× |
 | Table, P5 to P6: stored outputs instead of a bincount and reduction | 9.49× | not applicable | 5.26× | 2.34× |
@@ -70,9 +70,9 @@ Speedup is the slower path's median divided by the faster path's. Same questions
 The screen level gives the same shape: P1 to P2 1.71× hot and 4.9× cold, P2 to P5 30.2× hot, P5 to P5L 1.37× hot and 1.90× end-to-end, P5 to P6 10.9× hot, P1 to P6 561× hot.
 
 - The representation step lumps two things: the stored per-cell codes replace the float affine lookup of two layers, and the reduction becomes one bincount over 20 codes.
-- Fast selection is much faster than `select_cells` on ordinary shapes and less so on boundary-heavy ones. On 100 adversarial boundary polygons (aligned edges, vertices on cell centres, slivers, lattices; from the test fuzz generator) P4 takes 25.0 µs per polygon against 47.9 for P3, a 1.92× speedup (it was 1.88× after the night pass, 1.16× after the evening pass and 0.81×, slower, before it), because many centres still go to exact GEOS. P4B takes 8.1 µs there. "P3 to P4 is only the selection algorithm" is no longer exactly true: P4 also uses a fused reduction.
-- P4B needs a batch in hand. Below `MIN_BATCH` = 4 it just loops over the single path, so one new plot gains nothing. On the 17-plot batch it is only 1.2× ahead of P4 (13.4 against 16.1 µs per plot), because the fixed per-call cost of its NumPy and shapely passes is spread over few plots. From a cold start it is now level with P4 (1.54 ms each). It was slower before the third pass (3.64 against 1.55 ms) because numpy 2.5's `np.unique` imports `numpy.ma` on first use, about 2 ms; a small sort-and-dedupe helper replaced it with an identical result. The gain shows on the 500-polygon batch (3.23×).
-- Most end-to-end time is imports. P0 and P1 spend about 73 ms importing numpy, shapely and rasterio. P3, P4 and P4B spend 30 ms (no rasterio). P5 spends 24 ms (no shapely). P5L spends 3.4 ms (stdlib only, no numpy). P6 spends 1.15 ms (stdlib only). The evening pass changed none of this, which is why end-to-end barely moved then: P5 decision went from 52.4 to 50.0 ms while its load + query went from 3.5 to 1.3 ms. P5L is the exception: dropping `import numpy` takes the registered re-check from 49.8 to 24.8 ms end-to-end (2.0×; 4.6× against P0). What is left is interpreter start-up (about 14 ms) plus the harness floor (about 20 ms). Net of the 19.8 ms harness floor, P5L decision costs 5.0 ms. The third pass did not move end-to-end times except the batch path's (59.1 to 56.5 ms).
+- Fast selection is much faster than `select_cells` on ordinary shapes and less so on boundary-heavy ones. On 100 adversarial boundary polygons (aligned edges, vertices on cell centres, slivers, lattices; from the test fuzz generator) P4 takes 25.0 µs per polygon against 47.9 for P3, a 1.92× speedup (it was 1.88× after Phase 2, 1.16× after Phase 1 and 0.81×, slower, at the start), because many centres still go to exact GEOS. P4B takes 8.1 µs there. "P3 to P4 is only the selection algorithm" is no longer exactly true: P4 also uses a fused reduction.
+- P4B needs a batch in hand. Below `MIN_BATCH` = 4 it just loops over the single path, so one new plot gains nothing. On the 17-plot batch it is only 1.2× ahead of P4 (13.4 against 16.1 µs per plot), because the fixed per-call cost of its NumPy and shapely passes is spread over few plots. From a cold start it is now level with P4 (1.54 ms each). It was slower before Phase 3 (3.64 against 1.55 ms) because numpy 2.5's `np.unique` imports `numpy.ma` on first use, about 2 ms; a small sort-and-dedupe helper replaced it with an identical result. The gain shows on the 500-polygon batch (3.23×).
+- Most end-to-end time is imports. P0 and P1 spend about 73 ms importing numpy, shapely and rasterio. P3, P4 and P4B spend 30 ms (no rasterio). P5 spends 24 ms (no shapely). P5L spends 3.4 ms (stdlib only, no numpy). P6 spends 1.15 ms (stdlib only). Phase 1 changed none of this, which is why end-to-end barely moved then: P5 decision went from 52.4 to 50.0 ms while its load + query went from 3.5 to 1.3 ms. P5L is the exception: dropping `import numpy` takes the registered re-check from 49.8 to 24.8 ms end-to-end (2.0×; 4.6× against P0). What is left is interpreter start-up (about 14 ms) plus the harness floor (about 20 ms). Net of the 19.8 ms harness floor, P5L decision costs 5.0 ms. Phase 3 did not move end-to-end times except the batch path's (59.1 to 56.5 ms).
 - The registry adds about 0.17 ms of load (1.22 ms against 1.05 ms for the store alone) and saves about 1.6 ms of query, so P5 process-cold is 1.28 ms against 2.69 ms for P3. P5L loads in 0.97 ms because it reads and validates the store without building arrays, so its process-cold time is 1.01 ms.
 
 ## New polygons
@@ -88,11 +88,11 @@ Throughput on 500 synthetic plot-like polygons (W3), one core, hot. These are se
 | P4 fast selection | 22.9 (23.8) | 43,700 |
 | P4B batch evaluator (whole 500 in one call) | 7.08 (7.52) | 141,000 |
 
-Second pass for the two live paths: P4 23.8 µs (42,000 per second), P4B 7.81 µs (128,000 per second).
+Phase 2 for the two live paths: P4 23.8 µs (42,000 per second), P4B 7.81 µs (128,000 per second).
 
 P4 is 4.7× the original path and P4B is 15× (3.2× over P4). P4B's per-polygon figure is the batch time divided by 500, so it needs the batch in hand.
 
-On the 100 adversarial polygons (W4, P3, P4 and P4B only): P3 47.9 µs (51.2), P4 25.0 (26.2), P4B 8.1 (8.7). Second pass: P3 48.7, P4 25.9, P4B 9.0.
+On the 100 adversarial polygons (W4, P3, P4 and P4B only): P3 47.9 µs (51.2), P4 25.0 (26.2), P4B 8.1 (8.7). Phase 2: P3 48.7, P4 25.9, P4B 9.0.
 
 Registered-plot key, hot, per plot:
 
@@ -106,9 +106,9 @@ The realistic registered-plot workflow is the precomputed key. A plot is registe
 
 ## Stability
 
-One full invocation of the benchmark: two whole runs back to back (75.3 and 77.0 s), with the one-minute load average between 1.9 and 2.6 at the start and end of both (about 2.1 typical, slightly busier than the second pass, which was 1.5 to 2.3). Power was AC.
+One full invocation of the benchmark: two whole runs back to back (75.3 and 77.0 s), with the one-minute load average between 1.9 and 2.6 at the start and end of both (about 2.1 typical, slightly busier than Phase 2, which was 1.5 to 2.3). Power was AC.
 
-- Between the two runs, the median spread is 1.0% across 49 metrics and the largest is 3.6% (P6 decision hot 17-plot batch; P6 process-cold is next). No metric exceeds 10%. The second pass had 0.3% and 1.4%, so this run was a little noisier.
+- Between the two runs, the median spread is 1.0% across 49 metrics and the largest is 3.6% (P6 decision hot 17-plot batch; P6 process-cold is next). No metric exceeds 10%. Phase 2 had 0.3% and 1.4%, so this run was a little noisier.
 - Between the individual hot children of a path (23 hot metrics, 4 children each), the median spread is 2.1% and the largest is 4.8% (P6 decision hot batch). The next largest is 4.3%, the P5L decision hot batch. No metric exceeds 10%.
 - The hot p95 is within 10% of its median for the batch timings of every path except two: P3 on the 500 synthetic polygons (17% above) and, among the hash-every-call variants, P6 decision (15% above).
 - The cost-estimate inputs are recorded in the artifact (`cost_inputs`): registry 1.93 µs, original 84.92, new polygon 16.1, all pooled hot medians on the 17 supplied plots (P5 decision with the precomputed hash, P0, P4). The 500 synthetic polygons give 22.88 µs for new polygons; it is recorded beside the others and not used.
@@ -118,18 +118,18 @@ One full invocation of the benchmark: two whole runs back to back (75.3 and 77.0
 
 Ran `.venv-data/bin/python -B -m engine.decision_scale --read-timing --cost` and rewrote [`cost-v1.json`](../../artifacts/decision/cost-v1.json). `--cost` now reads the per-plot inputs from `benchmark-v1.json` (`cost_inputs`) and the original-layers tile read time from [`tile-read-v1.json`](../../artifacts/decision/tile-read-v1.json), so the model cannot drift from the measurements. Re-checking 10 million registered plots over the tropical belt (measured-tile basis):
 
-| Representation | Compute before | Compute now | Lambda USD before | Lambda USD now |
+| Representation | Compute, Phase 1 | Compute, Phase 2 | Lambda USD, Phase 1 | Lambda USD, Phase 2 |
 | --- | --- | --- | --- | --- |
 | Original layers | 1,069 s | 1,058 s | 0.0178 | 0.0177 |
 | L1 screen registry | 58.0 s | 56.1 s | 0.0010 | 0.0010 |
 | L2 decision registry | 51.4 s | 49.5 s | 0.0009 | 0.0009 |
 | L2 decision, new polygons | 314 s | 193 s | 0.0053 | 0.0032 |
 
-"Before" is the evening perf pass; "now" is the night pass. The registry lines barely move. The new-polygon line drops by 38% in time (and in cost) because the scalar scan made selection plus reduction cheaper.
+The registry lines barely move. The new-polygon line drops by 38% in time (and in cost) because the scalar scan made selection plus reduction cheaper.
 
-Third pass, same basis. The cost column is the third-pass total (Lambda plus GET requests):
+Phase 3, same basis. The cost column is the Phase 3 total (Lambda plus GET requests):
 
-| Representation | Compute, second pass | Compute, third pass | Cost, third pass |
+| Representation | Compute, Phase 2 | Compute, Phase 3 | Cost, Phase 3 |
 | --- | --- | --- | --- |
 | Original layers | 1,058 s | 1,058 s | 0.020 |
 | L1 screen registry | 56.1 s | 49.3 s | 0.0009 |
@@ -138,16 +138,16 @@ Third pass, same basis. The cost column is the third-pass total (Lambda plus GET
 
 The registry lines drop by about 14% in time because the shared reducer is faster. The original-layers line is unchanged. New polygons drop by about 5%.
 
-The third pass moved the inputs again, to 84.92, 1.93 and 16.1 µs; the table below shows the effect. Before that, the per-plot inputs changed from 94.0, 3.0 (a placeholder) and 67.1 µs to the measured 84.91, 2.61 and 17.0 (they were 85.98, 2.80 and 29.09 after the evening perf pass, and 85.36, 3.55 and 38.94 before it). The registry placeholder was 15% too low. The plan's new-polygon figure was too high: selection plus reduction now measures at 17.0 µs per plot, 75% below the plan's 67.1. The tile-read part of the original-layers row also changed: 209 s (2.091 s per tile, 100 tiles, one process) replaces 710 s, which was the sum of strip-read times across 8 workers (7.1 s per tile). The L1 and L2 decode parts are unchanged (30 s and 23 s). The descriptive labels in `cost-v1.json` now derive from the parameters, and each per-plot input names its source in `benchmark-v1.json`.
+Phase 3 moved the inputs again, to 84.92, 1.93 and 16.1 µs (original, registry, new polygon); the tables above show the effect. Before that, the per-plot inputs changed from 94.0, 3.0 (a placeholder) and 67.1 µs to the measured 84.91, 2.61 and 17.0 in Phase 2. They were 85.98, 2.80 and 29.09 after Phase 1, and 85.36, 3.55 and 38.94 at the start. The registry placeholder was 15% too low. The plan's new-polygon figure was too high: selection plus reduction now measures at 17.0 µs per plot, 75% below the plan's 67.1. The tile-read part of the original-layers row also changed: 209 s (2.091 s per tile, 100 tiles, one process) replaces 710 s, which was the sum of strip-read times across 8 workers (7.1 s per tile). The L1 and L2 decode parts are unchanged (30 s and 23 s). The descriptive labels in `cost-v1.json` now derive from the parameters, and each per-plot input names its source in `benchmark-v1.json`.
 
 ## Caveats
 
 - P0 answers a bigger question than P1 to P6 (it also returns the canopy histogram), so it is not a like-for-like baseline. P1 is, and it is slower than P0 (1.86 against 1.44 ms hot), so speedups against P1 are larger.
 - Representation alone buys little hot speed (1.6× against P1) because both paths pay for polygon selection. The large hot gains come from the registry and the table, which exist only for registered plots. A new or changed polygon takes the P3 or P4 path.
-- Fast selection is exact (equal to `select_cells` on every polygon checked here, including 58,896 polygon and grid cases against a verbatim copy of the old code) but not equally faster everywhere: about 4× faster on the 17 plots and the 500 synthetic polygons, only 1.92× on the boundary-heavy adversarial set (1.88× after the night pass, 1.16× after the evening pass, 0.81× before it). The batch evaluator was compared with the single path on about 185,000 cases with no mismatch, and it is only a gain when a batch is in hand.
+- Fast selection is exact (equal to `select_cells` on every polygon checked here, including 58,896 polygon and grid cases against a verbatim copy of the old code) but not equally faster everywhere: about 4× faster on the 17 plots and the 500 synthetic polygons, only 1.92× on the boundary-heavy adversarial set (1.88× after Phase 2, 1.16× after Phase 1, 0.81× at the start). The batch evaluator was compared with the single path on about 185,000 cases with no mismatch, and it is only a gain when a batch is in hand.
 - The numpy-free re-check (P5L) does not check the decoded raster's `codes_sha256`, because that needs a full decode. The benchmark pins the store file's sha256, which closes the gap; a caller that does not pin it gets every other check but not that one. About 118,000 corrupted store blobs were all rejected with `ValueError`.
 - Nothing is disk-cold. The OS file cache is warm and uncontrolled, and network or object-store latency is out of scope.
-- One Apple M5 laptop with other processes running (this re-run was on AC power with low-power mode off; the evening re-run was on battery), a small 1233 × 604 cell chip and 17 real plots. Differences under the reported spread (about 0.3% typical, up to 1.4% between runs) are not findings, and nothing here says how a whole tile or a larger fleet behaves.
+- One Apple M5 laptop with other processes running (this re-run was on AC power with low-power mode off; the Phase 1 re-run was on battery), a small 1233 × 604 cell chip and 17 real plots. Differences under the reported spread (about 0.3% typical, up to 1.4% between runs) are not findings, and nothing here says how a whole tile or a larger fleet behaves.
 - End-to-end numbers assume bytecode caches. The benchmark compiles the engine modules before timing (gitignored `__pycache__`; children run with `-B` and only read). Without caches, start-up compiles each module, for example 2.7 ms for `decision_store.py`, 4.0 ms for `decision_index.py`, 2.1 ms for `decision_batch.py` and 1.3 ms for `decision_lite.py`. The larger new modules are hit hardest.
 - The P6 end-to-end figure includes about 5.4 ms of this harness's own imports (JSON, hashlib, pathlib) above bare `python -c pass`. Net of that harness floor, P6 decision costs 1.5 ms; the artifact breaks out 1.15 ms of imports, 0.24 ms of load and 0.01 ms of query inside the child. Quote P6 as interpreter start-up plus about 1.5 ms. The same applies to P5L decision: 24.6 ms end-to-end is interpreter start-up, the harness floor and 4.9 ms of its own work.
 - W3 is synthetic and its shapes are my assumption. Outputs are mapped observations, never legal compliance findings.
