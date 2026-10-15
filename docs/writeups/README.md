@@ -9,6 +9,7 @@ Written 15 October 2026 to catch up on everything done so far, mostly by earlier
 | 3 | [What we ship](03-what-we-ship.md) | The scope for the finals, the deliberate cuts and open questions |
 | 4 | [The pitch](04-pitch.md) | One-liner, 30-second elevator pitch, 3-minute demo script, and likely judge questions |
 | 5 | [Redesign decisions](05-redesign-decisions.md) | What changed in the UI today and why, plus what was verified |
+| 6 | [Decision layers](../lab/decision-layer-report.md) | The layer analysis, the 6 KB decision layer, its proof, and the storage and speed results |
 
 ## The two-minute version
 
@@ -17,11 +18,11 @@ Written 15 October 2026 to catch up on everything done so far, mostly by earlier
 - **The layers:**
   - **Hansen** tree-cover data: canopy in 2000, the year of loss for 2001–2025, and a land/water mask, at ~28 m.
   - **JRC 2020 forest map** as a separate baseline layer.
-- **What we built:** a compact store and the original path, one written query rule, and a **proof that all 17 plot answers are identical** with **every pixel preserved**. It also has receipts, a live query API, and the **Plotline** app to explore it.
-- **Honest numbers:**
-  - 8.6% smaller.
-  - ~1.9× faster cold start; no hot-query speedup.
-  - A tuned standard GeoTIFF is 0.5% smaller still, and we show it.
+- **What we built:** a written query rule, the original path and a lossless store, with a **proof that all 17 plot answers are identical**. On 15 Oct we added **decision layers**: we kept only what the EUDR decision reads and proved it gives the same answer for **every one of 744,732 cells**. It also has receipts, a live query API, and the **Plotline** app to explore it.
+- **Numbers:**
+  - The decision layer is **6.1 KB vs 623 KB of original layers: 99% smaller**. On a whole 10° tile it is 98% smaller (94.5% vs a zstd recompression).
+  - Registered plots are re-checked **24× faster** hot (420× from a stored answer table). New boundaries are 2.2× faster.
+  - A plain GeoTIFF of our decision codes is already 98.6% smaller: the win is the layer analysis, and we show it. The lossless store is only 8.6% smaller and stays as the audit tier.
   - Our ML codec selector lost, and was rejected.
 - **The headline finding:** the supplier's five "indication of deforestation" plots show **no** loss on the layer they cite. Three plots they cleared **do** show loss. Neither the older data release nor a different boundary rule explains it. That is not an accusation. It is why decisions need receipts.
-- **Bonus insight (exploratory):** in this plantation landscape, under 1% of post-2020 loss falls inside 2020 forest. Using one layer on its own raises far too many alarms, and stacking the layers answers the question that actually matters.
+- **What the decision layer shows:** Hansen alone shows post-2020 loss on 7 of 17 plots. Only P-0001 has mapped loss on JRC-mapped 2020 forest (2 cells in 2022). Region-wide, 341 of 80,429 post-2020 loss cells (0.4%) sit on mapped 2020 forest.

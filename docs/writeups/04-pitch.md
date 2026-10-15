@@ -1,69 +1,65 @@
 # 4 · The pitch
 
-Every number below is in the app or the retained evidence. Stick to these numbers and wording, because the judges are engineers and will probe.
+Every number below is in the app or the retained evidence ([decision-layer report](../lab/decision-layer-report.md)). Stick to these numbers and this wording: the judges are engineers and will probe.
 
 ## One line
 
-> **Plotline keeps every plot-level deforestation answer identical while storing the map layers compactly, and gives every answer a receipt you can re-check.**
+> **Plotline keeps the decision, not the data: a 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.**
 
-## Elevator pitch (~30 seconds)
+## Elevator pitch (~30 seconds, ~80 words)
 
-> To sell into the EU, every farm plot has to be shown deforestation-free. You take its boundary and check it against satellite layers: was it forest at the end of 2020, and has it lost trees since? Do that for millions of plots and years of layers and the data gets heavy. SystemEarth asked whether you can shrink it without changing a single decision.
+> To sell into the EU, every farm plot must be shown deforestation-free: forest at the end of 2020, lost since? SystemEarth asked us to keep that decision, not the data.
 >
-> Plotline does that for 17 real supplier plots in Thailand. It stores three Hansen layers across 25 years, plus the EU's 2020 forest map, in a compact form. All 17 plot answers come out **identical** to the original, down to the pixel, and each one ships with a receipt.
->
-> And when we replayed the supplier's own check, none of the five plots they flagged show loss on the layer they cite, while three they cleared do. That's not an accusation. It's exactly why a decision needs a receipt.
+> We worked out what the decision actually reads, and dropped the rest. On 17 real supplier plots, the decision layer is **99% smaller**. Registered plots are re-checked **24× faster**, and every one of 744,732 cells gives the **same answer** as the original layers.
 
 ## Longer version (~60–90 seconds, opens the demo)
 
-> **Problem.** EUDR compliance is a geospatial join at scale: plot polygons × forest baseline × annual loss × protected areas, re-run whenever a layer updates. SystemEarth's question is how to store that compactly, query it fast, and still reproduce every plot decision.
+> **Problem.** EUDR screening is a geospatial join that gets re-run: plot boundaries × forest at the 2020 cut-off × annual loss since, every time a layer updates.
 >
-> **What we built.** A working pipeline on the company's own sample: 17 smallholder plots in Surat Thani, three Hansen bands, 25 years of annual loss and the JRC 2020 forest baseline.
-> - One written query rule: a cell counts if its centre is inside the plot.
-> - Two ways to answer it: from the original GeoTIFFs and from our compact store.
-> - Proof they agree: **17/17 plots identical on every output field**, with every raw pixel and mask preserved.
+> **Layer analysis.** The decision needs three facts per map cell: land or water, forest on 31 December 2020, and the year of any loss since. Hansen's canopy percentages are 72% of its bytes, and no question reads them. Loss years before the cut-off and JRC's sub-cell detail don't change the answer either. We drop all of it and keep a 20-value code per cell.
 >
-> **Honest numbers.**
-> - The store is **8.6% smaller** at the loader boundary.
-> - Fresh start plus all 17 queries runs **about 1.9× faster**. Once data is in memory there is no speed difference.
-> - A tuned standard GeoTIFF is within half a percent of us, and our ML codec selector lost on held-out data, so we rejected it. We show those losses in the product.
+> **Proof.** An independent path rebuilds every code from the original GeoTIFFs: **744,732 of 744,732 cells identical**. Every output is a function of the selected cells' codes, so every possible plot boundary gets the same answer, not just the 17. Fuzzing 9,829 polygons agrees, and an independent validator re-derived it with exact arithmetic.
 >
-> **Why it matters.** The supplier's declarations can't be reproduced from the layer they name, even with the older data release or a looser boundary rule. And in this plantation landscape, Hansen alone would flag rotation harvests as deforestation: under 1% of post-2020 loss sits inside the 2020 forest map. Multi-layer, multi-year, reproducible answers aren't a nice-to-have. They're the product.
+> **Numbers.**
+> - **Smaller:** 6.1 KB vs 623 KB, **99% smaller**. On a whole 10° × 10° tile, 422 MB becomes 8.2 MB (94.5% smaller even against a zstd recompression of the originals).
+> - **Faster:** registered plots **24× faster** hot through a precomputed plot index, and **420×** from a stored answer table. New boundaries are **2.2×** faster with exact scanline selection. The fresh-process load + query time falls from 11.3 ms to 3.5 ms. Peak memory falls from 75 MB to 43 MB.
+> - **Honest controls:** a plain GeoTIFF of our decision codes is already 98.6% smaller. The win is the layer analysis; our encoding adds the last 28%. We show that in the product.
+>
+> **What it finds.** Hansen alone flags 7 of the 17 plots for loss after 2020. Against JRC's 2020 forest map, only **P-0001** shows mapped loss on mapped 2020 forest: **2 cells in 2022**. The supplier's own declarations don't line up with either.
 
-*Caveat for you:* the "under 1%" figure is an **exploratory** count from [`scripts/explore_cross_layer.py`](../../scripts/explore_cross_layer.py), which samples JRC at each Hansen cell centre. It is not part of the verified engine. If a judge asks, say that. The map overlay shows the same thing visually.
+## Three-minute demo: follow one plot
 
-## Three-minute demo (new UI)
-
-Open the app at `#/map`. If the live API is down, the Map, Cohort and Proof views still work offline.
+Open the app at `#/map/P-0001/2022`. If the live API is down, Map, Cohort and Proof still work offline.
 
 | Time | Do | Say |
 | --- | --- | --- |
-| 0:00 | Region view. Press ▶ on the year scrubber. | "This map *is* the data: the Hansen raster we encode, recoloured in the browser, with no satellite photos. Watch tree-cover loss burn in from 2001 to 2025. This is plantation country, so loss is everywhere." |
-| 0:25 | Toggle **JRC 2020 forest**. | "Now stack the EU's 2020 forest map. Most of that loss is outside forest; it's plantation rotation. That's why one layer isn't enough." |
-| 0:45 | Click **P-0001** (or `#/map/P-0001/2022`). | "Zoom into one plot. These squares are the actual ~28 m cells, and the dots are cell centres, which is our written inclusion rule. **Declared:** the supplier says no indication. **Mapped:** 38 loss cells in 2022. Plotline doesn't issue a verdict; it asks the reviewer a specific question." |
-| 1:15 | **Cohort** tab. | "All 17 plots × 25 years on one screen. Look at the matrix: five declared indications, three mapped plots, zero overlap. We tested the older data release and a different boundary rule, and neither explains it." |
-| 1:40 | Click a barcode cell (e.g. P-0005, 2025), then the year count → **Proof**. | "Every number is clickable down to its proof. Same question, two representations: identical outputs, field by field." |
-| 2:00 | Scroll the Proof hero and storage chart. | "17 of 17 plots identical, 100% pixel fidelity. 8.6% smaller, 1.9× faster cold start, no hot-query gain. And here's the standard GeoTIFF that beats us by half a percent. We show where we lose." |
-| 2:30 | Open **Receipt**, then the **Live query** tab → **Run region**. | "Every answer has a receipt with source versions, grid, rule and hashes. And it's live: ask any new region, and both representations answer with the full cell evidence." |
-| 2:50 | Close. | "Plotline: compact layers, identical decisions, answers you can re-check." |
+| 0:00 | Region view; press ▶ on the year scrubber, then pause at 2022. | "This map *is* the data: the Hansen raster, recoloured in the browser. Watch loss burn in from 2001 to 2025. This is rubber and oil-palm country." |
+| 0:20 | Toggle **JRC 2020 forest**. | "Now stack the EU's 2020 forest map. Much of the mapped loss falls outside JRC's 2020 forest class. The cause needs further evidence, but it means one layer alone raises the wrong alarm." |
+| 0:40 | Click **P-0001**. | "One plot. These squares are the ~28 m cells; the dots are the centres, our written inclusion rule. **Declared:** no indication. **Hansen:** 38 loss cells in 2022. **Decision layer:** 60 cells were 2020 forest, and 2 of them were lost in 2022. Plotline asks the reviewer about those 2 cells, not all 38." |
+| 1:15 | **Proof** tab: decision-layer hero. | "That answer came from a 6 KB decision layer, not 623 KB of layers. Every one of 744,732 cells matches the originals, so every plot boundary gets the same answer. 99% smaller. 24× faster for registered plots." |
+| 1:45 | Scroll to the ladder and speed table. | "Here's what we dropped and why: canopy percentages, pre-2021 loss years, JRC sub-cell detail. Here's the standard GeoTIFF control: most of the win is the layer analysis, not a magic codec. The lossless store stays as the audit tier." |
+| 2:15 | **Cohort**, then back to P-0001. | "Zoom out: 17 plots × 25 years. We tested the declarations against our documented rule and two data releases, and they don't line up. That's a question for the evidence files, not an accusation." |
+| 2:40 | Open the **Receipt**. | "Every answer has a receipt: layer versions, grid, rule and hashes. For SystemEarth, the next step is one agreed query contract, one reference plot and a representative workload." |
 
 ## Likely questions, with short answers
 
-1. **"8.6% isn't much compression."** True on a 34 × 17 km chip of already-compressed GeoTIFFs. We report the honest boundary. The point is a verified pipeline that lets you choose the format by workload, and we show a standard GeoTIFF is competitive. The larger opportunity is dropping what decisions don't need (bands, years, areas away from plots). The fidelity proof is what tells you a drop is safe. We haven't measured that at scale yet.
-2. **"What exactly is preserved?"** The full result for every plot: selected cells, land/water/unknown counts, annual loss histogram, period flags and support state. Plus every raw pixel value and validity mask in the region. Not just the headline number.
-3. **"Who decided the centre rule?"** We did, and we wrote it down. An "any overlap" rule changes five answers, so the rule has to be part of the contract. We'd adopt SystemEarth's rule. Changing the rule doesn't change the fidelity claim, because both rules give 17/17 on both stores.
-4. **"Is the supplier lying?"** We can't say that, and we don't. Their result can't be reproduced from the layer they name with our rule or the older release. That's a question for the evidence files, which weren't supplied.
-5. **"Why not use AI?"** We tried a learned codec selector with a sealed spatial holdout. It lost to a fixed setting, so we rejected it. ML should earn its place on measurements.
-6. **"Does it scale?"** We measured 17 plots on one region. We won't extrapolate. The next step is a representative workload from SystemEarth: plot counts, batch sizes, update frequency.
-7. **"Why is JRC separate?"** It has a different grid (~9 m vs ~28 m) and different definitions. Adding its counts to Hansen's would be wrong, so each layer keeps its own native grid, store and proof.
-8. **"Can I reproduce this?"** Yes. `scripts/setup-local.sh` then `scripts/verify-local.sh` rebuilds the proofs from tracked files, and there's no need for the 224 MB source tiles.
+1. **"Isn't dropping data lossy?"** It's lossy on what the decision doesn't read, and exact on what it does. We prove the second part for every cell, not by sampling. The lossless v1 store remains the audit tier, and the public source releases are pinned by hash, so a rule change can re-derive the layer.
+2. **"Why not just GeoTIFF?"** A GeoTIFF of our decision codes is already 98.6% smaller, and we show it. The value is knowing *what* to keep and proving that it's enough. Our encoding is 28% smaller again. Use whichever container suits the stack.
+3. **"Isn't the 420× a cache?"** Yes: a materialised view for registered plots, keyed by plot ID, geometry hash and layer hash, so a change in either misses. EUDR plots are registered once and re-checked as layers update, which is exactly that workload. New boundaries use the decision layer at 2.2×. We report every path separately.
+4. **"What if the rule changes?"** Then the decision layer is re-derived from the pinned originals. It takes seconds for this region and about 3 minutes for a full tile on a laptop with 8 workers. The rule (centre inclusion, JRC at the cell centre) is written down. Swapping JRC's centre rule for a 3×3 majority or "any forest" changes no plot decision here.
+5. **"Does it scale?"** Storage was measured on a whole real tile (1.6 billion cells): 98% smaller than the original files. Query timing was measured on 17 plots and 500 synthetic plots on one laptop. Cost: storing the decision layer for the tropical belt is cents a month at list prices. The bill isn't the point; time to answer and memory per worker are.
+6. **"Is the supplier lying?"** We don't say that. Their result can't be reproduced from the layer they name with our rule or the older release. Their evidence files weren't supplied.
+7. **"What about AI?"** We tried a learned codec selector with a sealed holdout. It lost to a fixed setting, so we rejected it. Here the intelligence is the layer analysis, grounded in the regulation's definitions.
+8. **"What's not covered?"** EUDR's 0.5 ha minimum area, the "able to reach 5 m" test and protected areas (licence unclear). Counts are cells, not hectares.
 
 ## Words to use / avoid
 
 | Use | Avoid |
 | --- | --- |
-| "mapped tree-cover loss", "loss cells" | "deforestation found", "hectares deforested" |
-| "declared by the supplier" | "the supplier is compliant", "violation" |
-| "identical outputs", "encoding fidelity" | "accurate", "ground truth" |
-| "fresh-process load + query" | "disk-cold", "always faster" |
+| "mapped loss on mapped 2020 forest", "loss cells" | "deforestation found", "hectares deforested" |
+| "identical plot-query outputs under our documented rule" | "accurate", "ground truth", "identical deforestation answers" |
+| "we tested the declarations against our documented rule and two data releases" | "we replayed the supplier's own check" |
+| "falls outside JRC's mapped 2020 forest class" | "it's plantation rotation" (the cause isn't established) |
+| "fresh-process load + query, excluding Python start-up" | "disk-cold", "1.9× faster cold start" |
+| "registered plots" vs "new boundaries" | one blended "N× faster" |
 | "a question for the reviewer" | "red flag", "non-compliant" |
