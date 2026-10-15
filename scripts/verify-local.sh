@@ -15,6 +15,7 @@ if [ ! -d "$ROOT/app/node_modules" ]; then
 fi
 
 cd "$ROOT"
+scripts/private-data.sh check
 "$PYTHON" -c 'import sys; assert sys.version_info[:2] == (3, 14), f"Python 3.14 required, found {sys.version.split()[0]}"'
 "$PYTHON" -B -m engine.verify
 "$PYTHON" -B -m engine.jrc --verify artifacts/jrc-baseline-v1.json

@@ -1,0 +1,35 @@
+# SystemEarth's sample and every tracked file that copied its plot boundaries, cell
+# footprints or declaration rows. Shared for local work only, so these stay out of git
+# (see .gitignore) and travel as a private bundle: scripts/private-data.sh pack|unpack|check.
+# Paths only, never contents.
+data/company-sample/2026-10-12/200001-17plots-valid.geojson
+data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv
+artifacts/demo-v1.json
+artifacts/example-v1.json
+artifacts/jrc-baseline-v1.json
+artifacts/spatial-rule-witness-v1.json
+artifacts/decision/registry.bin
+data/experimental/jrc-standard/exp-6ede5eb206c1d91f3dd8047f8406d52d8c9c289bb10ce55c152d40cd02236c26/20261013T035835162112Z/identity.json
+data/experimental/jrc-standard/exp-6ede5eb206c1d91f3dd8047f8406d52d8c9c289bb10ce55c152d40cd02236c26/20261013T035835162112Z/run-b65e0bde9ee1b811d8ddf6407ee878e9a6dfeda4e935d8efd9ddb4451f9a2819.json
+data/experimental/jrc-standard/exp-9e8c3160607370ac6d1c39cd266650dbc526631ad7af79595c77b2684d3bfddd/20261013T035704287175Z/identity.json
+data/experimental/jrc-standard/exp-9e8c3160607370ac6d1c39cd266650dbc526631ad7af79595c77b2684d3bfddd/20261013T035704287175Z/run-2beaef0e7604a989948767023275c4ca65a142b665450231549aa03395fa2427.json
+data/experimental/jrc-standard/exp-bb4d7bf8f584fc65dc94375917872d946cbae1357c34978d352e4a6c68f308bf/20261013T035938416118Z/identity.json
+data/experimental/jrc-standard/exp-bb4d7bf8f584fc65dc94375917872d946cbae1357c34978d352e4a6c68f308bf/20261013T035938416118Z/run-7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb.json
+data/experimental/jrc-standard/exp-c11ef38c77f2bc3b77cde17183d2967dd0d99f24b07e7779897f7f29b9f2b288/20261013T040145205039Z/identity.json
+data/experimental/jrc-standard/exp-c11ef38c77f2bc3b77cde17183d2967dd0d99f24b07e7779897f7f29b9f2b288/20261013T040145205039Z/run-51a4f4afa9c2ff1e525948cc194b94192ed56dac62f638909dcf55bc59e0008c.json
+data/experimental/live-service/known-plot-request.json
+data/experimental/live-service/known-plot-response.json
+data/experimental/spatial-sensitivity/results.json
+data/experimental/spatial-sensitivity/witnesses.json
+data/experimental/hansen-vintage/selected-cells.json
+data/experimental/hansen-vintage/comparison.json
+docs/lab/completion-browser-jrc-receipt-P-0001.json
+docs/lab/browser-evidence/14c5e3eb-a628-4bff-b5ed-3b62cb62c893
+docs/lab/browser-evidence/5fbfb13f-c199-4cbf-afbd-13b0bd03f922
+docs/lab/browser-evidence/79c6c78c-fdce-482b-b314-22d8cb669e63
+docs/lab/browser-evidence/868c067e-cc96-4a70-9fd1-bb8d34f5722b
+docs/lab/browser-evidence/96a5fa33-af7c-40d4-b59a-13f53153a2d2
+docs/lab/browser-evidence/w3-P-0005-receipt.json
+docs/lab/browser-evidence/w3-index-receipt-P-0001.json
+docs/lab/browser-evidence/w3-live-service-exact-receipt.json
+docs/research/company-sample-audit.json
