@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "same_complete_package_bytes": true,
+    "same_fixed_baselines": true,
+    "same_frozen_trees": true,
+    "same_geotiff_control_bytes": true,
+    "same_spatial_patch_manifest": true
+  },
+  "replay_policy_sha256": "6720c19407fa10be44b488ce2be47e11b538fe6b9b9a34f76f3720ea8cd08a81",
+  "replay_results_sha256": "f41a61e47d2362827851a8a2aa1987863dc6282ae9f38ccaeec909260ba16fef",
+  "replay_verification": {
+    "full_store_roundtrips": 180,
+    "guard": {
+      "data/experimental/selector/study.py": "4ac07bf34178118de6f1ce0194f3e0f4568e24f2cbbd7271ef2d91bdd480294c",
+      "data/public/provenance.json": "ac735dc856b79f98cb97d1c27336babc20f9daf1c7ee3baf2f2efea7b3f87bed",
+      "engine/codecs.py": "c48167fcb318cb627b2bca218b42920b2436d798ea172bd6bf0e3f6c820d6caa"
+    },
+    "passed": true,
+    "policy_sha256": "6720c19407fa10be44b488ce2be47e11b538fe6b9b9a34f76f3720ea8cd08a81",
+    "result_sha256": "f41a61e47d2362827851a8a2aa1987863dc6282ae9f38ccaeec909260ba16fef",
+    "source_reread": true,
+    "verified_utc": "2026-10-13T02:52:53.985036+00:00",
+    "window_roundtrips": 900
+  },
+  "scratch_deleted_after_success": true,
+  "wall_seconds": 57.331158041997696
+}

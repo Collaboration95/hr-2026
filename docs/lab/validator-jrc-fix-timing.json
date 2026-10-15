@@ -1,0 +1,15 @@
+{
+  "scope": "synthetic negative control; scratch-only archive; cold samples replayed, not new measurements",
+  "injected_wrong_measured_answer": [
+    {
+      "call": 5,
+      "plot": "P-0001",
+      "selected_cell_count": 1084
+    }
+  ],
+  "benchmark_runner_accepted": false,
+  "benchmark_proof_accepted": false,
+  "error": "JRC timed result mismatch at sample 2",
+  "expected": "runner must reject a wrong intermediate timed query answer",
+  "actual_archive": null
+}

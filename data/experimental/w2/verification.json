@@ -1,0 +1,387 @@
+{
+  "environment": {
+    "numpy": "2.5.4",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7",
+    "shapely": "2.1.2"
+  },
+  "evidence_version": "plotline.w2-oracle.v1",
+  "implementation_sha256": {
+    "data/experimental/w2/verify_oracle.py": "0620ada9693abf100e363c8a471694474a45ca352775163b84802c4a0c9fbde2",
+    "docs/lab/interface-v1.md": "db87c135fd7078895010600746e1ce1c8338d7e31da4ec3405bba3a284d6ec83",
+    "engine/model.py": "b6deb315687c47d8f884b3166608223137230b18a589efe4930b439abfe043f6",
+    "engine/oracle.py": "6835eb9c37856cc47086c30462eae1f8f276022e1d0107fba84ce103932a8792",
+    "engine/query.py": "7c3948f6f9ec4e1403fbf5c3d663601e9df77fba96ff4373f6ef2d0c2405edd7",
+    "engine/source.py": "e3fe3f5969f2924eac3be6a9f54612277a92671866b2d4c94757212185c10ef2",
+    "engine/tests/test_adversarial.py": "465e9c651e0913299ee9f845a9aa6f7cf01868627a21870facc300496364d038",
+    "engine/tests/test_query_oracle.py": "7baf2e3ee64656ba6d1c49f399847ba301887ea1217325c6c0164d8316908b59"
+  },
+  "implementation_stable_during_run": true,
+  "inputs": {
+    "geometry_sha256": "8922eef5040120b180a86f6002f52e090ee9bb8273c3c1cf71f984b68648662b",
+    "shape_height_width": [
+      604,
+      1233
+    ],
+    "sources": [
+      {
+        "band": "treecover2000",
+        "bytes": 414142,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_treecover2000_sample.tif",
+        "sha256": "f69b3f59e943a9830cd4076fa71c8f09c301de6f6635a683db536c5d956fdfcc"
+      },
+      {
+        "band": "lossyear",
+        "bytes": 159863,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_lossyear_sample.tif",
+        "sha256": "7a0307acecab4056bdbe09d200834e979daea17579f5e17b504050a8307150cf"
+      },
+      {
+        "band": "datamask",
+        "bytes": 2994,
+        "compression": "DEFLATE",
+        "nodata": null,
+        "path": "data/public/hansen_datamask_sample.tif",
+        "sha256": "041e62e410f908c47a7c48fe16f8884460ea69d5103fc753bdb5bec9a044d458"
+      }
+    ]
+  },
+  "limitations": [
+    "Oracle and core share GEOS topology validation; membership/reduction are independent.",
+    "This does not verify satellite accuracy or legal compliance.",
+    "Timings are a single correctness-run duration, not a comparative performance benchmark.",
+    "Scalar oracle work limit is 2,000,000 candidate cells and 10,000 vertices."
+  ],
+  "real_plots": {
+    "checks": [
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 38
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0001",
+        "selected_cell_count": 121,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 121
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0003",
+        "selected_cell_count": 87,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 87
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0004",
+        "selected_cell_count": 47,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 47
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 18
+          }
+        },
+        "plot_id": "P-0005",
+        "selected_cell_count": 262,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 262
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 18
+          }
+        },
+        "plot_id": "P-0006",
+        "selected_cell_count": 256,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 256
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0008",
+        "selected_cell_count": 27,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 27
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0009",
+        "selected_cell_count": 28,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 28
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0010",
+        "selected_cell_count": 27,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 27
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0011",
+        "selected_cell_count": 42,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 42
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 3
+          }
+        },
+        "plot_id": "P-0013",
+        "selected_cell_count": 25,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 25
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 7
+          }
+        },
+        "plot_id": "P-0014",
+        "selected_cell_count": 7,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 7
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0015",
+        "selected_cell_count": 39,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 39
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 1
+          },
+          "2024-2025": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 1
+          }
+        },
+        "plot_id": "P-0016",
+        "selected_cell_count": 14,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 14
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0017",
+        "selected_cell_count": 9,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 9
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": true,
+            "observed_loss_cell_count": 1
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0018",
+        "selected_cell_count": 34,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 34
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0019",
+        "selected_cell_count": 15,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 15
+      },
+      {
+        "differing_fields": [],
+        "periods": {
+          "2021-2023": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          },
+          "2024-2025": {
+            "mapped_loss_present": false,
+            "observed_loss_cell_count": 0
+          }
+        },
+        "plot_id": "P-0020",
+        "selected_cell_count": 8,
+        "support": "complete",
+        "unknown_cell_count": 0,
+        "valid_land_cell_count": 8
+      }
+    ],
+    "combined_oracle_core_wall_ms": 7.932749998872168,
+    "count": 17,
+    "equal": 17,
+    "selected_cells_sum_across_plots": 1048
+  },
+  "tests": {
+    "errors": 0,
+    "exhaustive_single_cell_fixtures": 144,
+    "failures": 0,
+    "invalid_geometry_fixtures": 22,
+    "random_seeds": [
+      20261013,
+      20261014
+    ],
+    "randomized_fixtures": 360,
+    "skips": 0,
+    "suite_wall_ms": 191.74924999242648,
+    "test_methods": 41
+  }
+}

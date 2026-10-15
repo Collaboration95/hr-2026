@@ -1,0 +1,141 @@
+{
+  "scope": "lead source-only native-JRC preliminary check, no codec/combined/legal inference",
+  "source_window_pixels_equal": true,
+  "source_window_masks_equal": true,
+  "grid": {
+    "shape": [
+      1809,
+      3695
+    ],
+    "transform": [
+      8.333333333333333e-05,
+      0.0,
+      98.77241666666667,
+      0.0,
+      -8.333333333333333e-05,
+      8.581916666666666
+    ],
+    "crs": "EPSG:4326"
+  },
+  "plots": [
+    {
+      "plot_id": "P-0001",
+      "selected": 1083,
+      "class0": 529,
+      "class1": 554,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0003",
+      "selected": 793,
+      "class0": 793,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0004",
+      "selected": 416,
+      "class0": 416,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0005",
+      "selected": 2370,
+      "class0": 2370,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0006",
+      "selected": 2309,
+      "class0": 2309,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0008",
+      "selected": 246,
+      "class0": 246,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0009",
+      "selected": 270,
+      "class0": 270,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0010",
+      "selected": 250,
+      "class0": 250,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0011",
+      "selected": 392,
+      "class0": 392,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0013",
+      "selected": 222,
+      "class0": 222,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0014",
+      "selected": 64,
+      "class0": 64,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0015",
+      "selected": 371,
+      "class0": 371,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0016",
+      "selected": 140,
+      "class0": 140,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0017",
+      "selected": 99,
+      "class0": 99,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0018",
+      "selected": 291,
+      "class0": 291,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0019",
+      "selected": 113,
+      "class0": 113,
+      "class1": 0,
+      "invalid_mask": 0
+    },
+    {
+      "plot_id": "P-0020",
+      "selected": 82,
+      "class0": 82,
+      "class1": 0,
+      "invalid_mask": 0
+    }
+  ]
+}

@@ -1,0 +1,1798 @@
+{
+  "scope": "synthetic; raw class0/class1, all mask combinations, missing, outside, tiny, partial, original JRC ULP lattice",
+  "checks": [
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": false,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 0
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 1
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 2
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 3
+    },
+    {
+      "pass": true,
+      "mask": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "missing": true,
+      "geometry": 4
+    },
+    {
+      "pass": true,
+      "case": "known transparent zero"
+    },
+    {
+      "pass": true,
+      "case": "binary_packed_zstd3 preserves masked raw ones"
+    },
+    {
+      "pass": true,
+      "case": "binary_byte_zstd3 preserves masked raw ones"
+    },
+    {
+      "pass": true,
+      "case": "binary_packed_zstd19 preserves masked raw ones"
+    },
+    {
+      "pass": true,
+      "case": "binary_byte_zstd19 preserves masked raw ones"
+    },
+    {
+      "pass": true,
+      "case": "native boundary 0x1.8b171529a485cp+6"
+    },
+    {
+      "pass": true,
+      "case": "native boundary 0x1.8b171529a485dp+6"
+    },
+    {
+      "pass": true,
+      "case": "native boundary 0x1.8b171529a485ep+6"
+    }
+  ],
+  "pass": true
+}

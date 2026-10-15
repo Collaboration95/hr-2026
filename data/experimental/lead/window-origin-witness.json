@@ -1,0 +1,52 @@
+{
+  "scope": "boundary selection hazard, not a codec pixel mismatch",
+  "row": 1,
+  "col": 1,
+  "original_center_x": 98.772625,
+  "shifted_center_x": 98.77262499999999,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          98.772625,
+          8.581635
+        ],
+        [
+          98.77263500000001,
+          8.581635
+        ],
+        [
+          98.77263500000001,
+          8.581615000000001
+        ],
+        [
+          98.772625,
+          8.581615000000001
+        ],
+        [
+          98.772625,
+          8.581635
+        ]
+      ]
+    ]
+  },
+  "original_selected": 1,
+  "shifted_selected": 0,
+  "original_transform": [
+    0.00025,
+    0.0,
+    98.77225,
+    0.0,
+    -0.00025,
+    8.582
+  ],
+  "shifted_transform": [
+    0.00025,
+    0,
+    98.7725,
+    0,
+    -0.00025,
+    8.581750000000001
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "status": "stale_after_successful_measurement",
+  "rejected_retained": {
+    "path": "data/experimental/jrc-standard/exp-bb4d7bf8f584fc65dc94375917872d946cbae1357c34978d352e4a6c68f308bf/20261013T035938416118Z/run-7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb.json",
+    "retention_reason": "Final guarded study with21tests and scientific decision recorded; earlier runs remain historical. Production choice unchanged.",
+    "run_id": "run-7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb",
+    "sha256": "7dd50fd40c3dad11269fa09af03ccb4cbb8a5691de39929e5aa8c5554cb6b2bb"
+  },
+  "reason": "MIXED RUN: fingerprint changed: artifacts/jrc-baseline-v1.json",
+  "current_artifact_sha256": "933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71",
+  "current_store": "artifacts/jrc-stores/exp-bfd3067040ae3fb83331667fba2ece195e9372893c81ac1930edbdfc68444f3a/binary_packed_zstd19-1024"
+}

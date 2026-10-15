@@ -1,0 +1,21 @@
+
+> plotline-local@0.1.0 qa:live
+> node scripts/browser-qa.mjs --live
+
+Browser QA: http://127.0.0.1:5183
+Evidence: /Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/app/.cache/completion-live
+PASS service unavailable remains explicit at desktop and390px; frozen review works
+PASS actual service retry accepts immutable snapshot bytes
+PASS actual unaugmented P-0003 response accepted with complete cells and receiptbytes
+PASS rectangle edits invalidate prior result and compute a different actualregion
+PASS blank and reversed bounds reject locally; oversized region rejects withoutsampling
+PASS actual tiny-no-centers region preserves unknown and complete evidence
+PASS actual outside region preserves unknown and complete evidence
+PASS actual partial region preserves unknown and complete evidence
+PASS active edit discards late actualresponse even when transport ignoresabort
+PASS Cancel query clears pendinganswer and staysclear afterlatebody
+PASS queryservicefailure invalidates ready thenrealretryrecovers
+PASS 390px keyboardcomplete actualquery and nativeevidence receipt
+PASS frozen source export unchanged after temporaryqueries
+PASS C5 browser has no application pageerrors
+{"passed":14,"failed":0,"blocked":null}

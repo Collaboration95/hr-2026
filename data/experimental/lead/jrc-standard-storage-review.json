@@ -1,0 +1,49 @@
+{
+  "retained_pointer": {
+    "path": "data/experimental/jrc-standard/exp-c11ef38c77f2bc3b77cde17183d2967dd0d99f24b07e7779897f7f29b9f2b288/20261013T040145205039Z/run-51a4f4afa9c2ff1e525948cc194b94192ed56dac62f638909dcf55bc59e0008c.json",
+    "retention_reason": "Explicitly selected fresh run after concurrent W1 artifact replacement invalidated prior handoff;21tests and full guarded verification passed; production unchanged.",
+    "run_id": "run-51a4f4afa9c2ff1e525948cc194b94192ed56dac62f638909dcf55bc59e0008c",
+    "sha256": "51a4f4afa9c2ff1e525948cc194b94192ed56dac62f638909dcf55bc59e0008c"
+  },
+  "controls": [
+    {
+      "name": "gtiff_onebit_zstd3_b1024",
+      "files": [
+        {
+          "path": "manifest.json",
+          "bytes": 4195,
+          "sha256": "c12ac6c8b5c8a8959976ae7a26f1835f4270d3587041a9dd91859ccacc73f685"
+        },
+        {
+          "path": "values.tif",
+          "bytes": 19587,
+          "sha256": "5361ec12d6914b42bd937b2a1c4e4ec9085a9b4255afd696b098077b4190eec1"
+        }
+      ],
+      "total_bytes": 23782,
+      "all_pixels_masks_grid_metadata_exact": true
+    },
+    {
+      "name": "gtiff_onebit_zstd19_b1024",
+      "files": [
+        {
+          "path": "manifest.json",
+          "bytes": 4196,
+          "sha256": "20f53817eb19700b27e8ec0b9e3e9476a752d0b439a633965aaba3385669e8e3"
+        },
+        {
+          "path": "values.tif",
+          "bytes": 15705,
+          "sha256": "2ff19f5b02dc670a16f450bd9ef67602c17dae5c15c8c163743109cccaa9d555"
+        }
+      ],
+      "total_bytes": 19901,
+      "all_pixels_masks_grid_metadata_exact": true
+    }
+  ],
+  "accepted_custom_bytes": 21459,
+  "best_control_bytes": 19901,
+  "saving_bytes": 1558,
+  "saving_percent": 7.260356959783774,
+  "scope": "Direct rasterio TIFF read; shared GDAL; actual real masks all valid; separate worker suite covers arbitrary independent masks."
+}

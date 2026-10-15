@@ -1,0 +1,87 @@
+{
+  "addressed_to": {
+    "master": "01a130e9-aaf5-7a53-9cff-96d579f69b35",
+    "science_lead_volta": "01a132f8-f774-7b32-9eef-2c0f572c1df0"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/.venv-data/bin/python",
+        "-B",
+        "data/experimental/spatial-sensitivity/study.py"
+      ],
+      "cwd": "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll",
+      "exit_code": 0,
+      "finished_utc": "2026-10-13T03:58:04.398351+00:00",
+      "started_utc": "2026-10-13T03:58:04.105125+00:00",
+      "stderr": "",
+      "stdout": "{\n  \"gates\": {\n    \"pass\": true,\n    \"failures\": [],\n    \"input_and_code_unchanged\": true,\n    \"positive_encoding_fidelity_claim_allowed\": true\n  },\n  \"array_comparison\": {\n    \"grid_metadata_equal\": true,\n    \"raw_values_compared\": 2234196,\n    \"mask_bits_compared\": 2234196,\n    \"raw_value_mismatch_count\": 0,\n    \"mask_bit_mismatch_count\": 0,\n    \"source_raw_sha256\": \"ba1889016337193d1a7a04b8ec4b20637075bb331196756c8194dfb99173c033\",\n    \"compact_raw_sha256\": \"ba1889016337193d1a7a04b8ec4b20637075bb331196756c8194dfb99173c033\",\n    \"source_masks_sha256\": \"d028907ee939909e6c600d9b36cd3972c4c3211f0c191ac856db6ab1158f72db\",\n    \"compact_masks_sha256\": \"d028907ee939909e6c600d9b36cd3972c4c3211f0c191ac856db6ab1158f72db\"\n  },\n  \"summary\": {\n    \"real_plot_count\": 17,\n    \"synthetic_plot_count_in_this_file\": 0,\n    \"source_compact_exact_query_count\": {\n      \"center_covers\": 17,\n      \"positive_area_overlap\": 17\n    },\n    \"total_selected_cell_memberships\": {\n      \"center_covers\": 1048,\n      \"positive_area_overlap\": 1385\n    },\n    \"positive_plot_counts\": {\n      \"center_covers\": {\n        \"2021-2023\": 3,\n        \"2024-2025\": 5\n      },\n      \"positive_area_overlap\": {\n        \"2021-2023\": 5,\n        \"2024-2025\": 8\n      }\n    },\n    \"period_flag_change_count\": 5,\n    \"plots_with_changed_period_flag\": [\n      \"P-0003\",\n      \"P-0004\",\n      \"P-0014\",\n      \"P-0015\",\n      \"P-0019\"\n    ],\n    \"center_only_cell_membership_count\": 0,\n    \"overlap_only_cell_membership_count\": 337,\n    \"zero_area_touch_cell_membership_count\": 0,\n    \"predicate_mismatch_count\": 0,\n    \"scalar_center_match_count\": 17,\n    \"canonical_center_match_count\": 17,\n    \"selected_support_totals\": {\n      \"center_covers\": {\n        \"valid_land_cell_count\": 1048,\n        \"unknown_cell_count\": 0,\n        \"out_of_coverage_cell_count\": 0\n      },\n      \"positive_area_overlap\": {\n        \"valid_land_cell_count\": 1385,\n        \"unknown_cell_count\": 0,\n        \"out_of_coverage_cell_count\": 0\n      }\n    },\n    \"supplier_indication_ids\": [\n      \"P-0003\",\n      \"P-0005\",\n      \"P-0008\",\n      \"P-0010\",\n      \"P-0013\"\n    ],\n    \"supplier_indication_2021_2023\": [\n      {\n        \"plot_id\": \"P-0003\",\n        \"center_covers\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        },\n        \"positive_area_overlap\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        }\n      },\n      {\n        \"plot_id\": \"P-0005\",\n        \"center_covers\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        },\n        \"positive_area_overlap\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        }\n      },\n      {\n        \"plot_id\": \"P-0008\",\n        \"center_covers\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        },\n        \"positive_area_overlap\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        }\n      },\n      {\n        \"plot_id\": \"P-0010\",\n        \"center_covers\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        },\n        \"positive_area_overlap\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        }\n      },\n      {\n        \"plot_id\": \"P-0013\",\n        \"center_covers\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        },\n        \"positive_area_overlap\": {\n          \"mapped_loss_present\": false,\n          \"observed_loss_cell_count\": 0\n        }\n      }\n    ],\n    \"supplier_indication_new_2021_2023_signal_ids\": []\n  },\n  \"content_sha256\": \"37ddeb70c8dfd7c0b6f8169bb1063232510ac4cfd5a26f935c73f24cd276e045\"\n}\n"
+    },
+    {
+      "argv": [
+        "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/.venv-data/bin/python",
+        "-B",
+        "data/experimental/spatial-sensitivity/fixtures.py"
+      ],
+      "cwd": "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll",
+      "exit_code": 0,
+      "finished_utc": "2026-10-13T03:58:04.785332+00:00",
+      "started_utc": "2026-10-13T03:58:04.398409+00:00",
+      "stderr": "",
+      "stdout": "{\n  \"valid_synthetic_case_count\": 24,\n  \"rejection_case_count\": 2,\n  \"gates\": {\n    \"pass\": true,\n    \"failures\": []\n  },\n  \"content_sha256\": \"bb884dc40689b5386e46ebad7f4f41224b7ef45b853158e176572640dcc0c8bc\"\n}\n"
+    },
+    {
+      "argv": [
+        "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/.venv-data/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "data/experimental/spatial-sensitivity",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll",
+      "exit_code": 0,
+      "finished_utc": "2026-10-13T03:58:06.370933+00:00",
+      "started_utc": "2026-10-13T03:58:04.785373+00:00",
+      "stderr": "test_analytic_and_scalar_fixture_cellsets_and_reductions (test_study.SpatialSensitivityTests.test_analytic_and_scalar_fixture_cellsets_and_reductions) ... ok\ntest_both_rules_source_compact_full_results_and_selected_arrays (test_study.SpatialSensitivityTests.test_both_rules_source_compact_full_results_and_selected_arrays) ... ok\ntest_center_matches_existing_canonical_geometry_supplier_and_results (test_study.SpatialSensitivityTests.test_center_matches_existing_canonical_geometry_supplier_and_results) ... ok\ntest_changed_period_flags_have_actual_native_loss_witnesses (test_study.SpatialSensitivityTests.test_changed_period_flags_have_actual_native_loss_witnesses) ... ok\ntest_exact_analytic_areas_independently_bind_clipping_oracle (test_study.SpatialSensitivityTests.test_exact_analytic_areas_independently_bind_clipping_oracle) ... ok\ntest_exact_clipping_does_not_depend_on_geos_membership (test_study.SpatialSensitivityTests.test_exact_clipping_does_not_depend_on_geos_membership) ... ok\ntest_five_supplier_indications_not_explained_in_2021_2023 (test_study.SpatialSensitivityTests.test_five_supplier_indications_not_explained_in_2021_2023) ... ok\ntest_full_grid_values_masks_and_metadata_exact (test_study.SpatialSensitivityTests.test_full_grid_values_masks_and_metadata_exact) ... ok\ntest_full_histograms_include_zero_and_exclude_masked_nonland_loss (test_study.SpatialSensitivityTests.test_full_histograms_include_zero_and_exclude_masked_nonland_loss) ... ok\ntest_holes_boundary_and_interior_are_distinct (test_study.SpatialSensitivityTests.test_holes_boundary_and_interior_are_distinct) ... ok\ntest_input_drift_blocks_positive_claim_without_mutating_any_file (test_study.SpatialSensitivityTests.test_input_drift_blocks_positive_claim_without_mutating_any_file) ... ok\ntest_input_fingerprints_unchanged_and_content_hash_verifies (test_study.SpatialSensitivityTests.test_input_fingerprints_unchanged_and_content_hash_verifies) ... ok\ntest_invalid_and_zero_area_geometry_rejected (test_study.SpatialSensitivityTests.test_invalid_and_zero_area_geometry_rejected) ... ok\ntest_json_bool_integer_confusion_does_not_pass_exact_comparison (test_study.SpatialSensitivityTests.test_json_bool_integer_confusion_does_not_pass_exact_comparison) ... ok\ntest_masked_nodata_water_raw_values_survive_but_do_not_vote (test_study.SpatialSensitivityTests.test_masked_nodata_water_raw_values_survive_but_do_not_vote) ... ok\ntest_membership_cross_check_failure_blocks_positive_claim (test_study.SpatialSensitivityTests.test_membership_cross_check_failure_blocks_positive_claim) ... ok\ntest_missing_band_is_unknown_and_raw_masked_values_are_preserved (test_study.SpatialSensitivityTests.test_missing_band_is_unknown_and_raw_masked_values_are_preserved) ... ok\ntest_native_decimal_one_ulp_is_separate_from_rule_sensitivity (test_study.SpatialSensitivityTests.test_native_decimal_one_ulp_is_separate_from_rule_sensitivity) ... ok\ntest_non_native_grid_is_rejected_instead_of_resampled (test_study.SpatialSensitivityTests.test_non_native_grid_is_rejected_instead_of_resampled) ... ok\ntest_output_path_cannot_escape_owned_directory (test_study.SpatialSensitivityTests.test_output_path_cannot_escape_owned_directory) ... ok\ntest_outside_added_support_changes_absence_to_unknown (test_study.SpatialSensitivityTests.test_outside_added_support_changes_absence_to_unknown) ... ok\ntest_point_and_edge_only_contacts_are_excluded (test_study.SpatialSensitivityTests.test_point_and_edge_only_contacts_are_excluded) ... ok\ntest_real_and_synthetic_denominators_are_separate (test_study.SpatialSensitivityTests.test_real_and_synthetic_denominators_are_separate) ... ok\ntest_real_membership_cross_checks_and_subset (test_study.SpatialSensitivityTests.test_real_membership_cross_checks_and_subset) ... ok\ntest_rerun_is_deterministic (test_study.SpatialSensitivityTests.test_rerun_is_deterministic) ... ok\ntest_selected_mask_mismatch_blocks_query_and_fidelity_claim (test_study.SpatialSensitivityTests.test_selected_mask_mismatch_blocks_query_and_fidelity_claim) ... ok\ntest_tiny_sliver_and_multipart_do_not_require_a_center (test_study.SpatialSensitivityTests.test_tiny_sliver_and_multipart_do_not_require_a_center) ... ok\ntest_unselected_raw_mismatch_blocks_positive_fidelity_claim (test_study.SpatialSensitivityTests.test_unselected_raw_mismatch_blocks_positive_fidelity_claim) ... ok\ntest_witnessed_positive_remains_true_with_outside_unknown (test_study.SpatialSensitivityTests.test_witnessed_positive_remains_true_with_outside_unknown) ... ok\n\n----------------------------------------------------------------------\nRan 29 tests in 1.444s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "content_sha256": "42ca1206ec1bb0e41fe0ee4fd8a2608709f4045eb6e16d7db3def57ea97049be",
+  "final_input_fingerprint_checks": {
+    "artifacts/demo-v1.json": true,
+    "artifacts/experiments/retained-choice.json": true,
+    "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19/index.json": true,
+    "artifacts/stores/exp-0109a8d6c4782217871315b92c63a971d11ebd164585c80981f24c55b4f68fea/separate_zstd_l19/payload.bin": true,
+    "data/company-sample/2026-10-12/200001-17plots-valid.geojson": true,
+    "data/company-sample/2026-10-12/200001-17plots-valid_2025-08-02T09_11_12Z.csv": true,
+    "data/public/hansen_datamask_sample.tif": true,
+    "data/public/hansen_lossyear_sample.tif": true,
+    "data/public/hansen_treecover2000_sample.tif": true,
+    "data/public/provenance.json": true
+  },
+  "fixtures_content_sha256": "bb884dc40689b5386e46ebad7f4f41224b7ef45b853158e176572640dcc0c8bc",
+  "handoff": "Shared local files; no callable agent/thread messaging tool available.",
+  "note": "Times are execution records only, not a query benchmark; no performance claim.",
+  "outputs": {
+    "data/experimental/spatial-sensitivity/fixtures.json": {
+      "bytes": 393767,
+      "sha256": "d2e72d9504144f2f7b8433a61fea712b9c16727ec50765a994cea855e893f3ba"
+    },
+    "data/experimental/spatial-sensitivity/results.json": {
+      "bytes": 555104,
+      "sha256": "a80b8b8c018f27126ea188a4d3555b2f6a0750a1d6f12902dd53b44399e27add"
+    },
+    "data/experimental/spatial-sensitivity/witnesses.json": {
+      "bytes": 37657,
+      "sha256": "74613408e5d7b7e3eeb1d004dc475f6891d4838ba836b509f876028fb23b7669"
+    }
+  },
+  "pass": true,
+  "results_content_sha256": "37ddeb70c8dfd7c0b6f8169bb1063232510ac4cfd5a26f935c73f24cd276e045",
+  "schema_version": "plotline.spatial-sensitivity-verification.v1"
+}

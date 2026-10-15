@@ -1,0 +1,288 @@
+{
+  "timestamp": "2026-10-14T02:09:16.508Z",
+  "tool": "existing Playwright 1.63.0 + cached Chromium",
+  "endpoint": "http://127.0.0.1:5183",
+  "canonicalContentSha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2",
+  "checks": [
+    {
+      "name": "served artifact equals canonical",
+      "status": "PASS",
+      "detail": {
+        "plots": 17,
+        "content_sha256": "d22b0cac287de0d12b1ecfdcf114aa549a886b86299ca8cd43384c6ff2e075b2"
+      }
+    },
+    {
+      "name": "keyboard queue and annual evidence",
+      "status": "PASS",
+      "detail": {
+        "plot": "P-0005",
+        "selected": 262,
+        "count2024": 7,
+        "count2025": 11,
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Year 2025, 11 observed loss cells",
+          "focusVisible": true,
+          "outline": "rgb(41, 94, 150) solid 3px"
+        }
+      }
+    },
+    {
+      "name": "proof table and cohort agree with JSON",
+      "status": "PASS",
+      "detail": {
+        "overall_storage_choice": "separate_zstd_l19",
+        "source_bytes": 585293,
+        "best_candidate_bytes": 535012
+      }
+    },
+    {
+      "name": "benchmark storage choice, units and timing match JSON",
+      "status": "PASS",
+      "detail": {
+        "sourceTotalBytes": 585293,
+        "sourceHotMs": 1.418167,
+        "sourceFreshProcessMs": 11.182333
+      }
+    },
+    {
+      "name": "receipt content and downloaded JSON agree with canonical",
+      "status": "PASS",
+      "detail": {
+        "filename": "P-0005-receipt.json",
+        "receipt_sha256": "45a9bcae041da9bdcd855e5687a0be898b0cc9b384828b6402f0ef018a590a68"
+      }
+    },
+    {
+      "name": "receipt dialog accessible name",
+      "status": "PASS",
+      "detail": "P-0005 evidence receipt"
+    },
+    {
+      "name": "dialog traps keyboard and restores opener",
+      "status": "PASS"
+    },
+    {
+      "name": "empty search retains clearly labelled selection and recovers",
+      "status": "PASS"
+    },
+    {
+      "name": "command Find a plot focuses search after close",
+      "status": "PASS"
+    },
+    {
+      "name": "all-plot map keyboard selection",
+      "status": "PASS",
+      "detail": {
+        "selected": "P-0001"
+      }
+    },
+    {
+      "name": "cell inspector has keyboard-accessible entry",
+      "status": "PASS",
+      "detail": {
+        "rows": 121,
+        "keyboardInspected": "51:69"
+      }
+    },
+    {
+      "name": "17 plots expose all 25 annual counts from JSON",
+      "status": "PASS",
+      "detail": {
+        "plots": 17,
+        "annualCounts": 425
+      }
+    },
+    {
+      "name": "390px review has no document overflow",
+      "status": "PASS",
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "offenders": [
+          {
+            "tag": "BUTTON",
+            "class": "queue-row ",
+            "right": 554
+          },
+          {
+            "tag": "DIV",
+            "class": "",
+            "right": 543
+          },
+          {
+            "tag": "STRONG",
+            "class": "",
+            "right": 438.53125
+          },
+          {
+            "tag": "SPAN",
+            "class": "",
+            "right": 543
+          },
+          {
+            "tag": "SMALL",
+            "class": "",
+            "right": 532.546875
+          },
+          {
+            "tag": "SPAN",
+            "class": "queue-row-bottom",
+            "right": 543
+          },
+          {
+            "tag": "I",
+            "class": "lead-dot",
+            "right": 395
+          },
+          {
+            "tag": "svg",
+            "class": {},
+            "right": 543
+          },
+          {
+            "tag": "path",
+            "class": {},
+            "right": 538.3333129882812
+          },
+          {
+            "tag": "BUTTON",
+            "class": "queue-row ",
+            "right": 736
+          },
+          {
+            "tag": "DIV",
+            "class": "",
+            "right": 725
+          },
+          {
+            "tag": "STRONG",
+            "class": "",
+            "right": 618.359375
+          }
+        ]
+      }
+    },
+    {
+      "name": "390px map boundary and legend fit inside panel",
+      "status": "PASS",
+      "detail": {
+        ".map-panel": {
+          "left": 16,
+          "right": 374,
+          "width": 358
+        },
+        ".map-canvas": {
+          "left": 17,
+          "right": 373,
+          "width": 356
+        },
+        ".spatial-map": {
+          "left": 17,
+          "right": 373,
+          "width": 356
+        },
+        ".plot-geometry": {
+          "left": 110.51959991455078,
+          "right": 283.0608596801758,
+          "width": 172.541259765625
+        },
+        ".map-legend": {
+          "left": 203.375,
+          "right": 363,
+          "width": 159.625
+        }
+      }
+    },
+    {
+      "name": "390px empty search and recovery",
+      "status": "PASS"
+    },
+    {
+      "name": "390px proof controls and layout",
+      "status": "PASS",
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "offenders": [
+          {
+            "tag": "BUTTON",
+            "class": "queue-row ",
+            "right": 556
+          },
+          {
+            "tag": "DIV",
+            "class": "",
+            "right": 545
+          },
+          {
+            "tag": "STRONG",
+            "class": "",
+            "right": 440.46875
+          },
+          {
+            "tag": "SPAN",
+            "class": "",
+            "right": 545
+          },
+          {
+            "tag": "SMALL",
+            "class": "",
+            "right": 460.703125
+          },
+          {
+            "tag": "SPAN",
+            "class": "queue-row-bottom",
+            "right": 545
+          },
+          {
+            "tag": "I",
+            "class": "record-dot",
+            "right": 397
+          },
+          {
+            "tag": "svg",
+            "class": {},
+            "right": 545
+          },
+          {
+            "tag": "path",
+            "class": {},
+            "right": 540.3333129882812
+          },
+          {
+            "tag": "BUTTON",
+            "class": "queue-row ",
+            "right": 738
+          },
+          {
+            "tag": "DIV",
+            "class": "",
+            "right": 727
+          },
+          {
+            "tag": "STRONG",
+            "class": "",
+            "right": 622.421875
+          }
+        ]
+      }
+    },
+    {
+      "name": "reduced motion media and computed style",
+      "status": "PASS",
+      "detail": {
+        "matches": true,
+        "transition": "1e-05s",
+        "animation": "1e-05s",
+        "scroll": "auto"
+      }
+    },
+    {
+      "name": "no browser application errors",
+      "status": "PASS"
+    }
+  ],
+  "errors": []
+}

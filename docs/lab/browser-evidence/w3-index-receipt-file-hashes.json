@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-10-13T03:12:53.978199+00:00",
+  "sha256": {
+    "app/src/App.tsx": "afcf7621a2eed3784585d9b86ec6ce7bc263fd95d423cb593aab6fa605cb8e13",
+    "app/src/CohortIndex.tsx": "3fd19a34b6a32b107d8825dce70fccd60895c4ffd76b78db427446dedae44449",
+    "app/src/ReceiptDetails.tsx": "b387286631a5f3ca2106d4ee3c67f57f6b2d9088485e0a86d8b607f035c8aafd",
+    "app/src/styles/cohort.css": "07bbdbf9c6afa04ba00c45fd31fd4f2622ae3e0a61eb30594dff7f0ff09723d7",
+    "app/src/styles/receipt.css": "ee206e53bc2bd1aeb9de8f4f4440917d0a4563b7e4c0d0d63b9d322d41c7c921",
+    "app/tests/index-receipt-journey.mjs": "6129e689cf88b741529a185d660d08282cac8ea97bd522bb07cc4f9e8b5ad38c",
+    "artifacts/demo-v1.json": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555"
+  }
+}

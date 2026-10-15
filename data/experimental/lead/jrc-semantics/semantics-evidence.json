@@ -1,0 +1,31 @@
+{
+  "schema_version": "plotline.jrc-semantics-evidence.v1",
+  "observed_date_utc": "2026-10-13",
+  "product_version": "v4",
+  "class_labels": {
+    "0": {
+      "label": "Non-forest",
+      "alpha": 0
+    },
+    "1": {
+      "label": "Forest",
+      "alpha": 255
+    }
+  },
+  "sources": [
+    {
+      "path": "data/experimental/lead/jrc-semantics/JRC_GFC2020_V4.qml",
+      "url": "https://forobs.jrc.ec.europa.eu/GFC/download?output=qgis&type=symbology&version=v4",
+      "sha256": "d089a9d21a10537a13c77f206fd8ac844d364800b48580361893179d902080b0",
+      "bytes": 976
+    },
+    {
+      "path": "data/experimental/lead/jrc-semantics/JRC_GFC2020_V4.xml",
+      "url": "https://forobs.jrc.ec.europa.eu/GFC/download?type=metadata&version=v4",
+      "sha256": "cdccfb393e306cf6775a2041263c09885a275a67b8098acde6536f06358a66b9",
+      "bytes": 5759
+    }
+  ],
+  "interpretation": "Code0 is explicitly Non-forest in official v4 symbology, despite transparency. A valid raw0 is not nodata. Coverage/masks determine unknown separately. Mapped classes do not establish legal compliance.",
+  "metadata_caveat": "XML title says v4 but has revision2025-11-28 and v2technicalreport DOI10.2760/1975879; retain discrepancy, do not infer a v4release date or method from these older fields."
+}

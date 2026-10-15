@@ -1,0 +1,300 @@
+{
+  "overview": {
+    "title": {
+      "x": 313,
+      "y": 278.25,
+      "width": 180.40625,
+      "height": 60.5,
+      "top": 278.25,
+      "right": 493.40625,
+      "bottom": 338.75,
+      "left": 313
+    },
+    "markers": [
+      {
+        "id": "Select P-0003 on map",
+        "rect": {
+          "x": 425.68084716796875,
+          "y": 306.63861083984375,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 306.63861083984375,
+          "right": 439.85107421875,
+          "bottom": 320.8088073730469,
+          "left": 425.68084716796875
+        },
+        "overlapsTitle": true
+      },
+      {
+        "id": "Select P-0005 on map",
+        "rect": {
+          "x": 636.364501953125,
+          "y": 548.207763671875,
+          "width": 14.17022705078125,
+          "height": 14.170166015625,
+          "top": 548.207763671875,
+          "right": 650.5347290039062,
+          "bottom": 562.3779296875,
+          "left": 636.364501953125
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0008 on map",
+        "rect": {
+          "x": 837.31298828125,
+          "y": 344.5500793457031,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 344.5500793457031,
+          "right": 851.4832153320312,
+          "bottom": 358.72027587890625,
+          "left": 837.31298828125
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0010 on map",
+        "rect": {
+          "x": 840.370361328125,
+          "y": 377.4319152832031,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 377.4319152832031,
+          "right": 854.5405883789062,
+          "bottom": 391.60211181640625,
+          "left": 840.370361328125
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0013 on map",
+        "rect": {
+          "x": 496.35302734375,
+          "y": 357.4601745605469,
+          "width": 14.170196533203125,
+          "height": 14.170196533203125,
+          "top": 357.4601745605469,
+          "right": 510.5232238769531,
+          "bottom": 371.63037109375,
+          "left": 496.35302734375
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0001 on map",
+        "rect": {
+          "x": 455.12261962890625,
+          "y": 329.95281982421875,
+          "width": 14.17022705078125,
+          "height": 14.17022705078125,
+          "top": 329.95281982421875,
+          "right": 469.2928466796875,
+          "bottom": 344.123046875,
+          "left": 455.12261962890625
+        },
+        "overlapsTitle": true
+      },
+      {
+        "id": "Select P-0004 on map",
+        "rect": {
+          "x": 516.2362060546875,
+          "y": 351.1536865234375,
+          "width": 14.17022705078125,
+          "height": 14.17022705078125,
+          "top": 351.1536865234375,
+          "right": 530.4064331054688,
+          "bottom": 365.32391357421875,
+          "left": 516.2362060546875
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0006 on map",
+        "rect": {
+          "x": 636.4554443359375,
+          "y": 559.2361450195312,
+          "width": 14.1702880859375,
+          "height": 14.17022705078125,
+          "top": 559.2361450195312,
+          "right": 650.625732421875,
+          "bottom": 573.4063720703125,
+          "left": 636.4554443359375
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0009 on map",
+        "rect": {
+          "x": 837.0576171875,
+          "y": 339.311767578125,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 339.311767578125,
+          "right": 851.2278442382812,
+          "bottom": 353.4819641113281,
+          "left": 837.0576171875
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0011 on map",
+        "rect": {
+          "x": 840.9633178710938,
+          "y": 354.85162353515625,
+          "width": 14.170166015625,
+          "height": 14.17022705078125,
+          "top": 354.85162353515625,
+          "right": 855.1334838867188,
+          "bottom": 369.0218505859375,
+          "left": 840.9633178710938
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0014 on map",
+        "rect": {
+          "x": 942.2630615234375,
+          "y": 500.63665771484375,
+          "width": 14.17022705078125,
+          "height": 14.17022705078125,
+          "top": 500.63665771484375,
+          "right": 956.4332885742188,
+          "bottom": 514.806884765625,
+          "left": 942.2630615234375
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0015 on map",
+        "rect": {
+          "x": 961.9644165039062,
+          "y": 461.250244140625,
+          "width": 14.170166015625,
+          "height": 14.17022705078125,
+          "top": 461.250244140625,
+          "right": 976.1345825195312,
+          "bottom": 475.42047119140625,
+          "left": 961.9644165039062
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0016 on map",
+        "rect": {
+          "x": 918.9044799804688,
+          "y": 541.317626953125,
+          "width": 14.17022705078125,
+          "height": 14.170166015625,
+          "top": 541.317626953125,
+          "right": 933.07470703125,
+          "bottom": 555.48779296875,
+          "left": 918.9044799804688
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0017 on map",
+        "rect": {
+          "x": 943.96484375,
+          "y": 441.4872131347656,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 441.4872131347656,
+          "right": 958.1350708007812,
+          "bottom": 455.65740966796875,
+          "left": 943.96484375
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0018 on map",
+        "rect": {
+          "x": 913.5488891601562,
+          "y": 499.2413330078125,
+          "width": 14.170166015625,
+          "height": 14.17022705078125,
+          "top": 499.2413330078125,
+          "right": 927.7190551757812,
+          "bottom": 513.4115600585938,
+          "left": 913.5488891601562
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0019 on map",
+        "rect": {
+          "x": 942.8857421875,
+          "y": 427.27020263671875,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 427.27020263671875,
+          "right": 957.0559692382812,
+          "bottom": 441.4403991699219,
+          "left": 942.8857421875
+        },
+        "overlapsTitle": false
+      },
+      {
+        "id": "Select P-0020 on map",
+        "rect": {
+          "x": 936.4212036132812,
+          "y": 440.7691955566406,
+          "width": 14.17022705078125,
+          "height": 14.170196533203125,
+          "top": 440.7691955566406,
+          "right": 950.5914306640625,
+          "bottom": 454.93939208984375,
+          "left": 936.4212036132812
+        },
+        "overlapsTitle": false
+      }
+    ]
+  },
+  "fonts": {
+    ".candidate-detail h3": {
+      "text": "Separate bands",
+      "fontSize": "20px"
+    },
+    ".candidate-size>span": {
+      "text": "0.4% larger than original",
+      "fontSize": "10px"
+    },
+    ".candidate-detail dt": {
+      "text": "Payload",
+      "fontSize": "10px"
+    },
+    ".candidate-detail dd": {
+      "text": "571.7 KiB",
+      "fontSize": "9px"
+    },
+    ".timing-tabs button": {
+      "text": "Loaded query",
+      "fontSize": "8px"
+    },
+    ".timing-number span": {
+      "text": "Median / 17-plot batch",
+      "fontSize": "9px"
+    },
+    ".distribution": {
+      "text": "1.45\n1.61 ms",
+      "fontSize": "8px"
+    },
+    ".candidate-detail>p": {
+      "text": "Full regional data loaded before query timing. 7 measured repetitions.",
+      "fontSize": "9px"
+    },
+    ".benchmark-method": {
+      "text": "Cohort\n17 real supplied plots\nShared inputs\n18.8 KiB excluded on both sides\nGrid\nSame coverage, bands and native cells",
+      "fontSize": "10px"
+    },
+    ".benchmark .json-details summary": {
+      "text": "Inspect measurement method, environment and experiment identity",
+      "fontSize": "11px"
+    },
+    ".comparison-table th": {
+      "text": "P-0003 · hansen-centers.v1",
+      "fontSize": "11px"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "clean project-local copy of only retained bundle files; uses existing isolated Python dependencies",
+  "files": 50,
+  "bytes": 4281747,
+  "checks": [
+    {
+      "command": "-m engine.verify",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"plot_count\": 17,\n  \"compact_plot_count\": 17,\n  \"checks\": \"exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code\",\n  \"failures\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "-m engine.export",
+      "exit_code": 0,
+      "stdout": "{\n  \"plot_count\": 17,\n  \"selected_cell_count_sum\": 1048,\n  \"selected_cell_count_note\": \"sum over plots; overlapping geometries could count the same native cell twice\",\n  \"comparison_status\": \"computed\",\n  \"exact_match_count\": 17,\n  \"mapped_loss_plot_counts\": {\n    \"2021-2023\": {\n      \"true\": 3,\n      \"false\": 14,\n      \"unknown\": 0\n    },\n    \"2024-2025\": {\n      \"true\": 5,\n      \"false\": 12,\n      \"unknown\": 0\n    }\n  },\n  \"supplier_indication_count\": 5\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "-m engine.verify",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"plot_count\": 17,\n  \"compact_plot_count\": 17,\n  \"checks\": \"exact inputs/contract/summary, all raw values/masks, query outputs, native cells, receipts, retained benchmark archive/current files/code\",\n  \"failures\": []\n}\n",
+      "stderr": ""
+    }
+  ],
+  "no_raw_full_tile_cache": true,
+  "no_other_experiment_stores": true
+}

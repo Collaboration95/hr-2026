@@ -1,0 +1,54 @@
+
+> plotline-local@0.1.0 qa:browser
+> node scripts/browser-qa.mjs
+
+Browser QA: http://127.0.0.1:5183
+Evidence: /Users/speedpowermac/Documents/projects/CODE_MAIN/personal/hack_roll/app/.cache/completion-frozen
+PASS served artifact equals canonical
+PASS keyboard queue and annual evidence
+PASS proof table and cohort agree with JSON
+PASS benchmark storage choice, units and timing match JSON
+PASS receipt content and downloaded JSON agree with canonical
+PASS receipt dialog accessible name
+PASS dialog traps keyboard and restores opener
+PASS empty search retains clearly labelled selection and recovers
+PASS command Find a plot focuses search after close
+PASS all-plot map keyboard selection
+PASS cell inspector has keyboard-accessible entry
+PASS 17 plots expose all 25 annual counts from JSON
+PASS 390px review has no document overflow
+PASS 390px map boundary and legend fit inside panel
+PASS 390px empty search and recovery
+PASS 390px proof controls and layout
+PASS reduced motion media and computed style
+PASS no browser application errors
+{"passed":18,"failed":0}
+PASS cycle3 accepted artifact matches canonical
+PASS expanded cell table count → proof focus and scroll → return context
+PASS integrated note drafts survive plot and proof switches
+PASS saved note survives reload under exact supplier-row context
+PASS unsaved note export is explicitly a draft and leaves evidence unchanged
+PASS quota error keeps draft and previous saved note; retry recovers
+PASS supplier-context versions isolate actual notes component
+PASS storage read denial remains explicit without blocking evidence
+PASS overview layer controls, cohort extents and single-plot table scope
+PASS six actual synthetic cases × two periods stay outside real cohort
+PASS mobile timeline scrolls at readable size and retains selected year
+PASS mobile count proof focus and back restore visible count
+PASS integrated notes fit mobile viewport
+PASS cycle3 application has no page errors
+{"passed":14,"failed":0}
+PASS integrated period tables preserve all17 counts and separate declarations
+PASS actual displayed CSV download has51rows and exact source context
+PASS positive earlierperiod count navigates exact plot/year with visible keyboard focus
+PASS return to index is reachable and focuses visible heading
+PASS readable receipt disclosures open by keyboard and show actual plot/year
+PASS full hashes rules grid engine claims and unavailable metadata retain meaning
+PASS raw disclosures and original receipt download coexist with readable basis
+PASS 390px integrated expanded receipt fits and Escape restores opener
+PASS 320px integrated expanded receipt fits and Escape restores opener
+PASS mobile index period→positivecell→receipt preserves exact context below header
+PASS focused integration has no page errors
+{"passed":11,"failed":0}
+{"passed":2,"results":[{"width":1440,"rows":17,"annualCells":425,"positiveButtons":37,"csvRows":34,"focus":{"id":"plot-review-heading","top":100,"headerBottom":76,"overflow":false}},{"width":390,"rows":17,"annualCells":425,"positiveButtons":37,"csvRows":34,"focus":{"id":"plot-review-heading","top":121.5,"headerBottom":100,"overflow":false}}]}
+{"passed":2,"viewports":[1440,390]}

@@ -1,0 +1,162 @@
+{
+  "recorded_at_utc": "2026-10-14T02:17:03.859996+00:00",
+  "base_commit": "e6c846ea80cd0199b1edc02f102361055e4b86d8",
+  "scope": "Complete the existing local software/demo slice; no new query semantics or retained benchmarks",
+  "checks": [
+    {
+      "command": ".venv-data/bin/python -B -m unittest discover -s engine/tests -q",
+      "result": "pass",
+      "tests": 198,
+      "seconds": 12.885
+    },
+    {
+      "command": "npm test --prefix app",
+      "result": "pass",
+      "tests": 298,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "scripts/verify-local.sh",
+      "result": "pass",
+      "hansen_plots": 17,
+      "jrc_plots": 17,
+      "jrc_pixels": 6684255,
+      "p0003_full_and_indexed_equal": true,
+      "production_build": true
+    },
+    {
+      "command": ".venv-data/bin/python -B validation/strong_proof_controls.py",
+      "result": "pass",
+      "valid_positive": true,
+      "rejected_rehashed_forgeries": 6
+    },
+    {
+      "command": "PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:browser --prefix app",
+      "result": "pass",
+      "suite_counts": [
+        18,
+        14,
+        11
+      ],
+      "index_viewports": [
+        1440,
+        390
+      ],
+      "overview_viewports": [
+        1440,
+        390
+      ]
+    },
+    {
+      "command": "PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:live --prefix app",
+      "result": "pass",
+      "checks": 14,
+      "successful_responses": "actual unaugmented service responses"
+    },
+    {
+      "command": "PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run qa:jrc --prefix app",
+      "result": "pass",
+      "checks": 9,
+      "independent_report": "completion-browser-report.md",
+      "portable_lead_replay": "completion-evidence/jrc-portable-replay.json"
+    },
+    {
+      "command": "scripts/setup-local.sh && scripts/verify-local.sh (clean export)",
+      "result": "pass",
+      "environment": "new Python venv and npm ci on same physical machine",
+      "full_tile_caches_present": false,
+      "report": "completion-reproducibility.md"
+    },
+    {
+      "check": "QA rejects remote, non-origin, credential-bearing and query-bearing URLs",
+      "result": "pass",
+      "cases": 4
+    },
+    {
+      "check": "setup/verification shell syntax and git diff whitespace",
+      "result": "pass"
+    },
+    {
+      "command": "PLOTLINE_QA_ORIGIN=http://127.0.0.1:5183 npm run demo:record --prefix app",
+      "result": "pass",
+      "duration_seconds": 25.0,
+      "chapters": 6,
+      "narration": false,
+      "actual_live_response": true,
+      "page_errors": []
+    }
+  ],
+  "retained_identities": [
+    {
+      "path": "artifacts/demo-v1.json",
+      "sha256": "11d5ca337e142dcb6080028f09d5573265dc67e9826e55131aa7515876336555",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "artifacts/benchmark-v1.json",
+      "sha256": "a356ce606eec338d9c2d7efafad406fa994915cb15506397e72bfc04d96a7e09",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "artifacts/jrc-baseline-v1.json",
+      "sha256": "933b3d302b8ec961444a7f252f74deb87f3f186f1b7f8d5bcb5012cb55658f71",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "artifacts/strong-baseline-v1.json",
+      "sha256": "f36e83f4d8df214eb5770a9eeb906f3f4a6f74ec224ea9f7d04d0e20a36bc80b",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "app/package-lock.json",
+      "sha256": "5f1da1cd6b7d3a6eca972bdb1aec89ed406c6b0a74eff4bbbd2530a7942a5456",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "engine/live_query.py",
+      "sha256": "fc4fc327b18b0b357ec5c5c8069e74054464dbd19f640c860c72ec3979dec8df",
+      "unchanged_from_13_october": true
+    },
+    {
+      "path": "engine/live_server.py",
+      "sha256": "05a6c6a0d523dbb23480f39f9d6e86640fddb3a9c7300204d55f2855d5894c2b",
+      "unchanged_from_13_october": true
+    }
+  ],
+  "evidence_directory": "completion-evidence/",
+  "historical_evidence_preserved": true,
+  "external_handoffs": [
+    "Company source vintage/query semantics and mitigation files",
+    "Representative production workload",
+    "Organizer submission deadline/channel/pitch length and team presenter"
+  ],
+  "optional_unshipped": [
+    "RuleLens educational UI",
+    "Cloud deployment",
+    "Infrastructure cost estimate"
+  ],
+  "limits": [
+    "Same-host clean environment, not cross-platform certification",
+    "Source agreement is not satellite or legal ground truth",
+    "Mobile JRC table uses contained horizontal scrolling"
+  ],
+  "demo_recording": {
+    "path": "completion-demo.webm",
+    "sha256": "e8853927e742d9832272676312a8f88c43ec4f5d8d1e55636909a832592bdbb5",
+    "bytes": 2251367
+  },
+  "independent_completion_review": {
+    "result": "PASS",
+    "rounds": 2,
+    "initial_findings": [
+      "Machine-specific Playwright fallback",
+      "Recording links absent during packaging"
+    ],
+    "resolution": [
+      "App-local Playwright and shared QA config; portable JRC replay passed",
+      "Recorded WebM and chapter metadata retained at linked paths"
+    ],
+    "reviewer": "GPT-6 Luna delegated read-only review"
+  }
+}

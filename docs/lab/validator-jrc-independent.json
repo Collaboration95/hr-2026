@@ -1,0 +1,1200 @@
+{
+  "checks": [
+    {
+      "pass": true,
+      "label": "pinned acquisition manifest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "pinned official QML",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "official QML zero is Non-forest despite alpha0",
+      "evidence": {
+        "0": {
+          "alpha": "0",
+          "value": "0",
+          "label": "Non-forest",
+          "color": "#ffffff"
+        },
+        "1": {
+          "alpha": "255",
+          "value": "1",
+          "label": "Forest",
+          "color": "#4d9221"
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "pinned official XML",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "XML older dates retained exactly",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "exact required source citation",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "separate reference2020/version4/publication2026",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "original chip identity",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "full source tile identity",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "exact native JRC grid",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "all chip masks known; nodata absent",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "all original window pixels exact",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "all original window mask bits exact",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "native original window/chip affine equality",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "native angular step/CRS",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "full source class histogram",
+      "evidence": {
+        "0": 5618060,
+        "1": 1066195
+      }
+    },
+    {
+      "pass": true,
+      "label": "P-0001 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0001 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0003 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0004 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0005 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0006 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0008 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0009 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0010 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0011 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0013 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0014 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0015 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0016 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0017 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0018 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0019 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 independent full query with strict JSON types",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 exact input geometry/hash",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 all independent native evidence records",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "P-0020 result/evidence receipts",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "cohort selected sum",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "cohort class sums",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "full-chip raw/mask digests independent",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "benchmark pinned independent answers",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 actual complete store bytes",
+      "evidence": 56361
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-256 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 actual complete store bytes",
+      "evidence": 74273
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-256 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 actual complete store bytes",
+      "evidence": 53436
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-256 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 actual complete store bytes",
+      "evidence": 57111
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-256 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 actual complete store bytes",
+      "evidence": 25960
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd3-1024 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 actual complete store bytes",
+      "evidence": 47873
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd3-1024 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 actual complete store bytes",
+      "evidence": 21459
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_packed_zstd19-1024 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 independent full raw/mask/metadata roundtrip",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 actual complete store bytes",
+      "evidence": 31422
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 answer digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 measured index.json",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 measured payload.bin",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 encode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 encode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 decode wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 decode cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 hot_17_queries wall statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "binary_byte_zstd19-1024 hot_17_queries cpu statistics",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "same-chip loader baseline actual files",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "selected and symmetric support accounting",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "cold_source every archived child answer",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "cold_smallest_encoded every archived child answer",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "artifact content digest",
+      "evidence": null
+    },
+    {
+      "pass": true,
+      "label": "implementation/artifact stable during independent check",
+      "evidence": null
+    }
+  ],
+  "failures": [],
+  "storage": {
+    "source_loader": 57653,
+    "selected_store": 21459,
+    "symmetric_compact": 32874,
+    "source_with_common_plots": 76918,
+    "symmetric_compact_with_common_plots": 52139
+  },
+  "pass_all": true,
+  "plots": [
+    {
+      "plot_id": "P-0001",
+      "selected_cell_count": 1083,
+      "in_coverage_cell_count": 1083,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 1083,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 529,
+        "1": 554
+      },
+      "mapped_forest_present": true,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0003",
+      "selected_cell_count": 793,
+      "in_coverage_cell_count": 793,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 793,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 793,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0004",
+      "selected_cell_count": 416,
+      "in_coverage_cell_count": 416,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 416,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 416,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0005",
+      "selected_cell_count": 2370,
+      "in_coverage_cell_count": 2370,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 2370,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 2370,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0006",
+      "selected_cell_count": 2309,
+      "in_coverage_cell_count": 2309,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 2309,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 2309,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0008",
+      "selected_cell_count": 246,
+      "in_coverage_cell_count": 246,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 246,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 246,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0009",
+      "selected_cell_count": 270,
+      "in_coverage_cell_count": 270,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 270,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 270,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0010",
+      "selected_cell_count": 250,
+      "in_coverage_cell_count": 250,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 250,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 250,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0011",
+      "selected_cell_count": 392,
+      "in_coverage_cell_count": 392,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 392,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 392,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0013",
+      "selected_cell_count": 222,
+      "in_coverage_cell_count": 222,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 222,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 222,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0014",
+      "selected_cell_count": 64,
+      "in_coverage_cell_count": 64,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 64,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 64,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0015",
+      "selected_cell_count": 371,
+      "in_coverage_cell_count": 371,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 371,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 371,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0016",
+      "selected_cell_count": 140,
+      "in_coverage_cell_count": 140,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 140,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 140,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0017",
+      "selected_cell_count": 99,
+      "in_coverage_cell_count": 99,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 99,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 99,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0018",
+      "selected_cell_count": 291,
+      "in_coverage_cell_count": 291,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 291,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 291,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0019",
+      "selected_cell_count": 113,
+      "in_coverage_cell_count": 113,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 113,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 113,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    },
+    {
+      "plot_id": "P-0020",
+      "selected_cell_count": 82,
+      "in_coverage_cell_count": 82,
+      "out_of_coverage_cell_count": 0,
+      "valid_cell_count": 82,
+      "unknown_cell_count": 0,
+      "class_counts": {
+        "0": 82,
+        "1": 0
+      },
+      "mapped_forest_present": false,
+      "support": "complete",
+      "unknown_reasons": []
+    }
+  ],
+  "source_hash": "fbae885505a5ee7a481775401f27c23b1b8ef1e5451b69156a70c04aa42f38d7",
+  "chip_hash": "3019c19bca064ac8f31747da856f40ce04146da6759c2f36dc30d0ff2e07e7c5",
+  "content": "f774b5c569c9cac0dc6b9b0e4e7ce2e8d19611b9e339e0beb1c183c87a1b2475",
+  "scope": "JRC-only cells and native grid; no browser, area or Hansen count inference"
+}
