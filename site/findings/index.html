@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What the plots show · Plotline explainers</title>
+<meta name="description" content="What 17 suppliers' plots declare, what Hansen and JRC maps show, where they do not line up, and what we are careful not to claim.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Every class starts with fnd- */
+.fnd-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.fnd-seg button { font: 600 13px var(--f-mono); color: var(--ink-2); background: var(--sheet); border: 1px solid var(--rule-2); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.fnd-seg button[aria-pressed="true"] { background: var(--pen); border-color: var(--pen); color: #fff; }
+
+/* chain */
+.fnd-chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 22px; align-items: stretch; }
+.fnd-link { position: relative; padding: 14px 16px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; font-size: 16px; line-height: 1.4; }
+.fnd-link b { display: block; font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--declared); margin-bottom: 6px; }
+.fnd-link.gap { border: 2px dashed var(--review); background: var(--review-wash); }
+.fnd-link.gap b { color: var(--review); }
+.fnd-ids { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.fnd-ids span { font: 600 12.5px var(--f-mono); padding: 5px 9px; border-radius: 999px; background: var(--mist); color: var(--muted); border: 1px solid var(--rule); }
+.fnd-ids span.d { background: var(--declared-wash); color: var(--declared); border-color: color-mix(in srgb, var(--declared) 40%, transparent); }
+
+/* barcode */
+.fnd-bc { width: 100%; border-collapse: separate; border-spacing: 3px; margin-top: 14px; font: 500 12.5px var(--f-mono); }
+.fnd-bc th { font: 600 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 2px 4px; text-align: center; }
+.fnd-bc th.l, .fnd-bc td.l { text-align: left; }
+.fnd-bc td.id { white-space: nowrap; padding-right: 6px; }
+.fnd-bc td.id .dm { color: var(--declared); font-weight: 700; display: inline-block; width: 1.1em; }
+.fnd-bc td.n { color: var(--faint); text-align: right; padding-right: 10px; font-variant-numeric: tabular-nums; }
+.fnd-bc td.c { padding: 0; }
+.fnd-bc button.c { display: block; width: 100%; min-width: 46px; height: 26px; border: 1px solid var(--rule); border-radius: 5px; background: var(--mist); font: 600 12px var(--f-mono); color: var(--ink); cursor: pointer; padding: 0; transition: background-color .6s var(--ease), opacity .4s; }
+.fnd-bc button.c.z { color: var(--faint); font-weight: 500; }
+.fnd-bc button.c.sel { outline: 3px solid var(--pen); outline-offset: 1px; }
+.fnd-bc tr.win-h th { border-bottom: 3px solid var(--review); padding-bottom: 4px; color: var(--review); }
+.fnd-bc tr.win-h th.later { border-bottom-color: var(--rule-2); color: var(--muted); }
+.fnd-read { margin-top: 12px; padding: 12px 16px; border-radius: 10px; background: var(--paper); border: 1px solid var(--rule); font: 500 14.5px/1.5 var(--f-ui); min-height: 70px; }
+.fnd-read b { font-weight: 650; }
+
+/* canvases and svgs */
+.fnd-cv { width: 100%; height: auto; display: block; margin-top: 14px; border-radius: 10px; background: var(--paper); border: 1px solid var(--rule); }
+.fnd-leg { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; font: 500 13px var(--f-mono); color: var(--muted); transition: opacity .5s; }
+.fnd-leg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.fnd-dot { transition: transform .9s var(--ease); }
+.fnd-dot circle { transition: fill .5s, stroke .5s; }
+.fnd-dot text { font: 600 11px var(--f-mono); fill: var(--ink-2); pointer-events: none; }
+.fnd-ovl { display: inline-block; font: 700 13px var(--f-mono); padding: 5px 11px; border-radius: 999px; background: var(--mist); color: var(--ink-2); }
+
+/* explanation tester */
+.fnd-test { margin-top: 16px; display: grid; gap: 8px; }
+.fnd-tr { display: grid; grid-template-columns: 90px minmax(0, 1fr) 110px; gap: 12px; align-items: center; font: 500 13.5px var(--f-mono); }
+.fnd-tr .tk { height: 22px; background: var(--mist); border-radius: 6px; position: relative; overflow: hidden; border: 1px dashed var(--rule-2); }
+.fnd-tr .tk i { position: absolute; inset: 0 auto 0 0; background: var(--loss); width: 0; transition: width .8s var(--ease); }
+.fnd-tr .v { text-align: right; font-variant-numeric: tabular-nums; }
+.fnd-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 30px; }
+
+/* truth state */
+.fnd-tgrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; max-width: 520px; }
+.fnd-tgrid button { aspect-ratio: 1; min-height: 44px; border-radius: 8px; border: 1px solid var(--rule-2); font: 700 12px var(--f-mono); cursor: pointer; background: var(--forest-wash); color: var(--forest); padding: 0; }
+.fnd-tgrid button[data-s="loss"] { background: var(--loss); color: #fff; border-color: var(--loss); }
+.fnd-tgrid button[data-s="gap"] { background: repeating-linear-gradient(45deg, #CDD2DE 0 5px, var(--mist) 5px 10px); color: var(--ink-2); }
+.fnd-tgrid button[data-s="water"] { background: var(--water-wash); color: var(--water); }
+.fnd-tgrid button:disabled { opacity: .4; }
+.fnd-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; margin-top: 14px; }
+.fnd-out { padding: 14px 16px; border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); margin-top: 10px; }
+.fnd-out h4 { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.fnd-pill { display: inline-block; margin-top: 8px; font: 800 26px/1.1 var(--f-display); padding: 8px 16px; border-radius: 10px; background: var(--mist); color: var(--ink-2); }
+.fnd-pill.zero { background: var(--ok-wash); color: var(--ok); }
+.fnd-pill.pos { background: var(--loss-wash); color: var(--loss); }
+.fnd-pill.unk { background: repeating-linear-gradient(45deg, #dfe3ec 0 6px, var(--mist) 6px 12px); }
+.fnd-pill.na { background: var(--mist); color: var(--faint); }
+.fnd-out p { margin-top: 8px; font-size: 16px; color: var(--ink-2); }
+.fnd-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 22px; }
+
+.fnd-q { display: grid; gap: 10px; margin-top: 22px; max-width: var(--prose); padding: 0; list-style: none; }
+.fnd-q li { margin: 0; padding: 14px 18px; background: var(--review-wash); border: 1px solid color-mix(in srgb, var(--review) 35%, transparent); border-left: 5px solid var(--review); border-radius: 12px; font-size: 17px; }
+.fnd-q li b { font: 700 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--review); display: block; margin-bottom: 4px; }
+
+@media (max-width: 760px) {
+  .fnd-two { grid-template-columns: 1fr; }
+  .fnd-tr { grid-template-columns: 70px minmax(0, 1fr) 80px; }
+  .fnd-bc button.c { min-width: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .fnd-dot, .fnd-dot circle, .fnd-bc button.c, .fnd-tr .tk i { transition: none; } }
+</style>
+</head>
+<body data-page="findings">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Deep dive · 15 min</div>
+  <h1>What the plots show: <span class="hl">questions, not verdicts.</span></h1>
+  <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". The maps point somewhere else. This page lays the declarations beside what Hansen and JRC show, says which easy explanations we ruled out, and is careful about what none of this proves.</p>
+  <div class="meta"><span>15 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md, docs/writeups/02 and 04, README.md, docs/research/company-sample-audit.md (prose), docs/lab/engine-vintage-report.md, engine-spatial-sensitivity-report.md, company-next-conversation.md</span></div>
+  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
+    <li>Five plots declared an indication, mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. Those are declarations; we were not given the evidence files.</li>
+    <li>Hansen alone shows loss after 2020 on <b>7 of 17</b> plots. Stack JRC's 2020 forest map and only <b>P-0001</b> has mapped loss on mapped 2020 forest: <b>2 cells in 2022</b>. Region-wide it is 341 of 80,429 post-2020 loss cells (0.4%).</li>
+    <li>The declarations and the maps do not line up, and neither an older Hansen release nor a different boundary rule closes the gap. That is a <b>question for the reviewer</b>, not an accusation.</li>
+  </ul></div>
+</header>
+
+<!-- ============ 1 · declared ============ -->
+<section id="declared">
+  <div class="prose rv">
+    <div class="kick">1 · What suppliers declared</div>
+    <h2>Five plots declare an indication, then a compliant status.</h2>
+    <p>The supplier's record covers 17 plots (we use IDs only here). On <b>five</b> of them the record says an "indication of deforestation" was found using <i>Hansen Tree Cover Loss 2021–2023</i>, that on-site verification with evidence was recorded, and that the final status is <b>"Deforestation-free"</b> and <b>"Compliant"</b> for EUDR.</p>
+    <p>That is a good review lead and nothing more. It does not show a violation, a false statement or a legal status. The evidence references in the record are opaque keys, not links, so we cannot see what the mitigation actually was.</p>
+  </div>
+  <div class="fnd-chain" id="fnd-chain">
+    <div class="fnd-link rv"><b>1 · Indication</b>"Indication of deforestation", using Hansen Tree Cover Loss 2021–2023</div>
+    <div class="fnd-link rv" style="transition-delay:.12s"><b>2 · Mitigation</b>On-site verification, with evidence recorded</div>
+    <div class="fnd-link rv" style="transition-delay:.24s"><b>3 · Final status</b>"Deforestation-free" and "Compliant"</div>
+    <div class="fnd-link gap rv" style="transition-delay:.36s"><b>Not supplied</b>The evidence behind step 2, the exact layer release and the inclusion rule used</div>
+  </div>
+  <div class="fnd-ids rv" aria-label="The 17 supplied plot IDs; five declared an indication">
+    <span class="d">◆ P-0003</span><span>P-0001</span><span>P-0004</span><span class="d">◆ P-0005</span><span>P-0006</span><span class="d">◆ P-0008</span><span>P-0009</span><span class="d">◆ P-0010</span><span>P-0011</span><span class="d">◆ P-0013</span><span>P-0014</span><span>P-0015</span><span>P-0016</span><span>P-0017</span><span>P-0018</span><span>P-0019</span><span>P-0020</span>
+  </div>
+  <p class="small muted rv">◆ = declared an indication in the supplier's record. Source: <code>docs/research/company-sample-audit.md</code>, "Dates and supplier-declared review leads". The other plots declared no indication.</p>
+</section>
+
+<!-- ============ 2 · hansen ============ -->
+<section id="hansen">
+  <div class="prose rv">
+    <div class="kick">2 · What Hansen shows</div>
+    <h2>Hansen alone shows loss after 2020 on 7 of 17 plots.</h2>
+    <p>Hansen's map records, for every ~28 m cell, the year of any tree-cover loss. Counting the cells whose centre falls inside each plot gives the barcode below: <b>plot by year, one colour, count as intensity</b>. The supplier named the 2021–23 window; the current Hansen release also covers 2024 and 2025.</p>
+  </div>
+
+  <div class="panel" id="fnd-bar">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Cohort barcode · 17 plots × 2021–2025 · cell counts</span><div class="btns" style="gap:12px"><span class="fnd-seg" id="fnd-bar-v"><button type="button" data-v="all" aria-pressed="true">All Hansen loss</button><button type="button" data-v="for" aria-pressed="false">On mapped 2020 forest</button></span><button class="replay" type="button">↻ Replay</button></div></div>
+      <table class="fnd-bc" id="fnd-bc" aria-label="Hansen loss cell counts per plot and year"></table>
+      <div class="legend"><span style="--c:var(--loss)"><i></i>cells with loss (darker = more)</span><span>· = known zero (complete support)</span><span>◆ declared an indication</span></div>
+      <div class="fnd-read" id="fnd-bar-read" aria-live="polite">Select a cell for its count.</div>
+    </div>
+    <p class="foot"><b>Source:</b> per-plot counts from <code>docs/lab/engine-vintage-report.md</code> and <code>docs/lab/engine-spatial-sensitivity-report.md</code> (centre rule, Hansen 2025 v1.13); P-0001 forest figures from <code>docs/lab/decision-layer-report.md</code>. Aggregate counts only, no geometry. Counts are <b>cells, not hectares</b>. Barcode years before 2021 are left out because the decision does not read them.</p>
+  </div>
+
+  <div class="stats rv">
+    <div class="big loss"><span class="num" data-count="7"></span><span class="cap">of 17 plots show Hansen loss after 2020</span></div>
+    <div class="big pen"><span class="num" data-count="3"></span><span class="cap">of them inside the supplier's 2021–23 window</span></div>
+    <div class="big forest"><span class="num" data-count="1"></span><span class="cap">has loss on mapped 2020 forest (P-0001)</span></div>
+  </div>
+  <div class="prose rv">
+    <p>Loss in the supplier's 2021–23 window appears on <b>P-0001</b> (38 cells, all coded 2022), <b>P-0016</b> (1 cell, 2023) and <b>P-0018</b> (1 cell, 2021). The other four plots with later loss (P-0005, P-0006, P-0013, P-0014) show it only in 2024 or 2025. None of the three plots with in-window loss is one of the five that declared an indication.</p>
+  </div>
+</section>
+
+<!-- ============ 3 · JRC ============ -->
+<section id="jrc">
+  <div class="prose rv">
+    <div class="kick">3 · What the decision layer adds</div>
+    <h2>Stack JRC's 2020 forest map and almost all of it falls away.</h2>
+    <p>EUDR asks about <i>forest on 31 December 2020</i>, not about any tree loss. Hansen loss also records harvests on land that was never forest. The decision layer therefore combines Hansen with JRC's 2020 forest class, and counts only <b>mapped loss on mapped 2020 forest</b>.</p>
+  </div>
+
+  <div class="panel" id="fnd-fun">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Region funnel · one dot per map cell · 80,429 dots</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
+      <div class="steps" style="margin-top:12px"></div>
+      <canvas class="fnd-cv" id="fnd-fun-cv" width="960" height="340" role="img" aria-label="A swarm of 80,429 dots, one per map cell with Hansen loss after 2020, sorts into three groups. 79,871 are not on mapped 2020 forest, 217 have no JRC value, and 341 are on mapped 2020 forest."></canvas>
+      <div class="fnd-leg" id="fnd-fun-leg" style="opacity:0"><span><i style="background:rgba(232,89,12,.35)"></i>79,871 on land JRC did not map as forest</span><span><i style="background:#8A90A3"></i>217 edge cells with no JRC value</span><span><i style="background:var(--forest)"></i>341 on mapped 2020 forest</span></div>
+      <p class="say"><small id="fnd-fun-n">Step 1 of 4</small><span id="fnd-fun-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> ("Region facts for the chip") and <code>docs/lab/decision-layer-report.md</code>. 80,429 land cells (10.8% of land) show Hansen loss after 2020; 341 (0.42%) sit on JRC 2020 forest; 79,871 are on non-forest land; 217 are edge cells where JRC has no value. The dot positions are random; only the counts are real. Cells, not hectares.</p>
+  </div>
+
+  <div class="stats rv">
+    <div class="big loss"><span class="num" data-count="341"></span><span class="cap">of 80,429 post-2020 loss cells on mapped 2020 forest (0.4%)</span></div>
+    <div class="big forest"><span class="num" data-count="60"></span><span class="cap">of P-0001's 121 cells are mapped 2020 forest</span></div>
+    <div class="big pen"><span class="num" data-count="2"></span><span class="cap">of P-0001's 38 loss cells (2022) sit on it</span></div>
+  </div>
+  <div class="prose rv">
+    <h3>Plot by plot</h3>
+    <ul>
+      <li><b>P-0001:</b> 60 of its 121 cells are JRC 2020 forest. Of its 38 loss cells in 2022, <b>2</b> are on mapped 2020 forest (mapped loss on mapped 2020 forest). The other 36 are on land JRC did not map as forest.</li>
+      <li><b>The other 16 plots:</b> no mapped 2020 forest, so no mapped loss on mapped 2020 forest, with complete support. Six of them (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) do have Hansen loss after 2020. All of it falls outside JRC's mapped 2020 forest class.</li>
+    </ul>
+    <p>Why those cells are not forest in the JRC map is not established. It could be a plantation harvest cycle, or something else. We say "falls outside JRC's mapped 2020 forest class", nothing stronger.</p>
+  </div>
+  <div class="note warn rv"><b>Careful</b><span>These are mapped observations from public layers under a written rule. They are not a compliance verdict, and "deforestation found" is not what we are saying.</span></div>
+  <details class="deeper"><summary>Go deeper: why one layer alone raises the wrong alarm <span class="lvl">technical</span></summary><div class="body">
+    <p>On the region, 42.9% of land cells show Hansen loss at some point since 2001 (319,011 of 743,418). A Hansen-only forest proxy (canopy above 10%, no loss to 2020) marks 58.4% of land as forest and counts 71,030 post-2020 loss cells on it; JRC marks 15.9% as forest. That gap is why a rubber and oil-palm mosaic needs the second layer. At JRC's native ~9 m resolution, P-0001 has 554 forest cells out of 1,083 JRC cells. Sources: <code>docs/lab/decision-scale-notes.md</code>, <code>docs/writeups/02-what-we-tried-and-found.md</code>.</p>
+    <p>The JRC rule reads one JRC cell per Hansen cell (the centre). Reading a 3×3 majority or "any forest in the block" instead changes no plot decision, but only P-0001 has forest, so it is a weak test. "Any forest" moves the regional total of loss-on-forest cells from 341 to 506 and P-0001's from 2 to 4.</p>
+  </div></details>
+</section>
+
+<!-- ============ 4 · lineup ============ -->
+<section id="lineup">
+  <div class="prose rv">
+    <div class="kick">4 · Declared against mapped</div>
+    <h2>The declared plots and the mapped plots are different plots.</h2>
+    <p>Put the sets side by side. Step through them: first the plots that declared an indication, then the plots Hansen shows loss on, widening the window and then adding JRC's forest map.</p>
+  </div>
+
+  <div class="panel" id="fnd-set">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Set comparison · 17 plots by ID number</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
+      <div class="steps" style="margin-top:12px"></div>
+      <div style="overflow-x:auto"><svg id="fnd-set-svg" style="min-width:560px" viewBox="0 0 680 360" role="img" aria-label="Seventeen plot dots sort into two overlapping circles: plots that declared an indication, and plots with mapped loss"></svg></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:6px"><span class="fnd-ovl" id="fnd-set-ovl"></span><span class="small muted" id="fnd-set-small"></span></div>
+      <p class="say"><small id="fnd-set-n">Step 1 of 5</small><span id="fnd-set-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> declared set from <code>docs/research/company-sample-audit.md</code>; Hansen sets from <code>docs/lab/engine-vintage-report.md</code> and <code>docs/lab/decision-layer-report.md</code> (centre rule, Hansen 2025 v1.13). Dots are labelled by the last two digits of the plot ID (P-0003 is "03"). Purple = declared; orange ring = mapped loss.</p>
+  </div>
+
+  <div class="prose rv">
+    <p>The honest summary is that <b>no declared plot has mapped loss in the window the supplier named</b>, and the one plot with mapped loss on mapped 2020 forest is not a declared plot. Two declared plots (P-0005 and P-0013) do show later Hansen loss, in 2024 and 2025, which is after the 2021–23 layer the supplier cites. We do not read anything into that. We do not know the supplier's method, so these are things to ask, not conclusions.</p>
+  </div>
+  <ul class="fnd-q rv">
+    <li><b>Question for the reviewer</b>Which layer release, inclusion rule and forest definition produced each declared indication?</li>
+    <li><b>Question for the reviewer</b>What did the recorded on-site verification find, and does it relate to loss the maps show for that plot at all?</li>
+  </ul>
+</section>
+
+<!-- ============ 5 · ruled out ============ -->
+<section id="ruled">
+  <div class="prose rv">
+    <div class="kick">5 · The easy explanations</div>
+    <h2>Neither an older release nor a different rule closes the gap.</h2>
+    <p>Two obvious explanations: the supplier used an older Hansen release, or counted a cell for a plot by a different rule. We tested both, fixing the method before looking at the results. Try them below. In every variant, <b>none of the five declared indications is reproduced</b> in the 2021–23 window.</p>
+  </div>
+
+  <div class="panel" id="fnd-test">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Explanation tester · 2021–23 Hansen loss cells on the five declared plots</span></div>
+      <div class="fnd-seg" id="fnd-test-v" style="margin-top:12px"><button type="button" data-v="a" aria-pressed="true">Our rule, Hansen 2025 v1.13</button><button type="button" data-v="b" aria-pressed="false">Older release: Hansen 2023 v1.11</button><button type="button" data-v="c" aria-pressed="false">Any overlap, not centre inside</button></div>
+      <div class="fnd-test" id="fnd-test-rows"></div>
+      <div style="margin-top:14px"><span class="fnd-ovl" id="fnd-test-rep"></span></div>
+      <div class="sol-lab" style="font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:16px">Other plots with 2021–23 loss under this variant (cells)</div>
+      <div class="fnd-chips" id="fnd-test-chips"></div>
+      <p class="say"><small id="fnd-test-small"></small><span id="fnd-test-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> older release: <code>docs/lab/engine-vintage-report.md</code> (preregistered 2023 v1.11 vs 2025 v1.13, 17 plots, same rule: 2021–23 counts identical). Overlap rule: <code>docs/lab/engine-spatial-sensitivity-report.md</code> (centre selects 1,048 plot/cell memberships; overlap selects 1,385). The supplier's own release is <b>unknown</b>; 2023 v1.11 is a hypothetical comparison chosen before looking at results.</p>
+  </div>
+
+  <div class="prose rv">
+    <p>Two things to keep straight. First, a different rule is not a harmless toggle: switching from "centre inside" to "any overlap" changes five plot-period answers on <i>other</i> plots (the rule is part of the decision), yet it creates no 2021–23 signal on the five declared plots. Second, these tests cannot say what the supplier actually did. They may have used manual review, a threshold, another layer or a buffer. That is exactly the problem SystemEarth described: a plot-level decision is only trustworthy if the layers, versions and rules behind it can be replayed. That is what Plotline's receipts are for.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"We tested the declarations against our documented rule and two data releases, and they don't line up. That's a question for the evidence files, not an accusation."</span></div>
+</section>
+
+<!-- ============ 6 · known vs unknown ============ -->
+<section id="known">
+  <div class="prose rv">
+    <div class="kick">6 · Zero is not the same as unknown</div>
+    <h2>"No loss seen" and "we could not look" are different answers.</h2>
+    <p>Every Plotline answer carries one of four truth states. The important rule: <b>missing data never turns into a reassuring zero.</b> Click the cells below to build a plot, or use a preset, and watch the answer change.</p>
+  </div>
+
+  <div class="panel" id="fnd-truth">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Truth-state explainer · an invented 24-cell plot</span></div>
+      <div class="btns" style="margin-top:12px" id="fnd-tt-pre">
+        <button class="btn" type="button" data-p="clean">All clear</button><button class="btn" type="button" data-p="loss">One loss cell</button><button class="btn" type="button" data-p="gap">A gap, no loss seen</button><button class="btn" type="button" data-p="gaploss">A gap, loss seen</button><button class="btn" type="button" data-p="water">Water only</button><button class="btn" type="button" id="fnd-tt-miss" aria-pressed="false">A required layer failed to load</button>
+      </div>
+      <div class="fnd-two">
+        <div>
+          <div class="fnd-tgrid" id="fnd-tt-grid" role="group" aria-label="24 cells; click a cell to cycle land, loss, no data, water"></div>
+          <div class="legend"><span><i style="--c:var(--forest)"></i>L land, no loss</span><span><i style="--c:var(--loss)"></i>X loss seen</span><span><i style="--c:var(--unknown)"></i>? no data / outside the map</span><span><i style="--c:var(--water)"></i>W water</span></div>
+          <p class="small muted" style="margin:8px 0 0">Click a cell to cycle through the four kinds.</p>
+        </div>
+        <div>
+          <div class="fnd-out"><h4>Support</h4><span class="fnd-pill" id="fnd-tt-sup" style="font-size:20px"></span></div>
+          <div class="fnd-out"><h4>Mapped loss after 2020</h4><span class="fnd-pill" id="fnd-tt-flag"></span><p id="fnd-tt-why"></p></div>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> rule from <code>docs/lab/interface-v1.md</code> ("Resolved partial-support ambiguity") and <code>engine/decision_summary.py</code>; <code>design/DESIGN.md</code> section 7 (truth-state rules). The grid is invented. In the app, unknown is drawn hatched and never as 0.</p>
+  </div>
+
+  <div class="fnd-4">
+    <div class="card rv" style="--c: var(--ok)"><div class="who">Known zero</div><p>Every selected cell was read and none shows loss. Shown as "none" with complete support.</p></div>
+    <div class="card rv" style="--c: var(--loss)"><div class="who">Positive</div><p>At least one loss cell was seen. It stays positive even if other cells are missing: missing data cannot cancel something we saw.</p></div>
+    <div class="card rv" style="--c: var(--unknown)"><div class="who">Unknown</div><p>Some cells could not be read, and none of the rest shows loss. We cannot say "no loss", only "none seen so far".</p></div>
+    <div class="card rv" style="--c: var(--faint)"><div class="who">Unavailable</div><p>Nothing can be computed: no cell centres, no valid land, or a required layer is missing.</p></div>
+  </div>
+</section>
+
+<!-- ============ 7 · limits ============ -->
+<section id="limits">
+  <div class="prose rv">
+    <div class="kick">7 · What these numbers cannot tell you</div>
+    <h2>Honest limits, said once.</h2>
+    <ul>
+      <li><b>Cells, not hectares.</b> Every count is a number of ~28 m map cells.</li>
+      <li><b>The 0.5 ha minimum area and the "able to reach 5 m" test</b> from the EUDR forest definition are not applied by any layer here. "Deforestation" here means mapped tree-cover loss on mapped 2020 forest.</li>
+      <li><b>Hansen loss includes fire and logging</b> and does not say what the land became. The cut-off is checked at year resolution.</li>
+      <li><b>Protected areas</b> are not included, because their licence is unclear.</li>
+      <li><b>One region, one laptop.</b> The 34 × 17 km sample region is the only area measured. JRC is read at the Hansen cell centre, a documented simplification.</li>
+      <li><b>The supplier's release, rule and method are unknown.</b> A current Hansen release may differ from the one they used.</li>
+      <li><b>Source and compact agreeing</b> shows the representation keeps the answer under our rule. It does not show the maps are right, nor that anyone complied.</li>
+    </ul>
+    <p class="small muted">Sources: "Honest limits" in <code>docs/lab/decision-layer-report.md</code>, <code>docs/writeups/04-pitch.md</code>, <code>docs/lab/interface-v1.md</code>.</p>
+  </div>
+</section>
+
+<!-- ============ 8 · next ============ -->
+<section id="next">
+  <div class="prose rv">
+    <div class="kick">8 · Next conversation</div>
+    <h2>What we would ask SystemEarth next.</h2>
+    <p>Our smallest useful next step is <b>one plot and one receipt</b>: ask them to mark which fields answer their real review question, where the decision rules differ, and what happens to an unresolved evidence reference. A corrected query contract is worth more than another dataset.</p>
+  </div>
+  <ul class="fnd-q rv">
+    <li><b>Question 1 · The reference query</b>What exact historical layer release, spatial inclusion rule, canopy and forest definitions and missing-data rules produced the supplied results?</li>
+    <li><b>Question 2 · The evidence</b>What do the opaque reference keys resolve to? Can you share one representative mitigation or evidence item and the expected review steps?</li>
+    <li><b>Question 3 · The workload</b>Is the common operation one interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after layer updates? The workload should pick the representation.</li>
+    <li><b>Also confirm</b>Whether the supplied sample may appear in slides, the final commodity and region, and the real submission and pitch logistics (still unknown).</li>
+  </ul>
+  <div class="prose rv"><p class="small muted">Source: <code>docs/lab/company-next-conversation.md</code>, <code>docs/writeups/03-what-we-ship.md</code> ("Still open"). Future company-reviewed cases should stay separate from the 17-record test set, and no classifier should be trained on supplier final declarations as if they were independent truth.</p></div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, seg, REDUCE } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.append(e); return e; };
+
+  /* ---------- aggregate per-plot data (docs: engine-vintage-report.md, engine-spatial-sensitivity-report.md) ---------- */
+  const PLOTS = ['P-0001', 'P-0003', 'P-0004', 'P-0005', 'P-0006', 'P-0008', 'P-0009', 'P-0010', 'P-0011', 'P-0013', 'P-0014', 'P-0015', 'P-0016', 'P-0017', 'P-0018', 'P-0019', 'P-0020'];
+  const CELLS = { 'P-0001': 121, 'P-0003': 87, 'P-0004': 47, 'P-0005': 262, 'P-0006': 256, 'P-0008': 27, 'P-0009': 28, 'P-0010': 27, 'P-0011': 42, 'P-0013': 25, 'P-0014': 7, 'P-0015': 39, 'P-0016': 14, 'P-0017': 9, 'P-0018': 34, 'P-0019': 15, 'P-0020': 8 };
+  const DECL = new Set(['P-0003', 'P-0005', 'P-0008', 'P-0010', 'P-0013']);
+  const YEARS = [2021, 2022, 2023, 2024, 2025];
+  // loss cells per year under the centre rule
+  const LOSS = { 'P-0001': { 2022: 38 }, 'P-0005': { 2024: 7, 2025: 11 }, 'P-0006': { 2025: 18 }, 'P-0013': { 2025: 3 }, 'P-0014': { 2024: 7 }, 'P-0016': { 2023: 1, 2024: 1 }, 'P-0018': { 2021: 1 } };
+  const ONFOREST = { 'P-0001': { 2022: 2 } };
+
+  /* ---------- 1 · cohort barcode ---------- */
+  (() => {
+    const root = $('#fnd-bar'), tbl = $('#fnd-bc', root), read = $('#fnd-bar-read', root);
+    let view = 'all';
+    const head = `<thead><tr class="win-h"><th class="l" colspan="3"></th><th colspan="3" scope="colgroup">Supplier's named window</th><th colspan="2" class="later" scope="colgroup">After the window</th></tr><tr><th class="l" scope="col">Plot</th><th scope="col" class="l">cells</th><th scope="col"></th>${YEARS.map(y => `<th scope="col">${y}</th>`).join('')}</tr></thead>`;
+    tbl.innerHTML = head + '<tbody>' + PLOTS.map(p => `<tr data-p="${p}"><td class="id l"><span class="dm" title="${DECL.has(p) ? 'declared an indication' : ''}">${DECL.has(p) ? '◆' : ''}</span>${p}</td><td class="n">${CELLS[p]}</td><td></td>${YEARS.map(y => `<td class="c"><button type="button" class="c" data-p="${p}" data-y="${y}"></button></td>`).join('')}</tr>`).join('') + '</tbody>';
+    const btns = $$('button.c', tbl);
+    const val = (p, y) => ((view === 'all' ? LOSS : ONFOREST)[p] || {})[y] || 0;
+    function paint() {
+      btns.forEach(b => {
+        const v = val(b.dataset.p, +b.dataset.y);
+        b.textContent = v || '·'; b.classList.toggle('z', !v);
+        b.style.background = v ? `color-mix(in srgb, var(--loss) ${Math.round(18 + 82 * Math.sqrt(v / 38))}%, white)` : '';
+        b.style.color = v && v > 9 ? '#fff' : '';
+        b.setAttribute('aria-label', `${b.dataset.p}, ${b.dataset.y}: ${v} cells`);
+      });
+    }
+    function describe(p, y) {
+      const total = (LOSS[p] || {})[y] || 0, f = (ONFOREST[p] || {})[y] || 0, d = DECL.has(p);
+      let t = `<b>${p} · ${y}</b> (${CELLS[p]} selected cells${d ? '; declared an indication' : '; no indication declared'}). `;
+      if (view === 'all') {
+        t += total ? `<b>${total}</b> cell${total > 1 ? 's' : ''} of Hansen loss. ` : 'No Hansen loss mapped: a known zero (complete support). ';
+        if (p === 'P-0001' && y === 2022) t += 'Switch to "On mapped 2020 forest" to see how many sit on forest.';
+        else if (total && y >= 2024 && d) t += 'This is after the 2021–23 window the supplier named.';
+        else if (total && y <= 2023 && !d) t += 'Inside the supplier\'s window, on a plot that declared no indication.';
+      } else {
+        if (p === 'P-0001' && y === 2022) t += '<b>2</b> of the 38 loss cells sit on mapped 2020 forest. The other 36 are on land JRC did not map as forest.';
+        else t += total ? `The ${total} Hansen loss cell${total > 1 ? 's are' : ' is'} all outside JRC's mapped 2020 forest class, so mapped loss on mapped 2020 forest is a known zero.` : (p === 'P-0001' ? 'No loss this year.' : 'No mapped 2020 forest in this plot: nothing to lose, a known zero.');
+      }
+      return t;
+    }
+    let cur = null;
+    tbl.addEventListener('click', e => { const b = e.target.closest('button.c'); if (!b) return; cur = b; btns.forEach(x => x.classList.toggle('sel', x === b)); read.innerHTML = describe(b.dataset.p, +b.dataset.y); });
+    $$('#fnd-bar-v button', root).forEach(b => b.addEventListener('click', () => { view = b.dataset.v; $$('#fnd-bar-v button', root).forEach(x => x.setAttribute('aria-pressed', x === b)); paint(); if (cur) read.innerHTML = describe(cur.dataset.p, +cur.dataset.y); }));
+    paint();
+    const cols = YEARS.length;
+    instrument(root, { ms: 2600, render(t) {
+      btns.forEach(b => { const ci = YEARS.indexOf(+b.dataset.y), ri = PLOTS.indexOf(b.dataset.p); b.style.opacity = seg(t, ci * .12 + ri * .006, ci * .12 + ri * .006 + .3); });
+    } });
+  })();
+
+  /* ---------- 2 · region funnel (canvas dot swarm) ---------- */
+  (() => {
+    const root = $('#fnd-fun'), cv = $('#fnd-fun-cv', root), ctx = cv.getContext('2d'), say = $('#fnd-fun-say'), nn = $('#fnd-fun-n'), leg = $('#fnd-fun-leg');
+    const W = cv.width, H = cv.height, NA = 79871, NU = 217, NF = 341, N = NA + NU + NF;
+    let sd = 2026; const rnd = () => (sd = (Math.imul(sd, 1664525) + 1013904223) >>> 0) / 4294967296;
+    const x0 = new Float32Array(N), y0 = new Float32Array(N);
+    for (let i = 0; i < N; i++) { x0[i] = 16 + Math.floor(rnd() * 580); y0[i] = 16 + Math.floor(rnd() * 308); }
+    const F0 = NA + NU, tx = new Float32Array(NF), ty = new Float32Array(NF);
+    for (let k = 0; k < NF; k++) { tx[k] = 660 + (k % 28) * 10; ty[k] = 92 + Math.floor(k / 28) * 10; }
+    const img = ctx.createImageData(W, H), u32 = new Uint32Array(img.data.buffer);
+    const px = (r, g, b, a) => ((a & 255) << 24) | (b << 16) | (g << 8) | r;
+    const P = { aA: .8, aU: .8, cu: 0, g: 0, mv: 0, hl: 0 };
+    const STEPS = [
+      { aA: .8, aU: .8, cu: 0, g: 0, mv: 0, hl: 0 },
+      { aA: .3, aU: .8, cu: 1, g: 1, mv: 0, hl: 0 },
+      { aA: .05, aU: .05, cu: 1, g: 1, mv: 1, hl: 0 },
+      { aA: .05, aU: .05, cu: 1, g: 1, mv: 1, hl: 1 },
+    ];
+    const SAY = [
+      '80,429 cells in the region show Hansen loss after 2020: 10.8% of the region\'s land. One orange dot is one cell.',
+      'Now ask JRC: was that cell mapped as forest on 31 Dec 2020? Most are not (pale orange). 217 edge cells have no JRC value (grey). 341 are mapped 2020 forest (green).',
+      'Keep only mapped loss on mapped 2020 forest: 341 cells, 0.4% of the 80,429.',
+      'Of those 341 cells in the whole region, 2 sit inside a supplied plot: P-0001, in 2022. The other 16 plots have none.',
+    ];
+    const mix = (a, b, t) => a + (b - a) * t, e3 = t => 1 - Math.pow(1 - t, 3);
+    function draw() {
+      u32.fill(0);
+      const cA = px(232, 89, 12, Math.round(P.aA * 255));
+      const gu = [mix(232, 138, P.cu), mix(89, 144, P.cu), mix(12, 163, P.cu)].map(Math.round), cU = px(gu[0], gu[1], gu[2], Math.round(P.aU * 255));
+      for (let i = 0; i < NA; i++) u32[y0[i] * W + x0[i]] = cA;
+      for (let i = NA; i < F0; i++) u32[y0[i] * W + x0[i]] = cU;
+      ctx.putImageData(img, 0, 0);
+      const m = e3(P.mv), fc = [Math.round(mix(232, 21, P.g)), Math.round(mix(89, 128, P.g)), Math.round(mix(12, 61, P.g))];
+      ctx.fillStyle = `rgb(${fc})`;
+      const sz = mix(2, 8, m);
+      for (let k = 0; k < NF; k++) { const i = F0 + k; ctx.fillRect(mix(x0[i], tx[k], m), mix(y0[i], ty[k], m), sz, sz); }
+      if (P.mv > .95) {
+        ctx.font = '600 13px "Geist Mono", monospace'; ctx.fillStyle = '#2B3046';
+        ctx.fillText('341 cells on mapped 2020 forest', 660, 70);
+        if (P.hl > 0) {
+          ctx.globalAlpha = P.hl;
+          ctx.fillStyle = '#E8590C'; for (let k = 0; k < 2; k++) ctx.fillRect(tx[k], ty[k], 8, 8);
+          ctx.strokeStyle = '#E8590C'; ctx.lineWidth = 2; ctx.strokeRect(tx[0] - 4, ty[0] - 4, tx[1] - tx[0] + 16, 16);
+          ctx.fillStyle = '#2B3046'; ctx.fillText('Outlined: P-0001, 2022', 660, 250);
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+    let raf = 0;
+    function go(k) {
+      nn.textContent = `Step ${k + 1} of 4`; say.textContent = SAY[k]; leg.style.opacity = k >= 1 ? 1 : 0;
+      const to = STEPS[k], from = { ...P };
+      cancelAnimationFrame(raf);
+      if (REDUCE) { Object.assign(P, to); draw(); return; }
+      const t0 = performance.now();
+      const tick = now => { const t = Math.min(1, (now - t0) / 1100); for (const key in to) P[key] = mix(from[key], to[key], t); draw(); if (t < 1) raf = requestAnimationFrame(tick); };
+      raf = requestAnimationFrame(tick);
+    }
+    stepper(root, 4, go);
+  })();
+
+  /* ---------- 3 · set comparison ---------- */
+  (() => {
+    const root = $('#fnd-set'), svg = $('#fnd-set-svg', root), say = $('#fnd-set-say'), nn = $('#fnd-set-n'), ovl = $('#fnd-set-ovl'), small = $('#fnd-set-small');
+    const A = el('circle', { cx: 250, cy: 150, r: 125, fill: 'var(--declared-wash)', 'fill-opacity': .55, stroke: 'var(--declared)', 'stroke-width': 2 }, svg);
+    const B = el('circle', { cx: 430, cy: 150, r: 125, fill: 'var(--loss-wash)', 'fill-opacity': .55, stroke: 'var(--loss)', 'stroke-width': 2 }, svg);
+    const la = el('text', { x: 190, y: 14, 'font-size': 12, 'font-weight': 600, fill: 'var(--declared)', 'text-anchor': 'middle' }, svg);
+    const lb = el('text', { x: 490, y: 14, 'font-size': 12, 'font-weight': 600, fill: 'var(--loss)', 'text-anchor': 'middle' }, svg);
+    A.style.transition = B.style.transition = 'opacity .6s';
+    const DEC = ['P-0003', 'P-0005', 'P-0008', 'P-0010', 'P-0013'];
+    const SETB = [[], [], ['P-0001', 'P-0016', 'P-0018'], ['P-0001', 'P-0005', 'P-0006', 'P-0013', 'P-0014', 'P-0016', 'P-0018'], ['P-0001']];
+    const LBL = ['', '', 'Hansen loss in 2021–23 (3)', 'Any Hansen loss after 2020 (7)', 'Mapped loss on mapped 2020 forest (1)'];
+    const slotsA = [[165, 105], [215, 82], [185, 150], [235, 130], [205, 195]];
+    const slotsB = [[450, 150], [425, 100], [490, 100], [525, 150], [480, 200], [430, 205], [540, 195]];
+    const slotsO = [[340, 128], [340, 175]];
+    const dots = PLOTS.map((p, i) => {
+      const g = el('g', { class: 'fnd-dot' }, svg), home = [30 + i * 38, 332];
+      el('circle', { r: 14, fill: '#fff', stroke: 'var(--rule-2)', 'stroke-width': 1.5 }, g);
+      const t = el('text', { 'text-anchor': 'middle', y: 4 }, g); t.textContent = p.slice(-2);
+      el('title', {}, g).textContent = p;
+      g.setAttribute('transform', `translate(${home})`);
+      return { p, g, home, c: g.firstChild };
+    });
+    const MSG = [
+      'The 17 supplied plots, each a dot labelled by the last two digits of its ID.',
+      'Five plots declared an indication of deforestation: P-0003, P-0005, P-0008, P-0010 and P-0013.',
+      'The supplier named Hansen 2021–23. Three plots show Hansen loss in that window: P-0001, P-0016, P-0018. No dot is in both circles.',
+      'Widen to any Hansen loss after 2020, up to 2025: 7 plots. Now P-0005 and P-0013 sit in the overlap, but their loss is in 2024 and 2025 (P-0005: 7 cells in 2024 and 11 in 2025; P-0013: 3 in 2025), after the layer the supplier cites.',
+      'Keep only mapped loss on mapped 2020 forest: P-0001 alone, 2 cells in 2022. It is not one of the declared plots.',
+    ];
+    function show(k) {
+      nn.textContent = `Step ${k + 1} of 5`; say.textContent = MSG[k];
+      const showA = k >= 1, showB = k >= 2, setB = SETB[k];
+      A.style.opacity = showA ? 1 : .12; B.style.opacity = showB ? 1 : .12;
+      la.textContent = showA ? 'Declared an indication (5)' : ''; lb.textContent = LBL[k];
+      let ia = 0, ib = 0, io = 0, over = 0;
+      dots.forEach(d => {
+        const inA = showA && DEC.includes(d.p), inB = showB && setB.includes(d.p);
+        let pos = d.home;
+        if (inA && inB) { pos = slotsO[io++]; over++; } else if (inA) pos = slotsA[ia++]; else if (inB) pos = slotsB[ib++];
+        d.g.setAttribute('transform', `translate(${pos})`);
+        d.c.setAttribute('fill', inA ? 'var(--declared-wash)' : inB ? 'var(--loss-wash)' : '#fff');
+        d.c.setAttribute('stroke', inB ? 'var(--loss)' : inA ? 'var(--declared)' : 'var(--rule-2)');
+        d.c.setAttribute('stroke-width', inA || inB ? 3 : 1.5);
+        d.g.setAttribute('opacity', (k >= 1 && !inA && !inB) ? .55 : 1);
+      });
+      ovl.textContent = k < 2 ? 'Overlap: —' : `Overlap with declared: ${over} of 5`;
+      small.textContent = k === 3 ? 'Both overlapping plots: loss only in 2024–25.' : k === 4 ? 'Not one of the 5 declared plots.' : k === 2 ? 'In the supplier\'s own window.' : '';
+    }
+    stepper(root, 5, show);
+  })();
+
+  /* ---------- 4 · explanation tester ---------- */
+  (() => {
+    const root = $('#fnd-test'), rows = $('#fnd-test-rows', root), chips = $('#fnd-test-chips', root), rep = $('#fnd-test-rep', root), say = $('#fnd-test-say'), small = $('#fnd-test-small');
+    const V = {
+      a: { name: 'Our written rule', say: 'Cell centre inside the plot, Hansen 2025 v1.13. The five declared plots show no loss in 2021–23. The loss in the window is on three other plots.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0016', 1], ['P-0018', 1]] },
+      b: { name: 'Older release', say: 'Hansen 2023 v1.11, the same rule, chosen before looking at the results. All 2021–23 counts are identical to the current release on every plot. Only 47 later-year cells (2024 and 2025) differ, because the old release ends in 2023.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0016', 1], ['P-0018', 1]] },
+      c: { name: 'Any overlap', say: 'Any positive overlap selects 1,385 plot/cell memberships instead of 1,048 (+337). Five plot-period flags change: P-0014 and P-0015 gain 2021–23 loss; P-0003, P-0004 and P-0019 gain 2024–25 loss. Still no loss in 2021–23 on the five declared plots.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0014', 4], ['P-0015', 6], ['P-0016', 5], ['P-0018', 1]] },
+    };
+    rows.innerHTML = Object.keys(V.a.c).map(p => `<div class="fnd-tr"><span><span style="color:var(--declared)">◆</span> ${p}</span><span class="tk"><i></i></span><span class="v"></span></div>`).join('');
+    const trs = $$('.fnd-tr', rows);
+    function show(k) {
+      const v = V[k];
+      Object.keys(v.c).forEach((p, i) => { const n = v.c[p]; $('i', trs[i]).style.width = (100 * n / 38) + '%'; $('.v', trs[i]).textContent = n + ' cells'; });
+      rep.textContent = 'Declared indications reproduced: 0 of 5';
+      chips.innerHTML = v.o.map(([p, n]) => `<span class="st loss">${p} · ${n}</span>`).join('');
+      small.textContent = v.name; say.textContent = v.say;
+      $$('#fnd-test-v button', root).forEach(b => b.setAttribute('aria-pressed', b.dataset.v === k));
+    }
+    $$('#fnd-test-v button', root).forEach(b => b.addEventListener('click', () => show(b.dataset.v)));
+    show('a');
+  })();
+
+  /* ---------- 5 · truth states ---------- */
+  (() => {
+    const root = $('#fnd-truth'), grid = $('#fnd-tt-grid', root), sup = $('#fnd-tt-sup'), flag = $('#fnd-tt-flag'), why = $('#fnd-tt-why'), miss = $('#fnd-tt-miss');
+    const ORDER = ['land', 'loss', 'gap', 'water'], GLYPH = { land: 'L', loss: 'X', gap: '?', water: 'W' }, NAME = { land: 'land, no loss', loss: 'loss seen', gap: 'no data', water: 'water' };
+    const cells = Array.from({ length: 24 }, () => 'land'); let missing = false;
+    const btns = cells.map((_, i) => { const b = document.createElement('button'); b.type = 'button'; b.addEventListener('click', () => { cells[i] = ORDER[(ORDER.indexOf(cells[i]) + 1) % 4]; render(); }); grid.append(b); return b; });
+    const set = (map) => { cells.fill('land'); Object.entries(map).forEach(([i, s]) => cells[+i] = s); };
+    const PRE = { clean: () => { set({}); missing = false; }, loss: () => { set({ 9: 'loss' }); missing = false; }, gap: () => { set({ 14: 'gap', 15: 'gap' }); missing = false; }, gaploss: () => { set({ 14: 'gap', 15: 'gap', 9: 'loss' }); missing = false; }, water: () => { cells.fill('water'); missing = false; } };
+    $$('#fnd-tt-pre [data-p]', root).forEach(b => b.addEventListener('click', () => { PRE[b.dataset.p](); render(); }));
+    miss.addEventListener('click', () => { missing = !missing; render(); });
+    function render() {
+      btns.forEach((b, i) => { b.dataset.s = cells[i]; b.textContent = GLYPH[cells[i]]; b.setAttribute('aria-label', `Cell ${i + 1}: ${NAME[cells[i]]}. Click to change.`); });
+      miss.setAttribute('aria-pressed', missing); miss.classList.toggle('on', missing);
+      const n = k => cells.filter(c => c === k).length, loss = n('loss'), gap = n('gap'), land = n('land') + loss;
+      const support = land === 0 ? 'none' : gap > 0 ? 'partial' : 'complete';
+      sup.textContent = missing ? 'unavailable' : support; sup.className = 'fnd-pill ' + (missing || support === 'none' ? 'na' : support === 'partial' ? 'unk' : 'zero'); sup.style.fontSize = '20px';
+      let cls, txt, w;
+      if (missing || support === 'none') { cls = 'na'; txt = 'Unavailable'; w = missing ? 'A required layer is missing, so nothing can be computed. This is not the same as "no loss".' : 'There is no valid land in the selection (water is counted but is not land), so there is nothing to answer about.'; }
+      else if (loss > 0) { cls = 'pos'; txt = `${loss} loss cell${loss > 1 ? 's' : ''}`; w = support === 'partial' ? 'Loss was seen, so the answer is positive even though some cells have no data. Missing cells cannot cancel something we saw.' : 'Loss was seen on read cells, with complete support.'; }
+      else if (gap === 0) { cls = 'zero'; txt = 'None · known zero'; w = 'Every cell was read and none shows loss. This is the only case that may be shown as a zero.'; }
+      else { cls = 'unk'; txt = 'Unknown'; w = 'Some cells could not be read, and none of the rest shows loss. We can say "none seen", never a clean "no". The app draws this hatched.'; }
+      flag.textContent = txt; flag.className = 'fnd-pill ' + cls; why.textContent = w;
+    }
+    render();
+  })();
+})();
+</script>
+</body>
+</html>

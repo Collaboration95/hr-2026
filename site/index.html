@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plotline explainers · Hack &amp; Hire 2026, SystemEarth track</title>
+<meta name="description" content="Plotline keeps the decision, not the data. Explainers for the SystemEarth track of Hack & Hire Sustainability Edition 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="assets/pack.css">
+<style>
+.hub-mast { font: 500 13px/1.3 var(--f-mono); color: var(--muted); padding: 18px 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.hub-mast b { color: var(--ink); font-weight: 600; }
+.hub-mast .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--forest); margin-right: 8px; vertical-align: 1px; }
+.hub-hero { padding: 72px 0 24px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: end; }
+.hub-hero h1 { font-size: clamp(46px, 7.4vw, 88px); }
+
+/* the hero animation: 3 layers collapse into one decision layer */
+.stack { position: relative; height: 250px; }
+.stack .sheet { position: absolute; left: 30px; width: 220px; height: 120px; border-radius: 10px; border: 1px solid var(--rule-2); box-shadow: 0 14px 30px -20px rgba(15, 18, 34, .4); transform: skewY(-12deg); transition: top 1s var(--ease), opacity 1s var(--ease), height 1s var(--ease); display: grid; place-items: center; font: 600 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; }
+.stack .s1 { top: 0; background: linear-gradient(135deg, var(--canopy-100), #6BA27E); }
+.stack .s2 { top: 44px; background: linear-gradient(135deg, var(--loss), #F59E66); }
+.stack .s3 { top: 88px; background: linear-gradient(135deg, var(--forest), #4ABA78); }
+.stack .s4 { top: 132px; background: linear-gradient(135deg, var(--water), #6EA3D6); }
+.stack .dec { top: 210px; height: 22px; background: var(--ink); opacity: 0; }
+.stack.go .s1, .stack.go .s2, .stack.go .s3, .stack.go .s4 { top: 205px; opacity: 0; }
+.stack.go .dec { opacity: 1; top: 150px; height: 34px; }
+.stack .lab { position: absolute; left: 0; right: 0; bottom: -8px; text-align: center; font: 500 12.5px/1.4 var(--f-mono); color: var(--muted); }
+
+.path { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
+.path div { font: 500 13px/1.4 var(--f-mono); color: var(--muted); padding: 12px 14px; border-radius: 10px; background: var(--sheet); border: 1px solid var(--rule); }
+.path b { display: block; font: 700 17px/1.2 var(--f-display); color: var(--ink); margin-bottom: 4px; letter-spacing: -.01em; }
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 18px; }
+.hcard { --c: var(--pen); grid-column: span 2; position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 12px; padding: 22px 22px 18px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 16px; text-decoration: none; color: var(--ink); overflow: hidden;
+  box-shadow: 0 1px 0 var(--rule), 0 18px 40px -30px rgba(15, 18, 34, .3);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  animation: rise .7s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+.hcard.wide { grid-column: span 3; } .hcard.full { grid-column: 1 / -1; }
+.hcard::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--c); transform: scaleX(.18); transform-origin: left; transition: transform .5s var(--ease); }
+.hcard:hover, .hcard:focus-visible { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c) 45%, var(--rule)); box-shadow: 0 1px 0 var(--rule), 0 26px 50px -28px color-mix(in srgb, var(--c) 55%, transparent); outline: none; }
+.hcard:hover::before, .hcard:focus-visible::before { transform: scaleX(1); }
+.hcard .tg { font: 600 11.5px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.hcard .tg span:last-child { color: var(--muted); letter-spacing: .04em; }
+.hcard h2 { font-size: 28px; line-height: 1.05; margin: 0; }
+.hcard p { margin: 10px 0 0; color: var(--muted); font-size: 16px; line-height: 1.5; }
+.hcard .go { font: 600 14px/1 var(--f-mono); display: flex; justify-content: space-between; align-items: center; padding-top: 6px; }
+.hcard .go span { transition: transform .35s var(--ease); color: var(--c); }
+.hcard:hover .go span { transform: translateX(6px); }
+.group { margin-top: 56px; }
+.group > .kick { color: var(--muted); }
+.qr { display: grid; grid-template-columns: 160px 1fr; gap: 22px; align-items: center; }
+.qr .box { width: 160px; height: 160px; border-radius: 12px; border: 2px dashed var(--rule-2); display: grid; place-items: center; font: 500 12px/1.4 var(--f-mono); color: var(--faint); text-align: center; padding: 10px; }
+footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font: 500 13px/1.6 var(--f-mono); color: var(--muted); }
+@media (max-width: 860px) { .hub-hero { grid-template-columns: 1fr; } .stack { display: none; } .path { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .hcard, .hcard.wide, .hcard.full { grid-column: auto; } .qr { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .hcard, .hcard::before, .hcard .go span { animation: none; transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap"><main>
+  <div class="hub-mast"><span><span class="dot"></span><b>Plotline</b> · Hack &amp; Hire Sustainability Edition 2026 · SystemEarth track</span><span>Finals 17 Oct 2026</span></div>
+
+  <header class="hub-hero">
+    <div>
+      <div class="kick">Explainer pack</div>
+      <h1>Keep the decision, <span class="hl">not the data.</span></h1>
+      <p class="lede">SystemEarth asked how to store years of satellite forest maps compactly, query them fast, and still give every farm plot the same deforestation answer. Plotline's decision layer is <strong>99% smaller</strong>, re-checks registered plots <strong>44× faster</strong>, and gives the <strong>same answer for all 744,732 map cells</strong>.</p>
+    </div>
+    <div class="stack" id="stack" aria-hidden="true">
+      <div class="sheet s1">canopy 2000</div><div class="sheet s2">loss year</div><div class="sheet s3">forest 2020</div><div class="sheet s4">land / water</div>
+      <div class="sheet dec">decision layer · 6 KB</div>
+      <div class="lab" id="stack-lab">623 KB of original layers</div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="big proof"><span class="num" data-count="744732"></span><span class="cap">of 744,732 cells give the same answer</span></div>
+    <div class="big pen"><span class="num" data-count="99" data-suffix="%"></span><span class="cap">smaller: 623 KB → 6.1 KB</span></div>
+    <div class="big loss"><span class="num" data-count="44" data-suffix="×"></span><span class="cap">faster re-checks of registered plots</span></div>
+  </div>
+
+  <section class="group" style="padding-top:40px">
+    <div class="kick">How to read this pack</div>
+    <div class="path">
+      <div><b>1 · Basics</b>The whole story in 15 minutes. Start here.</div>
+      <div><b>2 · Context</b>The event, the company and the rule they work with.</div>
+      <div><b>3 · Deep dives</b>Data, how it works, speed, findings.</div>
+      <div><b>4 · Presenting</b>The pitch and the submission checklist.</div>
+    </div>
+    <p class="muted small">About 2½ to 3 hours end to end. Every page stands alone, so jump to whatever you need.</p>
+  </section>
+
+  <section class="group" style="padding-top:0">
+    <div class="kick">Basics</div>
+    <div class="grid">
+      <a class="hcard full" href="start/" style="--c: var(--pen); --i: 0">
+        <div class="tg"><span>Start here</span><span>15 min</span></div>
+        <div><h2>The whole story</h2><p>The challenge, the data, what we built, the numbers and what we will say tomorrow, in one sitting. Read this first, then go deeper wherever you want.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" style="padding-top:0">
+    <div class="kick">Context</div>
+    <div class="grid">
+      <a class="hcard wide" href="event/" style="--c: var(--ink-2); --i: 1">
+        <div class="tg"><span>The hackathon</span><span>15 min</span></div>
+        <div><h2>The event and the brief</h2><p>Hack &amp; Hire, the six company challenges, what SystemEarth's brief asks for word by word, and what the judges will measure.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard wide" href="company/" style="--c: var(--forest); --i: 2">
+        <div class="tg"><span>The company</span><span>20 min</span></div>
+        <div><h2>SystemEarth and the EUDR</h2><p>Who SystemEarth is, the EU rule on deforestation-free supply chains, the 31 December 2020 cut-off, and why plot checks get re-run.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" style="padding-top:0">
+    <div class="kick">Deep dives</div>
+    <div class="grid">
+      <a class="hcard wide" href="data/" style="--c: var(--water); --i: 3">
+        <div class="tg"><span>The data</span><span>25 min</span></div>
+        <div><h2>The data</h2><p>The 17 supplier plots, Hansen's tree-cover loss maps, the JRC 2020 forest map, and what a raster, a grid and a GeoTIFF actually are.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard wide" href="solution/" style="--c: var(--proof); --i: 4">
+        <div class="tg"><span>The build</span><span>25 min</span></div>
+        <div><h2>How Plotline works</h2><p>Three questions, a 20-value code per cell, the decision layer, the proof for every cell, and the app that shows it.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard wide" href="speed/" style="--c: var(--loss); --i: 5">
+        <div class="tg"><span>Performance</span><span>20 min</span></div>
+        <div><h2>The speed story</h2><p>The five breakthroughs behind 24× → 44× (83× without NumPy) and 2.2× → 5.2× for new plots, phase by phase.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard wide" href="findings/" style="--c: var(--declared); --i: 6">
+        <div class="tg"><span>Results</span><span>15 min</span></div>
+        <div><h2>What the plots show</h2><p>What suppliers declared, what the maps show, where they disagree, and what we are careful not to claim.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" style="padding-top:0">
+    <div class="kick">Presenting</div>
+    <div class="grid">
+      <a class="hcard wide" href="pitch/" style="--c: var(--pen); --i: 7">
+        <div class="tg"><span>Finals, 17 Oct</span><span>20 min</span></div>
+        <div><h2>Tomorrow's pitch</h2><p>The storyline, the one-liner, the demo script, the "cool stuff" moment and the questions judges are likely to ask.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard wide" href="submit/" style="--c: var(--review); --i: 8">
+        <div class="tg"><span>Before we submit</span><span>10 min</span></div>
+        <div><h2>Submission checklist</h2><p>What the brief requires against what we have, how to run the code, and the logistics still to confirm.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+      <a class="hcard full" href="glossary/" style="--c: var(--muted); --i: 9">
+        <div class="tg"><span>Reference</span><span>look-up</span></div>
+        <div><h2>Glossary</h2><p>Every term in this pack, from "affine" to "zstd", in one line each.</p></div>
+        <div class="go">Open <span>→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" style="padding-top:0">
+    <div class="kick">Share it</div>
+    <div class="qr" style="margin-top:14px">
+      <div class="box">QR code goes here once the site is published</div>
+      <p class="muted small" style="margin:0">Code and lab reports live in the project repository. Supplier plot boundaries and declaration rows are private to SystemEarth and never appear in this pack: every map of a plot here is a synthetic illustration, and only aggregate per-plot results are quoted.</p>
+    </div>
+  </section>
+
+  <footer>Built for Hack &amp; Hire Sustainability Edition 2026 (Projet × NUS CAT). Results are encoding and query evidence, not legal compliance findings.</footer>
+</main></div>
+<script src="assets/pack.js"></script>
+<script>
+(() => {
+  const s = document.getElementById('stack'), lab = document.getElementById('stack-lab');
+  if (Pack.REDUCE) { s.classList.add('go'); lab.textContent = '6.1 KB decision layer'; return; }
+  const cycle = () => { s.classList.toggle('go'); lab.textContent = s.classList.contains('go') ? '6.1 KB decision layer, same answers' : '623 KB of original layers'; };
+  setTimeout(cycle, 1200); setInterval(cycle, 4200);
+})();
+</script>
+</body>
+</html>

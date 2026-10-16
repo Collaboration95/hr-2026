@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The event and the brief · Plotline explainers</title>
+<meta name="description" content="What Hack & Hire is, the week's timeline, the six company challenges, and SystemEarth's brief decoded line by line: required, suggested, bonus and unknown.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Prefix: ev- */
+.ev-scroll { overflow-x: auto; margin-top: 14px; }
+.ev-scroll > svg { min-width: 760px; }
+.ev-item { cursor: pointer; transition: opacity .25s; }
+.ev-item:focus-visible { outline: none; }
+.ev-item.sel .ev-shape { stroke: var(--ink); stroke-width: 3; }
+.ev-lab { font: 500 11px var(--f-mono); fill: var(--ink-2); }
+.ev-lab.dim { fill: var(--muted); }
+.ev-day { font: 600 11px var(--f-mono); fill: var(--muted); }
+.ev-day b { fill: var(--ink); }
+.ev-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ev-chip { font: 600 12.5px var(--f-mono); border: 1px solid var(--rule-2); background: var(--sheet); border-radius: 999px; padding: 7px 12px; cursor: pointer; color: var(--ink-2); display: inline-flex; gap: 8px; align-items: center; }
+.ev-chip:hover { background: var(--pen-wash); }
+.ev-chip[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.ev-chip i { font-style: normal; font-weight: 500; opacity: .7; }
+.ev-clock { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: baseline; margin-top: 10px; font: 500 13px var(--f-mono); color: var(--muted); }
+.ev-clock b { color: var(--ink); font-size: 22px; font-family: var(--f-display); letter-spacing: -.02em; }
+
+/* status tags used across the page */
+.ev-tag { display: inline-block; font: 700 11px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--mist); color: var(--muted); white-space: nowrap; }
+.ev-tag.req { background: var(--pen-wash); color: var(--pen-deep); }
+.ev-tag.sug { background: var(--mist); color: var(--ink-2); border: 1px dashed var(--rule-2); }
+.ev-tag.bon { background: var(--hi-wash); color: #6b5500; }
+.ev-tag.unk { background: var(--review-wash); color: var(--review); }
+.ev-tag.ours { background: var(--ok-wash); color: var(--ok); }
+
+/* six challenge cards */
+.ev-six .card { display: flex; flex-direction: column; }
+.ev-six .card .ask { font-size: 16px; }
+.ev-six .card .open { margin-top: auto; padding-top: 12px; font: 500 12.5px/1.45 var(--f-mono); color: var(--muted); }
+.ev-six .card .open b { color: var(--review); font-weight: 600; }
+.ev-six .card.mine { border-color: var(--pen); box-shadow: 0 0 0 3px var(--pen-wash), 0 18px 40px -28px rgba(47, 69, 255, .5); }
+.ev-six .card.mine .ev-tag { margin-left: 6px; }
+
+/* comparison table */
+.ev-cmp-wrap { overflow-x: auto; margin-top: 16px; }
+table.ev-cmp { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; font: 400 14.5px/1.4 var(--f-ui); }
+.ev-cmp th { text-align: left; font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 10px 10px; border-bottom: 1px solid var(--rule-2); vertical-align: bottom; }
+.ev-cmp th small { display: block; font: 500 11px var(--f-mono); letter-spacing: 0; text-transform: none; color: var(--faint); margin-top: 3px; }
+.ev-cmp td { padding: 10px; border-bottom: 1px solid var(--rule); vertical-align: top; transition: opacity .3s, background .3s; }
+.ev-cmp td.rq { font-weight: 600; width: 22%; }
+.ev-cmp td .lv { display: block; font: 700 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
+.ev-cmp td.l2 .lv { color: var(--ok); } .ev-cmp td.l1 .lv { color: var(--review); } .ev-cmp td.l0 .lv { color: var(--faint); }
+.ev-cmp td.l0 { color: var(--muted); }
+.ev-cmp.only-p td.s, .ev-cmp.only-p td.t, .ev-cmp.only-s td.p, .ev-cmp.only-s td.t, .ev-cmp.only-t td.p, .ev-cmp.only-t td.s { opacity: .22; }
+.ev-cmp.diff tr:not(.d) td { opacity: .35; }
+.ev-cmp.diff tr.d td { background: var(--hi-wash); }
+.ev-cmp tr .dflag { display: none; font: 700 10.5px var(--f-mono); letter-spacing: .06em; color: #6b5500; background: var(--hi); border-radius: 4px; padding: 2px 5px; margin-left: 6px; vertical-align: 1px; }
+.ev-cmp.diff tr.d .dflag { display: inline-block; }
+.ev-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font: 500 12.5px var(--f-mono); color: var(--muted); }
+.ev-key b { font-weight: 700; }
+.ev-key .a { color: var(--ok); } .ev-key .b { color: var(--review); } .ev-key .c { color: var(--faint); }
+
+/* four buckets */
+.ev-buckets { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 22px; }
+.ev-bucket { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 16px 18px; }
+.ev-bucket h3 { margin: 10px 0 0; font-size: 20px; }
+.ev-bucket ul { padding-left: 1.1em; margin-top: 8px; font-size: 15.5px; }
+.ev-bucket li { margin-top: 5px; }
+.ev-bucket .src { margin-top: 10px; font: 500 12px/1.4 var(--f-mono); color: var(--muted); }
+
+/* decoder */
+.ev-dec { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 22px; margin-top: 16px; align-items: start; }
+.ev-pipe .node rect { fill: var(--mist); stroke: var(--rule-2); stroke-width: 1.5; transition: fill .4s, stroke .4s; }
+.ev-pipe .node text { font: 600 12px var(--f-mono); fill: var(--muted); transition: fill .4s; }
+.ev-pipe .node.lit rect { fill: var(--pen-wash); stroke: var(--pen); stroke-width: 2.5; }
+.ev-pipe .node.lit text { fill: var(--pen-deep); }
+.ev-pipe .arrow { stroke: var(--rule-2); stroke-width: 2; fill: none; marker-end: url(#ev-ah); transition: stroke .4s; }
+.ev-pipe .arrow.lit { stroke: var(--pen); }
+.ev-quote { margin: 10px 0 0; padding: 12px 14px; border-left: 4px solid var(--hi); background: var(--paper); border-radius: 0 10px 10px 0; font-size: 16px; }
+.ev-quote small { display: block; font: 500 11.5px var(--f-mono); color: var(--muted); margin-top: 6px; }
+.ev-ans { margin-top: 12px; font-size: 16.5px; }
+.ev-ans .num { font: 800 34px/1 var(--f-display); letter-spacing: -.02em; color: var(--proof); }
+.ev-links { margin-top: 10px; font: 600 13px var(--f-mono); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.ev-decbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.ev-decbar .steps { flex: 1; min-width: 200px; }
+
+/* fidelity sandbox */
+.ev-fid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 22px; margin-top: 16px; align-items: start; }
+.ev-plots { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; }
+.ev-plot { border: 1px solid var(--rule-2); border-radius: 10px; padding: 7px 8px 8px; background: var(--sheet); transition: background .3s, border-color .3s; }
+.ev-plot.bad { background: var(--bad-wash); border-color: var(--bad); }
+.ev-plot .nm { font: 600 10.5px var(--f-mono); color: var(--muted); letter-spacing: .04em; }
+.ev-plot .dots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 6px; }
+.ev-plot button { aspect-ratio: 1; border-radius: 4px; border: 1.5px solid var(--proof); background: var(--proof-wash); cursor: pointer; padding: 0; font: 700 11px/1 var(--f-mono); color: var(--proof); }
+.ev-plot button[aria-pressed="true"] { border-color: var(--bad); background: var(--bad); color: #fff; }
+.ev-plot .res { display: block; margin-top: 6px; font: 700 10.5px var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--proof); }
+.ev-plot.bad .res { color: var(--bad); }
+.ev-readout .big { margin-top: 10px; }
+.ev-readout .big .num { font-size: clamp(40px, 5vw, 60px); }
+
+@media (max-width: 860px) { .ev-dec, .ev-fid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="event">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Context · 15 min</div>
+  <h1>The event and <span class="hl">the brief.</span></h1>
+  <p class="lede">Hack &amp; Hire is a one-week, build-and-pitch event run with real companies. We took the SystemEarth challenge. This page shows the week, the six challenges, and exactly what SystemEarth's brief asks for, what it only suggests, what is a bonus, and what nobody has told us yet.</p>
+  <div class="meta"><span>15 min read</span><span>Level: context</span><span>Sources: docs/event_rules_and_open_questions.txt, docs/problem_statement_reference.txt, docs/transcript_rules_and_constraints.txt, docs/sustainability_kickoff_reference.txt, SystemEarth-track.md, README.md</span></div>
+  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
+    <li>Build period 10 to 17 October 2026, teams of one to three, pitch straight to the company team at finals on 17 October.</li>
+    <li>SystemEarth's brief wants a layer analysis, an encoding strategy, a working prototype and a comparison with the original layers on storage, query speed, resource use and <strong>decision fidelity</strong> (the share of plots whose outputs <em>all</em> match).</li>
+    <li>Nobody has given a pitch length, a submission place or deadline, scoring weights or passing thresholds. We say so rather than guess.</li>
+  </ul></div>
+</header>
+
+<!-- 1 -->
+<section id="what">
+  <div class="prose">
+    <div class="kick">1 · The event</div>
+    <h2>A week to build something real, then pitch it to the company.</h2>
+    <p><strong>Hack &amp; Hire Sustainability Edition 2026</strong> is organised by Projet with NUS CAT. Each team picks one of six real company challenges, builds a useful, demonstrable slice over the week, and pitches it directly to that company's team at the finals. The aim, in the repository's own words, is a practical outcome with clear reasoning and evidence.</p>
+    <p>Teams can be solo, or two or three people. Entry is through a Projet profile (name and email); a CV is not required. Participants rank three preferred challenges on a form, and the organisers allocate tracks and teams afterwards.</p>
+  </div>
+  <div class="stats">
+    <div class="big pen"><span class="num" data-count="6"></span><span class="cap">company challenges</span></div>
+    <div class="big pen"><span class="num" data-count="3"></span><span class="cap">people per team, at most</span></div>
+    <div class="big pen"><span class="num" data-count="3"></span><span class="cap">ranked preferences on the form</span></div>
+  </div>
+  <div class="note"><b>Note</b><span>The "Hire" in the name suggests hiring, but the sources describe no hiring process beyond the Projet profile. What they do say about recognition is vague: Telegram says effort earns recognition and testimonials, the kickoff deck says outstanding work earns a signed written testimonial, and nothing defines the conditions. Workshop attendees get testimonial priority, which is not a guarantee.</span></div>
+  <div class="note unknown"><b>Unknown</b><span>The finals venue and schedule, how long each pitch is, and whether we can pitch online. The event notes say teams who cannot attend may pitch online; the challenge-page screenshot we were sent on 11 October says on-site. Neither is confirmed for us.</span></div>
+</section>
+
+<!-- 2 -->
+<section id="timeline">
+  <div class="prose">
+    <div class="kick">2 · The week</div>
+    <h2>Seven days, one odd end time.</h2>
+    <p>The top bar is the challenge page's own window: <strong>11 October 00:00 SGT to 17 October 00:00 SGT</strong>. Midnight at the end of that window is the <em>start</em> of 17 October, which is also finals day. Nobody has said whether that end time closes applications or project submissions. So we planned to be ready on <strong>16 October</strong>, which is today.</p>
+  </div>
+
+  <div class="panel" id="ev-tl">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">The week at a glance, Singapore time</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="ev-clock"><span>Time left to 17 Oct 00:00 SGT, from your clock</span><b id="ev-left">…</b></div>
+      <div class="ev-scroll">
+      <svg viewBox="0 0 960 290" role="img" aria-label="Timeline of 10 to 17 October 2026 with the organisers' dates on one row, our own build on another, the challenge page window above, a moving today marker and the finals flag on 17 October"></svg>
+      </div>
+      <div class="ev-chips" id="ev-chips" role="group" aria-label="Pick an event to read about it"></div>
+      <p class="say" aria-live="polite"><small id="ev-tl-sm">Watch the marker sweep to today</small><span id="ev-tl-say">Pick an event to read about it.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/event_rules_and_open_questions.txt (dates), SystemEarth-track.md (challenge-page window, work sequence), README.md (what we built and when). Where the hour is not stated, the dot sits mid-day and is drawn hollow. Dashed shapes are not yet reached or are targets, not events.</p>
+  </div>
+
+  <div class="note say-it"><b>Say it</b><span>"We aimed to be ready a day early, because the challenge page's end time is midnight at the start of finals day and nobody has told us what it closes."</span></div>
+</section>
+
+<!-- 3 -->
+<section id="six">
+  <div class="prose">
+    <div class="kick">3 · The six challenges</div>
+    <h2>Six companies, six very different jobs.</h2>
+    <p>One card per challenge, in the booklet's order. Role fit and the one-line ask come from the printed booklet; the targets and extra guidance come from the spoken briefing. Spoken targets belong to their own challenge only. They are not universal judging criteria.</p>
+  </div>
+  <div class="cols ev-six">
+    <div class="card" style="--c: var(--water)"><div class="who">BlueNexus · operations</div><h3>Water-plant efficiency</h3>
+      <p class="ask"><strong>Role fit:</strong> data analytics, AI/ML, engineering. Use plant data (flow, pressure, energy, chemical dosing, equipment status, water quality) to spot abnormal or inefficient operation and give early insights that cut energy, chemical and water use, while maintaining treatment performance. A full industrial AI platform is not expected.</p>
+      <p class="open"><b>Open:</b> whether teams get plant data at all, and which fields.</p></div>
+    <div class="card" style="--c: var(--water)"><div class="who">BlueNexus · ESG</div><h3>Autonomous water-system impact</h3>
+      <p class="ask"><strong>Role fit:</strong> ESG, data analytics. Measure the impact of BlueNexus systems and present it credibly in a format clients can use for ESG reporting. Exact impact figures are not essential if the method is explained and the format is usable. GRI was named as a possible reference.</p>
+      <p class="open"><b>Open:</b> which metrics, which baseline (and how seasons adjust it), data access.</p></div>
+    <div class="card" style="--c: var(--loss)"><div class="who">Bizsu · leads</div><h3>Lead-generation and sales engine</h3>
+      <p class="ask"><strong>Role fit:</strong> business development, AI engineering. Bizsu's ceramic net helps air conditioners cool faster on less electricity without modifying the unit. Build a scalable way to get qualified leads and sales. Spoken targets: email 100 relevant people, seek a 20% positive response.</p>
+      <p class="open"><b>Open:</b> the audience. The booklet says homeowners; the speaker said Singapore SMEs.</p></div>
+    <div class="card" style="--c: var(--loss)"><div class="who">Bizsu · content</div><h3>Brand awareness through content</h3>
+      <p class="ask"><strong>Role fit:</strong> marketing and comms. Explain the product, introduce the team and motivate people to act. The spoken brief says a strategy alone is not enough: produce actual content. Spoken target: 30,000 views.</p>
+      <p class="open"><b>Open:</b> which formats count, and how and when views are measured.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">beez-fm · building energy</div><h3>Technology fit, visualised</h3>
+      <p class="ask"><strong>Role fit:</strong> data visualisation. Show a building's energy profile, the matched efficiency technology, and why it fits, so owners and finance decision-makers trust the recommendation before agreeing to a zero-CAPEX pilot. The organiser stressed executing the plan, not only proposing one.</p>
+      <p class="open"><b>Open:</b> where the building data is, its schema, permissions and timing.</p></div>
+    <div class="card mine" style="--c: var(--pen)"><div class="who">SystemEarth · geospatial <span class="ev-tag ours">Our track</span></div><h3>Multi-layer, multi-year geospatial data</h3>
+      <p class="ask"><strong>Role fit:</strong> geospatial, data engineering. Represent several map layers across time and space compactly, make them cheap to query, and still reproduce plot-level compliance decisions. The company gave us 17 supplier plots to work with.</p>
+      <p class="open"><b>Open:</b> pitch length, submission details, scoring weights, thresholds. Decoded below.</p></div>
+  </div>
+
+  <div class="prose">
+    <h3>Why SystemEarth</h3>
+    <p>The repository records that we <strong>selected the track on 10 October</strong> and that acceptance was reported on 11 October. It does not record <em>why</em>. Here is our reading, labelled as such:</p>
+    <ul>
+      <li><strong>It can be measured.</strong> Storage, query time and fidelity can all be computed against an original, so the result is a proof, not an opinion.</li>
+      <li><strong>It had real data.</strong> The company supplied a sample of 17 plots. Other tracks list their data access as an open question.</li>
+      <li><strong>It allows existing methods.</strong> A new compression algorithm is explicitly not required, so the week can go on analysis and evidence.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="sources">
+  <div class="prose">
+    <div class="kick">4 · The SystemEarth brief, three voices</div>
+    <h2>The brief was said three times, a little differently each time.</h2>
+    <p>SystemEarth's problem reached us as a <strong>printed booklet</strong> (page 9), as <strong>kickoff slides</strong> (pages 21 to 25 of the deck) and as <strong>spoken guidance</strong> at the event. A fourth input, a screenshot of the challenge page sent on 11 October, repeats the prototype and evaluation deliverables and gives the page dates.</p>
+    <p>The printed problem statement, word for word: <em>"Present on a specific use case and demonstrate how SystemEarth can represent multiple geospatial layers across time and space in a compact and query-efficient form, while preserving the information required to reproduce plot-level compliance decisions."</em> The slides give it a title: <strong>"keep the decision, not the data."</strong></p>
+  </div>
+
+  <div class="panel" id="ev-cmp">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Printed vs slides vs spoken</span>
+        <span class="btns" role="group" aria-label="Choose which source to focus on">
+          <button class="btn on" type="button" data-src="all" aria-pressed="true">All three</button>
+          <button class="btn" type="button" data-src="p" aria-pressed="false">Printed booklet</button>
+          <button class="btn" type="button" data-src="s" aria-pressed="false">Kickoff slides</button>
+          <button class="btn" type="button" data-src="t" aria-pressed="false">Spoken</button>
+          <button class="btn" type="button" data-diff aria-pressed="false">Highlight differences</button>
+        </span></div>
+      <div class="ev-cmp-wrap"><table class="ev-cmp" id="ev-cmp-t">
+        <thead><tr><th>Requirement</th><th>Printed booklet<small>p. 9</small></th><th>Kickoff slides<small>pp. 21 to 25</small></th><th>Spoken guidance<small>event transcript</small></th></tr></thead>
+        <tbody></tbody></table></div>
+      <div class="ev-key"><span><b class="a">Stated</b> said in that source</span><span><b class="b">Hinted</b> context or softer wording</span><span><b class="c">Not stated</b> absent from that source</span></div>
+      <p class="say" aria-live="polite"><small>What you are seeing</small><span id="ev-cmp-say">All three sources agree on the big idea. They differ on how much detail they ask for.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/problem_statement_reference.txt, docs/sustainability_kickoff_reference.txt, docs/transcript_rules_and_constraints.txt, checked against the quoted wording in docs/sources/ (booklet p. 9, deck pp. 21 to 25). "Not stated" means the source does not say it; it does not mean the company does not want it.</p>
+  </div>
+
+  <div class="note warn"><b>Careful</b><span>The one real conflict is the <strong>working prototype</strong>. The slides ask to "encode a sample set of layers for one region and query the compressed data" in a working prototype, and the challenge-page screenshot explicitly requests one. The spoken guidance treats it less firmly. We built one, so we are covered either way, but we have not had the requirement confirmed.</span></div>
+</section>
+
+<!-- 5 -->
+<section id="buckets">
+  <div class="prose">
+    <div class="kick">5 · Sorting the asks</div>
+    <h2>Required, suggested, bonus, unknown.</h2>
+    <p>The project rules say to keep these four apart. Mixing them is how a team ends up fretting over a "threshold" nobody set, or skipping something that was asked for.</p>
+  </div>
+  <div class="ev-buckets">
+    <div class="ev-bucket"><span class="ev-tag req">Required</span><h3>What the brief asks for</h3>
+      <ul>
+        <li>A specific use case.</li>
+        <li>Several layers across time and space, kept compact and cheap to query.</li>
+        <li>Enough information kept to reproduce plot-level compliance decisions.</li>
+        <li>Layer analysis: which attributes are essential, which can be simplified, summarised or dropped, grounded in regulatory definitions and cut-off dates.</li>
+        <li>An encoding strategy that combines layers and time steps, plus a working prototype that encodes a sample region and queries it (slides; spoken is softer).</li>
+        <li>A comparison with the original layers on storage, query speed and resource use, plus decision fidelity and, where relevant, pixel fidelity.</li>
+        <li>Spoken: explain pipeline choices, accuracy, information loss and any AI output.</li>
+      </ul><p class="src">Deck pp. 24 and 25, booklet p. 9, transcript.</p></div>
+    <div class="ev-bucket"><span class="ev-tag sug">Suggested</span><h3>Allowed, not demanded</h3>
+      <ul>
+        <li>Choose your own dataset, region and use case.</li>
+        <li>Use existing algorithms, models, formulas and encodings. A new compression algorithm is <em>not</em> required.</li>
+        <li>Prefer a smaller, complete slice over a sprawling one.</li>
+        <li>Our own plan (not the company's): compare against a well-configured compressed original and count indexes in the compact size.</li>
+      </ul><p class="src">Transcript; SystemEarth-track.md for our own plan.</p></div>
+    <div class="ev-bucket"><span class="ev-tag bon">Bonus</span><h3>Nice to have</h3>
+      <ul>
+        <li>Estimate infrastructure and processing costs to store, update and query.</li>
+      </ul><p class="src">The evaluation slide (p. 25) and the transcript both mark it a bonus. We did it, at list-price assumptions: see the last step of the decoder below.</p></div>
+    <div class="ev-bucket"><span class="ev-tag unk">Unknown</span><h3>Nobody has said</h3>
+      <ul>
+        <li>Pitch length.</li>
+        <li>Submission format, place and deadline.</li>
+        <li>Scoring weights and the judging rubric.</li>
+        <li>Numeric passing thresholds. The slides give no numeric benchmark either.</li>
+        <li>Whether a working prototype is strictly required.</li>
+        <li>What 17 Oct 00:00 SGT closes.</li>
+        <li>Whether the supplied sample may appear in slides or a public demo.</li>
+      </ul><p class="src">docs/event_rules_and_open_questions.txt, SystemEarth-track.md. Our aim that every output matches on every test plot is <em>our</em> engineering target, not a company threshold.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="decoder">
+  <div class="prose">
+    <div class="kick">6 · The brief decoder</div>
+    <h2>Each ask, and where Plotline answers it.</h2>
+    <p>Step through the requirements. Each one shows the company's own words, how firm it is, what we did, and lights up the stage of the pipeline where it lives. The numbers are the latest (Phase 4) figures from <code>docs/lab/decision-layer-report.md</code>.</p>
+  </div>
+
+  <div class="panel" id="ev-dec">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Brief decoder</span>
+        <span class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></span></div>
+      <div class="ev-dec">
+        <div>
+          <svg class="ev-pipe" viewBox="0 0 440 330" role="img" aria-label="Plotline pipeline in six stages: original layers, layer analysis, encoding, compact store, query, comparison with the originals. The stage the current requirement lives in is highlighted.">
+            <defs><marker id="ev-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs>
+            <g id="ev-pipe-g"></g>
+          </svg>
+          <div class="ev-decbar"><div class="steps" aria-label="Requirement steps"></div></div>
+        </div>
+        <div>
+          <div id="ev-d-tag"></div>
+          <h3 id="ev-d-title" style="margin-top:10px"></h3>
+          <blockquote class="ev-quote" id="ev-d-quote"></blockquote>
+          <div class="ev-ans" id="ev-d-ans" aria-live="polite"></div>
+          <div class="ev-links" id="ev-d-links"></div>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> quotes from docs/sources/ (deck pp. 24 and 25, booklet p. 9) and the transcript; answers from docs/lab/decision-layer-report.md, docs/lab/decision-scale-notes.md and docs/writeups/04-pitch.md. Links open the other pages in this pack.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="measures">
+  <div class="prose">
+    <div class="kick">7 · How we are measured</div>
+    <h2>Smaller, faster, and the same answers.</h2>
+    <p>The slides name three evaluation dimensions, in three questions: <strong>How much smaller? How much faster? Same decisions?</strong> Here they are with our measured numbers, followed by a small sandbox for the one measure that is easy to misread.</p>
+  </div>
+
+  <div class="stats">
+    <div class="big proof"><span class="num" data-count="99" data-suffix="%"></span><span class="cap">smaller: 623,237 B to 6,146 B</span></div>
+    <div class="big loss"><span class="num" data-count="44" data-suffix="×"></span><span class="cap">faster re-checks of registered plots (hot)</span></div>
+    <div class="big forest"><span class="num" data-count="17" data-suffix=" / 17"></span><span class="cap">plots with every output identical</span></div>
+  </div>
+
+  <div class="panel" id="ev-bars">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Three measures against the original layers</span><button class="replay" type="button">↻ Replay</button></div>
+      <h4>Storage (bytes, 34 × 17 km sample region)</h4>
+      <div class="bars">
+        <div class="brow"><span class="lab">Original layers</span><span class="track"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="val">623,237</span></div>
+        <div class="brow"><span class="lab">Best standard GeoTIFF</span><span class="track"><i data-w="1.37" style="background:var(--declared)"></i></span><span class="val">8,532</span></div>
+        <div class="brow"><span class="lab">Decision store</span><span class="track"><i data-w="0.99" style="background:var(--proof)"></i></span><span class="val">6,146</span></div>
+      </div>
+      <h4>Query time, 17 plots, hot (ms)</h4>
+      <div class="bars">
+        <div class="brow"><span class="lab">Original (v1)</span><span class="track"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="val">1.44</span></div>
+        <div class="brow"><span class="lab">New boundaries</span><span class="track"><i data-w="19" style="background:var(--pen)"></i></span><span class="val">0.27</span></div>
+        <div class="brow"><span class="lab">Registered plots</span><span class="track"><i data-w="2.2" style="background:var(--proof)"></i></span><span class="val">0.032</span></div>
+      </div>
+      <h4>Peak memory (MB)</h4>
+      <div class="bars">
+        <div class="brow"><span class="lab">Original (v1)</span><span class="track"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="val">75</span></div>
+        <div class="brow"><span class="lab">Registered plots</span><span class="track"><i data-w="49" style="background:var(--proof)"></i></span><span class="val">37</span></div>
+        <div class="brow"><span class="lab">Numpy-free re-check</span><span class="track"><i data-w="31" style="background:var(--proof)"></i></span><span class="val">23</span></div>
+      </div>
+      <p class="say"><small>Careful with the wording</small><span>Registered plots and new boundaries are separate rows. Never blend them into one "N× faster".</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md, "How much smaller" and "How much faster" (Phase 4). Hot query time on one region, one laptop, warm cache; not end-to-end from a fresh process. Multiples are against the retained v1 query. Bar lengths are drawn to scale from those figures.</p>
+  </div>
+
+  <div class="prose">
+    <h3>Decision fidelity is stricter than it sounds</h3>
+    <p>The slides define it as <em>"% of plots where all compliance outputs match the original layers."</em> The word is <strong>all</strong>. A plot with one wrong output out of several counts as a failed plot. Try it: click any square to make that output disagree with the original, and watch the plot-level score fall faster than the output-level one.</p>
+  </div>
+
+  <div class="panel" id="ev-fid">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Fidelity sandbox: 17 plots, 4 outputs each</span>
+        <span class="btns"><button class="btn" type="button" id="ev-f0">All match</button><button class="btn" type="button" id="ev-f1">One output off</button><button class="btn" type="button" id="ev-f3">Three plots off</button></span></div>
+      <div class="ev-fid">
+        <div class="ev-plots" id="ev-plots"></div>
+        <div class="ev-readout" aria-live="polite">
+          <div class="big proof" id="ev-bigp"><span class="num" id="ev-fp">100%</span><span class="cap">decision fidelity: plots with all outputs equal</span></div>
+          <div class="big pen"><span class="num" id="ev-fo" style="color:var(--pen)">100%</span><span class="cap">outputs that match, counted one by one</span></div>
+        </div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="ev-fid-say">Every output matches, so every plot passes.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> definition from the kickoff deck, evaluation slide (p. 25). Plot names S1 to S17 and the outputs are invented for this sandbox; they are not the supplier plots. Our real result is 17 of 17 plots with every output identical, and 744,732 of 744,732 map cells identical, which implies the same for any plot boundary in the region (docs/lab/decision-layer-report.md).</p>
+  </div>
+  <details class="deeper"><summary>Go deeper: pixel fidelity and what we dropped <span class="lvl">technical</span></summary><div class="body">
+    <p>Pixel fidelity asks how well pixel-level detail survives, "where relevant". We measure it as 100% on every attribute the decision reads. Attributes the decision does not read, such as exact canopy percentages in 2000 and loss years before 2021, are dropped on purpose and listed as dropped, never called lossless. The lossless version-1 store stays as an audit tier if a rule ever changes.</p>
+  </div></details>
+</section>
+
+<!-- 8 -->
+<section id="open">
+  <div class="prose">
+    <div class="kick">8 · What to take away</div>
+    <h2>Four things to carry into tomorrow.</h2>
+    <ul>
+      <li><strong>Lead with the company's own phrase:</strong> "keep the decision, not the data". It is the title of their problem slide.</li>
+      <li><strong>Answer the three evaluation questions in order:</strong> how much smaller, how much faster, same decisions.</li>
+      <li><strong>Say what is not covered:</strong> our results are encoding and query evidence, not legal compliance findings. Supplier declarations are declarations, not proven violations.</li>
+      <li><strong>Ask the unknowns early.</strong> The logistics questions are collected on <a href="../submit/">the submission checklist</a>; the storyline is on <a href="../pitch/">the pitch page</a>.</li>
+    </ul>
+  </div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+/* ---------- 1. Timeline ---------- */
+(() => {
+  const { $, instrument, seg, ease } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = $('#ev-tl'), svg = $('svg', el), say = $('#ev-tl-say'), sm = $('#ev-tl-sm'), chipBox = $('#ev-chips');
+  const X0 = 44, DX = 108, X = d => X0 + d * DX;
+  const mk = (n, a = {}, p = svg) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
+
+  // d = days since 10 Oct 00:00 SGT. exact=false when the hour is not stated.
+  const EV = [
+    { id: 'kick',  lane: 'org', d: .5,  exact: false, lab: 'Kickoff', up: 1, sh: 'Kickoff, 10 Oct', tx: 'Kickoff in Singapore on 10 October. The kickoff deck expected track confirmation by the end of that day.' },
+    { id: 'conf',  lane: 'org', d: .95, exact: false, lab: 'Track confirm?', up: 0, anc: 'end', sh: 'Track confirmation', tx: 'The kickoff deck expected tracks to be confirmed by the end of 10 October. Later posts moved this to allocation on 11 October, and the sources do not say whether these are separate stages.' },
+    { id: 'alloc', lane: 'org', d: 1.35, exact: false, lab: 'Allocation', up: 1, sh: 'Allocation, 11 Oct', tx: 'The latest post says track and team allocation happens "tomorrow morning", which in context means the morning of 11 October. The hour is not stated.' },
+    { id: 'sign',  lane: 'org', d: 1.9,  exact: false, lab: 'Sign-ups close', up: 0, anc: 'start', sh: 'Workshop sign-ups close', tx: 'Sign-ups for the optional Carbon Footprint Calculator Workshop close on 11 October. No closing hour is given.' },
+    { id: 'work',  lane: 'org', d: 3.75, e: 3.8333, exact: true, lab: 'Workshop 18:00 to 20:00', up: 1, sh: 'Workshop, 13 Oct', tx: 'Optional Carbon Footprint Calculator Workshop, 13 October, 18:00 to 20:00 (read as Singapore time). Attendees get testimonial priority, which is not a guarantee.' },
+    { id: 'end',   lane: 'org', d: 7.0,  exact: true, unsure: true, lab: '17 Oct 00:00 end?', up: 0, anc: 'end', sh: '17 Oct 00:00 SGT', tx: 'The challenge page shows an end time of 17 October 00:00 SGT, which is midnight at the start of finals day. It is unconfirmed whether this closes applications or project submissions. We planned to be ready on 16 October.' },
+    { id: 'fin',   lane: 'org', d: 7.5,  exact: false, flag: true, lab: 'Finals', up: 1, sh: 'Finals, 17 Oct', tx: 'Finals on 17 October: pitch directly to the company teams. Venue, schedule and pitch length are not stated. Online pitching was offered to those who cannot attend; the screenshot says on-site.' },
+
+    { id: 'sel',   lane: 'us', d: .5,  exact: false, lab: 'Selected', up: 1, sh: 'We select SystemEarth', tx: 'We selected the SystemEarth track on 10 October (SystemEarth-track.md).' },
+    { id: 'acc',   lane: 'us', d: 1.5, exact: false, lab: 'Accepted', up: 1, sh: 'Acceptance reported', tx: 'Acceptance into the track was reported on 11 October. Team composition is not recorded in the repository.' },
+    { id: 'smp',   lane: 'us', d: 2.5, exact: false, lab: 'Sample files', up: 1, sh: 'Company sample files', tx: 'SystemEarth supplied a CSV of 17 supplier declarations and a GeoJSON of 17 plot boundaries (the sample folder is dated 12 October). The sample is private and kept out of git.' },
+    { id: 'proto', lane: 'us', d: 3, e: 5, bar: true, lab: 'Prototype', sh: 'Prototype + proof, 13 to 14 Oct', tx: 'The local lab: a Python engine and a React app that query the original layers and a compact copy and show the two agree for all 17 plots. The README marks the local slice complete on 14 October.' },
+    { id: 'dec',   lane: 'us', d: 5, e: 6, bar: true, lab: 'Layers + P1-3', sh: 'Decision layers, 15 Oct', tx: 'Decision layers (15 October afternoon), then speed-up Phase 1 (evening), Phase 2 (night) and Phase 3 (late night). The UI was also redesigned that day, and the repository was made private.' },
+    { id: 'p4',    lane: 'us', d: 6, e: 6.35, bar: true, lab: 'P4', sh: 'Phase 4, 16 Oct early', tx: 'Phase 4 (early morning, 16 October): a leaner reducer entry, a better rule for the pure-Python scan, and a research pass that found nothing else worth building.' },
+    { id: 'frz',   lane: 'us', d: 6.35, e: 7, bar: true, target: true, lab: 'Freeze', sh: 'Freeze and rehearse, 16 Oct', tx: 'The plan was to freeze the demonstrable slice, run instructions, evidence and pitch on 16 October, with a fallback recording. This is a target from our own work sequence, not an organiser date.' },
+  ];
+  const Y = { page: 44, org: 126, us: 212 };
+
+  // day columns and labels
+  const wd = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  for (let i = 0; i <= 8; i++) mk('line', { x1: X(i), x2: X(i), y1: 26, y2: 252, stroke: 'var(--rule)', 'stroke-width': 1 });
+  for (let i = 0; i < 8; i++) {
+    const t = mk('text', { x: X(i) + DX / 2, y: 274, 'text-anchor': 'middle', class: 'ev-day' });
+    t.textContent = wd[i] + ' ' + (10 + i) + ' Oct';
+  }
+  mk('rect', { x: X(7), y: 26, width: DX, height: 226, fill: 'var(--hi-wash)', opacity: .55 });
+  [['Challenge page', Y.page - 22], ['Organisers', Y.org - 50], ['Our build', Y.us - 50]].forEach(([s, y]) => { const t = mk('text', { x: X0, y: y + 2, class: 'ev-lab dim' }); t.textContent = s.toUpperCase(); t.style.letterSpacing = '.1em'; });
+
+  // challenge-page window bar: d=1 .. 7
+  const winG = mk('g');
+  const winGhost = mk('rect', { x: X(1), y: Y.page - 8, width: 6 * DX, height: 20, rx: 6, fill: 'none', stroke: 'var(--rule-2)', 'stroke-dasharray': '4 4' }, winG);
+  const winFill = mk('rect', { x: X(1), y: Y.page - 8, width: 0, height: 20, rx: 6, fill: 'var(--water)', opacity: .85 }, winG);
+  const winTx = mk('text', { x: X(1) + 10, y: Y.page + 6, class: 'ev-lab', fill: '#fff' }, winG); winTx.textContent = '11 Oct 00:00 SGT → 17 Oct 00:00 SGT'; winTx.style.fill = '#fff';
+  const q = mk('text', { x: X(7) + 8, y: Y.page + 7, class: 'ev-lab' }); q.textContent = '?'; q.style.fontWeight = 700; q.style.fontSize = '16px';
+  mk('line', { x1: X(7), x2: X(7), y1: 26, y2: 252, stroke: 'var(--ink-2)', 'stroke-width': 1.5, 'stroke-dasharray': '3 4' });
+
+  // lane baselines
+  mk('line', { x1: X0, x2: X(8), y1: Y.org, y2: Y.org, stroke: 'var(--rule-2)', 'stroke-width': 2 });
+  mk('line', { x1: X0, x2: X(8), y1: Y.us + 10, y2: Y.us + 10, stroke: 'var(--rule-2)', 'stroke-width': 2 });
+
+  // items
+  const items = EV.map(ev => {
+    const y = ev.lane === 'org' ? Y.org : Y.us + 10;
+    const g = mk('g', { class: 'ev-item', tabindex: -1, 'data-id': ev.id });
+    let shape, fill, extra = null;
+    if (ev.bar) {
+      const w = (ev.e - ev.d) * DX;
+      mk('rect', { x: X(ev.d), y: y - 10, width: w, height: 20, rx: 6, fill: 'none', stroke: 'var(--rule-2)', 'stroke-dasharray': '4 3' }, g);
+      shape = mk('rect', { class: 'ev-shape', x: X(ev.d), y: y - 10, width: 0, height: 20, rx: 6, fill: ev.target ? 'var(--hi)' : 'var(--pen)', stroke: ev.target ? 'var(--ink-2)' : 'none' }, g);
+      const t = mk('text', { x: X(ev.d) + w / 2, y: y + 4, 'text-anchor': 'middle', class: 'ev-lab' }, g);
+      t.textContent = ev.lab; t.style.fill = ev.target ? 'var(--ink)' : '#fff'; t.style.fontSize = '10px'; extra = t;
+    } else if (ev.flag) {
+      mk('line', { x1: X(ev.d), x2: X(ev.d), y1: y - 34, y2: y + 4, stroke: 'var(--ink)', 'stroke-width': 2 }, g);
+      shape = mk('path', { class: 'ev-shape', d: `M${X(ev.d)} ${y - 34} l30 9 l-30 9 z`, fill: 'var(--bad)' }, g);
+      mk('circle', { cx: X(ev.d), cy: y, r: 6, fill: 'var(--ink)' }, g);
+    } else if (ev.e) {
+      shape = mk('rect', { class: 'ev-shape', x: X(ev.d) - 2, y: y - 10, width: (ev.e - ev.d) * DX + 4, height: 20, rx: 5, fill: 'var(--ink)' }, g);
+    } else {
+      fill = ev.lane === 'us' ? 'var(--pen)' : 'var(--ink)';
+      shape = mk('circle', { class: 'ev-shape', cx: X(ev.d), cy: y, r: 8, fill: ev.exact ? fill : 'var(--sheet)', stroke: fill, 'stroke-width': 2.5, 'stroke-dasharray': ev.exact ? '' : '3 2' }, g);
+    }
+    if (!ev.bar) {
+      const lx = ev.e ? X((ev.d + ev.e) / 2) : X(ev.d);
+      const t = mk('text', { x: Math.min(lx, X(8) - 40), y: ev.up ? y - (ev.flag ? 42 : 17) : y + 25, 'text-anchor': ev.anc || (ev.d > 7.3 ? 'start' : 'middle'), class: 'ev-lab' }, g);
+      if (ev.flag) t.setAttribute('x', X(ev.d) + 36), t.setAttribute('y', y - 20);
+      t.textContent = ev.lab;
+    }
+    return { ev, g, shape, ghost: ev.bar || false };
+  });
+  const sel = id => {
+    const e = EV.find(x => x.id === id); if (!e) return;
+    items.forEach(it => it.g.classList.toggle('sel', it.ev.id === id));
+    $$btns().forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === id)));
+    sm.textContent = e.sh + (e.exact ? '' : ' · hour not stated') + (e.target ? ' · our target' : '') + (e.unsure ? ' · meaning unconfirmed' : '');
+    say.textContent = e.tx;
+  };
+  const $$btns = () => [...chipBox.querySelectorAll('button')];
+  EV.forEach(e => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'ev-chip'; b.dataset.id = e.id; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = e.sh.replace(/,/, ' <i>·</i>');
+    b.addEventListener('click', () => sel(e.id));
+    chipBox.append(b);
+  });
+  items.forEach(it => { it.g.addEventListener('click', () => sel(it.ev.id)); });
+
+  // "today" from the reader's clock (Singapore time = UTC+8)
+  const T0 = Date.UTC(2026, 9, 9, 16, 0, 0);
+  const nowD = Math.max(0, Math.min(8, (Date.now() - T0) / 864e5));
+  const cur = mk('g'); mk('line', { x1: 0, x2: 0, y1: 20, y2: 256, stroke: 'var(--bad)', 'stroke-width': 2.5 }, cur);
+  const curTag = mk('rect', { x: -34, y: 4, width: 68, height: 18, rx: 9, fill: 'var(--bad)' }, cur);
+  const curTx = mk('text', { x: 0, y: 17, 'text-anchor': 'middle', class: 'ev-lab' }, cur); curTx.style.fill = '#fff'; curTx.style.fontWeight = '700';
+  curTx.textContent = nowD >= 8 ? 'after' : nowD <= 0 ? 'before' : 'today';
+
+  instrument(el, { ms: 4200, render(t) {
+    const c = nowD * ease(t);
+    cur.setAttribute('transform', `translate(${X(c)},0)`);
+    winFill.setAttribute('width', Math.max(0, Math.min(c, 7) - 1) * DX);
+    items.forEach(({ ev, g, shape }) => {
+      const passed = seg(c, ev.d, ev.d + .12), future = ev.d > nowD;
+      g.style.opacity = future ? .38 : .28 + .72 * passed;
+      if (ev.bar) shape.setAttribute('width', Math.max(0, Math.min(c, ev.e) - ev.d) * DX);
+    });
+  } });
+  // keyboard: make the chips the accessible route; svg items stay mouse-friendly
+  // live countdown
+  const left = $('#ev-left');
+  const tick = () => {
+    const ms = T0 + 7 * 864e5 - Date.now();
+    if (ms <= 0) { left.textContent = 'passed'; return; }
+    const h = Math.floor(ms / 36e5), d = Math.floor(h / 24);
+    left.textContent = d + ' d ' + (h % 24) + ' h ' + Math.floor((ms % 36e5) / 6e4) + ' min';
+  };
+  tick(); setInterval(tick, 30000);
+})();
+
+/* ---------- 2. Printed vs slides vs spoken ---------- */
+(() => {
+  const { $, $$ } = Pack;
+  const L = ['Not stated', 'Hinted', 'Stated'];
+  // [requirement, differs?, [level, text] x3 (printed, slides, spoken)]
+  const R = [
+    ['A specific use case', 0, [2, 'Present on a specific use case.'], [2, 'Pick a use case.'], [2, 'Present a specific use case; the team may choose it.']],
+    ['Layers across time and space, compact and query-efficient', 0, [2, 'Represent multiple geospatial layers across time and space in a compact and query-efficient form.'], [2, 'Same wording, as the problem statement.'], [2, 'Demonstrate a compact representation of multiple layers across time and space.']],
+    ['Preserve what is needed to reproduce plot-level decisions', 0, [2, 'While preserving the information required to reproduce plot-level compliance decisions.'], [2, 'Still reproduces plot-level compliance decisions.'], [2, 'Preserve the information needed to reproduce plot-level compliance decisions.']],
+    ['Layer analysis: essential vs simplified or dropped', 1, [1, 'Hinted: "a compliance decision rarely needs the entire raw value of data".'], [2, 'Which layers and attributes are essential, and which can be simplified, summarised or dropped.'], [2, 'Identify essential layers and attributes; say which can be simplified, summarised or dropped.']],
+    ['Ground choices in regulatory definitions and cut-off dates', 1, [1, 'Context only: forest presence "at the regulatory cut-off date".'], [2, 'Ground it in regulatory definitions, e.g. forest thresholds and cut-off dates.'], [2, 'For compliance use cases, ground layer choices in relevant definitions and cut-off dates.']],
+    ['Encoding strategy combining layers and time steps', 1, [0, 'Not stated.'], [2, 'Combine multiple layers and time steps into a single dataset or architecture.'], [2, 'Choose an encoding method; combine selected layers and time steps.']],
+    ['A working prototype that encodes and queries a sample region', 1, [0, 'Not stated.'], [2, 'Encode a sample set of layers for one region and query the compressed data (heading: "Encoding strategy and working prototype").'], [1, 'Encode and query a sample for one region, but a working prototype is treated less firmly.']],
+    ['Storage versus the original layers', 0, [1, 'Implied by "compact".'], [2, 'Reduction in storage requirements versus the original layers.'], [2, 'Compare storage requirements with the original layers.']],
+    ['Query speed and resource use', 0, [1, 'Implied by "query-efficient".'], [2, 'Query speed (effort, processing time) and resource requirements (e.g. additional storage) for representative plot-level queries.'], [2, 'Compare query speed and resource requirements with the original layers.']],
+    ['Decision fidelity', 0, [1, 'Implied by "reproduce plot-level compliance decisions".'], [2, '% of plots where all compliance outputs match the original layers.'], [2, 'Measure plot-level decision fidelity against the original layers.']],
+    ['Pixel fidelity', 1, [0, 'Not stated.'], [2, 'How well pixel-level detail is preserved, where relevant.'], [2, 'Compare pixel-level fidelity where relevant.']],
+    ['Accuracy, information loss, pipeline choices, AI output', 1, [0, 'Not stated.'], [0, 'Not stated.'], [2, 'Evaluate accuracy and information loss; explain pipeline choices and any AI output.']],
+    ['Cost estimate', 1, [0, 'Not stated.'], [2, 'Bonus: estimate infrastructure and processing costs to store, update and query.'], [2, 'Bonus: the same.']],
+    ['A new compression algorithm', 1, [0, 'Not stated.'], [0, 'Not stated.'], [2, 'Not required. Existing algorithms, models, formulas and encodings are allowed.']],
+    ['Dataset, region, resolution, time span', 1, [0, 'Not specified.'], [0, 'No dataset mandated; no sample region named.'], [1, 'Free choice of dataset and use case.']],
+    ['Passing thresholds, scoring weights, pitch length', 0, [0, 'Not given.'], [0, 'No numeric benchmark.'], [0, 'Not given.']],
+  ];
+  const tb = $('tbody', $('#ev-cmp'));
+  tb.innerHTML = R.map(r => `<tr class="${r[1] ? 'd' : ''}"><td class="rq">${r[0]}<span class="dflag">differs</span></td>` +
+    ['p', 's', 't'].map((k, i) => `<td class="${k} l${r[2 + i][0]}"><span class="lv">${r[2 + i][0] === 2 ? '● ' : r[2 + i][0] === 1 ? '◐ ' : '○ '}${L[r[2 + i][0]]}</span>${r[2 + i][1]}</td>`).join('') + '</tr>').join('');
+  const tbl = $('#ev-cmp-t'), say = $('#ev-cmp-say'), btns = $$('[data-src]', $('#ev-cmp')), diff = $('[data-diff]', $('#ev-cmp'));
+  const msg = {
+    all: 'All three sources agree on the big idea. They differ on how much detail they ask for.',
+    p: 'The printed booklet is the shortest: the problem and the "why", but none of the deliverables. It leaves the layer analysis, encoding, prototype and evaluation to the other two.',
+    s: 'The kickoff slides are the most specific. They name layer analysis, encoding with a working prototype, and the three evaluation questions: how much smaller, how much faster, same decisions.',
+    t: 'The spoken guidance adds things the slides lack: explain pipeline choices and AI output, accuracy and information loss, and that a new compression algorithm is not required. It also softens the prototype.',
+  };
+  const setSrc = k => {
+    tbl.classList.remove('only-p', 'only-s', 'only-t');
+    if (k !== 'all') tbl.classList.add('only-' + k);
+    btns.forEach(b => { const on = b.dataset.src === k; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    say.textContent = tbl.classList.contains('diff') ? 'Highlighted rows are where the sources do not say the same thing: ' + R.filter(r => r[1]).length + ' of ' + R.length + '.' : msg[k];
+    tbl.dataset.src = k;
+  };
+  btns.forEach(b => b.addEventListener('click', () => setSrc(b.dataset.src)));
+  diff.addEventListener('click', () => {
+    const on = !tbl.classList.contains('diff');
+    tbl.classList.toggle('diff', on); diff.classList.toggle('on', on); diff.setAttribute('aria-pressed', String(on));
+    setSrc(tbl.dataset.src || 'all');
+  });
+  setSrc('all');
+})();
+
+/* ---------- 3. Brief decoder ---------- */
+(() => {
+  const { $, $$, stepper } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = $('#ev-dec'), g = $('#ev-pipe-g');
+  const NODES = ['Original layers', 'Layer analysis', 'Encoding', 'Compact store', 'Query', 'Compare with originals'];
+  const pos = [[10, 8], [230, 8], [10, 118], [230, 118], [10, 228], [230, 228]];
+  const nodes = NODES.map((n, i) => {
+    const grp = document.createElementNS(NS, 'g'); grp.setAttribute('class', 'node');
+    const r = document.createElementNS(NS, 'rect'); [['x', pos[i][0]], ['y', pos[i][1]], ['width', 200], ['height', 84], ['rx', 14]].forEach(([k, v]) => r.setAttribute(k, v));
+    const tx = document.createElementNS(NS, 'text'); tx.setAttribute('x', pos[i][0] + 100); tx.setAttribute('y', pos[i][1] + 49); tx.setAttribute('text-anchor', 'middle'); tx.textContent = n;
+    const num = document.createElementNS(NS, 'text'); num.setAttribute('x', pos[i][0] + 14); num.setAttribute('y', pos[i][1] + 22); num.textContent = String(i + 1);
+    grp.append(r, num, tx); g.append(grp); return grp;
+  });
+  // arrows: 0→1, 1→2 (down-left), 2→3, 3→4 (down-left), 4→5
+  const arrows = [['M210 50 H230'], ['M330 92 V104 H110 V118'], ['M210 160 H230'], ['M330 202 V214 H110 V228'], ['M210 270 H230']].map(([d]) => {
+    const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); p.setAttribute('class', 'arrow'); g.prepend(p); return p;
+  });
+
+  const S = [
+    { t: 'req', tag: 'Required', title: 'Pick a specific use case', n: [0],
+      q: '"Present on a specific use case and demonstrate how SystemEarth can represent multiple geospatial layers…"', qs: 'Printed booklet, p. 9',
+      a: 'EUDR-style deforestation screening of <strong>17 real supplier plots</strong> in Surat Thani, Thailand: was it forest on 31 December 2020, and has tree cover been lost since?', links: [['../company/', 'The company and the rule'], ['../data/', 'The data']] },
+    { t: 'req', tag: 'Required', title: 'Layer analysis', n: [1],
+      q: '"Which layers and attributes are essential, and which can be simplified, summarised or dropped."', qs: 'Kickoff deck p. 24, item 1',
+      a: 'Three questions need only land or water, JRC 2020 forest, and the loss year since 2021. Hansen\'s canopy percentages are <span class="num">72%</span> of its bytes and no question reads them. Dropped on purpose, and listed.', links: [['../solution/', 'How Plotline works']] },
+    { t: 'req', tag: 'Required', title: 'Ground choices in regulatory definitions', n: [0, 1],
+      q: '"Ground it in regulatory definitions for your use case, e.g. forest thresholds and cut-off dates."', qs: 'Kickoff deck p. 24, item 1',
+      a: 'The cut-off is 31 December 2020, read through JRC\'s 2020 forest class. <strong>Partly covered:</strong> the 0.5 ha minimum area, degradation and protected areas are not captured. Say so when asked.', links: [['../company/', 'SystemEarth and the EUDR']] },
+    { t: 'req', tag: 'Required', title: 'An encoding strategy', n: [2, 3],
+      q: '"Combine multiple layers and time steps into a single dataset or architecture."', qs: 'Kickoff deck p. 24, item 2',
+      a: 'Each map cell becomes one of <strong>20 codes</strong>, stored as bit-planes plus sparse loss events: <span class="num">6,146 B</span> for the whole region. A plain GeoTIFF of the same codes is 8,532 B, so most of the win is the analysis, not the codec.', links: [['../solution/', 'The 20-value code']] },
+    { t: 'req', tag: 'Required · slides', title: 'A working prototype', n: [3, 4],
+      q: '"Encode a sample set of layers for one region and query the compressed data."', qs: 'Kickoff deck p. 24, item 2. The spoken brief is softer; the challenge page asks for one.',
+      a: 'A Python engine, a React app and a live-query service. It queries the original layers and the compact store side by side. <strong>The checks pass today</strong>: see <a href="../submit/">the submission checklist</a>.', links: [['../solution/', 'How Plotline works'], ['../submit/', 'Run it yourself']] },
+    { t: 'req', tag: 'Required', title: 'Storage versus the original layers', n: [3, 5],
+      q: '"Reduction in storage requirements versus the original layers."', qs: 'Kickoff deck p. 25, evaluation',
+      a: '<span class="num">623,237 B → 6,146 B</span>, 99.0% smaller, on the sample region. On a whole 10° tile: 421.9 MB to 8.2 MB (98.0% smaller).', links: [['../solution/', 'The ladder of representations']] },
+    { t: 'req', tag: 'Required', title: 'Query speed and resource use', n: [4, 5],
+      q: '"Query speed (effort, processing time) and resource requirements (e.g. additional storage) for representative plot-level queries."', qs: 'Kickoff deck p. 25, evaluation',
+      a: 'Registered plots re-check <span class="num">44×</span> faster, new boundaries 5.2× faster (hot, 17 plots). Peak memory 75 MB to 37 MB. Not end-to-end from a fresh process: that is mostly Python start-up.', links: [['../speed/', 'The speed story']] },
+    { t: 'req', tag: 'Required', title: 'Decision and pixel fidelity', n: [5],
+      q: '"Decision fidelity: % of plots where all compliance outputs match the original layers. Pixel fidelity: how well pixel-level detail is preserved, where relevant."', qs: 'Kickoff deck p. 25, evaluation',
+      a: '<span class="num">17 / 17</span> plots with every output identical, and <strong>744,732 / 744,732</strong> cells, which covers any plot boundary in the region. 9,829 fuzzed polygons agree. Pixel fidelity is 100% on every attribute the decision reads.', links: [['../solution/', 'The proof']] },
+    { t: 'req', tag: 'Required · spoken', title: 'Explain choices, loss and any AI output', n: [1, 2],
+      q: 'Spoken: evaluate accuracy and information loss; explain pipeline choices and any AI output.', qs: 'Transcript, SystemEarth section',
+      a: 'The shipped pipeline is rule-based. The one place ML was tried, a learned codec selector, <strong>lost on a sealed holdout and was rejected</strong>. Results are encoding and query evidence, not legal compliance findings.', links: [['../pitch/', 'Tomorrow\'s pitch']] },
+    { t: 'bon', tag: 'Bonus', title: 'Estimate infrastructure and processing costs', n: [3, 4],
+      q: '"Bonus: estimate infrastructure and processing costs to store, update and query."', qs: 'Kickoff deck p. 25, evaluation',
+      a: 'At list-price assumptions to verify before quoting: the decision layer for the tropical belt is about <span class="num">$0.018</span> a month; re-checking 10 million registered plots costs about $0.0008 and 10 million new plots about $0.0031.', links: [['../speed/', 'Speed and cost']] },
+  ];
+  const tagCls = { req: 'req', bon: 'bon', sug: 'sug', unk: 'unk' };
+  const show = k => {
+    const s = S[k];
+    $('#ev-d-tag').innerHTML = `<span class="ev-tag ${tagCls[s.t]}">${s.tag}</span>`;
+    $('#ev-d-title').textContent = s.title;
+    $('#ev-d-quote').innerHTML = s.q + `<small>${s.qs}</small>`;
+    $('#ev-d-ans').innerHTML = '<span class="ev-tag ours">Plotline</span> ' + s.a;
+    $('#ev-d-links').innerHTML = s.links.map(l => `<a href="${l[0]}">${l[1]} →</a>`).join('');
+    nodes.forEach((n, i) => n.classList.toggle('lit', s.n.includes(i)));
+    arrows.forEach((a, i) => a.classList.toggle('lit', s.n.includes(i) && s.n.includes(i + 1)));
+  };
+  stepper(el, S.length, show);
+})();
+
+/* ---------- 4. Fidelity sandbox ---------- */
+(() => {
+  const { $ } = Pack;
+  const box = $('#ev-plots'), say = $('#ev-fid-say');
+  const N = 17, M = 4, bad = new Set();
+  const cells = [];
+  for (let p = 0; p < N; p++) {
+    const d = document.createElement('div'); d.className = 'ev-plot';
+    d.innerHTML = `<span class="nm">S${p + 1}</span><div class="dots"></div><span class="res">match</span>`;
+    const dots = d.querySelector('.dots');
+    for (let o = 0; o < M; o++) {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.textContent = '✓';
+      b.setAttribute('aria-label', `Plot S${p + 1}, output ${o + 1}: matches the original. Click to make it differ.`);
+      b.addEventListener('click', () => { const k = p * M + o; bad.has(k) ? bad.delete(k) : bad.add(k); update(); });
+      dots.append(b);
+    }
+    box.append(d); cells.push(d);
+  }
+  const update = () => {
+    let failed = 0;
+    cells.forEach((d, p) => {
+      const n = [...Array(M).keys()].filter(o => bad.has(p * M + o)).length;
+      d.classList.toggle('bad', n > 0); if (n) failed++;
+      d.querySelector('.res').textContent = n ? 'fail' : 'match';
+      d.querySelectorAll('button').forEach((b, o) => {
+        const x = bad.has(p * M + o); b.setAttribute('aria-pressed', String(x)); b.textContent = x ? '✗' : '✓';
+        b.setAttribute('aria-label', `Plot S${p + 1}, output ${o + 1}: ${x ? 'differs from' : 'matches'} the original. Click to toggle.`);
+      });
+    });
+    const dp = Math.round(100 * (N - failed) / N * 10) / 10, op = Math.round(1000 * (N * M - bad.size) / (N * M)) / 10;
+    $('#ev-fp').textContent = dp + '%'; $('#ev-fo').textContent = op + '%';
+    $('#ev-bigp .num').style.color = failed ? 'var(--bad)' : 'var(--proof)';
+    say.textContent = !bad.size ? 'Every output matches, so every plot passes.'
+      : `${bad.size} of ${N * M} outputs differ (${op}% still match), but ${failed} of ${N} plots fail, so decision fidelity is ${dp}%.`;
+  };
+  const preset = k => { bad.clear(); if (k === 1) bad.add(5 * M + 2); if (k === 3) [1 * M + 0, 8 * M + 3, 14 * M + 1].forEach(x => bad.add(x)); update(); };
+  $('#ev-f0').addEventListener('click', () => preset(0));
+  $('#ev-f1').addEventListener('click', () => preset(1));
+  $('#ev-f3').addEventListener('click', () => preset(3));
+  update();
+})();
+
+/* replay for the bars panel: re-trigger fills */
+(() => {
+  const { $, $$ } = Pack;
+  const el = $('#ev-bars');
+  $('.replay', el).addEventListener('click', () => {
+    $$('.track i', el).forEach(i => { const w = i.dataset.w; i.style.width = '0'; requestAnimationFrame(() => requestAnimationFrame(() => { i.style.width = w + '%'; })); });
+  });
+})();
+</script>
+</body>
+</html>

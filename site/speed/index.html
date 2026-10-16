@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The speed story · Plotline explainers</title>
+<meta name="description" content="The few ideas that made Plotline's decision layer fast, phase by phase, with the honest caveats about what each speed-up multiple does and does not mean.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Every class is prefixed sp- (speed). */
+.sp-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; margin-top: 16px; }
+.sp-two > * { min-width: 0; }
+.sp-fig { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 8px; }
+.sp-fig svg text { font-size: 11.5px; fill: var(--muted); }
+.sp-fig svg text.sp-b { font-weight: 600; fill: var(--ink-2); }
+.sp-fig svg text.sp-w { fill: #fff; font-weight: 600; }
+.sp-live .track i { transition: none; }
+.sp-live .brow .val { font-weight: 600; }
+.sp-lab { font: 600 11.5px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 14px 0 0; }
+.sp-lab:first-child { margin-top: 0; }
+.sp-lab small { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--faint); margin-left: 8px; }
+.sp-grey i { background: var(--unknown) !important; }
+.sp-pen i { background: var(--pen) !important; }
+.sp-ok i { background: var(--proof) !important; }
+.sp-ink i { background: var(--ink-2) !important; }
+
+/* five-card overview */
+.sp-five { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.sp-five a { display: block; padding: 14px 14px 12px; background: var(--sheet); border: 1px solid var(--rule); border-top: 4px solid var(--pen); border-radius: 12px; color: var(--ink); text-decoration: none; transition: transform .3s var(--ease), border-color .3s; }
+.sp-five a:hover, .sp-five a:focus-visible { transform: translateY(-3px); border-color: var(--pen-wash-2); }
+.sp-five b { display: block; font: 700 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--pen); }
+.sp-five strong { display: block; font: 700 18px/1.2 var(--f-display); margin-top: 6px; letter-spacing: -.01em; }
+.sp-five em { display: block; font: 600 13.5px/1.35 var(--f-mono); font-style: normal; color: var(--ink-2); margin-top: 8px; }
+@media (max-width: 960px) { .sp-five { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .sp-five { grid-template-columns: 1fr; } }
+
+/* phase table */
+.sp-pt { width: 100%; min-width: 940px; border-collapse: separate; border-spacing: 0; font: 500 13px/1.35 var(--f-mono); font-variant-numeric: tabular-nums; }
+.sp-pt th { text-align: left; vertical-align: bottom; padding: 0 8px 10px; font: 600 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule-2); }
+.sp-pt th small { display: block; text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--faint); margin-top: 2px; }
+.sp-pt th.rl, .sp-pt td.rl { width: 22%; }
+.sp-pt td { padding: 9px 8px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.sp-pt td.rl { color: var(--ink-2); font-weight: 500; }
+.sp-pt tr.g th { padding: 16px 8px 6px; color: var(--ink-2); border-bottom: 0; font-size: 11.5px; }
+.sp-pt td.c { opacity: 0; transform: translateY(6px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+.sp-pt td.c.on { opacity: 1; transform: none; }
+.sp-pt td.c.up .tx { font-weight: 700; color: var(--ink); }
+.sp-pt .mbt { display: block; height: 5px; margin-top: 6px; border-radius: 3px; background: var(--mist); overflow: hidden; }
+.sp-pt .mbt i { display: block; height: 100%; width: 0; background: var(--unknown); border-radius: 3px; transition: width .8s var(--ease); }
+.sp-pt td.c.up .mbt i { background: var(--proof); }
+.sp-pt .na { color: var(--faint); }
+.sp-pt .hd { display: block; }
+
+/* race */
+.sp-race .brow { grid-template-columns: minmax(130px, 220px) minmax(0, 1fr) 96px; }
+.sp-race .na { color: var(--faint); font-weight: 400; }
+.sp-nowline { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin-top: 16px; font: 500 13px var(--f-mono); color: var(--muted); }
+.sp-nowline b { font: 700 17px var(--f-display); color: var(--ink); letter-spacing: -.01em; }
+.sp-ctl { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: 14px; }
+.sp-ctl .btn { padding: 6px 12px; font-size: 13px; }
+
+/* segmented bars: stacks */
+.sp-seg { display: flex; height: 38px; border-radius: 8px; overflow: hidden; background: var(--mist); }
+.sp-seg > * { flex: none; height: 100%; border: 0; border-right: 2px solid var(--sheet); padding: 0; margin: 0; cursor: pointer; font: 600 11.5px var(--f-mono); color: #fff; overflow: hidden; white-space: nowrap; }
+.sp-seg > *:last-child { border-right: 0; }
+.sp-seg > .on { outline: 3px solid var(--hi); outline-offset: -3px; }
+.sp-key { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px 18px; margin-top: 14px; font: 500 13px/1.35 var(--f-mono); color: var(--ink-2); }
+.sp-key button { display: grid; grid-template-columns: 14px 1fr auto; gap: 8px; align-items: center; text-align: left; background: none; border: 0; padding: 4px 6px; border-radius: 6px; cursor: pointer; font: inherit; color: inherit; }
+.sp-key button:hover, .sp-key button.on { background: var(--hi-wash); }
+.sp-key i { width: 12px; height: 12px; border-radius: 3px; display: block; }
+.sp-key span:last-child { font-variant-numeric: tabular-nums; color: var(--muted); }
+.sp-detail { margin-top: 14px; padding: 12px 16px; border-radius: 10px; background: var(--paper); border: 1px solid var(--rule); font-size: 16px; min-height: 76px; }
+.sp-detail b { font-family: var(--f-display); font-size: 18px; }
+.sp-detail span { display: block; color: var(--muted); font-size: 15px; margin-top: 3px; }
+
+/* segmented toggle */
+.sp-tog { display: inline-flex; border: 1px solid var(--rule-2); border-radius: 9px; overflow: hidden; background: var(--sheet); }
+.sp-tog button { font: 600 13.5px var(--f-mono); border: 0; background: transparent; padding: 9px 14px; cursor: pointer; color: var(--muted); border-right: 1px solid var(--rule); }
+.sp-tog button:last-child { border-right: 0; }
+.sp-tog button[aria-pressed="true"] { background: var(--pen); color: #fff; }
+.sp-views .brow { grid-template-columns: minmax(150px, 250px) minmax(0, 1fr) 150px; }
+.sp-views .brow .val { font-size: 13px; }
+.sp-views .brow .val em { font-style: normal; font-weight: 700; color: var(--pen-deep); margin-left: 6px; }
+.sp-views .gh { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; display: flex; gap: 10px; align-items: center; }
+.sp-views .gh::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+@media (max-width: 780px) { .sp-two { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .sp-live .brow:not([style]), .sp-views .brow, .sp-race .brow { grid-template-columns: minmax(0, 1fr) auto; row-gap: 4px; } .sp-live .brow:not([style]) .lab, .sp-views .brow .lab, .sp-race .brow .lab { grid-column: 1 / -1; white-space: normal; } .sp-views .brow .val { text-align: right; } }
+
+/* worth table bars */
+.sp-wt td .wb { display: block; height: 5px; border-radius: 3px; background: var(--mist); margin-top: 5px; overflow: hidden; }
+.sp-wt td .wb i { display: block; height: 100%; background: var(--pen); border-radius: 3px; width: 0; transition: width 1s var(--ease); }
+
+/* e2e stack */
+.sp-e2e { display: grid; gap: 12px; margin-top: 16px; }
+.sp-e2e .r { display: grid; grid-template-columns: minmax(130px, 210px) minmax(0, 1fr) 80px; gap: 12px; align-items: center; font: 500 13.5px var(--f-mono); }
+.sp-e2e .bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; background: var(--mist); }
+.sp-e2e .bar i { display: block; height: 100%; width: 0; transition: width 1s var(--ease); }
+.sp-e2e .f { background: repeating-linear-gradient(135deg, #CDD2DE 0 5px, #E3E6EE 5px 10px); }
+.sp-e2e .m { background: var(--ink-2); }
+.sp-e2e .o { background: var(--pen); }
+.sp-e2e .v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.sp-e2e .lab b { display: block; color: var(--ink); }
+.sp-e2e .lab span { font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) { .sp-e2e .r { grid-template-columns: 1fr 70px; } .sp-e2e .r .lab { grid-column: 1 / -1; } }
+
+.sp-code { font: 500 13px/1.6 var(--f-mono); background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; color: var(--ink-2); overflow-x: auto; margin-top: 10px; }
+.sp-code s { color: var(--faint); }
+.sp-code b { color: var(--pen-deep); }
+
+/* proof ticks */
+.sp-tick { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--proof-wash); color: var(--proof); font: 700 13px var(--f-mono); opacity: 0; transform: scale(.4); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+.sp-tick.on { opacity: 1; transform: none; }
+
+.sp-build { display: flex; height: 40px; border-radius: 8px; overflow: hidden; background: var(--mist); margin-top: 12px; }
+.sp-build > div { height: 100%; display: flex; align-items: center; padding-left: 10px; font: 600 12px var(--f-mono); color: #fff; overflow: hidden; white-space: nowrap; }
+
+.sp-leg td:first-child { white-space: nowrap; font-weight: 700; color: var(--ink); }
+.sp-clock { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.sp-clock > div { padding: 14px 16px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; border-top: 4px solid var(--pen); }
+.sp-clock b { display: block; font: 700 19px var(--f-display); }
+.sp-clock p { font-size: 15.5px; color: var(--ink-2); margin-top: 6px; }
+@media (max-width: 760px) { .sp-clock { grid-template-columns: 1fr; } }
+.sp-tl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 20px; counter-reset: ph; }
+.sp-tl > div { position: relative; padding: 14px 14px 12px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; }
+.sp-tl > div::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--pen); border-radius: 12px 12px 0 0; opacity: calc(.35 + var(--k) * .13); }
+.sp-tl b { display: block; font: 700 17px/1.2 var(--f-display); }
+.sp-tl small { display: block; font: 500 12px/1.3 var(--f-mono); color: var(--muted); margin-top: 3px; }
+.sp-tl p { font-size: 14.5px; line-height: 1.45; margin-top: 8px; color: var(--ink-2); }
+@media (max-width: 960px) { .sp-tl { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .sp-tl { grid-template-columns: 1fr; } }
+.sp-mx td, .sp-mx th { text-align: left; }
+.sp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+</style>
+</head>
+<body data-page="speed">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Deep dive · 20 min</div>
+  <h1>Five ideas did <span class="hl">most of the work.</span></h1>
+  <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a brand-new boundary <strong>5.2× faster</strong>. This page tells the few breakthroughs behind those numbers, in the order they happened, so you can say them on stage and defend them when someone pushes back.</p>
+  <div class="meta"><span>20 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4 figures), docs/lab/decision-benchmark-notes.md, docs/lab/decision-scale-notes.md, engine/decision_*.py</span></div>
+  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
+    <li><b>Five ideas:</b> keep only what the decision reads; find a registered plot's cells once; decode on the packed bit-planes; scan small polygons in plain Python; drop NumPy for re-checks. A leaner shared reducer helped all of them.</li>
+    <li><b>Two separate scoreboards, never blended.</b> Registered plots: 24× at the start, <b>44×</b> now (83× without NumPy). New boundaries: 2.2× at the start, <b>5.2×</b> now. All measured hot, against the retained original path (P0).</li>
+    <li><b>No phase changed an answer, a stored byte or a file format.</b> The same proof, 744,732 of 744,732 cells, was re-run after every phase. The caveat to say out loud: whole-process time is mostly Python and NumPy start-up.</li>
+  </ul></div>
+</header>
+
+<!-- ============================================================ 1 -->
+<section id="frame" data-toc="How to read a speed number">
+  <div class="prose">
+    <div class="kick">1 · Before the numbers</div>
+    <h2>A speed-up multiple only means something with its clock and its baseline.</h2>
+    <p>Every multiple on this page is measured <strong>against the original query path from version 1</strong>, which we kept so we could keep comparing. Call it <strong>P0</strong>. It reads three Hansen bands and builds a 101-bin canopy histogram. P0 is re-measured in every benchmark run, so a multiple can drift about half a percent without any code change.</p>
+    <p>Each multiple also belongs to one of three clocks. Mixing them is the easiest way to say something untrue.</p>
+  </div>
+
+  <div class="sp-clock">
+    <div><b>Hot</b><p>The layer is already loaded and the code has warmed up. We time one pass over the 17 supplied plots, repeated hundreds of times. This is the per-plot cost once the layer is local.</p></div>
+    <div style="--x:1"><b>Fresh process</b><p>A new Python process loads the layer and answers the 17 plots. Imports are done first; start-up is not counted. This is where a smaller layer shows.</p></div>
+    <div><b>End-to-end</b><p>Launch Python from scratch and print the answer. It includes interpreter start-up (about 14.6 ms) and importing NumPy (about 25 ms). A do-nothing child in the harness already costs 20.1 ms.</p></div>
+  </div>
+
+  <div class="prose">
+    <h3>The path codes, once</h3>
+    <p>Each path is a different way of answering the same question. The suffix <code>d</code> means the decision level (<code>s</code> is the slightly larger screening level).</p>
+  </div>
+  <div class="tbl"><table class="dt sp-leg">
+    <thead><tr><th>Code</th><th>What it is</th><th>Answers</th></tr></thead>
+    <tbody>
+      <tr><td>P0</td><td>The retained v1 query on the original layers. Baseline for every multiple.</td><td>any plot</td></tr>
+      <tr><td>P1</td><td>The original layers, asked the same EUDR question as the decision layer. The like-for-like baseline for the representation step.</td><td>any plot</td></tr>
+      <tr><td>P3</td><td>The decision store with the general polygon selection.</td><td>any plot</td></tr>
+      <tr><td>P4</td><td>The decision store with exact fast selection: the pure-Python scan and a fused reduction.</td><td>new boundaries, one at a time</td></tr>
+      <tr><td>P4B</td><td>The decision store with the batch evaluator: many new polygons in one pass.</td><td>new boundaries, <b>needs a batch in hand</b></td></tr>
+      <tr><td>P5d</td><td>The decision store plus a registered-plot index (cells found once).</td><td>registered plots only</td></tr>
+      <tr><td>P5Ld</td><td>The registered-plot re-check with no NumPy: standard library only.</td><td>registered plots only</td></tr>
+      <tr><td>P6d</td><td>The registered-plot answer table: stored outputs, looked up by key.</td><td>registered plots only</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="prose">
+    <h3>The clock of the project</h3>
+    <p>Skip everything before 14 October; the retained v1 path is the only part of that history that matters here. The speed work was one afternoon and four short rounds. The cards show what each round did.</p>
+  </div>
+  <div class="sp-tl">
+    <div style="--k:1"><b>Decision layers</b><small>15 Oct afternoon</small><p>Keep only what the decision reads. Registered-plot index and answer table. Benchmarked once: the starting line.</p></div>
+    <div style="--k:2"><b>Phase 1</b><small>15 Oct evening</small><p>Same code, made faster: decode on packed planes, a quicker reducer, a quicker polygon selection.</p></div>
+    <div style="--k:3"><b>Phase 2</b><small>15 Oct night</small><p>Shaped to the workload: scan small polygons in plain Python, a batch evaluator, a NumPy-free re-check.</p></div>
+    <div style="--k:4"><b>Phase 3</b><small>15 Oct late night</small><p>Two small wins: a reducer twice as lean, and no hidden import in the batch path.</p></div>
+    <div style="--k:5"><b>Phase 4</b><small>16 Oct early morning</small><p>A trusted-integer reducer entry, a smarter rule for when to scan in Python, and a research pass.</p></div>
+  </div>
+  <details class="deeper"><summary>Go deeper: the commits behind each round <span class="lvl">technical</span></summary><div class="body">
+    <p>Phase 1: <code>3286654</code> decode split stores on packed planes, <code>52868a5</code> speed up <code>fast_select_cells</code>, <code>9552776</code> cut <code>summarize_counts</code> overhead. Phase 2: <code>1c3b6e8</code> scalar scan, <code>531cdac</code> batch evaluator, <code>c580acf</code> NumPy-free re-check. Phase 3: <code>a8a296d</code> unpack the histogram by name, <code>0275811</code> dedupe batch cells without <code>np.unique</code>. Phase 4: <code>d208289</code> trusted-integer reducer entry, <code>30d9780</code> new scan-selection rule, <code>fcf2833</code> drop an unused variable. Evidence re-measured after each round in <code>artifacts/decision/</code>.</p>
+  </div></details>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="race" data-toc="The race, phase by phase">
+  <div class="prose">
+    <div class="kick">2 · The whole story in one picture</div>
+    <h2>Registered plots went 24× to 44×. New boundaries went 2.2× to 5.2×.</h2>
+    <p>Step through the five columns. Each bar is a multiple against P0, measured hot on the 17 plots. The two groups have different scales on purpose: a registered-plot re-check and a brand-new boundary are different jobs, and we never quote them as one number.</p>
+  </div>
+
+  <div class="panel sp-race" id="sp-race">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Bar race · hot, 17 plots, against P0</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-live" id="sp-race-rows" style="margin-top:14px"></div>
+      <div class="sp-ctl">
+        <button class="btn prev" type="button">← Back</button>
+        <div class="steps" role="group" aria-label="Phase"></div>
+        <button class="btn next" type="button">Next →</button>
+      </div>
+      <p class="say"><small id="sp-race-ph">Decision layers · 15 Oct afternoon</small><span id="sp-race-say">A small decision layer and a registered-plot index.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Speed-up phases" table. Each column is that phase's own full benchmark re-run (2 runs, every timed answer bound to the same digests). The answer table (P6d), about 420× then 410× now, is off this chart on purpose: it is a cache, explained below. The NumPy-free re-check did not exist before Phase 2.</p>
+  </div>
+
+  <div class="prose" style="margin-top:36px">
+    <h3>Every row, every phase</h3>
+    <p>The same data as a table, one column per phase. A green bar and a bold value mean that cell improved on the column before it by more than about 3%. Everything else is flat within noise. Lower is better for rows marked ↓.</p>
+  </div>
+  <div class="panel" id="sp-pt">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Phase by phase · P0 re-measured in each run</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="tbl" id="sp-pt-box"></div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Speed-up phases". Multiples are against P0 in the same run. The answer table reads 410× in Phase 4, not 417×, because the table time (0.206 µs per plot) did not change within noise and P0 re-measured 0.5% lower. It is not a slowdown. New boundaries read 5.2× rather than 5.3× for the same reason.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="breakthroughs" data-toc="The five breakthroughs">
+  <div class="prose">
+    <div class="kick">3 · The breakthroughs</div>
+    <h2>Five ideas explain nearly all of the gain.</h2>
+    <p>We list them in the order they happened. That is also a sensible order to tell them: each one answers the question the one before it leaves open. The cards say which clock each one moves; the numbers are step-on-step multiples, so they do not multiply together.</p>
+  </div>
+  <div class="sp-five">
+    <a href="#b1"><b>1 · Representation</b><strong>Keep only what the decision reads</strong><em>99% smaller<br>1.6× hot · 7.0× fresh</em></a>
+    <a href="#b2"><b>2 · Index</b><strong>Find a registered plot's cells once</strong><em>24× → 44× hot<br>answer table ~410× (a cache)</em></a>
+    <a href="#b3"><b>3 · Decode</b><strong>Decode on the packed bit-planes</strong><em>store read 2.5 → 0.67 ms<br>peak memory 43 → 37 MB</em></a>
+    <a href="#b4"><b>4 · Selection</b><strong>Scan small polygons in plain Python</strong><em>new boundaries 2.2× → 5.2×<br>batch ~15.8× (needs a batch)</em></a>
+    <a href="#b5"><b>5 · No NumPy</b><strong>Drop NumPy for re-checks; lean reducer</strong><em>44× → 83× hot<br>end-to-end 50.0 → 24.9 ms</em></a>
+  </div>
+  <div class="tbl"><table class="dt sp-mx sp-wt" id="sp-wt">
+    <thead><tr><th>Step (decision level)</th><th>Hot, 17 plots</th><th>Fresh process</th><th>End-to-end</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="muted small" style="max-width:700px">What each step is worth, measured one step at a time on the same machine and questions. Source: <code>docs/lab/decision-benchmark-notes.md</code>, "What each step is worth". The hot and end-to-end columns are almost never both big: that mismatch is the main caveat on the whole page.</p>
+</section>
+
+<!-- ---------------------------------------------------------- B1 -->
+<section id="b1" data-toc="1 · Keep only what the decision reads">
+  <div class="prose">
+    <div class="kick">Breakthrough 1 · decision layers, 15 Oct afternoon</div>
+    <h2>Keep only what the decision reads.</h2>
+    <p>The EUDR screen asks whether a cell was forest on 31 December 2020 and whether that forest has been lost since. Nothing in that question reads the 2000 canopy percentage, which is 72% of Hansen's bytes, or the loss years before the cut-off. Yet the original query loaded three Hansen bands and built a 101-bin canopy histogram on every call.</p>
+    <p>The decision layer throws all of that away and keeps one small band: a 20-value code per cell. The original layers are <strong>623,237 B</strong>; the decision store is <strong>6,146 B</strong>, 99.0% smaller.</p>
+  </div>
+  <div class="panel" id="sp-b1">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Four layers and a histogram collapse into one band</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-two">
+        <div class="sp-fig"><svg viewBox="0 0 360 250" role="img" aria-label="Four stacked layers and a canopy histogram shrink into one thin band of codes"></svg></div>
+        <div>
+          <p class="sp-lab">Bytes the query has to hold</p>
+          <div class="bars sp-live"><div class="brow" style="grid-template-columns:1fr"><span class="track" style="height:26px"><i id="sp-b1-fill" style="background:var(--pen);width:100%"></i></span></div></div>
+          <div class="stats" style="margin-top:10px"><div class="big pen"><span class="num" id="sp-b1-bytes" style="font-size:38px">623,237 B</span><span class="cap" id="sp-b1-pct">original layers</span></div></div>
+          <div class="sp-chips">
+            <span class="st ok">1.6× hot</span><span class="st ok">7.0× fresh process</span><span class="st">2.2× end-to-end</span>
+          </div>
+        </div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="sp-b1-say">Four layers, plus a canopy histogram that no question reads.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code> ("How much smaller", "How much faster"); the multiples are P1 to P3 in <code>docs/lab/decision-benchmark-notes.md</code> (same EUDR question, original layers against decision store). The shapes drawn are illustrative, not the real rasters.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"We worked out what the EUDR decision actually reads, and kept only that. Six kilobytes instead of six hundred, and loading it in a fresh process is about seven times faster. The answers are identical for every cell."</span></div>
+  <div class="note warn rv"><b>Careful</b><span>Hot, this step is only 1.6×, because both paths still pay to find the cells inside a polygon. And a plain GeoTIFF of the same decision codes is already 98.6% smaller: the win is the layer analysis, not a magic codec. Our structure-aware encoding adds the last 28%.</span></div>
+  <details class="deeper"><summary>Go deeper: what the 20 codes are <span class="lvl">technical</span></summary><div class="body">
+    <p>Each Hansen cell becomes one of 20 codes: unknown, water, or land crossed with three forest states (not forest, forest, forest unknown in 2020) and six loss states (none, 2021 to 2025). The decision level additionally forgets the loss year on land that was not forest in 2020. The code space and the one reducer that turns a 20-bin histogram into the contract answer live in <code>engine/decision_summary.py</code>.</p>
+  </div></details>
+</section>
+
+<!-- ---------------------------------------------------------- B2 -->
+<section id="b2" data-toc="2 · Find a registered plot's cells once">
+  <div class="prose">
+    <div class="kick">Breakthrough 2 · registered-plot index and answer table, 15 Oct afternoon</div>
+    <h2>Find a registered plot's cells once, then reuse them.</h2>
+    <p>EUDR plots are <strong>registered once and re-checked every time a layer updates</strong>. Which cells sit inside a plot depends on the plot's boundary and the grid. It does not depend on the layer's values. So the expensive part, finding the cells, can be done once and saved as a short list of cell numbers. A re-check is then: count the codes at those cells, and turn the count into the answer.</p>
+    <p>That took the re-check from 85.4 µs per plot to 3.55 µs at the start (24×), and to 1.90 µs now (44×). The index was the idea; a leaner reducer (breakthrough 5) made it faster still.</p>
+  </div>
+  <div class="panel" id="sp-b2">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>One plot, five layer updates</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-two">
+        <div class="sp-fig"><svg viewBox="0 0 360 226" role="img" aria-label="A synthetic polygon on a grid: its cells are found once, then reused on each layer update"></svg></div>
+        <div class="sp-live">
+          <p class="sp-lab">Time spent on 5 re-checks of one plot <small>per-plot hot times, to scale</small></p>
+          <div class="bars" id="sp-b2-bars">
+            <div class="brow"><span class="lab">Original path (P0)</span><span class="track sp-grey"><i></i></span><span class="val">0 µs</span></div>
+            <div class="brow"><span class="lab">New-boundary path (P4)</span><span class="track sp-pen"><i></i></span><span class="val">0 µs</span></div>
+            <div class="brow"><span class="lab">Registered index (P5d)</span><span class="track sp-ok"><i></i></span><span class="val">0 µs</span></div>
+            <div class="brow"><span class="lab">Answer table (P6d)</span><span class="track sp-ink"><i></i></span><span class="val">0 µs</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="sp-b2-say">Scan the polygon once.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> per-plot hot times from <code>docs/lab/decision-benchmark-notes.md</code>: P0 84.51 µs, P4 16.15 µs, P5 decision 1.90 µs, P6 decision 0.206 µs. Registering a plot costs one selection, once; we did not time that separately, so it is not in the bars. The grid and polygon are invented.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"Plots are registered once and re-checked every time a layer updates, so we find each plot's cells once. A re-check is then 44 times faster. The answer table, around 410 times, is a cache, and we say so."</span></div>
+  <div class="note warn rv"><b>Why the 410× is honestly a cache</b><span>The answer table is a materialised view: each registered plot's full answer, stored under a key of plot ID, geometry hash and layer (store) hash. Change the boundary or the layer and the key misses and nothing wrong comes back. It only answers plots registered in advance. New boundaries do not get it; they get the P4 path at about 5×.</span></div>
+  <details class="deeper"><summary>Go deeper: how the index and table work, and what hashing costs <span class="lvl">technical</span></summary><div class="body">
+    <p><code>build_registry</code> in <code>engine/decision_index.py</code> stores each plot's in-chip flat cell indices (row × width + column, int32, sorted). <code>registry_evaluate</code> is a bincount of the codes at those indices, passed to the shared reducer. <code>table_lookup</code> returns the stored output only on an exact plot, geometry, layer and level match, otherwise nothing.</p>
+    <p>The realistic workflow stores each plot's geometry hash at registration. If a service instead re-hashes the polygon on every call, cost rises: P5d 1.90 to 5.97 µs, P6d 0.21 to 3.65 µs per plot. The 44× and 410× figures use the precomputed key.</p>
+  </div></details>
+</section>
+
+<!-- ---------------------------------------------------------- B3 -->
+<section id="b3" data-toc="3 · Decode on the packed bit-planes">
+  <div class="prose">
+    <div class="kick">Breakthrough 3 · Phase 1, 15 Oct evening</div>
+    <h2>Decode on the packed bit-planes.</h2>
+    <p>The decision store keeps the map as a few yes/no <em>planes</em> (is it unknown? water? forest?) packed eight cells to a byte, plus a short list of loss-year events. The first reader unpacked every plane into 744,732 separate cells before it checked or used any of them.</p>
+    <p>Phase 1 does its checks on the packed bytes (93 KB), places the sparse loss years only where an event is, and finds ranked event cells by counting set bits. <strong>The file bytes and format did not change.</strong> Reading the decision store went from 2.5 ms to 0.67 ms (3.8×).</p>
+  </div>
+  <div class="panel" id="sp-b3">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Unpack everything, or work on the bytes</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-two">
+        <div class="sp-fig"><svg viewBox="0 0 360 250" role="img" aria-label="Top lane: every plane expanded into individual cells. Bottom lane: a few packed bytes are read and the rest skipped"></svg></div>
+        <div>
+          <p class="sp-lab">Reading the decision store</p>
+          <div class="bars sp-live" id="sp-b3-bars"></div>
+        </div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="sp-b3-say">Before: expand every plane to one cell per byte.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, Phase 1. Store read 2.5 to 0.67 ms; registered index fresh-process load + query 3.5 to 1.3 ms; peak memory 43 to 37 MB. The picture is schematic: the real chip is 1,233 × 604 cells.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"Our store keeps the map as packed yes-or-no flags. We stopped unpacking them into three-quarters of a million cells just to read a few hundred. Loading the store got almost four times faster."</span></div>
+  <div class="note unknown rv"><b>Careful</b><span>This is a load-time gain. Hot times are measured after loading, so the decode change cannot move them; Phase 1's hot gains (24× to 31×, 2.2× to 3.0×) came from the other two Phase 1 changes, the reducer and the selection. Phase 1 shipped the three together and we did not separate the memory drop by change. Do not quote Phase 1 as an end-to-end gain: that barely moved (index path 52.4 to 50.0 ms).</span></div>
+  <details class="deeper"><summary>Go deeper: the three Phase 1 changes <span class="lvl">technical</span></summary><div class="body">
+    <p><code>_decode_split</code> and <code>read_store</code> in <code>engine/decision_store.py</code>: the plane checks run on strip-order packed bytes and only the dense forest plane is expanded. A side effect: the validator's crafted-blob memory case now peaks near 6 MB instead of about 50 MB. The other two changes: the histogram reduction in <code>summarize_counts</code> (1.6 to 2.2× on its own) and polygon selection in <code>fast_select_cells</code>, which now builds the polygon straight from one coordinate array and paints ambiguous-cell rectangles without <code>np.add.at</code>. It calls a few <code>shapely.lib</code> functions directly, so it depends on the pinned shapely 2.1.2.</p>
+  </div></details>
+</section>
+
+<!-- ---------------------------------------------------------- B4 -->
+<section id="b4" data-toc="4 · Scan small polygons in plain Python">
+  <div class="prose">
+    <div class="kick">Breakthrough 4 · Phase 2 (tuned in Phase 4)</div>
+    <h2>For a small polygon, a plain Python loop beats NumPy.</h2>
+    <p>For a brand-new boundary there is no saved list of cells, so we have to find them. The rule is the centre rule: a cell counts if its centre is inside the plot. A scanline does it: for each map row, find where the boundary crosses the row; the centres between crossings are inside.</p>
+    <p>A plot is only about 120 cells. NumPy pays a fixed cost on every call, and at that size the cost is larger than the work. So Phase 2 scans small windows in plain Python and builds the histogram straight from the runs of selected centres. Ambiguous centres, such as an edge exactly through a centre, still go to exact GEOS geometry tests, so the result stays exact.</p>
+    <p>New boundaries went <strong>3.0× to 5.0×</strong> in Phase 2 (2.2× at the start, 5.2× now).</p>
+  </div>
+  <div class="panel" id="sp-b4">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A scanline finds the cells; then the cost per polygon</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-two">
+        <div class="sp-fig"><svg viewBox="0 0 360 270" role="img" aria-label="A horizontal line sweeps down a synthetic polygon on a grid, marking runs of cells whose centres lie inside"></svg></div>
+        <div class="sp-live">
+          <p class="sp-lab">Cost per new polygon <small>500 synthetic polygons, hot</small></p>
+          <div class="bars" id="sp-b4-bars"></div>
+          <div class="sp-chips"><span class="st ok">17 plots: 2.2× → 3.0× → 5.0× → 5.3× → 5.2×</span></div>
+        </div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="sp-b4-say">Sweep one row at a time.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-benchmark-notes.md</code>, "New polygons": seeded random concave shapes of 0.5 to 20 ha, 15% with a hole, 5 to 267 cells each (median 36). They are not company data. P4B's figure is the batch time divided by 500, so it needs the whole batch in hand.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"For one new boundary we are about five times faster than the original path, with the same exact answer. If a whole batch arrives, about sixteen times on hundreds of polygons, but only with the batch in hand."</span></div>
+  <div class="note warn rv"><b>The batch caveat</b><span>The batch evaluator (P4B, 146,000 polygons a second, 15.8×) answers many polygons in one vectorised pass. A single new plot gains nothing, and on the 17-plot batch it is only 1.2× ahead of one-at-a-time. From a cold start it was slower until Phase 3, because NumPy's <code>np.unique</code> imports a module on first use (about 2 ms); a small sort-and-dedupe helper fixed that.</span></div>
+  <details class="deeper"><summary>Go deeper: when the Python scan is used, and the Phase 4 tuning <span class="lvl">technical</span></summary><div class="body">
+    <p>In <code>engine/decision_index.py</code>: windows up to 500 rows × edges (and 4,096 cells) always use the Python scan. Phase 4 also lets it take 500 to 2,000, unless the boundary changes rows more than 150 times in total (a "sawtooth"), where the NumPy scan is faster. The reason: a 224-shape sweep found the Python scan costs about 0.17 µs per row an edge crosses, and rows × edges predicts its time poorly (R² of 0.66, against 0.99 for a fit on edges and row crossings). The two scans were already proven identical. On the 17 plots every polygon was already under the first threshold, so the Phase 4 rule change did not touch them.</p>
+  </div></details>
+</section>
+
+<!-- ---------------------------------------------------------- B5 -->
+<section id="b5" data-toc="5 · Drop NumPy for re-checks">
+  <div class="prose">
+    <div class="kick">Breakthrough 5 · Phases 2 to 4</div>
+    <h2>Drop NumPy for re-checks, and make the shared reducer lean.</h2>
+    <p>This is the only change that moves the <em>whole-process</em> time. A fresh Python process spends about 25 ms just importing NumPy. A registered re-check only needs the codes at a few hundred cells, so it never needed NumPy at all.</p>
+    <p>The NumPy-free re-check (<code>engine/decision_lite.py</code>) reads and validates the store using only the standard library, then decodes codes only at the registered cells, straight from the packed planes. It never builds the 744,732-cell raster. End-to-end time for a registered re-check halves, <strong>50.0 to 24.9 ms</strong>, and peak memory drops from 37 to 23 MB.</p>
+  </div>
+  <div class="panel" id="sp-b5">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">End-to-end, one fresh Python process, 17 plots</span><span class="btns"><button class="btn" type="button" id="sp-b5-btn" aria-pressed="false">Drop NumPy</button><button class="replay" type="button">↻ Replay</button></span></div>
+      <div class="sp-e2e sp-live" id="sp-e2e">
+        <div class="r"><div class="lab"><b>Original path (P0)</b><span>numpy, shapely, rasterio</span></div><div class="bar"><i class="f"></i><i class="m"></i><i class="o"></i></div><div class="v">0 ms</div></div>
+        <div class="r"><div class="lab"><b id="sp-e2e-name">Registered index (P5d)</b><span>with NumPy</span></div><div class="bar"><i class="f"></i><i class="m"></i><i class="o"></i></div><div class="v">0 ms</div></div>
+        <div class="r"><div class="lab"><b>Answer table (P6d)</b><span>standard library only</span></div><div class="bar"><i class="f"></i><i class="m"></i><i class="o"></i></div><div class="v">0 ms</div></div>
+      </div>
+      <div class="legend" style="margin-top:14px"><span><i style="--c:#CDD2DE"></i>harness floor (20.1 ms)</span><span><i style="--c:var(--ink-2)"></i>imports</span><span><i style="--c:var(--pen)"></i>load, query and the rest</span></div>
+      <p class="say"><small>What you are seeing</small><span id="sp-b5-say">Registered index: half the bar is the harness floor, a third is imports.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> end-to-end medians and import times from <code>docs/lab/decision-benchmark-notes.md</code> (P0 114.5, P5 50.0, P5L 24.9, P6 21.6 ms; imports about 73, 24, 3.4 and 1.15 ms; a do-nothing harness child 20.1 ms). The third segment is computed by subtraction, not measured separately. P0 and P5 import times are the notes' "about" figures.</p>
+  </div>
+
+  <div class="prose">
+    <h3>And the reducer got twice as lean</h3>
+    <p>Every live answer ends in one function, the reducer, that turns the 20-bin histogram into the contract answer. In Phase 3 it unpacks the 20 numbers by name instead of slicing, zipping and calling a nested helper: about <strong>1.6 to 0.8 µs</strong> per call. That alone lifted the registered index from 33× to 44× and the NumPy-free re-check from 44× to 65×. In Phase 4 a trusted-integer entry skips a list conversion that callers who already hold ints do not need: the NumPy-free re-check goes from 65× to <strong>83×</strong> (1.31 to 1.02 µs per plot).</p>
+  </div>
+  <div class="panel" id="sp-red">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Hot per-plot time as the reducer got leaner</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-two" style="align-items:start">
+        <div>
+          <p class="sp-lab">The reducer alone <small>per call</small></p>
+          <div class="bars sp-live" id="sp-red-one"></div>
+          <div class="sp-code"><s># before: slice, zip, call a nested helper</s><br><b># Phase 3: unpack the 20 codes by name</b><br>_, water, n0, n1, n2, n3, n4, n5, f0, ... = counts</div>
+        </div>
+        <div>
+          <p class="sp-lab">Per plot, by phase <small>µs, lower is better</small></p>
+          <div class="bars sp-live" id="sp-red-ph"></div>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, Phase 3 and Phase 4 tables; per-plot starting and Phase 1 values (3.55, 2.80 µs) from the cost-input history in <code>docs/lab/decision-benchmark-notes.md</code>. The NumPy-free re-check begins in Phase 2.</p>
+  </div>
+  <div class="note say-it rv"><b>Say it</b><span>"For re-checking registered plots we do not need NumPy at all. That alone halves the whole start-to-answer time, and gets the hot re-check to 83 times the original path. End-to-end it is 4.6 times."</span></div>
+  <div class="note unknown rv"><b>What it does not check</b><span>The NumPy-free path validates the store (header CRC, payload sha256, every split-decode check over the whole payload) and the registry. It does not check the decoded raster's own hash, because that needs every cell decoded. The benchmark pins the store file's sha256 instead, which closes the gap. Without that pin, the NumPy index path is the one that checks the decoded raster.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="sixteen" data-toc="Where the 16 µs goes">
+  <div class="prose">
+    <div class="kick">4 · What is left</div>
+    <h2>No single big cost is left in a new-boundary check.</h2>
+    <p>A new boundary now costs about 16 µs. An independent audit of the 17 plots measured each stage. The biggest, scanning the rows, is 30% of the total. Everything else is smaller, so there is no "one more trick" that would double the speed.</p>
+    <p>One correction we made on ourselves: Phase 3 wrote that about 5 µs of the 16 was the required geometry validity check. That was wrong. The check itself is 0.84 µs.</p>
+  </div>
+  <div class="panel" id="sp-16">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">New boundary (P4), per plot, 17 plots · tap a segment</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-seg" id="sp-16-bar" style="margin-top:14px" role="group" aria-label="Stages of a new-boundary check"></div>
+      <div class="sp-key" id="sp-16-key"></div>
+      <div class="sp-detail" id="sp-16-det" aria-live="polite"><b>Total 16.35 µs</b><span>Select a stage to see what it is.</span></div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Where the 16 µs goes". The audit total (16.35 µs) is a separate measurement from the benchmark's 16.15 µs; they differ by about 1%. It comes from the 17 plots only. The validity check grows with vertex count: about 0.84 µs at 8 vertices, 1.25 at 16, 4.1 at 60 and 12 at 150.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="clocks" data-toc="Hot, fresh and end-to-end">
+  <div class="prose">
+    <div class="kick">5 · The caveat that matters most</div>
+    <h2>The same paths look very different on the three clocks.</h2>
+    <p>Switch clocks below. The bars are the same seven paths, same 17 plots. Hot is where the index and the table dominate. Fresh-process time rewards the small layer. End-to-end barely moves, because 20 ms of it is the harness and a fresh Python and NumPy import is most of the rest.</p>
+    <p>Registered-only paths (P5d, P5Ld, P6d) are shown in their own group so they are never read as a speed-up for a new plot.</p>
+  </div>
+  <div class="panel sp-views" id="sp-views">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">17 plots · multiples against P0</span><span class="btns">
+        <span class="sp-tog" role="group" aria-label="Clock"><button type="button" data-m="0" aria-pressed="true">Hot</button><button type="button" data-m="1" aria-pressed="false">Fresh process</button><button type="button" data-m="2" aria-pressed="false">End-to-end</button></span>
+        <span class="sp-tog" role="group" aria-label="Bar scale"><button type="button" data-s="lin" aria-pressed="true">Linear</button><button type="button" data-s="log" aria-pressed="false">Log</button></span>
+      </span></div>
+      <div class="bars sp-live" id="sp-views-bars" style="margin-top:16px"></div>
+      <p class="say"><small id="sp-views-h">Hot</small><span id="sp-views-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> medians from <code>docs/lab/decision-benchmark-notes.md</code>, headline table (pooled over 2 full runs). Multiples the report prints are used as printed; those it does not print (for example P3 and P4B on the fresh-process and end-to-end clocks, and P5d end-to-end) are computed from the medians shown. Nothing here is disk-cold: the OS file cache was warm.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="research" data-toc="The research pass">
+  <div class="prose">
+    <div class="kick">6 · Did we miss something?</div>
+    <h2>We looked for something better. For small exact plots on a CPU, there isn't one.</h2>
+    <p>In Phase 4 we also checked papers, forums and engineering options. The centre rule is the standard zonal-statistics default (GDAL, rasterstats). The closest research, Raster Join, does what we do in its exact form (a fast interior pass and exact checks at the border); its bounded form gives up exactness, which we cannot. Other approaches do not fit plots of about 120 cells.</p>
+    <p>Other EUDR tools publish no per-plot latency, so every multiple here is against our own P0. We make no "faster than" claim about anyone else. The honest claim is <strong>per-plot cost once the layer is local</strong>.</p>
+  </div>
+  <div class="tbl"><table class="dt">
+    <thead><tr><th>Option</th><th>What we found</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>GPU for queries</td><td><span class="t">A plot is about 120 cells; GPU launch and transfer is around 10 µs, about the cost of the whole query. Apple GPUs have no float64, so the exact centre maths would change. GEOS runs on the CPU.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>GPU for building the layer</td><td><span class="t">Building is 92% compression, which tries 10 settings per stream and mostly picks LZMA (no GPU version). Free code derivation would make the build only about 1.06× faster.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>Python 3.14 JIT</td><td><span class="t">Not in the Homebrew build; where available, 2 to 3% slower.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>Tail-calling interpreter</td><td><span class="t">About 2 to 5%, and needs a different interpreter.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>Cython on the module</td><td><span class="t">About 6%, and needs per-platform builds.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>mypyc · numba · PyPy</td><td><span class="t">mypyc failed to import; numba takes 0.2 to 0.7 s to compile on the first call; PyPy has no shapely or numpy wheels.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>GEOS 3.14 / shapely 2.2</td><td><span class="t">About 3%.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>Hand-written validity check</td><td><span class="t">About 8× slower than GEOS in Python, with risky edge cases.</span></td><td><span class="st">skipped</span></td></tr>
+      <tr><td>Change-only re-checks</td><td><span class="t">When a layer updates, re-check only the plots whose cells changed. Needs an inverted cell-to-plot index (incremental view maintenance).</span></td><td><span class="st review">roadmap, not built</span></td></tr>
+      <tr><td>Direct GEOS binding via ctypes</td><td><span class="t">A prototype cut a fresh new-plot process from about 48 to about 20 ms and saved about 2.7 µs per plot, with 0 mismatches on 60,000 degenerate polygons. 3 to 5 hours of careful work.</span></td><td><span class="st review">roadmap, not built</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="panel" id="sp-build">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Where building the layer spends its time · per strip</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sp-build" id="sp-build-bar" role="img" aria-label="Read 2 percent, derive codes 6 percent, compression 92 percent"></div>
+      <p class="say"><small>What you are seeing</small><span>Compression is 92% of building a layer. A GPU would speed up the 8% that is not compression, so the build would be about 1.06× faster.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Research pass". A scratch measurement on 6 of the 160 strips of one coastal tile, in a single process; not a committed artifact. The estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is a rough one, since inland tiles encode more slowly.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="unchanged" data-toc="What never changed">
+  <div class="prose">
+    <div class="kick">7 · What never changed</div>
+    <h2>Nothing the user sees moved. Same answers, same bytes, same format, every phase.</h2>
+    <p>This is why we can speed things up in the last hours without fear. No phase changed any output, any stored byte or any file format. After each one we re-ran the benchmark with every timed answer bound to the same expected digests, and re-ran the proof. The check below is what each phase was compared against, in addition.</p>
+  </div>
+  <div class="panel" id="sp-proof">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">After every phase</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="tbl"><table class="dt" id="sp-proof-t">
+        <thead><tr><th>Phase</th><th>Cells identical</th><th>Fuzzed polygons</th><th>What the new code was compared with</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 744,732 / 744,732</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 9,829 / 9,829</td><td><span class="t">About 16,000 corrupted store blobs (identical decodes and rejections); 180,000 reducer comparisons; about 9,000 polygons against the old fast path and <code>select_cells</code>. 300 engine and 311 app tests; all 17 validators exit 0.</span></td></tr>
+          <tr><td>Phase 2</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 744,732 / 744,732</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 9,829 / 9,829</td><td><span class="t">58,896 polygon and grid cases against the old scan and <code>select_cells</code>; about 185,000 batch cases against the single path; about 118,000 corrupted blobs for the NumPy-free path, all rejected.</span></td></tr>
+          <tr><td>Phase 3</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 744,732 / 744,732</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 9,829 / 9,829</td><td><span class="t">300,000 random histograms against the old reducer (outputs, key order, errors); a permanent test on 40,000 seeded cases.</span></td></tr>
+          <tr><td>Phase 4</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 744,732 / 744,732</td><td style="white-space:nowrap"><span class="sp-tick">✓</span> 9,829 / 9,829</td><td><span class="t">14,500 polygons against <code>select_cells</code>; 20,000 cases for the new reducer entry. 361 engine tests; all 17 validators exit 0.</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, each phase's "How it was checked". The report does not state the validators result for Phases 2 and 3, so none is shown for them. "Identical" means every output field under our documented centre rule, not accuracy against the real world.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="cost" data-toc="What it costs">
+  <div class="prose">
+    <div class="kick">8 · The bonus</div>
+    <h2>Re-checking 10 million new plots costs about three-tenths of a cent.</h2>
+    <p>Cost estimation is a bonus in SystemEarth's brief. This is Lambda compute for re-checking 10 million plots over the tropical belt, at <strong>list-price assumptions</strong> dated 15 October 2026 with no web lookup, so verify before quoting. The tile counts are assumptions too. The bill is not the point: the case for the work is time to answer, memory per worker and being able to re-run.</p>
+  </div>
+  <div class="panel" id="sp-cost">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">10 million plots, one re-check, Lambda compute</span></div>
+      <div class="bars" style="margin-top:14px">
+        <div class="brow"><span class="lab">Original layers</span><span class="track"><i data-w="100" style="background:var(--unknown)"></i></span><span class="val">$0.020</span></div>
+        <div class="brow"><span class="lab">New plots (P4)</span><span class="track"><i data-w="15.5" style="background:var(--pen)"></i></span><span class="val">$0.0031</span></div>
+        <div class="brow"><span class="lab">Registered, decision (P5d)</span><span class="track"><i data-w="4" style="background:var(--proof)"></i></span><span class="val">$0.0008</span></div>
+      </div>
+      <div class="tbl"><table class="dt">
+        <thead><tr><th>New-plot line, by phase</th><th class="r">Start</th><th class="r">Phase 1</th><th class="r">Phase 2</th><th class="r">Phase 3</th><th class="r">Phase 4</th></tr></thead>
+        <tbody><tr><td>Lambda compute, 10M new plots</td><td class="r">$0.0069</td><td class="r">$0.0053</td><td class="r">$0.0032</td><td class="r">$0.0031</td><td class="r">$0.0031</td></tr></tbody>
+      </table></div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> ("Cost estimate") and <code>docs/lab/decision-benchmark-notes.md</code>. Compute time: original 1,054 s, registry 42 s, new polygons 185 s. The new-plot line prices P4 on the 17 plots, which did not change in Phase 4. Storage for the tropical belt (measured basis) is $0.018 a month for the decision layer against $0.90 for the original layers. Not priced: cold object-store latency, network time and the 15-minute Lambda limit. The per-strip container this assumes is not implemented.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="caveats" data-toc="Honest caveats">
+  <div class="prose">
+    <div class="kick">9 · Say these before you are asked</div>
+    <h2>Seven honest caveats.</h2>
+    <ul>
+      <li><b>Three clocks.</b> Hot, fresh-process and end-to-end are different measurements. We say which one every time. Python and NumPy start-up dominate end-to-end, except for the NumPy-free re-check.</li>
+      <li><b>Two scoreboards.</b> Registered plots (44×, 83×, ~410×) and new boundaries (5.2×, batch ~15.8×) are separate and never one blended "N× faster".</li>
+      <li><b>The answer table is a cache.</b> It is keyed by plot, geometry and layer, it only answers registered plots, and it is right about the workload EUDR creates.</li>
+      <li><b>The batch needs a batch.</b> About 16× on 500 synthetic polygons; 1.2× over one-at-a-time on 17; nothing for a single plot.</li>
+      <li><b>Small, warm, single-machine.</b> One 34 × 17 km region (a 1,233 × 604 chip), 17 real plots, one Apple M5 laptop, a warm file cache. Whole-tile figures are storage sizes only; we did not run queries at tile scale.</li>
+      <li><b>P0 moves.</b> The baseline is re-measured in each run, so multiples drift about 0.5% (the Phase 4 differences of 417× to 410× and 5.3× to 5.2× are this, not slowdowns). Between-run spread was 0.5% typical and 2.3% at most.</li>
+      <li><b>Only against ourselves.</b> No other EUDR tool publishes per-plot latency, so we claim nothing against them.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="stage" data-toc="Telling it on stage">
+  <div class="prose">
+    <div class="kick">10 · If you get one slide</div>
+    <h2>The speed story in about 40 seconds.</h2>
+    <p>Use this when the judges ask "how did you get that fast?". It only uses numbers from this page.</p>
+  </div>
+  <div class="note say-it rv" style="max-width:var(--prose)"><b>Say it</b><span>"We got fast by deleting work, not by tuning. First, we kept only what the decision reads, so there is almost nothing to load. Second, EUDR plots are re-checked every time a layer updates, so we find each plot's cells once: re-checks are 44 times faster for registered plots. Third, we stopped unpacking the map into three-quarters of a million cells. Fourth, for new boundaries, we scan small polygons in plain Python: about five times faster. Fifth, for re-checks, we dropped NumPy, which halves the whole run. Nothing changed an answer: every one of the 744,732 cells still matches."</span></div>
+  <div class="note rv" style="max-width:var(--prose)"><b>Then add</b><span>"These are hot, per-plot times on one laptop with a warm cache, against our own first version. Whole-process time is mostly Python start-up."</span></div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, ease, seg, fmt, REDUCE } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const S = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.append(e); return e; };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const pip = (x, y, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  const row = (parent, lab, cls) => { const d = document.createElement('div'); d.className = 'brow'; d.innerHTML = '<span class="lab"></span><span class="track ' + (cls || '') + '"><i></i></span><span class="val"></span>'; $('.lab', d).textContent = lab; parent.append(d); return { el: d, fill: $('i', d), val: $('.val', d), lab: $('.lab', d) }; };
+  const tween = (from, to, ms, fn, done) => { if (REDUCE) { fn(to); done && done(); return; } const t0 = performance.now(); const tick = now => { const t = clamp((now - t0) / ms); fn(lerp(from, to, ease(t))); if (t < 1) requestAnimationFrame(tick); else done && done(); }; requestAnimationFrame(tick); };
+
+  /* ---------------------------------------------------------- bar race */
+  (() => {
+    const el = $('#sp-race'), box = $('#sp-race-rows', el);
+    const PH = [
+      ['Decision layers · 15 Oct afternoon', 'A small decision layer plus a registered-plot index. Registered plots re-check 24× faster than the original path; a new boundary is 2.2× faster.'],
+      ['Phase 1 · 15 Oct evening', 'Packed-plane decoding, a quicker reducer and a quicker polygon selection. Index 31×; new boundaries 3.0×.'],
+      ['Phase 2 · 15 Oct night', 'Small polygons scanned in plain Python with a fused reduction: new boundaries jump to 5.0×. The NumPy-free re-check appears, already at 44×.'],
+      ['Phase 3 · 15 Oct late night', 'A reducer twice as lean: the index goes from 33× to 44× and the NumPy-free re-check from 44× to 65×.'],
+      ['Phase 4 · 16 Oct early morning', 'A trusted-integer reducer entry: NumPy-free reaches 83×. New boundaries are flat: 5.3× reads 5.2× only because P0 re-measured 0.5% lower.']
+    ];
+    const G = [
+      { name: 'Registered plots', note: 'own scale 0 to 90×', max: 90, rows: [
+        { lab: 'Registered index (P5d)', s: [24, 31, 33, 44, 44], c: 'sp-ok' },
+        { lab: 'NumPy-free re-check (P5Ld)', s: [null, null, 44, 65, 83], c: 'sp-ok' }] },
+      { name: 'New boundaries', note: 'own scale 0 to 6×', max: 6, rows: [
+        { lab: 'Fast selection (P4)', s: [2.2, 3.0, 5.0, 5.3, 5.2], c: 'sp-pen' }] }
+    ];
+    G.forEach(g => { const h = document.createElement('p'); h.className = 'sp-lab'; h.innerHTML = g.name + '<small>' + g.note + '</small>'; box.append(h); const w = document.createElement('div'); w.className = 'bars'; w.style.marginTop = '8px'; box.append(w); g.rows.forEach(r => Object.assign(r, row(w, r.lab, r.c))); });
+    const phEl = $('#sp-race-ph'), sayEl = $('#sp-race-say');
+    let pos = 0, manual = false, init = true, cur = -1;
+    const paint = p => {
+      pos = p;
+      const near = Math.round(p), i = Math.min(4, Math.floor(p)), f = p - i;
+      G.forEach(g => g.rows.forEach(r => {
+        const a = r.s[i] || 0, b = r.s[Math.min(4, i + 1)] || 0;
+        r.fill.style.width = clamp(lerp(a, b, ease(f)) / g.max * 100, 0, 100) + '%';
+        const v = r.s[near];
+        r.val.innerHTML = v == null ? '<span class="na">not built</span>' : fmt(v, v < 10 ? 1 : 0) + '×';
+      }));
+      $$('.steps button', el).forEach((b, i) => { b.classList.toggle('on', i === near); b.classList.toggle('done', i < near); });
+      if (near !== cur) { cur = near; phEl.textContent = PH[near][0]; sayEl.textContent = PH[near][1]; }
+    };
+    const inst = instrument(el, { ms: 7000, render(t) { if (!manual) paint(t * 4); } });
+    $$('.replay', el).forEach(b => b.addEventListener('click', () => { manual = false; }));
+    let tw = 0;
+    const st = stepper(el, 5, k => {
+      if (init) return;
+      manual = true;
+      const from = pos, id = ++tw;
+      tween(from, k, 600, v => { if (id === tw) paint(v); });
+    });
+    init = false;
+  })();
+
+  /* ---------------------------------------------------------- phase table */
+  (() => {
+    const el = $('#sp-pt'), box = $('#sp-pt-box');
+    const H = [['Decision layers', '15 Oct afternoon'], ['Phase 1', '15 Oct evening'], ['Phase 2', '15 Oct night'], ['Phase 3', '15 Oct late night'], ['Phase 4', '16 Oct early morning']];
+    const R = [
+      { g: 'New boundaries' },
+      { l: 'Fast selection (P4), 17 plots', hi: 1, c: [['0.66 ms (2.2×)', 2.2], ['0.49 ms (3.0×)', 3.0], ['0.29 ms (5.0×)', 5.0], ['0.27 ms (5.3×)', 5.3], ['0.27 ms (5.2×)', 5.2]] },
+      { l: '500 synthetic polygons (P4), per second', hi: 1, c: [['22,100/s', 22100], ['28,500/s', 28500], ['42,000/s', 42000], ['43,700/s', 43700], ['46,000/s', 46000]] },
+      { l: 'Adversarial shapes: fast vs reference selector', hi: 1, c: [['0.81×', .81], ['1.16×', 1.16], ['1.88×', 1.88], ['1.92×', 1.92], ['1.92×', 1.92]] },
+      { l: 'Batch of 500 new polygons (P4B)', hi: 1, c: [null, null, ['128,000/s (14×)', 128000], ['141,000/s (15×)', 141000], ['146,000/s (15.8×)', 146000]] },
+      { l: 'Batch path, fresh-process load + query ↓', hi: 0, c: [null, null, ['3.6 ms', 3.6], ['1.5 ms', 1.5], ['1.5 ms', 1.5]] },
+      { g: 'Registered plots' },
+      { l: 'Registered index (P5d), hot', hi: 1, c: [['0.060 ms (24×)', 24], ['0.048 ms (31×)', 31], ['0.044 ms (33×)', 33], ['0.033 ms (44×)', 44], ['0.032 ms (44×)', 44]] },
+      { l: 'NumPy-free re-check (P5Ld), hot', hi: 1, c: [null, null, ['0.033 ms (44×)', 44], ['0.022 ms (65×)', 65], ['0.017 ms (83×)', 83]] },
+      { l: 'Fresh-process load + query ↓', hi: 0, c: [['3.5 ms', 3.5], ['1.3 ms', 1.3], ['1.3 ms; 1.0 ms NumPy-free', 1.3], ['1.3 ms; 1.0 ms NumPy-free', 1.3], ['1.3 ms; 1.0 ms NumPy-free', 1.3]] },
+      { l: 'End-to-end incl. Python start ↓', hi: 0, c: [['52 ms', 52], ['50 ms', 50], ['50 ms; 24.6 ms NumPy-free', 50], ['50 ms; 24.8 ms NumPy-free', 50], ['50 ms; 24.9 ms NumPy-free', 50]] },
+      { l: 'Peak memory ↓', hi: 0, c: [['43 MB', 43], ['37 MB', 37], ['37 MB; 23 MB NumPy-free', 37], ['unchanged', 37], ['unchanged', 37]] },
+      { l: 'Answer table (P6d), a cache', hi: 1, c: [['~420×', 420], ['~430×', 430], ['417×', 417], ['417×', 417], ['410×', 410]] },
+      { g: 'Cost' },
+      { l: '10M new plots, Lambda compute ↓', hi: 0, c: [['$0.0069', 6.9], ['$0.0053', 5.3], ['$0.0032', 3.2], ['$0.0031', 3.1], ['$0.0031', 3.1]] }
+    ];
+    let h = '<table class="sp-pt"><thead><tr><th class="rl">Hot, 17 plots, against P0</th>' + H.map(x => '<th>' + x[0] + '<small>' + x[1] + '</small></th>').join('') + '</tr></thead><tbody>';
+    R.forEach(r => {
+      if (r.g) { h += '<tr class="g"><th colspan="6">' + r.g + '</th></tr>'; return; }
+      const mx = Math.max(...r.c.filter(Boolean).map(c => c[1]));
+      h += '<tr><td class="rl">' + r.l + '</td>';
+      r.c.forEach((c, j) => {
+        if (!c) { h += '<td class="c c' + j + '"><span class="na">not built</span></td>'; return; }
+        const prev = j > 0 ? r.c[j - 1] : null;
+        const up = prev && (r.hi ? c[1] > prev[1] * 1.03 : c[1] < prev[1] * 0.97);
+        h += '<td class="c c' + j + (up ? ' up' : '') + '"><span class="tx">' + (up ? '▲ ' : '') + c[0] + '</span><span class="mbt"><i data-w="' + (c[1] / mx * 100).toFixed(1) + '"></i></span></td>';
+      });
+      h += '</tr>';
+    });
+    box.innerHTML = h + '</tbody></table>';
+    const cols = [0, 1, 2, 3, 4].map(j => $$('td.c' + j, box));
+    instrument(el, { ms: 3600, render(t) {
+      cols.forEach((cs, j) => { const on = t >= j / 5 + 0.02 || t === 1; cs.forEach(c => { c.classList.toggle('on', on); const i = $('i', c); if (i) i.style.width = on ? i.dataset.w + '%' : '0'; }); });
+    } });
+  })();
+
+  /* ---------------------------------------------------------- step worth */
+  (() => {
+    const body = $('#sp-wt tbody');
+    const R = [
+      ['1 · Representation (P1 to P3): derived codes instead of original layers', 1.60, 7.06, 2.18],
+      ['2 · Registry index (P3 to P5): precomputed cells instead of selection', 36.3, 2.10, 1.14],
+      ['3 · Packed-plane decode (Phase 1)', null, '3.8× store read (load time)', null],
+      ['4 · Selection (P3 to P4): Python scan and fused reduction', 4.28, 1.73, 1.01],
+      ['4b · Batch (P4 to P4B): one pass, 500 polygons', 3.17, 1.01, 1.00],
+      ['5 · No NumPy (P5 to P5L): standard library only', 1.87, 1.26, 2.00],
+      ['Answer table (P5 to P6): stored outputs, a cache', 9.24, 5.25, 2.31]
+    ];
+    const bar = v => typeof v === 'number' ? '<span class="wb"><i data-w="' + (clamp(Math.log10(v) / Math.log10(40) * 100, 3, 100)).toFixed(0) + '"></i></span>' : '';
+    const cell = v => v == null ? '<span class="na" style="color:var(--faint)">not a path step</span>' : typeof v === 'number' ? '<b>' + v.toFixed(v < 10 ? (v === Math.round(v) ? 0 : 2) : 1).replace(/\.00$/, '') + '×</b>' + bar(v) : v;
+    R.forEach(r => { const tr = document.createElement('tr'); tr.innerHTML = '<td>' + r[0] + '</td><td>' + cell(r[1]) + '</td><td>' + cell(r[2]) + '</td><td>' + cell(r[3]) + '</td>'; body.append(tr); });
+    new IntersectionObserver((es, ob) => es.forEach(e => { if (e.isIntersecting) { ob.disconnect(); $$('.wb i', body).forEach(i => i.style.width = i.dataset.w + '%'); } }), { threshold: 0.2 }).observe(body);
+  })();
+
+  /* ---------------------------------------------------------- B1 */
+  (() => {
+    const el = $('#sp-b1'), svg = $('svg', el), fill = $('#sp-b1-fill'), bytes = $('#sp-b1-bytes'), pct = $('#sp-b1-pct'), say = $('#sp-b1-say');
+    const sheets = [['canopy % 2000', '--canopy-100'], ['loss year', '--loss'], ['land / water', '--water'], ['JRC 2020 forest', '--forest']].map(([n, c], i) => {
+      const r = S('rect', { x: 10, y: 10 + i * 44, width: 170, height: 36, rx: 6, fill: 'var(' + c + ')' }, svg);
+      const t = S('text', { x: 20, y: 33 + i * 44, class: 'sp-w' }, svg); t.textContent = n; return { r, t, y0: 10 + i * 44 };
+    });
+    const hist = []; for (let j = 0; j < 101; j++) { const h = 6 + 92 * Math.exp(-j / 7) + 54 * Math.exp(-Math.pow((j - 84) / 11, 2)); hist.push({ r: S('rect', { x: 200 + j * 1.5, y: 130 - h, width: 1.2, height: h, fill: 'var(--canopy-100)', opacity: .8 }, svg), h }); }
+    const hl = S('text', { x: 196, y: 148, style: 'font-size:10.5px' }, svg); hl.textContent = 'canopy histogram, 101 bins';
+    const strip = S('rect', { x: 10, y: 196, width: 170, height: 14, rx: 4, fill: 'var(--ink)', opacity: 0 }, svg);
+    const sl = S('text', { x: 10, y: 232, class: 'sp-b', opacity: 0 }, svg); sl.textContent = 'one band · 20-value code per cell';
+    instrument(el, { ms: 5400, render(t) {
+      sheets.forEach((s, i) => { const q = ease(seg(t, .28 + i * .06, .62 + i * .06)); s.r.setAttribute('y', lerp(s.y0, 196, q)); s.r.setAttribute('height', lerp(36, 14, q)); s.r.setAttribute('opacity', 1 - .95 * q); s.t.setAttribute('y', lerp(s.y0 + 23, 196, q)); s.t.setAttribute('opacity', 1 - seg(q, 0, .4)); });
+      hist.forEach((b, j) => { const q = ease(seg(t, .3 + j / 101 * .25, .55 + j / 101 * .25)); b.r.setAttribute('height', Math.max(0.01, b.h * (1 - q))); b.r.setAttribute('y', 130 - b.h * (1 - q)); });
+      hl.setAttribute('opacity', 1 - seg(t, .5, .7));
+      strip.setAttribute('opacity', seg(t, .6, .8)); sl.setAttribute('opacity', seg(t, .7, .9));
+      const q = ease(seg(t, .3, .85)), b = lerp(623237, 6146, q);
+      fill.style.width = Math.max(0.9, b / 623237 * 100) + '%';
+      bytes.textContent = fmt(Math.round(b), 0) + ' B';
+      pct.textContent = q < .02 ? 'original layers' : q > .98 ? 'decision store · 99.0% smaller' : Math.round((1 - b / 623237) * 100) + '% smaller so far';
+      say.textContent = t < .28 ? 'Four layers, plus a canopy histogram that no question reads.' : t < .75 ? 'Drop what the decision never reads: canopy %, loss years before the cut-off.' : 'One band of 20-value codes. 6,146 bytes. Same answers for all 744,732 cells.';
+    } });
+  })();
+
+  /* ---------------------------------------------------------- B2 */
+  (() => {
+    const el = $('#sp-b2'), svg = $('svg', el), say = $('#sp-b2-say');
+    const W = 14, H = 9, C = 22, X0 = 26, Y0 = 12;
+    const poly = [[2.0, 1.4], [7.2, 0.9], [8.6, 2.6], [12.2, 3.0], [11.4, 7.4], [6.4, 8.0], [3.0, 6.6]];
+    const cells = [], inside = [];
+    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+      const rect = S('rect', { x: X0 + c * C, y: Y0 + r * C, width: C - 1.5, height: C - 1.5, rx: 3, fill: 'var(--mist)' }, svg);
+      const ins = pip(c + .5, r + .5, poly); cells.push({ rect, r, c, ins }); if (ins) inside.push({ r, c });
+    }
+    S('polygon', { points: poly.map(p => (X0 + p[0] * C - .5) + ',' + (Y0 + p[1] * C - .5)).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+    const scan = S('line', { x1: X0 - 6, x2: X0 + W * C + 6, y1: Y0, y2: Y0, stroke: 'var(--pen)', 'stroke-width': 2.5, opacity: 0 }, svg);
+    const tag = S('text', { x: X0, y: Y0 + H * C + 14, class: 'sp-b' }, svg);
+    const names = ['Original path (P0)', 'New-boundary path (P4)', 'Registered index (P5d)', 'Answer table (P6d)'], per = [84.51, 16.15, 1.90, 0.206];
+    const rows = $$('#sp-b2-bars .brow', el); const tot = 5 * per[0];
+    instrument(el, { ms: 7000, render(t) {
+      const s = seg(t, 0, .3), rowsDone = Math.floor(s * H + (s >= 1 ? 1 : 0)), round = seg(t, .4, 1) * 5, k = Math.floor(Math.min(round, 4.999)), fr = round - k;
+      cells.forEach(o => {
+        const found = o.ins && (t >= .4 || o.r < rowsDone);
+        const flash = found && t >= .4 && round < 5 && fr < .3;
+        o.rect.setAttribute('fill', flash ? 'var(--pen)' : found ? 'var(--pen-wash-2)' : 'var(--mist)');
+        o.rect.setAttribute('stroke', found ? 'var(--pen)' : 'none'); o.rect.setAttribute('stroke-width', .8);
+      });
+      scan.setAttribute('opacity', s > 0 && s < 1 ? 1 : 0); scan.setAttribute('y1', Y0 + s * H * C); scan.setAttribute('y2', Y0 + s * H * C);
+      tag.textContent = t < .3 ? 'finding the cells…' : t < .4 ? inside.length + ' cells found: saved as a list of cell numbers' : round >= 5 ? '5 layer updates re-checked, 0 re-scans' : 'layer update ' + (k + 1) + ' of 5: count codes at the saved cells';
+      rows.forEach((r, i) => { const done = round * per[i]; $('i', r).style.width = Math.max(round > 0 ? 0.5 : 0, done / tot * 100) + '%'; $('.val', r).textContent = (done < 10 ? done.toFixed(2) : done.toFixed(0)) + ' µs'; });
+      say.textContent = t < .3 ? 'Scan the polygon once to find which cells it covers.' : t < .4 ? 'Save the list. That is the registration.' : round >= 5 ? 'Five re-checks: the index spent about 9.5 µs where the original path spent about 423.' : 'Each layer update only counts the codes at the saved cells. No geometry work.';
+    } });
+  })();
+
+  /* ---------------------------------------------------------- B3 */
+  (() => {
+    const el = $('#sp-b3'), svg = $('svg', el), say = $('#sp-b3-say');
+    const la = S('text', { x: 18, y: 14, class: 'sp-b' }, svg); la.textContent = 'Before: expand every plane to cells';
+    const grid = []; for (let r = 0; r < 7; r++) for (let c = 0; c < 36; c++) grid.push(S('rect', { x: 18 + c * 9, y: 24 + r * 9, width: 7.5, height: 7.5, rx: 1.5, fill: 'var(--mist)' }, svg));
+    const ga = S('text', { x: 18, y: 100 }, svg);
+    const lb = S('text', { x: 18, y: 138, class: 'sp-b' }, svg); lb.textContent = 'After: read the packed bytes (8 cells each)';
+    const bytes = [], hot = [2, 6, 9];
+    for (let b = 0; b < 12; b++) {
+      const g = { rect: S('rect', { x: 18 + b * 27, y: 150, width: 24, height: 22, rx: 4, fill: 'var(--sheet)', stroke: 'var(--rule-2)' }, svg), dots: [] };
+      for (let k = 0; k < 8; k++) g.dots.push(S('circle', { cx: 18 + b * 27 + 5 + (k % 4) * 5, cy: 150 + 7 + Math.floor(k / 4) * 8, r: 1.7, fill: 'var(--rule-2)' }, svg));
+      bytes.push(g);
+    }
+    const gb = S('text', { x: 18, y: 192 }, svg);
+    const gc = S('text', { x: 18, y: 214 }, svg);
+    const mk = (id, lab, a, b) => { const r = document.createElement('div'); r.className = 'sp-bar2'; r.style.marginTop = '12px'; r.innerHTML = '<div style="font:500 13px/1.4 var(--f-mono);color:var(--ink-2)">' + lab + '</div><div class="brow" style="grid-template-columns:56px minmax(0,1fr) 62px"><span class="lab">before</span><span class="track sp-grey"><i style="width:100%"></i></span><span class="val">' + a[1] + '</span></div><div class="brow" style="grid-template-columns:56px minmax(0,1fr) 62px;margin-top:4px"><span class="lab">after</span><span class="track sp-pen"><i data-f="' + (a[0] ? b / a[0] : 1) + '" style="width:0"></i></span><span class="val">' + a[2] + '</span></div>'; $('#sp-b3-bars').append(r); return $('i[data-f]', r); };
+    const fills = [mk(0, 'Read the decision store', [2.5, '2.5 ms', '0.67 ms'], .67), mk(1, 'Registered index: fresh-process load + query', [3.5, '3.5 ms', '1.3 ms'], 1.3), mk(2, 'Peak memory, registered index', [43, '43 MB', '37 MB'], 37)];
+    instrument(el, { ms: 6500, render(t) {
+      const a = seg(t, 0, .4), n = Math.floor(a * grid.length);
+      grid.forEach((g, i) => g.setAttribute('fill', i < n ? 'var(--ink-2)' : 'var(--mist)'));
+      ga.textContent = a < 1 ? 'cells unpacked: ' + fmt(Math.round(a * 744732), 0) : '744,732 cells, one byte each';
+      const b = seg(t, .5, .95);
+      bytes.forEach((o, i) => { const h = hot.indexOf(i) >= 0; o.rect.setAttribute('stroke', h && b > 0 ? 'var(--pen)' : 'var(--rule-2)'); o.rect.setAttribute('opacity', b > 0 && !h ? .45 : 1); o.dots.forEach((d, k) => d.setAttribute('fill', h && b > (k + 1) / 9 ? 'var(--pen)' : 'var(--rule-2)')); });
+      gb.textContent = b > 0 ? 'only the bytes holding needed cells are decoded' : '';
+      gc.textContent = b >= 1 ? 'the file bytes and format are unchanged' : '';
+      const f = ease(seg(t, .55, 1)); fills.forEach(i => i.style.width = (100 * lerp(1, +i.dataset.f, f)) + '%');
+      say.textContent = t < .45 ? 'Before: expand every plane to one cell per byte, 744,732 of them, before any check.' : t < .95 ? 'After: run the checks on 93 KB of packed bytes; decode only what a query touches.' : 'Store read 2.5 to 0.67 ms. Same file, same answers.';
+    } });
+  })();
+
+  /* ---------------------------------------------------------- B4 */
+  (() => {
+    const el = $('#sp-b4'), svg = $('svg', el), say = $('#sp-b4-say');
+    const W = 12, H = 9, C = 26, X0 = 24, Y0 = 8;
+    const poly = [[1.6, 1.3], [6.5, 0.6], [8.0, 2.3], [10.5, 2.8], [10.0, 6.8], [5.2, 7.9], [2.0, 6.3], [3.3, 4.2]];
+    const cells = [];
+    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) cells.push({ rect: S('rect', { x: X0 + c * C, y: Y0 + r * C, width: C - 1.5, height: C - 1.5, rx: 3, fill: 'var(--mist)' }, svg), r, c, ins: pip(c + .5, r + .5, poly) });
+    S('polygon', { points: poly.map(p => (X0 + p[0] * C - .5) + ',' + (Y0 + p[1] * C - .5)).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+    const scan = S('line', { x1: X0 - 6, x2: X0 + W * C + 6, y1: Y0, y2: Y0, stroke: 'var(--loss)', 'stroke-width': 2.5, opacity: 0 }, svg);
+    const info = S('text', { x: X0, y: Y0 + H * C + 20, class: 'sp-b' }, svg);
+    const rowsD = [['Original path (P0)', 108.1, 'sp-grey', '9,260/s'], ['Decision store (P3)', 90.6, 'sp-grey', '11,000/s'], ['Fast selection (P4)', 21.73, 'sp-pen', '46,000/s'], ['Batch of 500 (P4B)', 6.85, 'sp-ok', '146,000/s']].map(d => Object.assign({ d }, row($('#sp-b4-bars'), d[0], d[2])));
+    instrument(el, { ms: 7000, render(t) {
+      const s = seg(t, 0, .6), cur = s * H, rr = Math.floor(cur);
+      let runs = 0;
+      cells.forEach(o => { const done = o.r < rr || (o.r === rr && s > 0 && s < 1 && false); const show = o.ins && (o.r < rr || s >= 1); if (show && o.c === 0) {} o.rect.setAttribute('fill', show ? 'var(--pen-wash-2)' : 'var(--mist)'); o.rect.setAttribute('stroke', show ? 'var(--pen)' : 'none'); o.rect.setAttribute('stroke-width', .8); });
+      const cnt = cells.filter(o => o.ins && (o.r < rr || s >= 1)); const rowsWith = new Set(cnt.map(o => o.r)); runs = rowsWith.size;
+      scan.setAttribute('opacity', s > 0 && s < 1 ? 1 : 0); scan.setAttribute('y1', Y0 + cur * C); scan.setAttribute('y2', Y0 + cur * C);
+      info.textContent = s <= 0 ? '' : runs + ' runs → ' + cnt.length + ' cells → histogram, no extra pass';
+      const b = ease(seg(t, .5, 1));
+      rowsD.forEach(r => { r.fill.style.width = (b * r.d[1] / 108.1 * 100) + '%'; r.val.textContent = (b < .02 ? '0' : (r.d[1] * b).toFixed(r.d[1] < 10 ? 2 : 1)) + ' µs'; });
+      say.textContent = t < .5 ? 'A line sweeps the rows. Where it crosses the boundary, the centres between crossings are inside.' : t < .98 ? 'Per polygon, plain Python avoids NumPy\'s fixed cost on a window this small.' : 'New boundary: 108 µs on the original path, 21.7 µs now. The batch is 6.9 µs per polygon, if you have the batch.';
+    } });
+  })();
+
+  /* ---------------------------------------------------------- B5 e2e */
+  (() => {
+    const el = $('#sp-b5'), rows = $$('#sp-e2e .r', el), btn = $('#sp-b5-btn'), say = $('#sp-b5-say'), nm = $('#sp-e2e-name');
+    const MAX = 114.5, FLOOR = 20.1;
+    const D = [[FLOOR, 73, 114.5 - FLOOR - 73], [FLOOR, 24, 50.0 - FLOOR - 24], [FLOOR, 1.15, 21.6 - FLOOR - 1.15]];
+    const LITE = [FLOOR, 3.4, 24.9 - FLOOR - 3.4];
+    let grow = 0, m = 0, manual = false;
+    const paint = () => {
+      rows.forEach((r, i) => {
+        const v = i === 1 ? D[1].map((x, k) => lerp(x, LITE[k], m)) : D[i];
+        const sc = grow, bars = $$('.bar i', r);
+        v.forEach((x, k) => bars[k].style.width = (x / MAX * 100 * sc) + '%');
+        $('.v', r).textContent = (v[0] + v[1] + v[2]).toFixed(1) + ' ms';
+      });
+      btn.textContent = m > .5 ? 'Put NumPy back' : 'Drop NumPy'; btn.setAttribute('aria-pressed', m > .5 ? 'true' : 'false');
+      nm.textContent = m > .5 ? 'NumPy-free re-check (P5Ld)' : 'Registered index (P5d)';
+      $$('span', rows[1].firstElementChild)[0].textContent = m > .5 ? 'standard library only' : 'with NumPy';
+      say.textContent = m > .5 ? 'No NumPy import: 50.0 ms becomes 24.9 ms. What is left is the harness floor and 4.8 ms of real work.' : 'With NumPy: about 20 ms is the harness floor and about 24 ms is imports, mostly NumPy. The work itself is a few milliseconds.';
+    };
+    instrument(el, { ms: 6000, render(t) { grow = ease(seg(t, 0, .45)); if (!manual) m = ease(seg(t, .6, 1)); paint(); } });
+    $$('.replay', el).forEach(b => b.addEventListener('click', () => { manual = false; }));
+    btn.addEventListener('click', () => {
+      manual = true; const to = m > .5 ? 0 : 1;
+            tween(m, to, 900, v => { m = v; paint(); });
+    });
+  })();
+
+  /* ---------------------------------------------------------- reducer */
+  (() => {
+    const el = $('#sp-red'), one = row($('#sp-red-one'), 'Reducer, per call', 'sp-grey'), one2 = row($('#sp-red-one'), 'Reducer, Phase 3', 'sp-ok');
+    const data = [['Start', 3.55, null], ['Phase 1', 2.80, null], ['Phase 2', 2.61, 1.93], ['Phase 3', 1.93, 1.31], ['Phase 4', 1.90, 1.02]];
+    const box = $('#sp-red-ph'); const rr = [];
+    data.forEach(d => { const a = row(box, d[0] + ' · index (P5d)', 'sp-grey'), b = row(box, d[0] + ' · NumPy-free', 'sp-ok'); b.el.style.marginBottom = '6px'; rr.push([a, b, d]); });
+    one.lab.textContent = 'Before (to Phase 2)'; one2.lab.textContent = 'After (Phase 3)';
+    instrument(el, { ms: 4200, render(t) {
+      const q = ease(seg(t, 0, .5)), q2 = ease(seg(t, .3, .9));
+      one.fill.style.width = q * 100 + '%'; one.val.textContent = (1.6 * q).toFixed(1) + ' µs';
+      one2.fill.style.width = q2 * 50 + '%'; one2.val.textContent = (0.8 * q2).toFixed(1) + ' µs';
+      rr.forEach(([a, b, d], i) => { const g = ease(seg(t, .15 + i * .12, .55 + i * .12)); a.fill.style.width = g * d[1] / 3.55 * 100 + '%'; a.val.textContent = d[1].toFixed(2) + ' µs'; if (d[2] == null) { b.fill.style.width = 0; b.val.innerHTML = '<span class="na">not built</span>'; } else { b.fill.style.width = g * d[2] / 3.55 * 100 + '%'; b.val.textContent = d[2].toFixed(2) + ' µs'; } });
+    } });
+  })();
+
+  /* ---------------------------------------------------------- 16 µs */
+  (() => {
+    const el = $('#sp-16'), bar = $('#sp-16-bar'), key = $('#sp-16-key'), det = $('#sp-16-det');
+    const D = [
+      ['Coordinate parsing and validation', 1.38, '#2F45FF', 'Reading the GeoJSON numbers and checking the input is clean.'],
+      ['Building the shape', 1.59, '#5668FF', 'Making a polygon object straight from one coordinate array.'],
+      ['Validity check', 0.84, '#8A97FF', 'The required GEOS check that the polygon is valid. Cheap here; it grows with vertex count.'],
+      ['Scanning rows', 4.93, '#1B1F3A', 'Walking the polygon row by row to find which cell centres are inside. The biggest single stage, about 30%.'],
+      ['Gathering cells and the histogram', 3.14, '#555B70', 'Collecting the selected cells and counting the 20 codes.'],
+      ['Building the answer', 0.63, '#8A90A3', 'The shared reducer turns the 20-bin histogram into the contract answer.'],
+      ['Other overhead', 3.83, '#B3BBFF', 'Bounds, grid and window checks, and dispatch.']
+    ];
+    const tot = D.reduce((a, d) => a + d[1], 0);
+    const segs = D.map((d, i) => { const b = document.createElement('button'); b.type = 'button'; b.style.background = d[2]; b.setAttribute('aria-label', d[0] + ', ' + d[1].toFixed(2) + ' microseconds'); b.textContent = d[1] / tot > .08 ? d[1].toFixed(2) : ''; if (d[2] === '#B3BBFF' || d[2] === '#8A97FF') b.style.color = 'var(--ink)'; bar.append(b); const k = document.createElement('button'); k.type = 'button'; k.innerHTML = '<i style="background:' + d[2] + '"></i><span>' + d[0] + '</span><span>' + d[1].toFixed(2) + ' µs · ' + (d[1] / tot * 100).toFixed(0) + '%</span>'; key.append(k); const pick = () => { segs.forEach((s, j) => { s.b.classList.toggle('on', j === i); s.k.classList.toggle('on', j === i); }); det.innerHTML = '<b>' + d[0] + ': ' + d[1].toFixed(2) + ' µs (' + (d[1] / tot * 100).toFixed(1) + '%)</b><span>' + d[3] + '</span>'; }; b.addEventListener('click', pick); k.addEventListener('click', pick); return { b, k }; });
+    det.innerHTML = '<b>Total 16.35 µs</b><span>Select a stage to see what it is. No stage is more than a third of the total.</span>';
+    instrument(el, { ms: 3200, render(t) { D.forEach((d, i) => { segs[i].b.style.width = (d[1] / tot * 100 * ease(seg(t, i * .08, .35 + i * .09))) + '%'; }); } });
+  })();
+
+  /* ---------------------------------------------------------- clocks */
+  (() => {
+    const el = $('#sp-views'), box = $('#sp-views-bars'), say = $('#sp-views-say'), hd = $('#sp-views-h');
+    const P = [
+      ['P0', 'Original path (P0)', [1.437, 11.11, 114.5], null, 'any'],
+      ['P3', 'Decision store, general selection (P3)', [1.175, 2.68, 57.2], ['1.2×', '4.1×', '2.0×'], 'any'],
+      ['P4', 'Fast selection (P4)', [0.275, 1.55, 56.9], ['5.2×', '7.2×', '2.0×'], 'any'],
+      ['P4B', 'Batch evaluator (P4B), needs a batch', [0.222, 1.53, 56.9], ['6.5×', '7.3×', '2.0×'], 'any'],
+      ['P5d', 'Registered index (P5d)', [0.0323, 1.28, 50.0], ['44×', '8.7×', '2.3×'], 'reg'],
+      ['P5Ld', 'NumPy-free re-check (P5Ld)', [0.0173, 1.02, 24.9], ['83×', '10.9×', '4.6×'], 'reg'],
+      ['P6d', 'Answer table (P6d), a cache', [0.0035, 0.244, 21.6], ['410×', '46×', '5.3×'], 'reg']
+    ];
+    const SAY = [
+      ['Hot', 'Same process, already loaded and warmed up. This is where the registered index and the table dominate; the bars for P5d, P5Ld and P6d are hairlines on a linear scale.'],
+      ['Fresh process', 'A new Python process loads the layer and answers 17 plots. The smaller layer helps everyone, and registered paths are about 9 to 46×. Interpreter start-up is not counted.'],
+      ['End-to-end', 'Launch Python and print the answer. A no-op harness child already costs 20.1 ms, and importing NumPy costs about 25. Only dropping NumPy moves it: P5Ld 24.9 ms against P5d 50.0.']
+    ];
+    let mode = 0, scale = 'lin'; const R = [];
+    P.forEach((p, i) => { if (i === 4) { const g = document.createElement('div'); g.className = 'gh'; g.textContent = 'Registered plots only'; box.append(g); } if (i === 0) { const g = document.createElement('div'); g.className = 'gh'; g.textContent = 'Any plot'; box.append(g); } const r = row(box, p[1], i === 0 ? 'sp-grey' : p[4] === 'reg' ? 'sp-ok' : 'sp-pen'); R.push(r); });
+    const f = v => v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v >= 0.1 ? v.toFixed(3) : v.toFixed(4);
+    let k = 0;
+    const paint = () => {
+      const vals = P.map(p => p[2][mode]), mx = Math.max(...vals), mn = Math.min(...vals) / 2;
+      P.forEach((p, i) => {
+        const v = vals[i];
+        const w = scale === 'lin' ? v / mx * 100 : Math.log(v / mn) / Math.log(mx / mn) * 100;
+        R[i].fill.style.width = (Math.max(.6, w) * k) + '%';
+        R[i].val.innerHTML = f(v) + ' ms' + (p[3] ? '<em>' + p[3][mode] + '</em>' : '');
+      });
+      hd.textContent = SAY[mode][0]; say.textContent = SAY[mode][1];
+    };
+    $$('[data-m]', el).forEach(b => b.addEventListener('click', () => { mode = +b.dataset.m; $$('[data-m]', el).forEach(x => x.setAttribute('aria-pressed', x === b)); paint(); }));
+    $$('[data-s]', el).forEach(b => b.addEventListener('click', () => { scale = b.dataset.s; $$('[data-s]', el).forEach(x => x.setAttribute('aria-pressed', x === b)); paint(); }));
+    instrument(el, { ms: 1200, render(t) { k = ease(t); paint(); } });
+  })();
+
+  /* ---------------------------------------------------------- build time */
+  (() => {
+    const el = $('#sp-build'), bar = $('#sp-build-bar');
+    const D = [['Read 2%', 2, '#8A90A3'], ['Derive codes 6%', 6, '#2F45FF'], ['Our compression 92%', 92, '#1B1F3A']];
+    const ds = D.map(d => { const x = document.createElement('div'); x.style.background = d[2]; x.textContent = d[1] > 20 ? d[0] : ''; x.title = d[0]; bar.append(x); return x; });
+    const lg = document.createElement('div'); lg.className = 'legend'; lg.innerHTML = D.map(d => '<span><i style="--c:' + d[2] + '"></i>' + d[0] + '</span>').join(''); bar.after(lg);
+    instrument(el, { ms: 1800, render(t) { const q = ease(t); ds.forEach((x, i) => x.style.width = D[i][1] * q + '%'); } });
+  })();
+
+  /* ---------------------------------------------------------- proof ticks */
+  (() => {
+    const el = $('#sp-proof'), ticks = $$('.sp-tick', el);
+    instrument(el, { ms: 2600, render(t) { ticks.forEach((x, i) => x.classList.toggle('on', t >= (Math.floor(i / 2) * .22 + (i % 2) * .08 + .04) || t === 1)); } });
+  })();
+})();
+</script>
+</body>
+</html>

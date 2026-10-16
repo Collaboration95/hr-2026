@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The data · Plotline explainers</title>
+<meta name="description" content="What a raster, a polygon and a GeoTIFF are, then the real inputs: SystemEarth's 17-plot sample, Hansen's tree-cover loss maps and the JRC 2020 forest map.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles, prefixed dat- */
+.dat-sq rect { transition: fill .35s, stroke .35s, opacity .35s; }
+.dat-sq text { pointer-events: none; font-size: 11px; transition: fill .35s; }
+.dat-bits { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 14px; }
+.dat-bit { width: 46px; height: 58px; border-radius: 8px; border: 1px solid var(--rule-2); background: var(--sheet); font: 600 20px var(--f-mono); color: var(--faint); cursor: pointer; padding: 0; display: grid; place-items: center; }
+.dat-bit small { display: block; font: 500 10px var(--f-mono); color: var(--faint); }
+.dat-bit.on { background: var(--pen); border-color: var(--pen); color: #fff; }
+.dat-bit.on small { color: #cfd5ff; }
+.dat-val { font: 800 56px/1 var(--f-display); letter-spacing: -.03em; margin-left: 14px; font-variant-numeric: tabular-nums; min-width: 110px; }
+.dat-sel text { pointer-events: none; }
+.dat-sel rect.k { transition: fill .15s; }
+.dat-coords { font: 500 14px/1.7 var(--f-mono); margin-top: 8px; }
+.dat-coords b { color: var(--pen-deep); }
+.dat-pills { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-top: 14px; }
+.dat-pills div { padding: 10px 12px; border: 1px solid var(--rule); border-radius: 10px; background: var(--paper); font: 500 12.5px/1.4 var(--f-mono); color: var(--muted); }
+.dat-pills b { display: block; font: 700 17px var(--f-display); color: var(--ink); margin-bottom: 2px; }
+.dat-range { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.dat-slide { position: relative; flex: 1 1 260px; padding-bottom: 22px; }
+.dat-slide input { width: 100%; accent-color: var(--pen); margin: 0; }
+.dat-tick { position: absolute; top: -6px; left: 80%; height: 30px; border-left: 2px dashed var(--loss); pointer-events: none; }
+.dat-tick em { position: absolute; top: 32px; left: -76px; width: 88px; text-align: right; font: 600 11px var(--f-mono); font-style: normal; color: var(--loss); white-space: nowrap; }
+.dat-yr { font: 800 40px/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; min-width: 92px; }
+.dat-stack g.lay { transition: transform .9s var(--ease), opacity .7s var(--ease); }
+.dat-stack .bar { transition: opacity .7s var(--ease); }
+.dat-stack text { font-size: 12px; }
+.dat-two { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 20px; align-items: start; margin-top: 12px; }
+@media (max-width: 760px) { .dat-two { grid-template-columns: 1fr; } }
+.dat-tally { display: grid; gap: 10px; }
+.dat-tally div { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper); font: 500 12.5px/1.35 var(--f-mono); color: var(--muted); }
+.dat-tally b { display: block; font: 800 28px/1 var(--f-display); font-variant-numeric: tabular-nums; margin-bottom: 4px; color: var(--ink); }
+.dat-drag { touch-action: none; cursor: grab; }
+.dat-drag:active { cursor: grabbing; }
+.dat-drag:focus-visible { outline: 3px solid var(--pen); }
+.dat-ids text { font-size: 11.5px; }
+.dat-fields td:first-child { white-space: nowrap; font-weight: 600; }
+</style>
+</head>
+<body data-page="data">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Deep dive · 25 min</div>
+  <h1>The data: <span class="hl">grids of numbers, and one polygon per farm.</span></h1>
+  <p class="lede">Plotline reads three kinds of input: SystemEarth's 17 supplier plots, a tree-cover loss map from the University of Maryland (Hansen) and a 2020 forest map from the EU's Joint Research Centre (JRC). Start from "what is a map made of?" and end at the exact rule that decides which map cells belong to a plot.</p>
+  <div class="meta"><span>25 min read</span><span>Level: deep dive</span><span>Sources: docs/research/company-sample-audit.md, docs/research/layer-acquisition.md, docs/lab/engine-data-W4.md, docs/lab/decision-scale-notes.md</span></div>
+  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
+    <li>A satellite map here is a <strong>grid of whole numbers</strong>. The Hansen chip is <strong>1,233 × 604 = 744,732 cells</strong>, three numbers per cell, about 28 m wide.</li>
+    <li>Of the Hansen chip's 576,999 bytes, the canopy percentage band is <strong>72%</strong>, and no EUDR question reads it.</li>
+    <li>SystemEarth's sample is <strong>17 spreadsheet rows and 17 outlines</strong> that join one-to-one. A plot owns a map cell if the cell's <strong>centre</strong> is inside its outline.</li>
+  </ul></div>
+</header>
+
+<!-- RASTER -->
+<section id="raster">
+  <div class="prose">
+    <div class="kick">1 · Two ways to draw a map</div>
+    <h2>A raster is graph paper with a number in every square.</h2>
+    <p>A <strong>raster</strong> is a rectangular grid of cells, each holding a number. A satellite "image" for science is usually not a photo: it is a grid where each cell stores a measurement, and a colour is chosen later to display it.</p>
+    <p>A <strong>vector</strong> describes shapes by their corner points, like joining pegs with string. A farm boundary is a vector <strong>polygon</strong>: a closed ring of points. The raster says what each patch of ground looks like; the polygon says which patches to look at.</p>
+    <p>One map can hold several measurements per cell. Each measurement is a <strong>band</strong>: one sheet of graph paper, all aligned. Switch the bands in the panel below. It is a synthetic landscape, shaped like the three Hansen bands.</p>
+  </div>
+
+  <div class="panel" id="dat-paper">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A 16 × 10 grid, three bands</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="btns" style="margin-top:12px" role="group" aria-label="Choose a band">
+        <button class="btn on" type="button" data-band="canopy" aria-pressed="true">canopy % in 2000</button>
+        <button class="btn" type="button" data-band="loss" aria-pressed="false">loss year code</button>
+        <button class="btn" type="button" data-band="mask" aria-pressed="false">land / water mask</button>
+        <button class="btn" type="button" id="dat-vec" aria-pressed="false">+ outline (vector)</button>
+      </div>
+      <svg class="dat-sq" id="dat-sq" viewBox="0 0 560 350" role="img" aria-label="A synthetic grid of 16 by 10 cells, each with a number. The buttons switch which band the numbers and colours show."></svg>
+      <div class="legend" id="dat-leg"></div>
+      <p class="say"><small>What you are seeing</small><span id="dat-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> synthetic illustration. Band meanings follow Hansen Global Forest Change (<code>docs/research/layer-acquisition.md</code>). The outline is not resized into pixels: Plotline keeps the exact vector and asks which cell centres it covers (section 6).</p>
+  </div>
+
+  <div class="prose">
+    <h3>Whole numbers in one byte: uint8</h3>
+    <p>Each Hansen cell is stored as a <strong>uint8</strong>: an unsigned 8-bit integer. It is one byte, so it holds a whole number from 0 to 255. Hansen uses only part of that range. Flip the bits below.</p>
+  </div>
+  <div class="panel" id="dat-bits">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Eight switches make one byte</span><div class="btns"><button class="btn" type="button" data-set="100">canopy 100%</button><button class="btn" type="button" data-set="22">loss code 22</button><button class="btn" type="button" data-set="2">mask 2</button><button class="btn" type="button" data-set="0">clear</button></div></div>
+      <div class="dat-bits" id="dat-bitrow" role="group" aria-label="Eight bits of a byte"></div>
+      <p class="say"><small id="dat-bit-s">Each switch adds its weight.</small><span id="dat-bit-say">0</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/explainer/01-maps-as-numbers.html</code> and the Hansen band codes in <code>docs/research/layer-acquisition.md</code>. The raw size of one band of the chip would be 744,732 bytes (one per cell, before compression). The real files are smaller because they are compressed.</p>
+  </div>
+
+  <div class="prose">
+    <h3>Nodata: a blank on the form</h3>
+    <p><strong>Nodata</strong> means "no usable observation". It is not zero. Hansen's <code>lossyear</code> is 0 for "no mapped loss", so you need a second band, <code>datamask</code>, to know whether that zero was really observed. In the chip, <code>datamask</code> 0 would mean no data, 1 mapped land, 2 permanent water. In the chip we have, no cell has mask 0. But 56 cells on permanent water carry a non-zero loss year, which is exactly why Plotline reads the mask first. Unknown stays unknown and never turns into "clear".</p>
+  </div>
+</section>
+
+<!-- GEOTIFF -->
+<section id="geotiff">
+  <div class="prose">
+    <div class="kick">2 · The address label</div>
+    <h2>A GeoTIFF is a numbered mosaic with a label that says where it sits.</h2>
+    <p>A <strong>GeoTIFF</strong> is an image file with extra labels. The numbers are the bands. The labels say what coordinate system the map uses and how a row and column become a place on Earth. These maps use <strong>WGS 84 (EPSG:4326)</strong>: longitude and latitude in degrees.</p>
+    <p>The link between "row 3, column 5" and a longitude and latitude is an <strong>affine transform</strong>: start at a known corner, take one fixed step per column and one per row. Click a cell below, or focus the grid and use the arrow keys. The origin and step are invented for teaching; the Hansen step really is 0.00025° (0.9 arc-seconds).</p>
+  </div>
+  <div class="panel" id="dat-aff">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Row and column to longitude and latitude</span></div>
+      <svg class="dat-sel" id="dat-affsvg" style="max-width:600px;margin-top:12px" viewBox="0 0 442 222" tabindex="0" role="application" aria-label="A grid of 10 columns by 5 rows. Click a cell or use the arrow keys to read its longitude and latitude."></svg>
+      <div class="dat-coords" id="dat-coords" aria-live="polite"></div>
+      <p class="muted small" style="margin-top:8px">origin x₀ = 12°, y₀ = 6° (upper-left outer corner) · step Δx = +0.00025°, Δy = −0.00025° (rows run south) · the 0.5 moves to the cell centre</p>
+    </div>
+    <p class="foot"><b>Source:</b> the transform formulas in <code>docs/explainer/01-maps-as-numbers.html</code>. Invented origin; no company coordinates.</p>
+  </div>
+
+  <div class="prose">
+    <h3>Tile versus chip</h3>
+    <p>A <strong>tile</strong> is a page of the atlas: Hansen publishes the world in 10° × 10° tiles. At 0.00025° per cell, one tile is 40,000 × 40,000 = <strong>1.6 billion cells</strong>. A <strong>chip</strong> is a small cut-out of a tile. Ours covers the bounding box of the 17 plots and keeps the original cells exactly, with no resampling. Tile <code>10N_090E</code> runs from 90°E to 100°E and 0°N to 10°N. The sample sits near 99°E, so it is in that tile. (A teammate's earlier guess, <code>10N_100E</code>, lies east of the sample and does not cover it.)</p>
+    <p>"Tile" has a second, unrelated meaning inside a TIFF file: a block of bytes. A geographic tile is where it is on Earth; a storage tile is how it is packed.</p>
+  </div>
+  <div class="panel" id="dat-zoom">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">From one tile to our chip</span><button class="replay" type="button">↻ Replay</button></div>
+      <div style="max-width:520px;margin:10px auto 0"><svg id="dat-zoomsvg" viewBox="0 0 400 400" role="img" aria-label="A square representing the 10 by 10 degree Hansen tile. A tiny rectangle near its top-right marks where our chip sits. The view then zooms into that rectangle."></svg></div>
+      <p class="say"><small id="dat-zoom-s">Hansen tile 10N_090E</small><span id="dat-zoom-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> the chip sits at Hansen row 5,672, column 35,089 of the tile (<code>docs/lab/decision-scale-notes.md</code>). Tile and chip are drawn to scale; the marker ring is an enlarged pointer, not part of the data.</p>
+  </div>
+  <div class="stats">
+    <div class="big pen"><span class="num" data-count="744732"></span><span class="cap">cells in the chip (1,233 × 604)</span></div>
+    <div class="big forest"><span class="num" data-count="576999"></span><span class="cap">bytes: the three Hansen chip files</span></div>
+    <div class="big loss"><span class="num" data-count="224170336"></span><span class="cap">bytes: the three full Hansen tiles it was cut from</span></div>
+  </div>
+  <p class="muted small">Source: <code>docs/research/layer-acquisition.md</code>. The chip is 0.26% of the downloaded tile bytes: the provider's tile files do not offer a subset download, so the whole tiles had to be fetched and cut. Cropping is not a compression saving, and we do not count it as one.</p>
+</section>
+
+<!-- SAMPLE -->
+<section id="sample">
+  <div class="prose">
+    <div class="kick">3 · The company sample</div>
+    <h2>17 spreadsheet rows, 17 outlines, joined by plot ID.</h2>
+    <p>On 12 October SystemEarth supplied two small files for <strong>one shipment lot from one supplier</strong>.</p>
+    <ul>
+      <li>A <strong>CSV</strong> with 17 data rows and 35 columns: one supplier due-diligence declaration per plot.</li>
+      <li>A <strong>GeoJSON</strong> file with 17 matching plot polygons.</li>
+    </ul>
+    <p>The spreadsheet column <code>a3_plot_id</code> matches the GeoJSON property <code>ProductionPlace</code> for all 17 plots, one-to-one, with no repeated, missing or unmatched IDs. The plot IDs are P-0001, P-0003 to P-0006, P-0008 to P-0011 and P-0013 to P-0020. The gaps (P-0002, P-0007, P-0012) are not missing records unless some manifest says they were expected. A draft note from an earlier session alleged a mismatch; a fresh audit showed it was wrong.</p>
+    <p>The CSV labels every row <strong>Chai Buri, Surat Thani, Thailand</strong>. The plots sit within a box of roughly <strong>34 × 17 km around 99° E, 8.5° N</strong>, consistent with that label. We did not check the label against administrative boundaries. The plots are smallholdings of 0.53 to 20.07 ha.</p>
+  </div>
+
+  <div class="panel" id="dat-join">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Plot IDs only</span>Joining the two files by ID</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg class="dat-ids" id="dat-joinsvg" viewBox="0 0 600 428" role="img" aria-label="Seventeen CSV rows on the left connect by plot ID to seventeen outlines on the right. Five rows are highlighted as declaration-backed review leads."></svg>
+      <div class="legend"><span style="--c: var(--declared)"><i></i>Declaration-backed review lead</span><span style="--c: var(--unknown)"><i></i>Other plot</span></div>
+      <p class="say"><small id="dat-join-s">Matched: 0 of 17</small><span id="dat-join-say">Each line is a join on the plot ID. The right-hand side is not in map order.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/research/company-sample-audit.md</code>. Only plot IDs are shown. The outlines are anonymous placeholder icons: no coordinates, no real boundaries and no CSV values are drawn here.</p>
+  </div>
+
+  <div class="prose">
+    <h3>What the spreadsheet says, at a high level</h3>
+    <p>Each row is a supplier's own due-diligence record for a plot. Think of them as <strong>claims to check</strong>, not facts.</p>
+  </div>
+  <div class="tbl"><table class="dt dat-fields">
+    <thead><tr><th>Group</th><th>What the columns hold</th></tr></thead>
+    <tbody>
+      <tr><td>Identity</td><td>Plot ID, plot size in hectares (matches the GeoJSON <code>Area</code> for all 17), supply-chain type, the factory, a lot number and a supplier code.</td></tr>
+      <tr><td>Dates</td><td>A processing period and a harvest date, both in 2024. What these mean is a question for the company; we do not classify their order as normal or odd.</td></tr>
+      <tr><td>The deforestation check</td><td>Which layer the supplier used (all 17 name <q>Hansen Tree Cover Loss 2021-2023</q>), what it showed (2 values), and what they did about it (mitigation, 2 values).</td></tr>
+      <tr><td>Evidence</td><td>A reference key for each plot's evidence file. These are opaque keys, not working links.</td></tr>
+      <tr><td>Final statuses</td><td>Deforestation, protected areas, land tenure, labour and EUDR overall. All 17 declare deforestation-free and EUDR compliant.</td></tr>
+      <tr><td>Weights and quota</td><td>Plot dry weight and a quota (8 distinct values each).</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>Five leads</b><span><strong>P-0003, P-0005, P-0008, P-0010 and P-0013</strong> say the Hansen check found an "indication of deforestation", then record "on-site verification with evidence" and a final deforestation-free, compliant status. These are <strong>declaration-backed review leads</strong>: questions for the evidence, not violations and not proof of compliance.</span></div>
+  <div class="note unknown"><b>Missing</b><span>The referenced mitigation evidence files were <strong>not supplied</strong>: no rows, no coordinates, nothing to inspect behind those keys. One key for P-0003 even names P-0002, which is not in the sample. It may be a valid outside key or a placeholder; the company has to say.</span></div>
+  <div class="note warn"><b>Private</b><span>The sample is SystemEarth's. Whether it may appear in public slides or a public repository is unconfirmed, so this pack never shows plot outlines, coordinates or CSV rows. Only the bounding box, IDs and aggregate counts are quoted.</span></div>
+</section>
+
+<!-- HANSEN -->
+<section id="hansen">
+  <div class="prose">
+    <div class="kick">4 · Hansen Global Forest Change</div>
+    <h2>Three bands, 744,732 cells, and one of them is most of the bytes.</h2>
+    <p>The first public map is <strong>Hansen / UMD / Google / USGS / NASA Global Forest Change, 2025 version 1.13</strong>, covering 2000 to 2025. It is free to use (CC BY 4.0). Cells are 0.00025° wide: about <strong>28 m</strong> at this latitude (the product is nominally "30 m"). We cut the chip from tile <code>10N_090E</code>, and it equals the source window pixel for pixel.</p>
+  </div>
+  <div class="tbl"><table class="dt">
+    <thead><tr><th>Band</th><th>What the numbers mean</th><th class="r">Chip file</th><th class="r">Share</th></tr></thead>
+    <tbody>
+      <tr><td><code>treecover2000</code></td><td>Percent canopy closure in 2000 for trees over 5 m. 0 to 100.</td><td class="r">414,142 B</td><td class="r">72%</td></tr>
+      <tr><td><code>lossyear</code></td><td>0 means no mapped loss. 1 to 25 means loss in 2001 to 2025 (add 2000).</td><td class="r">159,863 B</td><td class="r">28%</td></tr>
+      <tr><td><code>datamask</code></td><td>0 no data, 1 mapped land, 2 permanent water.</td><td class="r">2,994 B</td><td class="r">0.5%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted small">Source: <code>docs/research/layer-acquisition.md</code> and <code>docs/lab/decision-scale-notes.md</code>. The three file sizes add to 576,999 bytes. Of the 744,732 cells, 743,418 are land and 1,314 are water.</p>
+  <div class="prose">
+    <p>Two cautions. <strong>Hansen loss is not legal deforestation.</strong> It records tree-cover loss, which can come from harvest, fire or storms, and it does not say what the land became. And <code>treecover2000</code> is the canopy in the year 2000; you cannot subtract the loss from it and call the result "forest in 2020".</p>
+  </div>
+
+  <div class="panel dat-stack" id="dat-stack">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Four layers, drawn by their bytes</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
+      <div class="steps" style="margin-top:10px" aria-label="Steps"></div>
+      <svg id="dat-stacksvg" viewBox="0 0 680 330" role="img" aria-label="Four map layers: three Hansen bands and the JRC chip. They start stacked, then slide apart with bars showing their file size, then collapse into the six-kilobyte decision layer."></svg>
+      <p class="say"><small id="dat-stack-s">Step 1 of 3</small><span id="dat-stack-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code> (623,237 B of original layers; decision store 6,146 B) and the file sizes above plus the JRC chip's 46,238 B (<code>docs/lab/engine-data-W4.md</code>). Bars are to scale of the 623,237 B total.</p>
+  </div>
+  <div class="tbl"><table class="dt">
+    <thead><tr><th>Layer</th><th>Which question reads it</th><th>What we do with it</th></tr></thead>
+    <tbody>
+      <tr><td><code>treecover2000</code></td><td>None of the three</td><td>Drop</td></tr>
+      <tr><td><code>lossyear</code>, 2001 to 2020</td><td>None: before the cut-off, and JRC supplies forest at the cut-off</td><td>Drop</td></tr>
+      <tr><td><code>lossyear</code>, 2021 to 2025</td><td>Deforestation since; the supplier's Hansen 2021-23 check</td><td>Keep</td></tr>
+      <tr><td><code>datamask</code></td><td>All three</td><td>Keep; it keeps "unknown" apart from "no loss"</td></tr>
+      <tr><td>JRC 2020 forest</td><td>Forest at the cut-off</td><td>Keep one of every nine cells</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>. How the kept facts are packed into a 20-value code per cell is on <a href="../solution/">How Plotline works</a>.</p>
+  <details class="deeper"><summary>Go deeper: why 72% on one page and 75% on another <span class="lvl">technical</span></summary><div class="body">
+    <p>72% is <code>treecover2000</code>'s share of the three GeoTIFF files (414,142 of 576,999 bytes). 75% is its share when each band is compressed with the same yardstick (zstd level 19 of the raw plane: 397,973 B). The yardstick compares attributes fairly; the file sizes are what is on disk. This page uses file sizes.</p>
+  </div></details>
+
+  <div class="prose">
+    <h3>Watching loss arrive, year by year</h3>
+    <p>The <code>lossyear</code> band is a single grid where each cell remembers <em>which year</em> it lost cover. That is why it is compact: no 25 separate maps. Drag the year to reveal every cell with a code up to that year. The scrubber below uses a synthetic landscape.</p>
+  </div>
+  <div class="panel" id="dat-year">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Loss-year codes, 2001 to 2025</span><button class="replay" type="button">▶ Play years</button></div>
+      <div class="dat-range">
+        <div class="dat-yr" id="dat-yr" aria-live="polite">2000</div>
+        <div class="dat-slide"><input type="range" id="dat-yrange" min="2000" max="2025" value="2000" aria-label="Year, 2000 to 2025"><span class="dat-tick" aria-hidden="true"><em>cut-off 31 Dec 2020</em></span></div>
+      </div>
+      <div class="dat-two">
+        <svg class="dat-sq" id="dat-yearsvg" viewBox="0 0 592 296" role="img" aria-label="A synthetic grid of 24 by 12 cells. Cells turn tan when they lost cover up to 2020 and orange when they lost cover after 2020. Blue cells are water."></svg>
+        <div class="dat-tally">
+          <div><b id="dat-ycode">0</b>code of the selected year (year minus 2000)</div>
+          <div><b id="dat-ya">0</b>cells with loss up to the selected year</div>
+          <div><b id="dat-yb" style="color:var(--loss)">0</b>of them after the 2020 cut-off</div>
+        </div>
+      </div>
+      <div class="legend"><span style="--c: var(--loss-past)"><i></i>Loss up to 2020 (code 1 to 20)</span><span style="--c: var(--loss)"><i></i>Loss after 2020 (code 21 to 25)</span><span style="--c: var(--water)"><i></i>Permanent water (mask 2)</span><span style="--c: var(--mist)"><i></i>No mapped loss (code 0)</span></div>
+      <p class="say"><small>What you are seeing</small><span id="dat-year-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> synthetic. The codes follow Hansen <code>lossyear</code>: 0 no mapped loss, 1 to 25 for 2001 to 2025. In the real chip, 319,011 of 743,418 land cells (43%) show loss at some point, and 80,429 (10.8%) after 2020 (<code>docs/lab/decision-scale-notes.md</code>). Mapped loss on a plantation is not the same as deforestation; section 5 explains why a second layer is needed.</p>
+  </div>
+</section>
+
+<!-- JRC -->
+<section id="jrc">
+  <div class="prose">
+    <div class="kick">5 · JRC Global Forest Cover 2020</div>
+    <h2>One more map: forest or not, at the cut-off, on a finer grid.</h2>
+    <p>The EU Joint Research Centre publishes a <strong>global forest cover map for 2020</strong>. Each cell is simply forest or not. It is the baseline the EUDR question needs: what was forest at the end of 2020? We use <strong>version 4</strong>, one band of uint8, WGS 84, free to use with acknowledgement.</p>
+    <ul>
+      <li><strong>Different grid.</strong> JRC's cells are 1/12,000° wide, about <strong>9 m</strong>, against Hansen's 28 m. Our JRC chip is 3,695 × 1,809 cells, a different shape from the Hansen chip. We keep it as a separate layer on its own grid.</li>
+      <li><strong>One year only.</strong> It describes 2020. It has no time series, and it does not say anything about what happened later.</li>
+      <li><strong>Codes.</strong> 1 is forest. 0 appears in the data but the catalogue lists only code 1, so we treat 0 as "not mapped as forest" and keep the raw value. In the chip, 1,066,195 of 6,684,255 cells are code 1: about 16%.</li>
+    </ul>
+    <p>The key fact for Plotline is how the two grids line up. The Hansen step is 0.00025° and the JRC step is a third of that, so <strong>a 3 × 3 block of JRC cells sits exactly inside one Hansen cell</strong>. Click the nine cells below.</p>
+  </div>
+
+  <div class="panel" id="dat-nest">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Nine JRC cells in one Hansen cell</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg id="dat-nestsvg" style="max-width:600px;margin:6px auto 0" viewBox="0 0 500 300" role="group" aria-label="Nine small JRC cells that fit inside one larger Hansen cell. Activate a small cell to flip it between forest and not forest."></svg>
+      <div class="dat-pills" aria-live="polite">
+        <div><b id="dat-n1">–</b>Centre rule (what Plotline uses): reads only the middle cell</div>
+        <div><b id="dat-n2">–</b>Majority rule: at least 5 of 9 are forest</div>
+        <div><b id="dat-n3">–</b>Any-forest rule: at least 1 of 9</div>
+      </div>
+      <p class="say"><small>What you are seeing</small><span id="dat-nest-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> nesting contract and rules in <code>docs/lab/decision-scale-notes.md</code> and <code>docs/explainer/01-maps-as-numbers.html</code> (Hansen cell (r, c) maps to JRC (3r + 1, 3c + 1) on these grids). Cell pattern is synthetic. The nesting is a property checked for these grids, not a promise about any two maps.</p>
+  </div>
+
+  <div class="prose">
+    <p>Plotline reads the <strong>middle</strong> JRC cell of each block ("the centre rule"). That drops eight of every nine JRC values, a documented simplification. We tested two alternatives on the whole chip:</p>
+  </div>
+  <div class="tbl"><table class="dt">
+    <thead><tr><th>Rule</th><th class="r">Forest share of land</th><th class="r">Deforested cells</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>Centre cell (shipped)</td><td class="r">15.998%</td><td class="r">341</td></tr>
+      <tr><td>Majority (5 of 9)</td><td class="r">16.005%</td><td class="r">332</td></tr>
+      <tr><td>Any forest</td><td class="r">16.575%</td><td class="r">506</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>; totals over the 741,062 cells whose whole block lies inside the JRC chip. "Deforested cells" means post-2020 loss on mapped 2020 forest.</p>
+  <div class="note"><b>Weak test</b><span>No plot decision changes under either alternative. But only one plot (P-0001) has any mapped forest, so this tests the rule weakly. The other 16 have no forest cell under any rule.</span></div>
+
+  <div class="prose">
+    <h3>Why we need both maps</h3>
+    <p>Hansen alone would call a plantation cut and replanted since 2020 "loss". The EUDR forest definition excludes plantations, and JRC's 2020 map is mostly the central forest block. Across the whole chip, Hansen shows 80,429 land cells with loss after 2020; only <strong>341 (0.42%)</strong> sit on JRC-mapped 2020 forest. That gap is why a second layer matters. It does not establish the cause of any loss.</p>
+    <h3>How we got JRC</h3>
+    <p>The official <strong>v3</strong> tile request returned HTTP 500 on retry, so v3 was never acquired and we claim nothing from it. A second route, the official per-tile file of <strong>v4</strong>, worked: a 197,739,699-byte tile (120,000 × 120,000 cells), from which we cut a 46,238-byte chip that matches the source window exactly. v3 and v4 are not interchangeable, so the data is labelled v4 everywhere. The JRC v4 technical report is not yet published (expected by December 2026).</p>
+  </div>
+  <details class="deeper"><summary>Go deeper: the fringe and the 3 × 3 arithmetic <span class="lvl">technical</span></summary><div class="body">
+    <p>The JRC chip stops a little short of the Hansen chip: 3 × 1,233 is 3,699 columns but the chip is 3,695 wide. A one-row, two-column fringe (2,439 cells) has no JRC value. There the forest state is marked unknown rather than guessed, and every plot in the sample lies inside the covered area.</p>
+  </div></details>
+</section>
+
+<!-- RULE -->
+<section id="rule">
+  <div class="prose">
+    <div class="kick">6 · Which cells belong to a plot?</div>
+    <h2>A cell belongs to a plot if its centre is inside the outline.</h2>
+    <p>Imagine a peg in the middle of every graph-paper square, and the farm boundary as string pulled around them. The <strong>centre-inclusion rule</strong>: keep a whole cell when its centre is inside the polygon or exactly on its edge. Merely touching a cell's corner is not enough.</p>
+    <p>Drag the outline, or focus it and use the arrow keys. It snaps to quarter-cells, so you can park an edge exactly on a row of centres. The shapes are synthetic.</p>
+  </div>
+  <div class="panel" id="dat-rule">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Centre inclusion</span><button class="replay" type="button">↻ Replay sweep</button></div>
+      <div class="btns" style="margin-top:12px" role="group" aria-label="Choose a shape">
+        <button class="btn on" type="button" data-shape="plain" aria-pressed="true">Ordinary</button>
+        <button class="btn" type="button" data-shape="edge" aria-pressed="false">Edge through centres</button>
+        <button class="btn" type="button" data-shape="hole" aria-pressed="false">With a hole</button>
+        <button class="btn" type="button" data-shape="two" aria-pressed="false">Two parts</button>
+        <button class="btn" type="button" data-shape="tiny" aria-pressed="false">Tiny plot</button>
+      </div>
+      <svg id="dat-rulesvg" viewBox="0 0 576 352" role="application" aria-label="A grid of 18 by 11 cells with a draggable polygon. Cells whose centre point is inside the polygon are highlighted."></svg>
+      <div class="legend"><span><i style="background:var(--pen)"></i>centre inside: cell kept</span><span><i style="background:var(--pen);outline:2px solid var(--pen);outline-offset:1px"></i>centre exactly on the edge: kept (ringed)</span><span><i style="background:var(--mist);outline:1px solid var(--faint)"></i>centre outside: cell not kept</span></div>
+      <p class="say"><small id="dat-rule-s">Selected centres: 0</small><span id="dat-rule-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> rule <code>hansen-centers.v1</code> (<code>docs/HANDOVER.md</code>) and <code>docs/explainer/02-answering-a-plot.html</code>. This widget uses browser JavaScript to illustrate it; the engine uses Shapely's <code>covers</code>, which is boundary-inclusive. Cell counts are cells, not hectares.</p>
+  </div>
+  <div class="prose">
+    <ul>
+      <li><strong>A hole removes its inside</strong>, but its edge still counts as part of the polygon. <strong>Two parts</strong> (a MultiPolygon) select a centre once if it is in either.</li>
+      <li><strong>A tiny plot can select no centres at all.</strong> Zero selected cells means <em>insufficient spatial support</em>. It is never reported as "clear".</li>
+      <li><strong>The rule is a choice.</strong> Counting any cell the outline overlaps instead adds 337 plot-and-cell memberships across the 17 plots and changes five period flags. Both rules keep the original and compact answers identical, which is why it is a documented choice, not a hidden one.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOT USED -->
+<section id="notused">
+  <div class="prose">
+    <div class="kick">7 · What we did not use</div>
+    <h2>Protected areas, and anything we could not use legally.</h2>
+    <ul>
+      <li><strong>WDPA (Protected Planet).</strong> The protected-areas layer is a natural third input for "is it legal to produce here?". Its terms prohibit commercial use without permission and restrict redistribution, including in derivative works. This work is for a company challenge, so we did not download or embed it. A national protected-area source could be used once the jurisdiction and licence are confirmed.</li>
+      <li><strong>JRC v3.</strong> The tile request failed; v4 replaced it.</li>
+      <li><strong>Alerts.</strong> Near-real-time deforestation alerts were named by SystemEarth. We did not acquire any; they are review signals with false positives, and a different problem.</li>
+      <li><strong>A made-up 2020 forest map.</strong> We did not derive "forest in 2020" by subtracting Hansen loss from 2000 canopy: the product definition does not support that equivalence.</li>
+      <li><strong>Older Hansen releases.</strong> The supplier cites "Hansen 2021-2023" in its own records. Our chips are the latest release (v1.13, to 2025), so the two are not the same vintage and we never treat them as one.</li>
+    </ul>
+    <p>Sources: <code>docs/research/layer-acquisition.md</code>, <code>docs/lab/engine-data-W4.md</code>, <code>docs/lab/engine-jrc-report.md</code>, <code>SystemEarth-track.md</code>. Next: <a href="../solution/">how Plotline works</a>, or back to <a href="../company/">the company and the rule</a>.</p>
+  </div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, seg, ease } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const S = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.append(e); return e; };
+  const rnd = (c, r, k) => { let h = (c * 374761393 + r * 668265263 + k * 2147483647) >>> 0; h = ((h ^ (h >>> 13)) * 1274126177) >>> 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',') + ')'; };
+  const nodeBtn = (btns, fn) => btns.forEach(b => b.addEventListener('click', () => fn(b)));
+
+  /* 1 · graph paper with bands */
+  (() => {
+    const el = $('#dat-paper'), svg = $('#dat-sq'), say = $('#dat-say'), leg = $('#dat-leg');
+    const C = 16, R = 10, W = 34, X0 = 8, Y0 = 5;
+    const water = (c, r) => (c <= 1 && r >= 6) || (c === 2 && r >= 8);
+    const nod = (c, r) => c >= 14 && r === 0;
+    const cells = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const mask = nod(c, r) ? 0 : water(c, r) ? 2 : 1;
+      let can = Math.max(0, Math.min(100, Math.round(98 - 15 * Math.hypot(c - 8, (r - 4.5) * 1.3) + (rnd(c, r, 3) - .5) * 26)));
+      if (mask !== 1) can = 0;
+      let loss = mask === 1 && can < 62 && rnd(c, r, 4) < .5 ? 1 + Math.floor(rnd(c, r, 5) * 25) : 0;
+      if (c === 1 && r === 7) loss = 9; /* a loss value on water: why the mask is read first */
+      const rect = S('rect', { x: X0 + c * W, y: Y0 + r * W, width: W - 2, height: W - 2, rx: 3 }, svg);
+      const txt = S('text', { x: X0 + c * W + (W - 2) / 2, y: Y0 + r * W + 21, 'text-anchor': 'middle' }, svg);
+      cells.push({ c, r, rect, txt, mask, can, loss });
+    }
+    const poly = S('polygon', { points: [[3.3, 2.2], [6.8, 1.6], [10.4, 3.1], [9.6, 6.6], [5.4, 7.8], [2.7, 5.4]].map(p => (X0 + p[0] * W - 1) + ',' + (Y0 + p[1] * W - 1)).join(' '), fill: 'rgba(47,69,255,.08)', stroke: 'var(--ink)', 'stroke-width': 2.5, 'stroke-dasharray': '7 4', opacity: 0, style: 'transition:opacity .4s' }, svg);
+    const verts = [[3.3, 2.2], [6.8, 1.6], [10.4, 3.1], [9.6, 6.6], [5.4, 7.8], [2.7, 5.4]].map(p => S('circle', { cx: X0 + p[0] * W - 1, cy: Y0 + p[1] * W - 1, r: 5, fill: 'var(--ink)', opacity: 0, style: 'transition:opacity .4s' }, svg));
+    let band = 'canopy', vec = false, lastT = 1;
+    const info = {
+      canopy: ['Canopy cover in 2000: each number is a percentage, 0 to 100. Darker green means denser tree cover. Water and no-data cells hold 0.', [['var(--canopy-100)', '100%'], ['var(--canopy-0)', '0%']]],
+      loss: ['Loss year code: 0 means no mapped loss, 1 to 25 mean 2001 to 2025. Tan is up to 2020, orange is after. One cell on the water carries a code: the mask tells us not to trust it.', [['var(--loss-past)', 'code 1 to 20'], ['var(--loss)', 'code 21 to 25'], ['var(--mist)', '0 no loss']]],
+      mask: ['Land or water mask: 1 is land, 2 is permanent water, 0 is no data. This band tells you which zeros in the other bands were really observed.', [['var(--canopy-0)', '1 land'], ['var(--water)', '2 water'], ['var(--unknown)', '0 no data']]]
+    };
+    const paint = t => {
+      lastT = t;
+      const N = cells.length;
+      cells.forEach((o, j) => {
+        const on = seg(t, (j / N) * .85, (j / N) * .85 + .1) > .5;
+        let fill = 'var(--mist)', tc = 'var(--muted)', val = '';
+        if (on) {
+          if (band === 'canopy') { fill = mix('#F1F5EF', '#2F6B47', o.can / 100); tc = o.can > 55 ? '#fff' : 'var(--ink-2)'; val = o.can; }
+          else if (band === 'loss') { val = o.loss; fill = o.loss === 0 ? 'var(--mist)' : o.loss <= 20 ? 'var(--loss-past)' : 'var(--loss)'; tc = o.loss > 20 ? '#fff' : 'var(--ink-2)'; }
+          else { val = o.mask; fill = o.mask === 1 ? '#F1F5EF' : o.mask === 2 ? 'var(--water)' : 'var(--unknown)'; tc = o.mask === 1 ? 'var(--ink-2)' : '#fff'; }
+        }
+        o.rect.style.fill = fill; o.rect.style.stroke = on ? 'rgba(15,18,34,.08)' : 'var(--rule)'; o.txt.style.fill = tc; o.txt.textContent = val;
+      });
+      poly.setAttribute('opacity', vec && t >= 1 ? 1 : 0); verts.forEach(v => v.setAttribute('opacity', vec && t >= 1 ? 1 : 0));
+      say.textContent = t < 1 ? 'Each square gets a number.' : (vec ? 'The outline is a list of corner points, not squares. The raster decides what is under it.' : info[band][0]);
+      leg.innerHTML = info[band][1].map(x => `<span style="--c:${x[0]}"><i style="outline:1px solid var(--rule-2)"></i>${x[1]}</span>`).join('');
+    };
+    instrument(el, { ms: 3200, render: paint });
+    const bb = $$('[data-band]', el);
+    nodeBtn(bb, b => { band = b.dataset.band; bb.forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); }); paint(lastT < 1 ? lastT : 1); });
+    $('#dat-vec').addEventListener('click', e => { vec = !vec; e.currentTarget.classList.toggle('on', vec); e.currentTarget.setAttribute('aria-pressed', vec); paint(lastT < 1 ? lastT : 1); });
+  })();
+
+  /* 1b · bits */
+  (() => {
+    const row = $('#dat-bitrow'), say = $('#dat-bit-say'), s = $('#dat-bit-s'), el = $('#dat-bits');
+    let v = 0;
+    const W = [128, 64, 32, 16, 8, 4, 2, 1];
+    const bt = W.map(w => { const b = document.createElement('button'); b.type = 'button'; b.className = 'dat-bit'; b.innerHTML = '<span>0</span><small>' + w + '</small>'; b.setAttribute('aria-label', 'Bit worth ' + w); b.setAttribute('aria-pressed', 'false'); b.addEventListener('click', () => { v ^= w; draw(); }); row.append(b); return b; });
+    const draw = () => {
+      bt.forEach((b, i) => { const on = !!(v & W[i]); b.classList.toggle('on', on); b.firstChild.textContent = on ? 1 : 0; b.setAttribute('aria-pressed', on); });
+      const parts = W.filter(w => v & w);
+      s.textContent = parts.length ? parts.join(' + ') + ' =' : 'No switch is on, so the byte is';
+      const use = v === 0 ? '' : v <= 2 ? '  ·  fits the mask codes (0 to 2)' : v <= 25 ? '  ·  fits the loss-year codes (0 to 25)' : v <= 100 ? '  ·  fits canopy percentages (0 to 100)' : '  ·  beyond anything Hansen stores';
+      say.textContent = v + use;
+    };
+    $$('[data-set]', el).forEach(b => b.addEventListener('click', () => { v = +b.dataset.set; draw(); }));
+    draw();
+  })();
+
+  /* 2 · affine address label */
+  (() => {
+    const svg = $('#dat-affsvg'), out = $('#dat-coords');
+    const C = 10, R = 5, W = 44, X0 = 0, Y0 = 0; let sel = { c: 3, r: 2 };
+    const cells = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const rect = S('rect', { class: 'k', x: 1 + c * W, y: 1 + r * W, width: W - 2, height: W - 2, rx: 4, style: 'stroke:var(--rule-2)' }, svg);
+      rect.dataset.c = c; rect.dataset.r = r; cells.push(rect);
+    }
+    const dot = S('circle', { r: 4, fill: 'var(--ink)' }, svg);
+    const draw = () => {
+      cells.forEach(k => { const on = +k.dataset.c === sel.c && +k.dataset.r === sel.r; k.style.fill = on ? 'var(--hi)' : 'var(--sheet)'; });
+      dot.setAttribute('cx', 1 + sel.c * W + (W - 2) / 2); dot.setAttribute('cy', 1 + sel.r * W + (W - 2) / 2);
+      const lon = 12 + (sel.c + .5) * .00025, lat = 6 - (sel.r + .5) * .00025;
+      out.innerHTML = `row <b>${sel.r}</b>, column <b>${sel.c}</b> (counted from zero)<br>longitude = 12 + (${sel.c} + 0.5) × 0.00025 = <b>${lon.toFixed(6)}°</b><br>latitude = 6 − (${sel.r} + 0.5) × 0.00025 = <b>${lat.toFixed(6)}°</b>`;
+    };
+    const pick = e => { const t = e.target; if (t.dataset && t.dataset.c !== undefined) { sel = { c: +t.dataset.c, r: +t.dataset.r }; draw(); } };
+    svg.addEventListener('click', pick); svg.addEventListener('pointerover', e => { if (e.pointerType === 'mouse') pick(e); });
+    svg.addEventListener('keydown', e => { const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]; if (!d) return; e.preventDefault(); sel = { c: Math.max(0, Math.min(C - 1, sel.c + d[0])), r: Math.max(0, Math.min(R - 1, sel.r + d[1])) }; draw(); });
+    draw();
+  })();
+
+  /* 2b · tile to chip zoom */
+  (() => {
+    const el = $('#dat-zoom'), svg = $('#dat-zoomsvg'), say = $('#dat-zoom-say'), s = $('#dat-zoom-s');
+    const T = 20, TS = 360; /* tile square from 20 to 380 */
+    S('rect', { x: T, y: T, width: TS, height: TS, fill: 'var(--mist)', stroke: 'var(--ink-2)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, svg);
+    for (let i = 1; i < 10; i++) { S('line', { x1: T + i * 36, y1: T, x2: T + i * 36, y2: T + TS, stroke: 'var(--rule-2)', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke' }, svg); S('line', { y1: T + i * 36, x1: T, y2: T + i * 36, x2: T + TS, stroke: 'var(--rule-2)', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke' }, svg); }
+    const cx = T + 35089 / 40000 * TS, cy = T + 5672 / 40000 * TS, cw = 1233 / 40000 * TS, ch = 604 / 40000 * TS;
+    const chip = S('rect', { x: cx, y: cy, width: cw, height: ch, fill: 'var(--pen)', 'fill-opacity': .25, stroke: 'var(--pen)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, svg);
+    const ring = S('circle', { cx: cx + cw / 2, cy: cy + ch / 2, r: 15, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, svg);
+    const mx = cx + cw / 2, my = cy + ch / 2, W1 = 14;
+    instrument(el, { ms: 5200, render(t) {
+      const z = ease(seg(t, .25, .9));
+      const w = 400 * Math.pow(W1 / 400, z), px = 200 + (mx - 200) * z, py = 200 + (my - 200) * z;
+      svg.setAttribute('viewBox', `${px - w / 2} ${py - w / 2} ${w} ${w}`);
+      ring.setAttribute('opacity', 1 - z);
+      s.textContent = z < .5 ? 'Hansen tile 10N_090E · 10° × 10° · 40,000 × 40,000 cells' : 'Our chip · 1,233 × 604 cells · 744,732 cells';
+      say.textContent = t < .25 ? 'One tile is 1.6 billion cells. Our chip is the small rectangle near the top right.' : z < 1 ? 'Zooming in on the chip.' : 'The chip: the bounding box of the 17 plots, cut out with the same cells.';
+    } });
+  })();
+
+  /* 3 · join animation */
+  (() => {
+    const el = $('#dat-join'), svg = $('#dat-joinsvg'), s = $('#dat-join-s');
+    const ids = ['P-0001', 'P-0003', 'P-0004', 'P-0005', 'P-0006', 'P-0008', 'P-0009', 'P-0010', 'P-0011', 'P-0013', 'P-0014', 'P-0015', 'P-0016', 'P-0017', 'P-0018', 'P-0019', 'P-0020'];
+    const leads = new Set(['P-0003', 'P-0005', 'P-0008', 'P-0010', 'P-0013']);
+    const perm = [9, 3, 14, 0, 11, 6, 16, 2, 13, 5, 8, 15, 1, 10, 4, 12, 7]; /* fixed shuffle for the right column */
+    const RH = 23, Y0 = 36;
+    S('text', { x: 12, y: 18, 'font-size': 11, fill: 'var(--muted)' }, svg).textContent = 'CSV · a3_plot_id';
+    S('text', { x: 588, y: 18, 'font-size': 11, fill: 'var(--muted)', 'text-anchor': 'end' }, svg).textContent = 'GeoJSON · ProductionPlace';
+    const rows = ids.map((id, i) => {
+      const lead = leads.has(id), col = lead ? 'var(--declared)' : 'var(--unknown)';
+      const y = Y0 + i * RH;
+      S('rect', { x: 8, y, width: 118, height: RH - 4, rx: 5, fill: lead ? 'var(--declared-wash)' : 'var(--mist)', stroke: col }, svg);
+      S('text', { x: 18, y: y + 15, fill: 'var(--ink)' }, svg).textContent = id;
+      const yr = Y0 + perm.indexOf(i) * RH; /* right slot of this id */
+      const g = S('g', { opacity: .35 }, svg);
+      S('rect', { x: 474, y: yr, width: 118, height: RH - 4, rx: 5, fill: lead ? 'var(--declared-wash)' : 'var(--mist)', stroke: col }, g);
+      S('polygon', { points: `${484},${yr + 14} ${488},${yr + 4} ${498},${yr + 5} ${501},${yr + 13} ${492},${yr + 16}`, fill: 'none', stroke: 'var(--ink-2)', 'stroke-width': 1.3 }, g);
+      S('text', { x: 510, y: yr + 15, fill: 'var(--ink)' }, g).textContent = id;
+      const line = S('path', { d: `M126 ${y + (RH - 4) / 2} C 280 ${y + (RH - 4) / 2}, 320 ${yr + (RH - 4) / 2}, 474 ${yr + (RH - 4) / 2}`, fill: 'none', stroke: col, 'stroke-width': lead ? 2.2 : 1.4, 'stroke-linecap': 'round' }, svg);
+      const len = line.getTotalLength(); line.style.strokeDasharray = len; line.style.strokeDashoffset = len;
+      return { line, len, g };
+    });
+    instrument(el, { ms: 4800, render(t) {
+      let n = 0;
+      rows.forEach((o, i) => { const k = seg(t, i / 17 * .8, i / 17 * .8 + .12); o.line.style.strokeDashoffset = o.len * (1 - k); o.g.setAttribute('opacity', .35 + .65 * k); if (k >= 1) n++; });
+      s.textContent = 'Matched: ' + n + ' of 17';
+    } });
+  })();
+
+  /* 4 · layer stack explorer */
+  (() => {
+    const el = $('#dat-stack'), svg = $('#dat-stacksvg'), say = $('#dat-stack-say'), s = $('#dat-stack-s');
+    const TOT = 623237, BW = 330;
+    const L = [
+      { n: 'treecover2000', b: 414142, f: 'var(--canopy-100)', note: '72% of the Hansen bytes' },
+      { n: 'lossyear', b: 159863, f: 'var(--loss)', note: '28% of the Hansen bytes' },
+      { n: 'datamask', b: 2994, f: 'var(--water)', note: '0.5% of the Hansen bytes' },
+      { n: 'JRC 2020 forest', b: 46238, f: 'var(--forest)', note: 'separate grid, 9 m' }
+    ];
+    const fm = n => n.toLocaleString('en-GB');
+    const groups = L.map((o, i) => {
+      const g = S('g', { class: 'lay' }, svg);
+      S('polygon', { points: '0,0 200,0 200,58 0,58', fill: o.f, opacity: .92 }, g);
+      S('text', { x: 12, y: 40, fill: '#fff' }, g).textContent = o.n;
+      const bar = S('g', { class: 'bar', opacity: 0 }, svg);
+      S('rect', { x: 250, y: 0, width: BW, height: 20, rx: 5, fill: 'var(--mist)' }, bar);
+      S('rect', { x: 250, y: 0, width: Math.max(2, o.b / TOT * BW), height: 20, rx: 4, fill: o.f }, bar);
+      S('text', { x: 250, y: 38, fill: 'var(--ink-2)' }, bar).textContent = fm(o.b) + ' B · ' + o.note;
+      return { g, bar };
+    });
+    for (let i = groups.length - 1; i >= 0; i--) svg.append(groups[i].g);
+    const dec = S('g', { class: 'lay', opacity: 0 }, svg);
+    S('rect', { x: 0, y: 0, width: 200, height: 30, rx: 5, fill: 'var(--ink)' }, dec);
+    S('text', { x: 12, y: 20, fill: '#fff' }, dec).textContent = 'decision layer';
+    const dbar = S('g', { class: 'bar', opacity: 0 }, svg);
+    S('rect', { x: 250, y: 145, width: BW, height: 20, rx: 5, fill: 'var(--mist)' }, dbar);
+    S('rect', { x: 250, y: 145, width: Math.max(3, 6146 / TOT * BW), height: 20, rx: 4, fill: 'var(--ink)' }, dbar);
+    S('text', { x: 250, y: 183, fill: 'var(--ink)' }, dbar).textContent = '6,146 B · 99.0% smaller than 623,237 B';
+    S('text', { x: 250 + BW, y: 137, 'text-anchor': 'end', fill: 'var(--muted)' }, dbar).textContent = 'full bar = 623,237 B of original layers';
+    const pos = [
+      /* stacked */ i => `translate(${40}px, ${30 + i * 40}px) skewY(-8deg)`,
+      /* split */ i => `translate(${24}px, ${14 + i * 72}px)`,
+      /* collapsed */ i => `translate(${24}px, ${160 + i * 4}px) scale(1, .02)`
+    ];
+    const texts = [
+      'The layers as delivered: three Hansen bands and the JRC chip, 623,237 bytes in total.',
+      'Slide them apart and weigh each by its bytes. The canopy percentage band is two-thirds of everything, and no question reads it.',
+      'Keep only the facts the questions read, as one 20-value code per cell: 6,146 bytes. Same answers for all 744,732 cells.'
+    ];
+    stepper(el, 3, k => {
+      groups.forEach((o, i) => {
+        o.g.style.transform = pos[k](i); o.g.style.opacity = k === 2 ? 0 : 1;
+        o.bar.style.transform = `translate(0, ${14 + i * 72 + 4}px)`; o.bar.setAttribute('opacity', k === 1 ? 1 : 0);
+      });
+      dec.style.transform = `translate(24px, ${k === 2 ? 140 : 200}px)`; dec.setAttribute('opacity', k === 2 ? 1 : 0);
+      dbar.setAttribute('opacity', k === 2 ? 1 : 0);
+      s.textContent = 'Step ' + (k + 1) + ' of 3';
+      say.textContent = texts[k];
+    });
+  })();
+
+  /* 4b · year scrubber */
+  (() => {
+    const el = $('#dat-year'), svg = $('#dat-yearsvg'), range = $('#dat-yrange'), yr = $('#dat-yr'), say = $('#dat-year-say');
+    const C = 24, R = 12, W = 24, X0 = 8, Y0 = 4;
+    const cells = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const wat = Math.abs(c - (3 + r * 1.5)) < 1.2;
+      const base = 1 + Math.floor(rnd(Math.floor(c / 4), Math.floor(r / 4), 11) * 25);
+      let code = 0;
+      if (!wat && rnd(c, r, 12) < .6) code = Math.max(1, Math.min(25, base + Math.round((rnd(c, r, 13) - .5) * 5)));
+      if (!wat && rnd(Math.floor(c / 4), Math.floor(r / 4), 14) < .3) code = 0;
+      const rect = S('rect', { x: X0 + c * W, y: Y0 + r * W, width: W - 2, height: W - 2, rx: 3 }, svg);
+      const txt = S('text', { x: X0 + c * W + (W - 2) / 2, y: Y0 + r * W + 16, 'text-anchor': 'middle', style: 'font-size:9.5px' }, svg);
+      cells.push({ rect, txt, wat, code });
+    }
+    let Y = 2000;
+    const paint = () => {
+      let a = 0, b = 0;
+      cells.forEach(o => {
+        const yrs = 2000 + o.code, on = o.code > 0 && yrs <= Y;
+        let f = 'var(--mist)', tc = 'var(--muted)';
+        if (o.wat) f = 'var(--water)'; else if (on) { f = yrs <= 2020 ? 'var(--loss-past)' : 'var(--loss)'; tc = yrs > 2020 ? '#fff' : 'var(--ink-2)'; a++; if (yrs > 2020) b++; }
+        o.rect.style.fill = f; o.rect.style.stroke = (on && yrs === Y) ? 'var(--ink)' : 'transparent'; o.rect.setAttribute('stroke-width', 2);
+        o.txt.style.fill = tc; o.txt.textContent = on ? o.code : '';
+      });
+      yr.textContent = Y; $('#dat-ycode').textContent = Math.max(0, Y - 2000); $('#dat-ya').textContent = a; $('#dat-yb').textContent = b;
+      say.textContent = Y === 2000 ? 'No cell has lost cover yet (code 0).' : Y <= 2020 ? 'Up to ' + Y + ', ' + a + ' cells have a code of ' + (Y - 2000) + ' or lower. Before the cut-off: context, not the question.' : 'Past the cut-off. ' + b + ' of the ' + a + ' cells with loss carry a code of 21 to ' + (Y - 2000) + '.';
+    };
+    range.addEventListener('input', () => { Y = +range.value; paint(); });
+    instrument(el, { ms: 9000, render(t) { Y = 2000 + Math.round(25 * t); range.value = Y; paint(); } });
+  })();
+
+  /* 5 · 3x3 nesting */
+  (() => {
+    const el = $('#dat-nest'), svg = $('#dat-nestsvg'), say = $('#dat-nest-say');
+    const X0 = 110, Y0 = 18, CS = 88;
+    const state = [1, 0, 0, 1, 1, 0, 0, 0, 1].map(Boolean);
+    const outer = S('rect', { x: X0 - 6, y: Y0 - 6, width: CS * 3 + 12, height: CS * 3 + 12, rx: 10, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
+    const lab1 = S('text', { x: X0 - 22, y: Y0 + CS * 1.5, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', transform: `rotate(-90 ${X0 - 22} ${Y0 + CS * 1.5})` }, svg); lab1.textContent = 'one Hansen cell, about 28 m';
+    const lab2 = S('text', { x: X0 + CS * 3 + 22, y: Y0 + CS * 2.5 + 4, 'font-size': 11, fill: 'var(--muted)' }, svg); lab2.textContent = 'each JRC cell';
+    const lab3 = S('text', { x: X0 + CS * 3 + 22, y: Y0 + CS * 2.5 + 18, 'font-size': 11, fill: 'var(--muted)' }, svg); lab3.textContent = 'about 9 m';
+    const cs = state.map((_, i) => {
+      const c = i % 3, r = Math.floor(i / 3);
+      const g = S('g', { tabindex: 0, role: 'button', style: 'cursor:pointer' }, svg);
+      const rect = S('rect', { width: CS - 4, height: CS - 4, rx: 6 }, g);
+      const tx = S('text', { 'text-anchor': 'middle', 'font-size': 12 }, g); const tx2 = S('text', { 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 600 }, g);
+      const go = () => { state[i] = !state[i]; draw(); };
+      g.addEventListener('click', go);
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      return { g, rect, tx, tx2, c, r, i };
+    });
+    let gap = 0;
+    const place = () => cs.forEach(o => { const x = X0 + o.c * CS + 2 + (o.c - 1) * gap, y = Y0 + o.r * CS + 2 + (o.r - 1) * gap; o.rect.setAttribute('x', x); o.rect.setAttribute('y', y); o.tx.setAttribute('x', x + (CS - 4) / 2); o.tx.setAttribute('y', y + (CS - 4) / 2 + 2); o.tx2.setAttribute('x', x + (CS - 4) / 2); o.tx2.setAttribute('y', y + (CS - 4) / 2 + 18); });
+    const draw = () => {
+      cs.forEach(o => {
+        const f = state[o.i]; o.rect.style.fill = f ? 'var(--forest-wash)' : 'var(--mist)'; o.rect.style.stroke = o.i === 4 ? 'var(--ink)' : (f ? 'var(--forest)' : 'var(--rule-2)'); o.rect.setAttribute('stroke-width', o.i === 4 ? 3 : 1.5);
+        o.tx.textContent = f ? 'forest' : 'not forest'; o.tx2.textContent = o.i === 4 ? '(centre)' : ''; o.tx.style.fill = 'var(--ink-2)';
+        o.g.setAttribute('aria-label', 'JRC cell ' + (o.i + 1) + ' of 9, ' + (f ? 'forest' : 'not forest') + (o.i === 4 ? ', the centre cell' : '') + '. Activate to flip.');
+        o.g.setAttribute('aria-pressed', f);
+      });
+      const n = state.filter(Boolean).length;
+      const set = (id, v) => { const e = $(id); e.textContent = v ? 'Forest' : 'Not forest'; e.style.color = v ? 'var(--forest)' : 'var(--muted)'; };
+      set('#dat-n1', state[4]); set('#dat-n2', n >= 5); set('#dat-n3', n >= 1);
+      say.textContent = n + ' of 9 cells are forest. The three rules ' + ((state[4] === (n >= 5) && state[4] === (n >= 1)) ? 'agree here.' : 'disagree here: that is the information the centre rule gives up.');
+    };
+    instrument(el, { ms: 2600, render(t) { gap = 22 * (1 - ease(seg(t, .1, .8))); place(); outer.setAttribute('opacity', seg(t, .5, 1)); [lab1, lab2, lab3].forEach(l => l.setAttribute('opacity', seg(t, .7, 1))); draw(); } });
+  })();
+
+  /* 6 · centre-inclusion rule */
+  (() => {
+    const el = $('#dat-rule'), svg = $('#dat-rulesvg'), s = $('#dat-rule-s'), say = $('#dat-rule-say');
+    const C = 18, R = 11, W = 32;
+    const SH = {
+      plain: { polys: [[[[3.2, 2.4], [8.6, 1.8], [9.6, 5.9], [6.3, 7.6], [2.8, 5.7]]]], off: [3, 1.5] },
+      edge: { polys: [[[[3.5, 2.5], [8.5, 2.5], [8.5, 6.5], [3.5, 6.5]]]], off: [3, 1] },
+      hole: { polys: [[[[2, 1.5], [10, 1.5], [10, 8.5], [2, 8.5]], [[4.5, 3.5], [7.5, 3.5], [7.5, 6.5], [4.5, 6.5]]]], off: [3, 0.5] },
+      two: { polys: [[[[2.3, 2.2], [5.7, 2.2], [5.7, 5.4], [2.3, 5.4]]], [[[8.4, 4.3], [12.6, 4.3], [12.6, 8.2], [8.4, 8.2]]]], off: [2, 1] },
+      tiny: { polys: [[[[5.6, 4.6], [6.4, 4.6], [6.0, 5.3]]]], off: [0, 0] }
+    };
+    const SAY = {
+      plain: 'Every kept cell is kept whole, even where the outline cuts through it.',
+      edge: 'The edge runs exactly through a row of centres. Those count: the rule is boundary-inclusive.',
+      hole: 'The hole drops the centres strictly inside it. Centres exactly on the hole’s edge still count.',
+      two: 'Two separate parts. A centre in either one is kept, once.',
+      tiny: 'This small plot overlaps four cells but covers none of their centres, so nothing is selected. That means "insufficient spatial support", never "clear". Drag it and watch.'
+    };
+    let shape = 'plain', off = [0, 0];
+    for (let r = 0; r <= R; r++) S('line', { x1: 0, y1: r * W, x2: C * W, y2: r * W, stroke: 'var(--rule)', 'stroke-width': 1 }, svg);
+    for (let c = 0; c <= C; c++) S('line', { x1: c * W, y1: 0, x2: c * W, y2: R * W, stroke: 'var(--rule)', 'stroke-width': 1 }, svg);
+    const sq = [], dots = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      sq.push({ c, r, rect: S('rect', { x: c * W + 1, y: r * W + 1, width: W - 2, height: W - 2, rx: 3, fill: 'transparent' }, svg) });
+    }
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const g = S('g', {}, svg);
+      const ring = S('circle', { cx: (c + .5) * W, cy: (r + .5) * W, r: 8, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2, opacity: 0 }, g);
+      const d = S('circle', { cx: (c + .5) * W, cy: (r + .5) * W, r: 3, fill: 'var(--sheet)', stroke: 'var(--faint)', 'stroke-width': 1.3 }, g);
+      dots.push({ c, r, d, ring });
+    }
+    const path = S('path', { class: 'dat-drag', tabindex: 0, fill: 'rgba(47,69,255,.10)', 'fill-rule': 'evenodd', stroke: 'var(--ink)', 'stroke-width': 2.5, 'stroke-linejoin': 'round', role: 'img', 'aria-label': 'The outline. Drag it, or focus it and press the arrow keys.' }, svg);
+    const pts = () => SH[shape].polys.map(p => p.map(ring => ring.map(q => [q[0] + off[0], q[1] + off[1]])));
+    const onSeg = (p, a, b) => { const cr = (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0]); return Math.abs(cr) < 1e-9 && p[0] >= Math.min(a[0], b[0]) - 1e-9 && p[0] <= Math.max(a[0], b[0]) + 1e-9 && p[1] >= Math.min(a[1], b[1]) - 1e-9 && p[1] <= Math.max(a[1], b[1]) + 1e-9; };
+    const inRing = (p, ring) => { let ins = false; for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) { const a = ring[i], b = ring[j]; if (((a[1] > p[1]) !== (b[1] > p[1])) && (p[0] < (b[0] - a[0]) * (p[1] - a[1]) / (b[1] - a[1]) + a[0])) ins = !ins; } return ins; };
+    const classify = (p, poly) => { /* 0 outside, 1 inside, 2 on boundary */
+      for (const ring of poly) for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) if (onSeg(p, ring[i], ring[j])) return 2;
+      let ins = inRing(p, poly[0]); for (let k = 1; k < poly.length; k++) if (inRing(p, poly[k])) ins = !ins; return ins ? 1 : 0;
+    };
+    const draw = () => {
+      const P = pts();
+      path.setAttribute('d', P.map(poly => poly.map(ring => 'M' + ring.map(q => (q[0] * W) + ' ' + (q[1] * W)).join(' L') + ' Z').join(' ')).join(' '));
+      let n = 0, nb = 0;
+      const kept = new Set();
+      dots.forEach(o => {
+        let k = 0; for (const poly of P) k = Math.max(k, classify([o.c + .5, o.r + .5], poly));
+        if (k) { n++; kept.add(o.r * C + o.c); if (k === 2) nb++; }
+        o.d.setAttribute('r', k ? 4.5 : 3); o.d.style.fill = k ? 'var(--pen)' : 'var(--sheet)'; o.d.style.stroke = k ? 'var(--pen)' : 'var(--faint)'; o.ring.setAttribute('opacity', k === 2 ? 1 : 0);
+      });
+      sq.forEach(o => o.rect.style.fill = kept.has(o.r * C + o.c) ? 'rgba(47,69,255,.16)' : 'transparent');
+      s.textContent = 'Selected centres: ' + n + (nb ? ' (' + nb + ' exactly on the edge)' : '');
+      say.textContent = n === 0 ? 'No centre is inside. Insufficient spatial support: never "clear".' : SAY[shape];
+    };
+    const clamp = () => { const P = SH[shape].polys.flat(2); const xs = P.map(q => q[0]), ys = P.map(q => q[1]); off[0] = Math.max(-Math.min(...xs), Math.min(C - Math.max(...xs), off[0])); off[1] = Math.max(-Math.min(...ys), Math.min(R - Math.max(...ys), off[1])); };
+    const snap = v => Math.round(v * 4) / 4;
+    let drag = null;
+    const toCell = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse()); return [q.x / W, q.y / W]; };
+    path.addEventListener('pointerdown', e => { path.setPointerCapture(e.pointerId); drag = { s: toCell(e), o: off.slice() }; stopSweep(); });
+    path.addEventListener('pointermove', e => { if (!drag) return; const c = toCell(e); off = [snap(drag.o[0] + c[0] - drag.s[0]), snap(drag.o[1] + c[1] - drag.s[1])]; clamp(); draw(); });
+    path.addEventListener('pointerup', () => drag = null); path.addEventListener('pointercancel', () => drag = null);
+    path.addEventListener('keydown', e => { const d = { ArrowLeft: [-.25, 0], ArrowRight: [.25, 0], ArrowUp: [0, -.25], ArrowDown: [0, .25] }[e.key]; if (!d) return; e.preventDefault(); stopSweep(); off = [off[0] + d[0], off[1] + d[1]]; clamp(); draw(); });
+    let sweeping = false; const stopSweep = () => { sweeping = false; };
+    const bs = $$('[data-shape]', el);
+    const setShape = k => { shape = k; off = SH[k].off.slice(); clamp(); bs.forEach(x => { x.classList.toggle('on', x.dataset.shape === k); x.setAttribute('aria-pressed', x.dataset.shape === k); }); draw(); };
+    nodeBtn(bs, b => { stopSweep(); setShape(b.dataset.shape); });
+    setShape('plain');
+    $('.replay', el).addEventListener('click', () => { setShape('plain'); sweeping = true; });
+    instrument(el, { ms: 4200, render(t) { if (t === 0) { sweeping = true; } if (!sweeping) return; if (shape !== 'plain') return; const base = SH.plain.off; off = [snap(base[0] + 5 * (1 - ease(seg(t, .05, .85)))), base[1]]; clamp(); draw(); } });
+  })();
+})();
+</script>
+</body>
+</html>
