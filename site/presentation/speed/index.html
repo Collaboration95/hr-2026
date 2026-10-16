@@ -212,10 +212,10 @@
   <div class="panel sp-race" id="sp-race">
     <div class="panel-in">
       <div class="ph"><span class="tag">Bar race · hot, 17 plots, against P0</span><button class="replay" type="button">↻ Replay</button></div>
-      <div class="sp-live" id="sp-race-rows" style="margin-top:14px"></div>
+      
       <div class="sp-ctl">
         <button class="btn prev" type="button">← Back</button>
-        <div class="steps" role="group" aria-label="Phase"></div>
+        
         <button class="btn next" type="button">Next →</button>
       </div>
       <p class="say"><small id="sp-race-ph">Decision layers · starting point</small><span id="sp-race-say">A small decision layer and a registered-plot index.</span></p>
@@ -230,9 +230,9 @@
   <div class="panel" id="sp-pt">
     <div class="panel-in">
       <div class="ph"><span class="tag">Phase by phase · P0 re-measured in each run</span><button class="replay" type="button">↻ Replay</button></div>
-      <div class="tbl" id="sp-pt-box"></div>
+      
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Speed-up phases". Multiples are against P0 in the same run. The answer table reads 410× in Phase 4, not 417×, because the table time (0.206 µs per plot) did not change within noise and P0 re-measured 0.5% lower. It is not a slowdown. New boundaries read 5.2× rather than 5.3× for the same reason.</p>
+    <p class="foot"> Multiples are against P0 in the same run. The answer table reads 410× in Phase 4, not 417×, because the table time (0.206 µs per plot) did not change within noise and P0 re-measured 0.5% lower. It is not a slowdown. New boundaries read 5.2× rather than 5.3× for the same reason.</p>
   </div>
 </section>
 
@@ -254,7 +254,7 @@
     <thead><tr><th>Step (decision level)</th><th>Hot, 17 plots</th><th>Fresh process</th><th>End-to-end</th></tr></thead>
     <tbody></tbody>
   </table></div>
-  <p class="muted small" style="max-width:700px">What each step is worth, measured one step at a time on the same machine and questions. Source: <code>docs/lab/decision-benchmark-notes.md</code>, "What each step is worth". The hot and end-to-end columns are almost never both large; that mismatch is the main caveat on this page.</p>
+  <p class="muted small" style="max-width:700px">What each step is worth, measured one step at a time on the same machine and questions.  The hot and end-to-end columns are almost never both large; that mismatch is the main caveat on this page.</p>
 </section>
 
 <!-- ---------------------------------------------------------- B1 -->
@@ -340,7 +340,7 @@
         <div class="sp-fig"><svg viewBox="0 0 360 250" role="img" aria-label="Top lane: every plane expanded into individual cells. Bottom lane: a few packed bytes are read and the rest skipped"></svg></div>
         <div>
           <p class="sp-lab">Reading the decision store</p>
-          <div class="bars sp-live" id="sp-b3-bars"></div>
+          
         </div>
       </div>
       <p class="say"><small>Figure</small><span id="sp-b3-say">Before: expand every plane to one cell per byte.</span></p>
@@ -370,7 +370,7 @@
         <div class="sp-fig"><svg viewBox="0 0 360 270" role="img" aria-label="A horizontal line sweeps down a synthetic polygon on a grid, marking runs of cells whose centres lie inside"></svg></div>
         <div class="sp-live">
           <p class="sp-lab">Cost per new polygon <small>500 synthetic polygons, hot</small></p>
-          <div class="bars" id="sp-b4-bars"></div>
+          
           <div class="sp-chips"><span class="st ok">17 plots: 2.2× → 3.0× → 5.0× → 5.3× → 5.2×</span></div>
         </div>
       </div>
@@ -417,12 +417,12 @@
       <div class="sp-two" style="align-items:start">
         <div>
           <p class="sp-lab">The reducer alone <small>per call</small></p>
-          <div class="bars sp-live" id="sp-red-one"></div>
+          
           <div class="sp-code"><s># before: slice, zip, call a nested helper</s><br><b># Phase 3: unpack the 20 codes by name</b><br>_, water, n0, n1, n2, n3, n4, n5, f0, ... = counts</div>
         </div>
         <div>
           <p class="sp-lab">Per plot, by phase <small>µs, lower is better</small></p>
-          <div class="bars sp-live" id="sp-red-ph"></div>
+          
         </div>
       </div>
     </div>
@@ -443,11 +443,11 @@
   <div class="panel" id="sp-16">
     <div class="panel-in">
       <div class="ph"><span class="tag">New boundary (P4), per plot, 17 plots · select a segment</span><button class="replay" type="button">↻ Replay</button></div>
-      <div class="sp-seg" id="sp-16-bar" style="margin-top:14px" role="group" aria-label="Stages of a new-boundary check"></div>
-      <div class="sp-key" id="sp-16-key"></div>
+      
+      
       <div class="sp-detail" id="sp-16-det" aria-live="polite"><b>Total 16.35 µs</b><span>Select a stage to see what it is.</span></div>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Where the 16 µs goes". The audit total (16.35 µs) is a separate measurement from the benchmark's 16.15 µs; they differ by about 1%. It comes from the 17 plots only. The validity check grows with vertex count: about 0.84 µs at 8 vertices, 1.25 at 16, 4.1 at 60 and 12 at 150.</p>
+    <p class="foot"> The audit total (16.35 µs) is a separate measurement from the benchmark's 16.15 µs; they differ by about 1%. It comes from the 17 plots only. The validity check grows with vertex count: about 0.84 µs at 8 vertices, 1.25 at 16, 4.1 at 60 and 12 at 150.</p>
   </div>
 </section>
 
@@ -466,7 +466,7 @@
         <span class="sp-tog" role="group" aria-label="Clock"><button type="button" data-m="0" aria-pressed="true">Hot</button><button type="button" data-m="1" aria-pressed="false">Fresh process</button><button type="button" data-m="2" aria-pressed="false">End-to-end</button></span>
         <span class="sp-tog" role="group" aria-label="Bar scale"><button type="button" data-s="lin" aria-pressed="true">Linear</button><button type="button" data-s="log" aria-pressed="false">Log</button></span>
       </span></div>
-      <div class="bars sp-live" id="sp-views-bars" style="margin-top:16px"></div>
+      
       <p class="say"><small id="sp-views-h">Hot</small><span id="sp-views-say"></span></p>
     </div>
     <p class="foot"><b>Source:</b> medians from <code>docs/lab/decision-benchmark-notes.md</code>, headline table (pooled over 2 full runs). Multiples the report prints are used as printed; those it does not print (for example P3 and P4B on the fresh-process and end-to-end clocks, and P5d end-to-end) are computed from the medians shown. Nothing here is disk-cold: the OS file cache was warm.</p>
@@ -499,10 +499,10 @@
   <div class="panel" id="sp-build">
     <div class="panel-in">
       <div class="ph"><span class="tag">Where building the layer spends its time · per strip</span><button class="replay" type="button">↻ Replay</button></div>
-      <div class="sp-build" id="sp-build-bar" role="img" aria-label="Read 2 percent, derive codes 6 percent, compression 92 percent"></div>
+      
       <p class="say"><small>Figure</small><span>Compression is 92% of building a layer. A GPU would speed up the 8% that is not compression, so the build would be about 1.06× faster.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Research pass". A scratch measurement on 6 of the 160 strips of one coastal tile, in a single process; not a committed artifact. The estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is a rough one, since inland tiles encode more slowly.</p>
+    <p class="foot"> A scratch measurement on 6 of the 160 strips of one coastal tile, in a single process; not a committed artifact. The estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is a rough one, since inland tiles encode more slowly.</p>
   </div>
 </section>
 
@@ -550,7 +550,7 @@
         <tbody><tr><td>Lambda compute, 10M new plots</td><td class="r">$0.0069</td><td class="r">$0.0053</td><td class="r">$0.0032</td><td class="r">$0.0031</td><td class="r">$0.0031</td></tr></tbody>
       </table></div>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> ("Cost estimate") and <code>docs/lab/decision-benchmark-notes.md</code>. Compute time: original 1,054 s, registry 42 s, new polygons 185 s. The new-plot line prices P4 on the 17 plots, which did not change in Phase 4. Storage for the tropical belt (measured basis) is $0.018 a month for the decision layer against $0.90 for the original layers. Not priced: cold object-store latency, network time and the 15-minute Lambda limit. The per-strip container this assumes is not implemented.</p>
+    <p class="foot"> Compute time: original 1,054 s, registry 42 s, new polygons 185 s. The new-plot line prices P4 on the 17 plots, which did not change in Phase 4. Storage for the tropical belt (measured basis) is $0.018 a month for the decision layer against $0.90 for the original layers. Not priced: cold object-store latency, network time and the 15-minute Lambda limit. The per-strip container this assumes is not implemented.</p>
   </div>
 </section>
 

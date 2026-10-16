@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../../assets/pack.css">
-<link rel="stylesheet" href="../../assets/sprites.css">
+<link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles, prefixed dat- */
 .dat-sq rect { transition: fill .35s, stroke .35s, opacity .35s; }
@@ -231,7 +231,7 @@
       <tr><td>JRC 2020 forest</td><td>Forest at the cut-off</td><td>Keep one of every nine cells</td></tr>
     </tbody>
   </table></div>
-  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>. The packing of the kept facts into a 20-value code per cell is described in <a href="../solution/">How Plotline works</a>.</p>
+  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>. The packing of the kept facts into a 20-value code per cell is described in <a href="../presentation/solution/">How Plotline works</a>.</p>
   <details class="deeper"><summary>Go deeper: 72% and 75% <span class="lvl">technical</span></summary><div class="body">
     <p>72% is <code>treecover2000</code>'s share of the three GeoTIFF files (414,142 of 576,999 bytes). 75% is its share when each band is compressed with the same yardstick (zstd level 19 of the raw plane: 397,973 B). The yardstick compares attributes fairly; file sizes are what is on disk. This page uses file sizes, and 75% appears elsewhere in the pack.</p>
   </div></details>
@@ -361,12 +361,12 @@
       <li><strong>A derived 2020 forest map.</strong> Forest in 2020 was not derived by subtracting Hansen loss from 2000 canopy, because the product definition does not support that equivalence.</li>
       <li><strong>Older Hansen releases.</strong> The supplier cites "Hansen 2021-2023" in its own records. The chips are the latest release (v1.13, to 2025), so the two are not the same vintage and are never treated as one.</li>
     </ul>
-    <p>Sources: <code>docs/research/layer-acquisition.md</code>, <code>docs/lab/engine-data-W4.md</code>, <code>docs/lab/engine-jrc-report.md</code>, <code>SystemEarth-track.md</code>. Related: <a href="../solution/">How Plotline works</a> and <a href="../company/">SystemEarth and the EUDR</a>.</p>
+    <p>Sources: <code>docs/research/layer-acquisition.md</code>, <code>docs/lab/engine-data-W4.md</code>, <code>docs/lab/engine-jrc-report.md</code>, <code>SystemEarth-track.md</code>. Related: <a href="../presentation/solution/">How Plotline works</a> and <a href="../company/">SystemEarth and the EUDR</a>.</p>
   </div>
 </section>
 
 </main></div>
-<script src="../../assets/pack.js"></script>
+<script src="../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, seg, ease } = Pack;
@@ -705,7 +705,7 @@
   })();
 })();
 </script>
-<script src="../../assets/sprites.js"></script>
+<script src="../assets/sprites.js"></script>
 <script>(function(){
   var e=document.getElementById('raster'); if(e) e.dataset.spriteSay='Think of it as a grid.';
   var e=document.getElementById('geotiff'); if(e) e.dataset.spriteSay='Tiles inside a file.';

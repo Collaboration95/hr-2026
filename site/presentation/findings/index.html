@@ -121,7 +121,7 @@
   <div class="fnd-ids rv" aria-label="The 17 supplied plot IDs; five declared an indication">
     <span class="d">◆ P-0003</span><span>P-0001</span><span>P-0004</span><span class="d">◆ P-0005</span><span>P-0006</span><span class="d">◆ P-0008</span><span>P-0009</span><span class="d">◆ P-0010</span><span>P-0011</span><span class="d">◆ P-0013</span><span>P-0014</span><span>P-0015</span><span>P-0016</span><span>P-0017</span><span>P-0018</span><span>P-0019</span><span>P-0020</span>
   </div>
-  <p class="small muted rv">◆ = declared an indication. Source: <code>docs/research/company-sample-audit.md</code>, "Dates and supplier-declared review leads".</p>
+  <p class="small muted rv">◆ = declared an indication. </p>
 </section>
 
 <!-- ============ 2 · hansen ============ -->
@@ -165,7 +165,7 @@
   <div class="panel" id="fnd-fun">
     <div class="panel-in">
       <div class="ph"><span class="tag">Region funnel · one dot per map cell · 80,429 dots</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      <div class="steps" style="margin-top:12px"></div>
+      
       <canvas class="fnd-cv" id="fnd-fun-cv" width="960" height="340" role="img" aria-label="A swarm of 80,429 dots, one per map cell with Hansen loss after 2020, sorts into three groups. 79,871 are not on mapped 2020 forest, 217 have no JRC value, and 341 are on mapped 2020 forest."></canvas>
       <div class="fnd-leg" id="fnd-fun-leg" style="opacity:0"><span><i style="background:rgba(232,89,12,.35)"></i>79,871 on land JRC did not map as forest</span><span><i style="background:#8A90A3"></i>217 edge cells with no JRC value</span><span><i style="background:var(--forest)"></i>341 on mapped 2020 forest</span></div>
       <p class="say"><small id="fnd-fun-n">Step 1 of 4</small><span id="fnd-fun-say"></span></p>
@@ -188,7 +188,7 @@
   </div>
   <div class="note warn rv"><b>Scope</b><span>These are mapped observations from public layers under a written rule. They are not compliance findings.</span></div>
   <details class="deeper"><summary>Detail: why one layer alone overstates post-2020 loss <span class="lvl">technical</span></summary><div class="body">
-    <p>On the region, 42.9% of land cells show Hansen loss at some point since 2001 (319,011 of 743,418). A Hansen-only forest proxy (canopy above 10%, no loss to 2020) marks 58.4% of land as forest and counts 71,030 post-2020 loss cells on it; JRC marks 15.9% as forest. That gap is why a rubber and oil-palm mosaic needs the second layer. At JRC's native ~9 m resolution, P-0001 has 554 forest cells out of 1,083 JRC cells. Sources: <code>docs/lab/decision-scale-notes.md</code>, <code>docs/writeups/02-what-we-tried-and-found.md</code>.</p>
+    <p>On the region, 42.9% of land cells show Hansen loss at some point since 2001 (319,011 of 743,418). A Hansen-only forest proxy (canopy above 10%, no loss to 2020) marks 58.4% of land as forest and counts 71,030 post-2020 loss cells on it; JRC marks 15.9% as forest. That gap is why a rubber and oil-palm mosaic needs the second layer. At JRC's native ~9 m resolution, P-0001 has 554 forest cells out of 1,083 JRC cells. </p>
     <p>The JRC rule reads one JRC cell per Hansen cell (the centre). Reading a 3×3 majority or "any forest in the block" instead changes no plot decision, but only P-0001 has forest, so it is a weak test. "Any forest" moves the regional total of loss-on-forest cells from 341 to 506 and P-0001's from 2 to 4.</p>
   </div></details>
 </section>
@@ -204,7 +204,7 @@
   <div class="panel" id="fnd-set">
     <div class="panel-in">
       <div class="ph"><span class="tag">Set comparison · 17 plots by ID number</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      <div class="steps" style="margin-top:12px"></div>
+      
       <div style="overflow-x:auto"><svg id="fnd-set-svg" style="min-width:560px" viewBox="0 0 680 360" role="img" aria-label="Seventeen plot dots sort into two overlapping circles: plots that declared an indication, and plots with mapped loss"></svg></div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:6px"><span class="fnd-ovl" id="fnd-set-ovl"></span><span class="small muted" id="fnd-set-small"></span></div>
       <p class="say"><small id="fnd-set-n">Step 1 of 5</small><span id="fnd-set-say"></span></p>
@@ -233,10 +233,10 @@
     <div class="panel-in">
       <div class="ph"><span class="tag">Explanation tester · 2021–23 Hansen loss cells on the five declared plots</span></div>
       <div class="fnd-seg" id="fnd-test-v" style="margin-top:12px"><button type="button" data-v="a" aria-pressed="true">Written rule, Hansen 2025 v1.13</button><button type="button" data-v="b" aria-pressed="false">Older release: Hansen 2023 v1.11</button><button type="button" data-v="c" aria-pressed="false">Any overlap, not centre inside</button></div>
-      <div class="fnd-test" id="fnd-test-rows"></div>
+      
       <div style="margin-top:14px"><span class="fnd-ovl" id="fnd-test-rep"></span></div>
       <div class="sol-lab" style="font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:16px">Other plots with 2021–23 loss under this variant (cells)</div>
-      <div class="fnd-chips" id="fnd-test-chips"></div>
+      
       <p class="say"><small id="fnd-test-small"></small><span id="fnd-test-say"></span></p>
     </div>
     <p class="foot"><b>Source:</b> older release: <code>docs/lab/engine-vintage-report.md</code> (preregistered 2023 v1.11 vs 2025 v1.13, 17 plots, same rule: 2021–23 counts identical). Overlap rule: <code>docs/lab/engine-spatial-sensitivity-report.md</code> (centre selects 1,048 plot/cell memberships; overlap selects 1,385). The supplier's own release is <b>unknown</b>; 2023 v1.11 is a hypothetical comparison chosen before looking at results.</p>
@@ -265,17 +265,17 @@
       </div>
       <div class="fnd-two">
         <div>
-          <div class="fnd-tgrid" id="fnd-tt-grid" role="group" aria-label="24 cells; click a cell to cycle land, loss, no data, water"></div>
+          
           <div class="legend"><span><i style="--c:var(--forest)"></i>L land, no loss</span><span><i style="--c:var(--loss)"></i>X loss seen</span><span><i style="--c:var(--unknown)"></i>? no data / outside the map</span><span><i style="--c:var(--water)"></i>W water</span></div>
           <p class="small muted" style="margin:8px 0 0">Click a cell to cycle through the four kinds.</p>
         </div>
         <div>
           <div class="fnd-out"><h4>Support</h4><span class="fnd-pill" id="fnd-tt-sup" style="font-size:20px"></span></div>
-          <div class="fnd-out"><h4>Mapped loss after 2020</h4><span class="fnd-pill" id="fnd-tt-flag"></span><p id="fnd-tt-why"></p></div>
+          <div class="fnd-out"><h4>Mapped loss after 2020</h4><span class="fnd-pill" id="fnd-tt-flag"></span></div>
         </div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> rule from <code>docs/lab/interface-v1.md</code> ("Resolved partial-support ambiguity") and <code>engine/decision_summary.py</code>; <code>design/DESIGN.md</code> section 7 (truth-state rules). The grid is invented. In the app, unknown is drawn hatched and never as 0.</p>
+    <p class="foot"> The grid is invented. In the app, unknown is drawn hatched and never as 0.</p>
   </div>
 
   <div class="fnd-4">
@@ -300,7 +300,7 @@
       <li><b>The supplier's release, rule and method are unknown.</b> A current Hansen release may differ from the one they used.</li>
       <li><b>Source and compact agreeing</b> shows the representation keeps the answer under the written rule. It does not show the maps are right, nor that anyone complied.</li>
     </ul>
-    <p class="small muted">Sources: "Honest limits" in <code>docs/lab/decision-layer-report.md</code>, <code>docs/writeups/04-pitch.md</code>, <code>docs/lab/interface-v1.md</code>.</p>
+    
   </div>
 </section>
 
@@ -317,7 +317,7 @@
     <li><b>Question 3 · The workload</b>Is the common operation one interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after layer updates? The workload should pick the representation.</li>
     <li><b>Also to confirm</b>Whether the supplied sample may appear in published material, and the commodity and region of interest beyond this sample.</li>
   </ul>
-  <div class="prose rv"><p class="small muted">Source: <code>docs/lab/company-next-conversation.md</code>, <code>docs/writeups/03-what-we-ship.md</code> ("Still open"). Company-reviewed cases are best kept separate from the 17-record test set, and supplier final declarations are not independent ground truth for training a classifier.</p></div>
+  <div class="prose rv"><p class="small muted"> Company-reviewed cases are best kept separate from the 17-record test set, and supplier final declarations are not independent ground truth for training a classifier.</p></div>
 </section>
 
 </main></div>

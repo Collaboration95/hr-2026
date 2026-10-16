@@ -119,36 +119,15 @@
   </ul></div>
 </header>
 
-<!-- 1 · EVENT -->
-<section id="event" data-toc="The event">
-  <div class="prose">
-    <div class="kick">1 · The event</div>
-    <h2>Hack &amp; Hire Sustainability Edition 2026</h2>
-    <p>The event is run by Projet with NUS CAT. Participants pick one of six real company challenges, build over a week (<strong>10 to 17 October 2026</strong>), and pitch to the company's team at the <strong>finals on 17 October</strong>. Teams have one to three people.</p>
-    <p>Track: <strong>SystemEarth</strong>.</p>
-  </div>
-
-  <div class="panel" id="st-time">
-    <div class="panel-in">
-      <div class="ph"><span class="tag">Build sequence</span></div>
-      <div class="st-day well" aria-live="polite"><div class="d" id="st-td"></div><h3 id="st-th"></h3><p id="st-tp"></p></div>
-      <div class="st-tbtns"><div class="steps" aria-label="Build stages"></div><div class="btns"><button class="btn prev" type="button">← Previous</button><button class="btn next" type="button">Next →</button></div></div>
-    </div>
-    <p class="foot"><b>Source:</b> docs/writeups/02-what-we-tried-and-found.md (how the work developed), README.md (current status). Track acceptance is reported by the project owner; team composition is not recorded.</p>
-  </div>
-
-  <div class="note unknown"><b>Unknown</b><span>Pitch length, the submission format and the judging weights were not specified. The challenge page shows an end time of 17 October 00:00 SGT; whether that closes applications or submissions is unconfirmed.</span></div>
-</section>
-
 <!-- 2 · COMPANY AND PROBLEM -->
 <section id="problem" data-toc="The company and the rule">
   <div class="prose">
-    <div class="kick">2 · The company and the problem</div>
+    <div class="kick">1 · The company and the problem</div>
     <h2>EUDR plot-level screening</h2>
     <p>Companies that sell rubber, palm oil, cocoa or coffee into the EU must show that every supplying farm plot is <strong>deforestation-free</strong> under the EU Deforestation Regulation, <strong>EUDR</strong>. SystemEarth works with this kind of plot-level evidence.</p>
     <p>A plot's boundary is checked against satellite maps for two things: whether the land was <strong>forest on 31 December 2020</strong>, the rule's cut-off date, and whether tree cover has been <strong>lost since</strong>. The maps come from different sources at different sharpness and update every year. The check is therefore re-run for millions of plots whenever a layer updates, and the data accumulates.</p>
     <p>The brief's slide title frames the task: <span class="hl">"Keep the decision, not the data."</span> The layers are to be stored compactly and queried fast while reproducing exactly the same plot-level decisions as the original layers.</p>
-    <p class="st-go"><a href="../company/">Deep dive: SystemEarth and the EUDR →</a></p>
+    <p class="st-go">Deep dive: SystemEarth and the EUDR →</p>
   </div>
 
   <div class="panel" id="st-cut">
@@ -157,7 +136,7 @@
       <svg class="st-years" viewBox="0 0 1000 150" role="img" aria-label="A strip of the years 2001 to 2025 with a cut-off line after 2020. Years up to 2020 are marked as not read by the decision; 2021 to 2025 are the loss years that matter."></svg>
       <p class="say"><small>Cut-off</small><span id="st-cut-say">Hansen records one loss year per map cell, 2001 to 2025.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("The questions and what each needs"). A schematic of years, not data: no heights are measured values.</p>
+    <p class="foot"> A schematic of years, not data: no heights are measured values.</p>
   </div>
 
   <h3>Brief requirements</h3>
@@ -170,13 +149,13 @@
       <tr><td>Estimate infrastructure cost</td><td><span class="st review">bonus</span></td></tr>
       <tr><td>Invent a new compression algorithm</td><td><span class="st">not required</span></td></tr>
     </tbody></table></div>
-  <p class="muted small" style="max-width:700px">No dataset, region, resolution, time span, passing threshold or scoring rubric was specified. Source: docs/writeups/01-the-brief-and-the-data.md.</p>
+  <p class="muted small" style="max-width:700px">No dataset, region, resolution, time span, passing threshold or scoring rubric was specified. </p>
 </section>
 
 <!-- 3 · DATA -->
 <section id="data" data-toc="The data">
   <div class="prose">
-    <div class="kick">3 · The data</div>
+    <div class="kick">2 · The data</div>
     <h2>17 supplier plots and two public maps</h2>
     <p>A <strong>raster</strong> is a map stored as a grid of squares, one number per square, like graph paper. Satellite forest maps are rasters. A farm plot is a <strong>vector</strong>: an outline traced with coordinates. The task is laying outlines over grids.</p>
   </div>
@@ -203,15 +182,15 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-plan.md (the shipped rule reads the middle JRC cell of each exactly nested 3 × 3 block; "any forest in the block" and "at least 5 of 9" were also tried) and decision-layer-report.md (none of the three changes a plot decision here; only P-0001 has forest, so it is a weak test).</p>
+    
   </div>
-  <p class="st-go"><a href="../data/">Deep dive: the data, in full →</a></p>
+  <p class="st-go">Deep dive: the data, in full →</p>
 </section>
 
 <!-- 4 · BUILD -->
 <section id="build" data-toc="Design">
   <div class="prose">
-    <div class="kick">4 · Design</div>
+    <div class="kick">3 · Design</div>
     <h2>Plotline design: three questions, one decision layer</h2>
     <p>Plotline starts from the <strong>three questions</strong> an EUDR-style screen asks of a plot, and what each needs from the maps.</p>
   </div>
@@ -267,7 +246,7 @@
 <!-- 5 · ONE PLOT -->
 <section id="plot" data-toc="One plot, step by step">
   <div class="prose">
-    <div class="kick">5 · How a plot gets its answer</div>
+    <div class="kick">4 · How a plot gets its answer</div>
     <h2>From outline to answer</h2>
     <p>A cell belongs to a plot if the <strong>cell's centre</strong> falls inside the outline. This written rule is part of the decision: changing it changes answers.</p>
   </div>
@@ -275,10 +254,10 @@
   <div class="panel st-plot" id="st-plot">
     <div class="panel-in">
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A made-up plot on a made-up grid</span>
-        <div class="steps" aria-label="Steps"></div></div>
+        </div>
       <svg viewBox="0 0 560 360" id="st-psvg" role="img" aria-label="A grid of square map cells with a synthetic plot outline drawn on top; later steps mark the cells whose centres are inside and show their codes."></svg>
       <div class="legend"><span style="--c:var(--forest-wash)"><i style="border:1px solid var(--forest)"></i>F forest in 2020</span><span style="--c:var(--mist)"><i style="border:1px solid var(--rule-2)"></i>N not forest</span><span style="--c:var(--water-wash)"><i style="border:1px solid var(--water)"></i>W water</span><span style="--c:var(--loss)"><i></i>·22 lost in 2022</span></div>
-      <div class="st-tally" id="st-tally"></div>
+      
       <p class="say"><small id="st-psmall"></small><span id="st-psay"></span></p>
       <div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div>
     </div>
@@ -290,7 +269,7 @@
 <section id="proof" data-toc="The proof">
   <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
   <div class="prose">
-    <div class="kick">6 · The proof</div>
+    <div class="kick">5 · The proof</div>
     <h2>Identical answers, checked for every cell</h2>
     <p>Dropping data is acceptable only if nothing the decision reads is lost. An <strong>independent path</strong> rebuilds the code for every map cell straight from the original GeoTIFFs and compares it with the decision layer. The comparison covers all <strong>744,732 cells</strong>, not a sample.</p>
     <p>This covers every plot, not only the 17 supplied: each answer depends only on the codes of the selected cells, so if every cell's code matches, <em>any</em> boundary drawn in the region gets identical outputs under the same centre rule.</p>
@@ -308,7 +287,7 @@
       </div>
       <p class="say"><small>Check</small><span id="st-psay2">Every cell is rebuilt from the originals and compared.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("Same answers, proven for every cell"). The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which the report says all detected.</p>
+    <p class="foot"> The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which the report says all detected.</p>
   </div>
 
   <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and tried 216,360 more adversarial polygons: 0 mismatches. It also found seven hardening issues, which were fixed. This proves encoding and query agreement, not real-world accuracy or legal compliance.</span></div>
@@ -317,7 +296,7 @@
 <!-- 7 · APP -->
 <section id="app" data-toc="The app">
   <div class="prose">
-    <div class="kick">7 · The app</div>
+    <div class="kick">6 · The app</div>
     <h2>The Plotline app: five views</h2>
     <p>The <strong>Plotline app</strong> presents the evidence to a reviewer. It is map-first and draws the real Hansen and JRC grids in the browser.</p>
   </div>
@@ -336,7 +315,7 @@
 <!-- 8 · NUMBERS -->
 <section id="numbers" data-toc="The numbers">
   <div class="prose">
-    <div class="kick">8 · The numbers</div>
+    <div class="kick">7 · The numbers</div>
     <h2>Results: identical answers, smaller storage, faster queries</h2>
     <p>Three claims are measured separately, each with its conditions stated beside the number.</p>
     <p class="st-go"><a href="../speed/">Deep dive: the speed story →</a></p>
@@ -398,7 +377,7 @@
 <!-- 9 · FINDINGS -->
 <section id="found" data-toc="Findings">
   <div class="prose">
-    <div class="kick">9 · What it found</div>
+    <div class="kick">8 · What it found</div>
     <h2>Findings on the 17 supplied plots</h2>
     <p>With Hansen alone, <strong>7 of the 17 plots</strong> show tree-cover loss after 2020. Hansen records any tree-cover loss on any land, and the region is rubber and oil-palm country. With the JRC 2020 forest map added, only <strong>P-0001</strong> has <span class="hl">mapped loss on mapped 2020 forest</span>: 2 cells, in 2022, out of its 38 Hansen loss cells that year.</p>
     <p class="st-go"><a href="../findings/">Deep dive: what the plots show →</a></p>
@@ -410,7 +389,7 @@
       <svg viewBox="0 0 1000 250" id="st-fsvg" role="img" aria-label="Seventeen dots for the seventeen plots. Seven turn orange when Hansen alone is read. Six of those fade back when the JRC 2020 forest map is added, leaving only the dot for P-0001."></svg>
       <p class="say"><small>Filter</small><span id="st-fsay"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("What the decision layer says about the 17 plots"). One dot per plot; positions are decorative. The six other plots with Hansen loss after 2020 (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) had that loss only on land JRC did not map as forest in 2020. Counts are cells, not hectares.</p>
+    <p class="foot"> One dot per plot; positions are decorative. The six other plots with Hansen loss after 2020 (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) had that loss only on land JRC did not map as forest in 2020. Counts are cells, not hectares.</p>
   </div>
 
   <div class="st-two">
@@ -421,17 +400,6 @@
   <div class="note warn"><b>Scope</b><span>These are mapped observations under a written rule, not a legal compliance verdict. The wording is "mapped loss on mapped 2020 forest", not "deforestation found". The screen excludes EUDR's 0.5 ha minimum area, the "able to reach 5 m" test and protected areas.</span></div>
 </section>
 
-<!-- 10 · TOMORROW -->
-<section id="tomorrow" data-toc="The pitch">
-  <div class="prose">
-    <div class="kick">10 · The pitch</div>
-    <h2>The pitch in brief</h2>
-    <div class="note say-it" style="max-width:none"><b>Summary line</b><span><strong>Plotline keeps the decision, not the data: a 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.</strong></span></div>
-    <p>The pitch structure: the rule is re-run, so most of the data is unnecessary; what the decision reads; proof for every cell; the measured numbers; what the layers show. The judges are engineers, so claims stay tied to the numbers and wording used on this page.</p>
-    <p>Three wording rules apply: registered plots and new boundaries are kept separate (never one blended "N× faster"), "hot" is stated as hot, and supplier declarations are called declarations.</p>
-  </div>
-</section>
-
 <!-- READING MAP -->
 <section id="map" data-toc="Other pages">
   <div class="prose">
@@ -439,12 +407,9 @@
     <h2>Other pages</h2>
   </div>
   <div class="cols st-map">
-    <a class="card" href="../company/" style="--c: var(--forest)"><div class="who">Context · 20 min</div><h3>SystemEarth and the EUDR</h3><p class="rd">The EUDR rule, the cut-off date and the company.</p></a>
-    <a class="card" href="../data/" style="--c: var(--water)"><div class="who">Deep dive · 25 min</div><h3>The data</h3><p class="rd">Rasters, GeoTIFFs and the two public maps.</p></a>
-    <a class="card" href="../solution/" style="--c: var(--proof)"><div class="who">Deep dive · 25 min</div><h3>How Plotline works</h3><p class="rd">The 20 codes, the proof and the app.</p></a>
-    <a class="card" href="../speed/" style="--c: var(--loss)"><div class="who">Deep dive · 20 min</div><h3>Performance</h3><p class="rd">The baseline and conditions behind each speed multiple.</p></a>
-    <a class="card" href="../findings/" style="--c: var(--declared)"><div class="who">Deep dive · 15 min</div><h3>What the plots show</h3><p class="rd">The declaration gap and what the results do not claim.</p></a>
-    <a class="card" href="../glossary/" style="--c: var(--muted)"><div class="who">Reference</div><h3>Glossary</h3><p class="rd">Definitions from "affine" to "zstd".</p></a>
+    <a class="card" href="../solution/" style="--c: var(--proof)"><div class="who">Method</div><h3>How Plotline works</h3><p class="rd">The 20 codes, the proof and the app.</p></a>
+    <a class="card" href="../speed/" style="--c: var(--loss)"><div class="who">Results</div><h3>Performance</h3><p class="rd">The baseline and conditions behind each speed multiple.</p></a>
+    <a class="card" href="../findings/" style="--c: var(--declared)"><div class="who">Results</div><h3>What the plots show</h3><p class="rd">The declaration gap and what the results do not claim.</p></a>
   </div>
   <p class="endnote">Results are encoding and query evidence on a sample region, not legal compliance findings. Supplier plot boundaries and declaration rows are private; every plot drawn here is synthetic.</p>
 </section>

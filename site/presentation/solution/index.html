@@ -134,7 +134,7 @@
     </table>
   </div>
   <div class="prose rv">
-    <p class="small muted">Q3 mirrors the check the supplier's record describes. It uses Hansen alone, so it also counts loss on land that was not forest in 2020. Q1 and Q2 are the EUDR question itself. Source: <code>docs/lab/decision-layer-report.md</code>, "The questions and what each needs". Answers are mapped observations under a written rule, not legal verdicts.</p>
+    <p class="small muted">Q3 mirrors the check the supplier's record describes. It uses Hansen alone, so it also counts loss on land that was not forest in 2020. Q1 and Q2 are the EUDR question itself.  Answers are mapped observations under a written rule, not legal verdicts.</p>
   </div>
 </section>
 
@@ -149,11 +149,11 @@
   <div class="panel" id="sol-shed">
     <div class="panel-in">
       <div class="ph"><span class="tag">Stepper · what the original layers store, and what is read</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      <div class="steps" style="margin-top:12px"></div>
-      <div class="sol-rows" id="sol-shed-rows" role="list" aria-label="Attributes stored for each map cell, with their compressed size"></div>
+      
+      
       <p class="say"><small id="sol-shed-n">Step 1 of 6</small><span id="sol-shed-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> (table "What each attribute costs, and who needs it", 744,732-cell chip) and <code>docs/lab/decision-layer-report.md</code>. Bars share one linear scale and one yardstick: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller: 38,513 B (screening) and 6,146 B (decision).</p>
+    <p class="foot"> Bars share one linear scale and one yardstick: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller: 38,513 B (screening) and 6,146 B (decision).</p>
   </div>
 
   <div class="sol-3">
@@ -172,7 +172,7 @@
       <li><b>Not captured by any step:</b> the 0.5 ha minimum area (a Hansen cell is 0.076 ha, a JRC cell 0.0085 ha, and no contiguity test is applied), "trees able to reach the thresholds in situ", and degradation.</li>
       <li><b>A proxy:</b> "deforestation" here means mapped tree-cover loss on mapped 2020 forest. Hansen loss includes fire and logging and does not say what the land became.</li>
     </ul>
-    <p>4,813 JRC-forest cells on the chip carry 2001–2020 Hansen loss. They are kept as forest: JRC is the authority for the cut-off state, and Hansen loss only dates what happened after it. Source: <code>docs/lab/decision-scale-notes.md</code>, <code>engine/decision.py</code>.</p>
+    <p>4,813 JRC-forest cells on the chip carry 2001–2020 Hansen loss. They are kept as forest: JRC is the authority for the cut-off state, and Hansen loss only dates what happened after it. </p>
   </div></details>
 </section>
 
@@ -197,16 +197,16 @@
           <span class="sol-lab">Hansen loss</span>
           <div class="sol-seg" data-g="y"><button type="button" data-v="0" aria-pressed="true">None</button><button type="button" data-v="1" aria-pressed="false">2021</button><button type="button" data-v="2" aria-pressed="false">2022</button><button type="button" data-v="3" aria-pressed="false">2023</button><button type="button" data-v="4" aria-pressed="false">2024</button><button type="button" data-v="5" aria-pressed="false">2025</button></div>
           <span class="sol-lab">Or select a code</span>
-          <div class="sol-codes" id="sol-dec-codes"></div>
+          
         </div>
         <div>
           <div class="sol-big"><span class="n" id="sol-dec-n">2</span><span class="f" id="sol-dec-f"></span></div>
-          <div class="sol-ans" style="margin-top:12px" id="sol-dec-lay"></div>
-          <div id="sol-dec-ans"></div>
+          
+          
         </div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_summary.py</code> (code layout: 0 unknown, 1 water, then 2 + 6 × forest state + loss index), <code>engine/decision.py</code> (<code>project_decision</code>), <code>docs/lab/decision-layer-report.md</code>. This panel shows one cell. A plot's answer counts many cells, and any "unknown" among them prevents a clean "no".</p>
+    <p class="foot"> This panel shows one cell. A plot's answer counts many cells, and any "unknown" among them prevents a clean "no".</p>
   </div>
 
   <h3 class="rv">Two layers from the same codes</h3>
@@ -237,16 +237,16 @@
   <div class="panel" id="sol-enc">
     <div class="panel-in">
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Stepper · an invented 8 × 6 grid of codes</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      <div class="steps" style="margin-top:12px"></div>
+      
       <div class="sol-svgwrap"><svg id="sol-enc-svg" viewBox="0 0 640 330" role="img" aria-label="An invented grid of 48 map cells shown as codes, then split into four yes or no sheets, then as a short list of loss events"></svg></div>
-      <div class="sol-ev" id="sol-enc-ev" hidden></div>
+      
       <p class="say"><small id="sol-enc-n"></small><span id="sol-enc-say"></span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_sections</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event") and the research pass in <code>docs/lab/decision-layer-report.md</code> (each stream tries 10 compressor settings and keeps the smallest, mostly LZMA). The grid is invented; the real region has 744,732 cells.</p>
   </div>
 
   <details class="deeper"><summary>Detail: integrity checks when the file is read <span class="lvl">technical</span></summary><div class="body">
-    <p>The store is a single file: a short prefix, a CRC-protected header that names the grid, level, encoding and source identities, then the payload. Decoders are bounded: every declared size is checked before anything is allocated. The header, the payload hash and a digest of the decoded raster all have to agree. These checks catch accidents. A deliberate forgery that recomputes every hash is out of scope, and is caught only if the caller pins the genuine file hash. Source: <code>engine/decision_store.py</code>, <code>validation/decision/report.md</code>.</p>
+    <p>The store is a single file: a short prefix, a CRC-protected header that names the grid, level, encoding and source identities, then the payload. Decoders are bounded: every declared size is checked before anything is allocated. The header, the payload hash and a digest of the decoded raster all have to agree. These checks catch accidents. A deliberate forgery that recomputes every hash is out of scope, and is caught only if the caller pins the genuine file hash. </p>
   </div></details>
 </section>
 
@@ -264,10 +264,10 @@
         <span class="sol-seg" data-g="scope" style="margin:0"><button type="button" data-v="region" aria-pressed="true">Sample region</button><button type="button" data-v="tile" aria-pressed="false">Whole real tile</button></span>
         <span class="sol-seg" data-g="scale" style="margin:0"><button type="button" data-v="lin" aria-pressed="true">Linear</button><button type="button" data-v="log" aria-pressed="false">Log</button></span>
         <button class="replay" type="button">↻ Replay</button></div></div>
-      <div class="bars" id="sol-lad-bars" style="margin-top:18px"></div>
+      
       <p class="say"><small id="sol-lad-small"></small><span id="sol-lad-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "How much smaller". Region: Hansen 3 bands + JRC chip, 34 × 17 km. Tile: Hansen 10N_090E + JRC N10_E90, 1.6 billion cells, every strip processed; the tile figures are storage sizes only, with no queries run at tile scale. On the log scale each tick is 10× the last, so 623 KB and 6 KB both stay visible.</p>
+    <p class="foot"> Region: Hansen 3 bands + JRC chip, 34 × 17 km. Tile: Hansen 10N_090E + JRC N10_E90, 1.6 billion cells, every strip processed; the tile figures are storage sizes only, with no queries run at tile scale. On the log scale each tick is 10× the last, so 623 KB and 6 KB both stay visible.</p>
   </div>
 
   <div class="stats rv">
@@ -295,7 +295,7 @@
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Proof · 112 invented cells, then any boundary</span><button class="replay" type="button">↻ Replay</button></div>
       <div class="ph" style="margin-top:10px"><span class="tag" id="sol-proof-count" aria-live="polite">Cells matching the originals: 0 of 112</span></div>
       <div class="sol-svgwrap"><svg id="sol-proof-svg" viewBox="0 0 560 320" role="img" aria-label="A grid of 112 invented map cells. They turn green one by one as each is confirmed to match the original. Afterwards a boundary can be drawn and its answer compared on both sides."></svg></div>
-      <div class="sol-legend" id="sol-proof-legend"></div>
+      
       <div class="btns" style="margin-top:12px" id="sol-proof-btns">
         <button class="btn" type="button" data-p="tri" disabled>Triangle</button>
         <button class="btn" type="button" data-p="ell" disabled>L-shape</button>
@@ -305,11 +305,11 @@
         <button class="btn" type="button" data-p="clear" disabled>Clear</button>
       </div>
       <p class="small muted" style="margin:8px 0 0">Corners can also be placed by clicking on the grid (pointer only), then "Close polygon". A cell is selected when its centre is inside the polygon.</p>
-      <div class="sol-res" id="sol-proof-res" hidden></div>
-      <div class="sol-verdict ok" id="sol-proof-v" hidden></div>
+      
+      
       <p class="say"><small>Observation</small><span id="sol-proof-say">Each cell is compared with the original layers.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (the theorem and <code>exhaustive()</code>), <code>docs/lab/decision-layer-report.md</code>. Synthetic illustration: both sides match by construction. In the real run the match was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
+    <p class="foot"> Synthetic illustration: both sides match by construction. In the real run the match was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
   </div>
 
   <div class="panel" id="sol-neg">
@@ -321,7 +321,7 @@
       <div class="sol-chk"><span>Check every cell</span><span class="st" id="sol-neg-b"></span></div>
       <p class="say"><small>Observation</small><span id="sol-neg-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (<code>negative_controls</code>), <code>validation/decision/report.md</code> (verdict 2: "the 17-plot check misses an erased-2021-loss mutation"; the exhaustive check carries the weight). The grid is invented and shows the compact copy. The flipped cell is outlined in red and also stated in words.</p>
+    <p class="foot"> The grid is invented and shows the compact copy. The flipped cell is outlined in red and also stated in words.</p>
   </div>
 
   <h3 class="rv">What was run</h3>
@@ -361,7 +361,7 @@
   </div>
   <div class="note warn rv"><b>Scope</b><span>These are <b>hot</b> times on the 17 plots, on one region and one laptop with a warm cache. They are not end-to-end times: from a fresh process most of the time is starting Python and importing NumPy. The new-boundary and registered-plot figures answer different jobs and are not averaged.</span></div>
   <div class="prose rv">
-    <p class="small muted">Source: <code>docs/lab/decision-layer-report.md</code>, "How much faster" (Phase 4 figures). The registered-plot table is 20,650 B and its cell index 4,096 B, reported as sidecars next to the 6,146 B layer.</p>
+    <p class="small muted"> The registered-plot table is 20,650 B and its cell index 4,096 B, reported as sidecars next to the 6,146 B layer.</p>
   </div>
 </section>
 
@@ -380,7 +380,7 @@
     <div class="card rv" style="--c: var(--declared)"><div class="who">Everywhere</div><h4>Receipts</h4><p>From any plot, a receipt shows readable fields (versions, grid, rule, hashes) plus the raw JSON, and can be downloaded.</p></div>
     <div class="card rv" style="--c: var(--review)"><div class="who">Everywhere</div><h4>Notes</h4><p>A local analyst note per plot, kept in the browser only. Unknown is shown hatched and never as zero; no screen shows a compliance badge.</p></div>
   </div>
-  <div class="prose rv"><p class="small muted">Sources: <code>docs/writeups/03-what-we-ship.md</code>, <code>app/README.md</code>, <code>design/DESIGN.md</code>, <code>docs/writeups/05-redesign-decisions.md</code>.</p></div>
+  
 </section>
 
 <!-- ============ 9 · lost / limits ============ -->
@@ -399,7 +399,7 @@
       <li><b>Protected areas</b> are not included because their licence is unclear.</li>
       <li><b>Registered-plot paths answer only registered plots.</b> New boundaries go through the decision layer.</li>
     </ul>
-    <p class="small muted">Sources: <code>docs/lab/engine-selector-report.md</code>, <code>docs/writeups/02-what-we-tried-and-found.md</code>, "Honest limits" in <code>docs/lab/decision-layer-report.md</code>.</p>
+    
   </div>
 </section>
 
@@ -477,7 +477,7 @@
     const R = {};
     rows.forEach(r => {
       const d = document.createElement('div'); d.className = 'sol-row'; d.setAttribute('role', 'listitem');
-      d.innerHTML = `<div class="nm">${r.name}<span class="sol-q">${(r.q.length ? r.q : ['read by nothing']).map(q => `<b class="${r.q.length ? '' : 'none'}">${q}</b>`).join('')}</span><small>${r.sub}</small></div><div class="sol-track"><i></i></div><div class="val"></div>`;
+      d.innerHTML = `<div class="nm">${r.name}<span class="sol-q">${(r.q.length ? r.q : ['read by nothing']).map(q => `<b class="${r.q.length ? '' : 'none'}">${q}</b>`).join('')}</span><small>${r.sub}</small></div><div class="sol-track"><i></i></div>`;
       box.append(d); R[r.id] = { d, bar: $('i', d), val: $('.val', d), nm: $('.nm', d) };
     });
     const says = [
