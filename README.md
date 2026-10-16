@@ -14,6 +14,8 @@ This repository holds the project context and working local implementation for t
 
 **Watch** the 55-second walkthrough (`docs/lab/redesign-demo.webm`, kept local, not committed: it shows supplier plot outlines) → **Inspect** the evidence in the app (`npm run dev:local --prefix app`, then `#/proof`) or the [decision-layer report](docs/lab/decision-layer-report.md) → **Reproduce** with `scripts/setup-local.sh` and the commands in that report.
 
+**Submission:** the four-part [submission memo](docs/SUBMISSION_MEMO.md) (what we built, how it works, results, limitations) and the live explainer site at https://collaboration95.github.io/hr-2026/.
+
 **New here? Start with the [explainer pack](site/index.html)** (16 Oct): ten light, animated pages covering the event, SystemEarth and the EUDR, the data, how Plotline works, the speed story, the findings, the pitch and a submission checklist. It is static HTML for GitHub Pages; locally, run `python3 -m http.server` in `site/`. Writer brief: [site/_template/BRIEF.md](site/_template/BRIEF.md).
 
 More: [visual explainer](docs/explainer/index.html) (GeoTIFFs, plot queries and every optimisation; open the file in a browser) · [plain-English writeups](docs/writeups/README.md) · [pitch and demo script](docs/writeups/04-pitch.md) · [design system](design/DESIGN.md) · [detailed handover](docs/HANDOVER.md)
