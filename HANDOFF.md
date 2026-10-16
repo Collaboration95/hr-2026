@@ -23,7 +23,7 @@ All paths in this document are relative to the repository root unless noted othe
 1. [AGENTS.md](AGENTS.md), [README.md](README.md), and this handoff.
 2. [Project handover](docs/HANDOVER.md), [app instructions](app/README.md), and [current demo script](docs/lab/demo-script.md).
 3. SystemEarth sections of [printed brief](docs/problem_statement_reference.txt), [spoken guidance](docs/transcript_rules_and_constraints.txt), and [kickoff guidance](docs/sustainability_kickoff_reference.txt).
-4. Run the app and inspect its actual data and behavior. The [25-second silent walkthrough](docs/lab/completion-demo.webm) and [chapter metadata](docs/lab/completion-demo.json) are a quick orientation to the old design, not an aesthetic specification.
+4. Run the app and inspect its actual data and behavior. The 25-second silent walkthrough (`docs/lab/completion-demo.webm`, kept local, not committed: it shows supplier plot outlines) and [chapter metadata](docs/lab/completion-demo.json) are a quick orientation to the old design, not an aesthetic specification.
 5. Before changing data-consuming components, read [frozen interface](docs/lab/interface-v1.md), [live interface](docs/lab/engine-live-interface-v1.md), [JRC interface](docs/lab/engine-jrc-interface.md), and the current consumer code. Interface documents contain dated additive updates; current validated artifacts and implementation resolve early “pending” descriptions.
 
 Use the deep reference index at the end for focused research. You do not need to reread every experiment log before designing the shell.

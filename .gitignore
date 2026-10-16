@@ -81,3 +81,9 @@ docs/lab/browser-evidence/w3-index-receipt-P-0001.json
 docs/lab/browser-evidence/w3-live-service-exact-receipt.json
 docs/research/company-sample-audit.json
 app/.vite/
+
+# Screenshots and recordings of the app show the supplier plot outlines; kept local only.
+docs/lab/**/*.png
+docs/lab/**/*.webm
+docs/lab/*.png
+docs/lab/*.webm

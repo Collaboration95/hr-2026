@@ -8,7 +8,7 @@
 - `scripts/setup-local.sh` and `scripts/verify-local.sh` provide explicit setup and retained-proof/build commands.
 - The second independent integrated JRC browser review passed nine focused checks. A lead replay uses the portable `npm run qa:jrc --prefix app` command. The horizontally scrolling mobile native-cell table remains a documented non-blocking usability suggestion.
 - Frozen browser suites and the 14-check actual-service live suite pass on a configured alternate port. New runs preserve historical evidence and write into a unique ignored cache directory.
-- A [25-second silent walkthrough](lab/completion-demo.webm), [chapter metadata](lab/completion-demo.json), and [updated narration](lab/demo-script.md) provide a fallback demonstration. A recording command reproduces the journey against the actual app and live service.
+- A 25-second silent walkthrough (`lab/completion-demo.webm`, kept local, not committed: it shows supplier plot outlines), [chapter metadata](lab/completion-demo.json), and [updated narration](lab/demo-script.md) provide a fallback demonstration. A recording command reproduces the journey against the actual app and live service.
 - [Completion verification](lab/completion-verification.json), [reproduction report](lab/completion-reproducibility.md), and [independent JRC review](lab/completion-browser-report.md) are the current evidence. The 13 October final-verification file remains historical.
 
 The agreed local software/demo slice is complete. Company-approved source/rule semantics, mitigation evidence, a representative production workload, team presenter and final organizer logistics remain external handoffs. No submission, company message, cloud deployment or legal approval is implied.

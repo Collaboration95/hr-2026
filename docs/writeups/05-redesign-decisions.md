@@ -76,7 +76,7 @@ The new redesign suite checks:
 
 Every old assertion was ported to an equivalent check on the new design. None were deleted to get a pass. The written audit (old check → new check → why) is in each run's QA output and in the test reports.
 
-**Demo fallback video:** [`docs/lab/redesign-demo.webm`](../lab/redesign-demo.webm), with [chapters](../lab/redesign-demo.json). It is 55 s at 1440×900 and was recorded against the real app and API. It follows the pitch flow: region playback, JRC overlay, P-0001's two accounts, the cohort, P-0005 proof, the receipt, then a live query. It was recorded just before the last two visual tweaks; re-record with `npm run demo:record --prefix app` if you want those included.
+**Demo fallback video:** `docs/lab/redesign-demo.webm` (kept local, not committed: it shows supplier plot outlines), with [chapters](../lab/redesign-demo.json). It is 55 s at 1440×900 and was recorded against the real app and API. It follows the pitch flow: region playback, JRC overlay, P-0001's two accounts, the cohort, P-0005 proof, the receipt, then a live query. It was recorded just before the last two visual tweaks; re-record with `npm run demo:record --prefix app` if you want those included.
 
 ## Known limits
 

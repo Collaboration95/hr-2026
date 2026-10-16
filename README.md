@@ -12,7 +12,7 @@ This repository holds the project context and working local implementation for t
 - **Smaller:** a 6.1 KB decision layer replaces 623 KB of original layers (99% smaller). On a whole 10° tile, 422 MB becomes 8.2 MB.
 - **Faster:** registered plots are re-checked 44× faster (83× with the numpy-free re-check, about 410× from a stored answer table), and new plot boundaries about 5× faster (about 16× if they arrive as a batch). Hot query time, one region, one laptop, warm cache. End-to-end from a fresh process is dominated by Python and NumPy start-up, except for the numpy-free re-check of registered plots, which halves it (50.0 to 24.9 ms).
 
-**Watch** the [55-second walkthrough](docs/lab/redesign-demo.webm) → **Inspect** the evidence in the app (`npm run dev:local --prefix app`, then `#/proof`) or the [decision-layer report](docs/lab/decision-layer-report.md) → **Reproduce** with `scripts/setup-local.sh` and the commands in that report.
+**Watch** the 55-second walkthrough (`docs/lab/redesign-demo.webm`, kept local, not committed: it shows supplier plot outlines) → **Inspect** the evidence in the app (`npm run dev:local --prefix app`, then `#/proof`) or the [decision-layer report](docs/lab/decision-layer-report.md) → **Reproduce** with `scripts/setup-local.sh` and the commands in that report.
 
 **New here? Start with the [explainer pack](site/index.html)** (16 Oct): ten light, animated pages covering the event, SystemEarth and the EUDR, the data, how Plotline works, the speed story, the findings, the pitch and a submission checklist. It is static HTML for GitHub Pages; locally, run `python3 -m http.server` in `site/`. Writer brief: [site/_template/BRIEF.md](site/_template/BRIEF.md).
 
@@ -101,7 +101,7 @@ The repository was public until 15 October 2026 and is now private. SystemEarth 
 
 A fresh clone therefore cannot run the app or the checks until the private bundle is restored. Get the bundle from a teammate through a private channel, then run `scripts/private-data.sh unpack <bundle.tar.gz>`. To make a bundle, run `scripts/private-data.sh pack <bundle.tar.gz>`. Never commit or upload it.
 
-Screenshots and the walkthrough video still show plot outlines on the map, so review them before making the repository public again. Raw acquisition caches, dependencies and disposable test bundles keep their existing exclusions. This record does not invent company data-use terms or alter the sources' licences.
+On 16 October the 76 screenshots and the walkthrough videos, which show plot outlines on the map, were removed from git and its history, and are ignored (kept local only). Raw acquisition caches, dependencies and disposable test bundles keep their existing exclusions. This record does not invent company data-use terms or alter the sources' licences.
 
 ## Working with an agent
 

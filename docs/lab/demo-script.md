@@ -4,7 +4,7 @@
 
 Updated 14 October 2026. Illustrative three-minute core plus a one-minute live/JRC extension, not a claimed organizer pitch duration. The recorded user authorization covers the tracked GitHub repository; confirm organizer logistics separately. Retained measurements are frozen. Use the displayed values and their accounting boundary.
 
-Fallback: [silent recorded walkthrough](completion-demo.webm), with [chapter timestamps](completion-demo.json). It shows actual local responses and can accompany the narration below if the live environment fails.
+Fallback: silent recorded walkthrough (`completion-demo.webm`, kept local, not committed: it shows supplier plot outlines), with [chapter timestamps](completion-demo.json). It shows actual local responses and can accompany the narration below if the live environment fails.
 
 ## Preparation
 
