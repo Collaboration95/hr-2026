@@ -3,12 +3,12 @@ button.sprite { padding: 0; border: 0; color: inherit; background: transparent; 
 .sprite > svg { width: 100%; height: 100%; max-width: none; image-rendering: pixelated; shape-rendering: crispEdges; }
 .sprite .pose { display: none; }
 .sprite svg[data-pose="idle"] .pose[data-pose="idle"], .sprite svg[data-pose="happy"] .pose[data-pose="happy"], .sprite svg[data-pose="sad"] .pose[data-pose="sad"], .sprite svg[data-pose="wave"] .pose[data-pose="wave"], .sprite svg[data-pose="dance"] .pose[data-pose="dance"], .sprite svg[data-pose="sprint"] .pose[data-pose="sprint"], .sprite svg[data-pose="squish"] .pose[data-pose="squish"], .sprite svg[data-pose="sleep"] .pose[data-pose="sleep"], .sprite svg[data-pose="blink"] .pose[data-pose="blink"] { display: inline; }
-.sprite-bubble { position: absolute; z-index: 8; left: 50%; bottom: calc(100% - 2px); width: max-content; max-width: 190px; padding: 5px 8px; transform: translateX(-50%); border: 1px solid var(--ink, #0F1222); border-radius: 3px; background: #fff; color: var(--ink, #0F1222); font: 500 12px/1.3 var(--f-mono, ui-monospace, monospace); text-align: center; box-shadow: 2px 2px 0 rgba(15,18,34,.12); }
-.sprite-bubble::after { content: ""; position: absolute; left: calc(50% - 4px); top: 100%; width: 6px; height: 6px; background: #fff; border-right: 1px solid var(--ink, #0F1222); border-bottom: 1px solid var(--ink, #0F1222); transform: rotate(45deg) translate(-2px,-2px); }
+.sprite-bubble { position: absolute; z-index: 8; left: 50%; bottom: calc(100% - 2px); width: max-content; max-width: 190px; padding: 5px 8px; transform: translateX(-50%); border: 1px solid var(--ink, #0F1222); border-radius: 3px; background: var(--sheet,#fff); color: var(--ink, #0F1222); font: 500 12px/1.3 var(--f-mono, ui-monospace, monospace); text-align: center; box-shadow: 2px 2px 0 rgba(15,18,34,.12); }
+.sprite-bubble::after { content: ""; position: absolute; left: calc(50% - 4px); top: 100%; width: 6px; height: 6px; background: var(--sheet,#fff); border-right: 1px solid var(--ink, #0F1222); border-bottom: 1px solid var(--ink, #0F1222); transform: rotate(45deg) translate(-2px,-2px); }
 .sprite-bubble[hidden] { display: none; }
 .sprite-companion { position: fixed; z-index: 50; right: 24px; bottom: 18px; display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: color-mix(in srgb, var(--sheet,#fff) 88%, transparent); box-shadow: 0 3px 16px rgba(15,18,34,.16); }
 .sprite-companion .sprite { width: 64px; height: 64px; }
-.sprite-companion-close { position: absolute; z-index: 2; right: -3px; top: -5px; width: 21px; height: 21px; padding: 0; border: 1px solid var(--ink,#0F1222); border-radius: 50%; background: white; color: var(--ink,#0F1222); font: 15px/18px var(--f-mono,monospace); cursor: pointer; }
+.sprite-companion-close { position: absolute; z-index: 2; right: -3px; top: -5px; width: 21px; height: 21px; padding: 0; border: 1px solid var(--ink,#0F1222); border-radius: 50%; background: var(--sheet,#fff); color: var(--ink,#0F1222); font: 15px/18px var(--f-mono,monospace); cursor: pointer; }
 .sprite-companion { transform: translateX(var(--walk-x,0)); transition: transform .25s steps(3,end); }
 .sprite-companion.hop .sprite { animation: sprite-hop .42s steps(3,end) 2; }
 @keyframes sprite-hop { 50% { transform: translate(8px,-7px) rotate(7deg); } }
@@ -51,3 +51,5 @@ button.sprite:focus-visible { outline: 3px solid var(--pen,#2F45FF); outline-off
 @media (max-width: 1180px) { .sprite-spot:not(.sprite-spot-hero) { display: none; } }
 @media (max-width: 1099px) { .sprite-spot-hero { display: none; } }
 @media (prefers-reduced-motion: reduce) { .sprite > svg { animation: none !important; } .sprite-puff { display: none; } }
+
+:root[data-theme="dark"] .sprite > svg { filter: drop-shadow(0 0 1px rgba(255,255,255,.55)); }
