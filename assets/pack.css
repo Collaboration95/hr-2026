@@ -137,7 +137,6 @@ li { margin-top: 6px; }
 /* cards and grids */
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 22px; }
 .card { --c: var(--pen); position: relative; padding: 18px 20px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; }
-.card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); }
 .card .who { font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
 .card h3, .card h4 { margin-top: 8px; }
 .card p { font-size: 16.5px; color: var(--ink-2); margin-top: 8px; }
@@ -196,3 +195,33 @@ kbd { font: 600 11px var(--f-mono); border: 1px solid var(--rule-2); border-bott
 .qr-fixed img { display: block; width: 100%; height: auto; }
 @media (min-width: 1500px) { .qr-fixed { display: block; } }
 @media print { .qr-fixed { display: block; } }
+
+/* card outline: a short bar at the top-left traces the whole border on hover, and unwinds on exit */
+.edge { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.edge rect { x: 2px; y: 2px; width: calc(100% - 4px); height: calc(100% - 4px); fill: none; stroke: var(--c); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 7 93; transition: stroke-dasharray 1.15s cubic-bezier(.65, 0, .35, 1); }
+.hcard:hover .edge rect, .hcard:focus-visible .edge rect, .card:hover .edge rect, a.card:focus-visible .edge rect { stroke-dasharray: 100 0; }
+@media (prefers-reduced-motion: reduce) { .edge rect { transition: none; } }
+
+/* dark theme: a deep blue-grey, not black, so nothing flashes; follows the system unless the toggle was used */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0F131B; --sheet: #171C26; --mist: #1E2430; --rule: #2A3140; --rule-2: #394256;
+  --ink: #ECEFF6; --ink-2: #CBD1DF; --muted: #A0A8BC; --faint: #7A8296;
+  --pen: #8392FF; --pen-deep: #A3AEFF; --pen-wash: #1D2347; --pen-wash-2: #29316A;
+  --hi: #6A5A14; --hi-wash: #2E2910;
+  --ok: #4ADE9A; --ok-bright: #34D399; --ok-wash: #11302A;
+  --bad: #F87171; --bad-wash: #34171B;
+  --loss: #FB923C; --loss-wash: #3A2616; --loss-past: #8D6E5D;
+  --canopy-0: #1B2B21; --canopy-100: #56B07C;
+  --forest: #4ADE80; --forest-wash: #12301F;
+  --water: #60A5FA; --water-wash: #152A42;
+  --declared: #A995FB; --declared-wash: #262048;
+  --proof: #A3E635; --proof-wash: #1F2B10;
+  --review: #FBBF24; --review-wash: #352A10;
+  --unknown: #8F96AA; --unknown-wash: #1E2430;
+}
+:root[data-theme="dark"] .btn.on, :root[data-theme="dark"] .steps button.on { color: #0F131B; }
+.theme-toggle { position: fixed; z-index: 45; left: 18px; bottom: 18px; width: 40px; height: 40px; padding: 0; border-radius: 50%; border: 1px solid var(--rule-2); background: var(--sheet); color: var(--ink-2); font: 18px/1 var(--f-ui); cursor: pointer; box-shadow: 0 6px 18px -10px rgba(0, 0, 0, .4); }
+.theme-toggle:hover { color: var(--pen); }
+@media print { .theme-toggle { display: none; } }
+:root[data-theme="dark"] .qr-fixed { filter: brightness(.92); }

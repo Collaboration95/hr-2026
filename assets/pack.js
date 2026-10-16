@@ -45,6 +45,19 @@
   qr.innerHTML = `<img src="${SITE}assets/qr.svg" alt="QR code for the Plotline presentation pages" width="180" height="180">`;
   document.body.append(qr);
 
+  /* card outlines (see .edge in pack.css) */
+  $$('.hcard, .card').forEach(card => {
+    const r = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 14;
+    card.insertAdjacentHTML('beforeend', `<svg class="edge" aria-hidden="true"><rect rx="${Math.max(0, r - 2)}" pathLength="100"/></svg>`);
+  });
+
+  /* theme toggle: the choice is remembered; the first visit follows the system setting (see the snippet in <head>) */
+  const tog = document.createElement('button');
+  tog.className = 'theme-toggle'; tog.type = 'button';
+  const paint = () => { const d = document.documentElement.dataset.theme === 'dark'; tog.textContent = d ? '☀' : '☾'; tog.setAttribute('aria-label', d ? 'Switch to light theme' : 'Switch to dark theme'); };
+  tog.addEventListener('click', () => { const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = t; try { localStorage.setItem('theme', t); } catch (_) {} paint(); });
+  paint(); document.body.append(tog);
+
   /* table of contents */
   const secs = $$('main section[id]').filter(s => $('h2', s));
   if (slug && secs.length > 2) {
