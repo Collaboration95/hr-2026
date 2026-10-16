@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles. Every class starts with fnd- */
 .fnd-seg { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -94,10 +94,9 @@
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="jrc" data-size="96" data-pose="look" data-click="happy" data-idle-fidget></span>
-  <div class="kick">Deep dive · 15 min</div>
+  <div class="kick">Deep dive</div>
   <h1>What the plots show: <span class="hl">declarations and mapped observations</span></h1>
   <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". Hansen and JRC map post-2020 loss on different plots. Two variants (an older Hansen release, a different cell-inclusion rule) do not reconcile the two, and the comparison does not establish the cause.</p>
-  <div class="meta"><span>15 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md, docs/writeups/02 and 04, README.md, docs/research/company-sample-audit.md (prose), docs/lab/engine-vintage-report.md, engine-spatial-sensitivity-report.md, company-next-conversation.md</span></div>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li>Five plots carry a declared indication, recorded mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. These are declarations; the evidence files were not supplied.</li>
     <li>Hansen alone maps loss after 2020 on <b>7 of 17</b> plots. With JRC's 2020 forest map, only <b>P-0001</b> has mapped loss on mapped 2020 forest: <b>2 cells in 2022</b>. Region-wide, 341 of 80,429 post-2020 loss cells (0.4%) are on mapped 2020 forest.</li>
@@ -322,7 +321,7 @@
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, seg, REDUCE } = Pack;
@@ -540,6 +539,6 @@
   })();
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 </body>
 </html>

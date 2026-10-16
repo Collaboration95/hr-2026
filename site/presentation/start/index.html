@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles. Every new class is prefixed st- (this page's slug is "start"). */
 .st-go { margin-top: 18px; font: 600 14px var(--f-mono); }
@@ -109,10 +109,9 @@
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
-  <div class="kick">Overview · 15 min</div>
+  <div class="kick">Overview</div>
   <h1>Plotline <span class="hl">overview</span></h1>
   <p class="lede">Plotline is a compact store for EUDR forest-loss screening. It keeps <strong>only the facts the decision reads</strong> and gives the same answers as the original map layers.</p>
-  <div class="meta"><span>15 min read</span><span>Level: basics</span><span>Sources: README.md, docs/writeups/, docs/lab/decision-layer-report.md</span></div>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li><b>The problem:</b> EUDR screening intersects farm plots with years of forest maps, and repeats the check whenever a map updates. The challenge brief asks for compact storage, fast queries and the <em>same</em> plot-level answer as the original layers.</li>
     <li><b>The result:</b> a <span class="hl">6.1 KB decision layer</span> replaces 623 KB of original layers, with identical answers for all 744,732 map cells.</li>
@@ -127,7 +126,6 @@
     <h2>Hack &amp; Hire Sustainability Edition 2026</h2>
     <p>The event is run by Projet with NUS CAT. Participants pick one of six real company challenges, build over a week (<strong>10 to 17 October 2026</strong>), and pitch to the company's team at the <strong>finals on 17 October</strong>. Teams have one to three people.</p>
     <p>Track: <strong>SystemEarth</strong>.</p>
-    <p class="st-go"><a href="../event/">Deep dive: the event and the brief →</a></p>
   </div>
 
   <div class="panel" id="st-time">
@@ -431,7 +429,6 @@
     <div class="note say-it" style="max-width:none"><b>Summary line</b><span><strong>Plotline keeps the decision, not the data: a 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.</strong></span></div>
     <p>The pitch structure: the rule is re-run, so most of the data is unnecessary; what the decision reads; proof for every cell; the measured numbers; what the layers show. The judges are engineers, so claims stay tied to the numbers and wording used on this page.</p>
     <p>Three wording rules apply: registered plots and new boundaries are kept separate (never one blended "N× faster"), "hot" is stated as hot, and supplier declarations are called declarations.</p>
-    <p class="st-go"><a href="../pitch/">Presentation guide →</a> &nbsp; <a href="../submit/">Submission readiness →</a></p>
   </div>
 </section>
 
@@ -442,21 +439,18 @@
     <h2>Other pages</h2>
   </div>
   <div class="cols st-map">
-    <a class="card" href="../event/" style="--c: var(--ink-2)"><div class="who">Context · 15 min</div><h3>The event and the brief</h3><p class="rd">The six challenges and the SystemEarth brief, word by word.</p></a>
     <a class="card" href="../company/" style="--c: var(--forest)"><div class="who">Context · 20 min</div><h3>SystemEarth and the EUDR</h3><p class="rd">The EUDR rule, the cut-off date and the company.</p></a>
     <a class="card" href="../data/" style="--c: var(--water)"><div class="who">Deep dive · 25 min</div><h3>The data</h3><p class="rd">Rasters, GeoTIFFs and the two public maps.</p></a>
     <a class="card" href="../solution/" style="--c: var(--proof)"><div class="who">Deep dive · 25 min</div><h3>How Plotline works</h3><p class="rd">The 20 codes, the proof and the app.</p></a>
     <a class="card" href="../speed/" style="--c: var(--loss)"><div class="who">Deep dive · 20 min</div><h3>Performance</h3><p class="rd">The baseline and conditions behind each speed multiple.</p></a>
     <a class="card" href="../findings/" style="--c: var(--declared)"><div class="who">Deep dive · 15 min</div><h3>What the plots show</h3><p class="rd">The declaration gap and what the results do not claim.</p></a>
-    <a class="card" href="../pitch/" style="--c: var(--pen)"><div class="who">Presenting · 20 min</div><h3>Presentation guide</h3><p class="rd">The summary line, demo run-through, and questions and answers.</p></a>
-    <a class="card" href="../submit/" style="--c: var(--review)"><div class="who">Presenting · 10 min</div><h3>Submission readiness</h3><p class="rd">Requirements, current status and unconfirmed items.</p></a>
     <a class="card" href="../glossary/" style="--c: var(--muted)"><div class="who">Reference</div><h3>Glossary</h3><p class="rd">Definitions from "affine" to "zstd".</p></a>
   </div>
   <p class="endnote">Results are encoding and query evidence on a sample region, not legal compliance findings. Supplier plot boundaries and declaration rows are private; every plot drawn here is synthetic.</p>
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, seg, ease, fmt } = Pack;
@@ -698,7 +692,7 @@
   })();
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 <script>(function(){
   var e=document.getElementById('event'); if(e) e.dataset.spriteSay='The short version of the event.';
   var e=document.getElementById('problem'); if(e) e.dataset.spriteSay='EUDR in one section.';

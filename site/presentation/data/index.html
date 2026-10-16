@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles, prefixed dat- */
 .dat-sq rect { transition: fill .35s, stroke .35s, opacity .35s; }
@@ -53,10 +53,9 @@
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="hansen" data-size="96" data-pose="look" data-click="happy" data-idle-fidget></span>
-  <div class="kick">Deep dive · 25 min</div>
+  <div class="kick">Deep dive</div>
   <h1>The data: <span class="hl">raster layers and one polygon per plot.</span></h1>
   <p class="lede">Plotline reads three kinds of input: the 17 supplier plots in the SystemEarth sample, a tree-cover loss map from the University of Maryland (Hansen) and a 2020 forest map from the EU's Joint Research Centre (JRC).</p>
-  <div class="meta"><span>25 min read</span><span>Level: deep dive</span><span>Sources: docs/research/company-sample-audit.md, docs/research/layer-acquisition.md, docs/lab/engine-data-W4.md, docs/lab/decision-scale-notes.md</span></div>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li>A satellite map here is a <strong>grid of whole numbers</strong>. The Hansen chip is <strong>1,233 × 604 = 744,732 cells</strong>, three numbers per cell, about 28 m wide.</li>
     <li>Of the Hansen chip's 576,999 bytes, the canopy percentage band is <strong>72%</strong>, and no EUDR question reads it.</li>
@@ -367,7 +366,7 @@
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, seg, ease } = Pack;
@@ -706,7 +705,7 @@
   })();
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 <script>(function(){
   var e=document.getElementById('raster'); if(e) e.dataset.spriteSay='Think of it as a grid.';
   var e=document.getElementById('geotiff'); if(e) e.dataset.spriteSay='Tiles inside a file.';

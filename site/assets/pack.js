@@ -3,36 +3,47 @@
    It adds the masthead, the table of contents (from <section id> + its first h2), the prev/next pager,
    scroll reveals, count-ups, bar fills, and a tiny "instrument" helper for animations that play on view. */
 (() => {
+  /* Two zones. "ext" pages live in presentation/ and are for readers outside the team; they never link to "int" pages.
+     "int" pages are team notes and may link to the presentation pages. */
+  const SITE = new URL('../', document.currentScript.src).href;
   const PAGES = [
-    { slug: 'start',    title: 'Overview',                   mins: 15, level: 'Overview' },
-    { slug: 'event',    title: 'The event and the brief',    mins: 15, level: 'Context' },
-    { slug: 'company',  title: 'SystemEarth and the EUDR',   mins: 20, level: 'Context' },
-    { slug: 'data',     title: 'The data',                   mins: 25, level: 'Detail' },
-    { slug: 'solution', title: 'How Plotline works',         mins: 25, level: 'Detail' },
-    { slug: 'speed',    title: 'Performance',            mins: 20, level: 'Detail' },
-    { slug: 'findings', title: 'What the plots show',        mins: 15, level: 'Detail' },
-    { slug: 'pitch',    title: 'Presentation guide',         mins: 20, level: 'Presentation' },
-    { slug: 'submit',   title: 'Submission readiness',       mins: 10, level: 'Presentation' },
-    { slug: 'glossary', title: 'Glossary',                   mins: 0,  level: 'Reference' },
+    { slug: 'start',    zone: 'ext', path: 'presentation/start/',    title: 'Overview' },
+    { slug: 'company',  zone: 'ext', path: 'presentation/company/',  title: 'SystemEarth and the EUDR' },
+    { slug: 'data',     zone: 'ext', path: 'presentation/data/',     title: 'The data' },
+    { slug: 'solution', zone: 'ext', path: 'presentation/solution/', title: 'How Plotline works' },
+    { slug: 'speed',    zone: 'ext', path: 'presentation/speed/',    title: 'Performance' },
+    { slug: 'findings', zone: 'ext', path: 'presentation/findings/', title: 'What the plots show' },
+    { slug: 'glossary', zone: 'ext', path: 'presentation/glossary/', title: 'Glossary' },
+    { slug: 'event',    zone: 'int', path: 'event/',                 title: 'The event and the brief' },
+    { slug: 'pitch',    zone: 'int', path: 'pitch/',                 title: 'Presentation guide' },
+    { slug: 'submit',   zone: 'int', path: 'submit/',                title: 'Submission readiness' },
   ];
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const slug = document.body.dataset.page;
-  const i = PAGES.findIndex(p => p.slug === slug);
-  const root = slug ? '../' : './';
+  const page = PAGES.find(p => p.slug === slug);
+  const zone = PAGES.filter(p => page && p.zone === page.zone);
+  const i = zone.indexOf(page);
+  const hub = SITE + (page && page.zone === 'ext' ? 'presentation/' : '');
 
   /* masthead */
   if (slug) {
     const mast = document.createElement('div');
     mast.className = 'mast';
-    mast.innerHTML = `<div class="mast-in"><a href="${root}"><span class="dot"></span><b>Plotline</b> · explainer pack</a>
-      <span class="where">${i >= 0 ? `<span>${i + 1} / ${PAGES.length}</span>` : ''}<a href="${root}">All pages ↗</a></span></div><div class="progress"></div>`;
+    mast.innerHTML = `<div class="mast-in"><a href="${hub}"><span class="dot"></span><b>Plotline</b></a>
+      <span class="where">${i >= 0 ? `<span>${i + 1} / ${zone.length}</span>` : ''}<a href="${hub}">All pages ↗</a></span></div><div class="progress"></div>`;
     document.body.prepend(mast);
     const bar = $('.progress', mast);
     const prog = () => { const h = document.documentElement; bar.style.width = (100 * h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight)) + '%'; };
     addEventListener('scroll', prog, { passive: true }); prog();
   }
+
+  /* persistent QR code on every page: it points at the presentation hub */
+  const qr = document.createElement('a');
+  qr.className = 'qr-fixed'; qr.href = SITE + 'presentation/'; qr.setAttribute('aria-label', 'Plotline presentation pages');
+  qr.innerHTML = `<img src="${SITE}assets/qr.svg" alt="QR code for the Plotline presentation pages" width="120" height="120">`;
+  document.body.append(qr);
 
   /* table of contents */
   const secs = $$('main section[id]').filter(s => $('h2', s));
@@ -48,11 +59,11 @@
 
   /* pager */
   if (i >= 0) {
-    const prev = PAGES[i - 1], next = PAGES[i + 1];
+    const prev = zone[i - 1], next = zone[i + 1];
     const pg = document.createElement('nav');
     pg.className = 'pager'; pg.setAttribute('aria-label', 'Pages');
-    pg.innerHTML = (prev ? `<a class="prev" href="../${prev.slug}/"><small>← Previous</small><span>${prev.title}</span></a>` : '<span></span>')
-      + (next ? `<a class="next" href="../${next.slug}/"><small>Next →</small><span>${next.title}</span></a>` : `<a class="next" href="../"><small>Done →</small><span>Back to all pages</span></a>`);
+    pg.innerHTML = (prev ? `<a class="prev" href="${SITE + prev.path}"><small>← Previous</small><span>${prev.title}</span></a>` : '<span></span>')
+      + (next ? `<a class="next" href="${SITE + next.path}"><small>Next →</small><span>${next.title}</span></a>` : `<a class="next" href="${hub}"><small>Done →</small><span>All pages</span></a>`);
     ($('main') || document.body).append(pg);
   }
 
