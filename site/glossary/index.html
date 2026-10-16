@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every new class is prefixed gl- (this page's slug is "glossary"). */
 .gl-bar { position: sticky; top: 44px; z-index: 15; margin-top: 28px; padding: 14px 16px 12px; background: color-mix(in srgb, var(--sheet) 94%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 14px 30px -24px rgba(15, 18, 34, .35); }
@@ -45,6 +46,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="hansen" data-size="96" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="kick">Reference · look-up</div>
   <h1>Glossary of <span class="hl">terms</span></h1>
   <p class="lede">Terms used across the Plotline pack, defined in plain language and grouped by theme, A to Z within each group. Each entry links to the page that explains it.</p>
@@ -274,5 +276,11 @@
   apply();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('g-rule'); if(e) e.dataset.spriteSay='The rule, in plain words.';
+  var e=document.getElementById('g-speed'); if(e) e.dataset.spriteSay='Hot means warm cache.';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>

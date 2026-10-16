@@ -1,0 +1,53 @@
+.sprite { position: relative; display: inline-flex; width: var(--sprite-size,64px); height: var(--sprite-size,64px); vertical-align: middle; align-items: center; justify-content: center; image-rendering: pixelated; }
+button.sprite { padding: 0; border: 0; color: inherit; background: transparent; cursor: pointer; font: inherit; }
+.sprite > svg { width: 100%; height: 100%; max-width: none; image-rendering: pixelated; shape-rendering: crispEdges; }
+.sprite .pose { display: none; }
+.sprite svg[data-pose="idle"] .pose[data-pose="idle"], .sprite svg[data-pose="happy"] .pose[data-pose="happy"], .sprite svg[data-pose="sad"] .pose[data-pose="sad"], .sprite svg[data-pose="wave"] .pose[data-pose="wave"], .sprite svg[data-pose="dance"] .pose[data-pose="dance"], .sprite svg[data-pose="sprint"] .pose[data-pose="sprint"], .sprite svg[data-pose="squish"] .pose[data-pose="squish"], .sprite svg[data-pose="sleep"] .pose[data-pose="sleep"], .sprite svg[data-pose="blink"] .pose[data-pose="blink"] { display: inline; }
+.sprite-bubble { position: absolute; z-index: 8; left: 50%; bottom: calc(100% - 2px); width: max-content; max-width: 190px; padding: 5px 8px; transform: translateX(-50%); border: 1px solid var(--ink, #0F1222); border-radius: 3px; background: #fff; color: var(--ink, #0F1222); font: 500 12px/1.3 var(--f-mono, ui-monospace, monospace); text-align: center; box-shadow: 2px 2px 0 rgba(15,18,34,.12); }
+.sprite-bubble::after { content: ""; position: absolute; left: calc(50% - 4px); top: 100%; width: 6px; height: 6px; background: #fff; border-right: 1px solid var(--ink, #0F1222); border-bottom: 1px solid var(--ink, #0F1222); transform: rotate(45deg) translate(-2px,-2px); }
+.sprite-bubble[hidden] { display: none; }
+.sprite-companion { position: fixed; z-index: 50; right: 24px; bottom: 18px; display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: color-mix(in srgb, var(--sheet,#fff) 88%, transparent); box-shadow: 0 3px 16px rgba(15,18,34,.16); }
+.sprite-companion .sprite { width: 64px; height: 64px; }
+.sprite-companion-close { position: absolute; z-index: 2; right: -3px; top: -5px; width: 21px; height: 21px; padding: 0; border: 1px solid var(--ink,#0F1222); border-radius: 50%; background: white; color: var(--ink,#0F1222); font: 15px/18px var(--f-mono,monospace); cursor: pointer; }
+.sprite-companion { transform: translateX(var(--walk-x,0)); transition: transform .25s steps(3,end); }
+.sprite-companion.hop .sprite { animation: sprite-hop .42s steps(3,end) 2; }
+@keyframes sprite-hop { 50% { transform: translate(8px,-7px) rotate(7deg); } }
+.sprite-leaf-field { position: fixed; z-index: 80; inset: 0; overflow: hidden; pointer-events: none; }
+.sprite-leaf { position: absolute; top: -14px; width: 6px; height: 6px; background: var(--forest,#15803D); image-rendering: pixelated; animation: sprite-fall 4s linear forwards; }
+.sprite-leaf:nth-child(3n) { background: var(--hi,#FFE45C); }
+.sprite-leaf:nth-child(3n + 1) { background: var(--loss,#E8590C); }
+@keyframes sprite-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (max-width: 639px) { .sprite-companion { display: none; } }
+@media (prefers-reduced-motion: reduce) { .sprite-companion { transform: none; transition: none; } .sprite-companion.hop .sprite, .sprite-leaf { animation: none !important; } .sprite-leaf-field { display: none; } }
+
+/* click animations (one per creature) and the leaf puff */
+.sprite > svg { transform-origin: 50% 90%; }
+.sprite-do-jump > svg { animation: sp-jump .6s steps(6,end); }
+.sprite-do-wobble > svg { animation: sp-wobble .7s steps(7,end); }
+.sprite-do-hop2 > svg { animation: sp-hop2 .8s steps(8,end); }
+.sprite-do-squash > svg { animation: sp-squash .7s steps(7,end); }
+.sprite-do-jitter > svg { animation: sp-jitter .5s steps(10,end); }
+.sprite-do-dash > svg { animation: sp-dash .7s steps(8,end); }
+.sprite-do-tilt > svg { animation: sp-tilt .8s steps(8,end); }
+@keyframes sp-jump { 0%,100% { transform: translateY(0) rotate(0); } 45% { transform: translateY(-16px) rotate(-8deg); } 75% { transform: translateY(0) scale(1.1,.88); } }
+@keyframes sp-wobble { 0%,100% { transform: rotate(0); } 20% { transform: rotate(-9deg); } 40% { transform: rotate(8deg); } 60% { transform: rotate(-5deg); } 80% { transform: rotate(3deg); } }
+@keyframes sp-hop2 { 0%,100% { transform: translateY(0); } 25% { transform: translateY(-12px); } 50% { transform: translateY(0); } 75% { transform: translateY(-8px); } }
+@keyframes sp-squash { 0%,100% { transform: scale(1); } 30% { transform: scale(1.3,.55); } 55% { transform: scale(.55,1.3); } 80% { transform: scale(1.1,.9); } }
+@keyframes sp-jitter { 0%,100% { transform: translate(0); } 20% { transform: translate(-3px,1px); } 40% { transform: translate(3px,-2px); } 60% { transform: translate(-2px,2px); } 80% { transform: translate(2px,-1px); } }
+@keyframes sp-dash { 0% { transform: translateX(0); } 40% { transform: translateX(46px) scaleX(1.15); } 41% { transform: translateX(-46px); } 100% { transform: translateX(0); } }
+@keyframes sp-tilt { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-14deg) translateY(-3px); } 50% { transform: rotate(0); } 75% { transform: rotate(14deg) translateY(-3px); } }
+.sprite-puff { position: absolute; inset: 0; pointer-events: none; }
+.sprite-puff i { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; background: var(--forest,#15803D); animation: sp-puff .7s steps(7,end) forwards; }
+.sprite-puff i:nth-child(3n) { background: var(--hi,#FFE45C); } .sprite-puff i:nth-child(3n+1) { background: var(--loss,#E8590C); }
+@keyframes sp-puff { to { transform: rotate(var(--a)) translateX(var(--d)); opacity: 0; } }
+/* placed sprites */
+.sprite-spot { position: absolute; z-index: 5; right: 6px; top: 12px; }
+.sprite-spot-hero { top: 34px; right: 0; }
+.hero, .hub-hero, section { position: relative; }
+.hub-hero > .sprite-spot-hero { top: 8px; right: 70px; }
+button.sprite:focus-visible { outline: 3px solid var(--pen,#2F45FF); outline-offset: 2px; border-radius: 6px; }
+.sprite-companion .sprite-bubble { left: auto; right: 0; transform: none; }
+.sprite-companion .sprite-bubble::after { left: auto; right: 28px; }
+@media (max-width: 1180px) { .sprite-spot:not(.sprite-spot-hero) { display: none; } }
+@media (max-width: 1099px) { .sprite-spot-hero { display: none; } }
+@media (prefers-reduced-motion: reduce) { .sprite > svg { animation: none !important; } .sprite-puff { display: none; } }

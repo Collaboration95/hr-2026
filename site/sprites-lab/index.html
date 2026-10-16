@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F6F7F9">
+  <title>Sprite judging lab · Plotline</title>
+  <link rel="stylesheet" href="../assets/pack.css">
+  <link rel="stylesheet" href="../assets/sprites.css">
+  <style>
+    .lab-intro { padding: 54px 0 28px; }
+    .lab-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:26px; }
+    .creature { --c:var(--forest); position:relative; padding:20px; background:var(--sheet); border:1px solid var(--rule); border-radius:14px; }
+    .creature::before { content:""; position:absolute; inset:0 0 auto; height:4px; background:var(--c); }
+    .creature-head { display:flex; align-items:center; gap:14px; min-height:140px; }
+    .creature h2 { font-size:26px; text-transform:capitalize; }
+    .creature .personality { margin-top:5px; color:var(--muted); font-size:14px; }
+    .pose-list { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+    .pose-list button,.demo-row button { border:1px solid var(--rule-2); border-radius:6px; padding:6px 9px; background:var(--mist); color:var(--ink); cursor:pointer; font:500 12px var(--f-mono); }
+    .pose-list button:hover,.pose-list button[aria-pressed="true"] { background:var(--pen-wash); border-color:var(--pen-wash-2); }
+    .speech-lines { padding:0; list-style:none; margin:14px 0 0; font:12px/1.55 var(--f-mono); color:var(--muted); }
+    .speech-lines li { margin:2px 0; }
+    .demo-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); }
+    .demo-row .hint { font:11px var(--f-mono); color:var(--muted); }
+    .explainer-sample { margin-top:28px; padding:26px; border:1px solid var(--rule); border-radius:14px; background:var(--sheet); }
+    .mini-roster { display:flex; align-items:center; justify-content:space-around; gap:12px; flex-wrap:wrap; padding:20px 8px 4px; }
+    .mini-roster .sprite { flex:none; }
+    .loading { color:var(--muted); font:13px var(--f-mono); }
+    .missing { opacity:.5; }
+    @media(max-width:640px) { .explainer-sample {padding:18px;} }
+  </style>
+</head>
+<body>
+  <header class="mast"><div class="mast-in"><a href="../index.html"><span class="dot"></span><b>Plotline</b> / sprite lab</a><div class="where"><a href="#gallery">Gallery</a><a href="#roster">Roster</a></div></div></header>
+  <div class="wrap"><main>
+    <header class="lab-intro">
+      <div class="kick">Interactive judging gallery</div>
+      <h1>Small forest<br><span class="hl">colleagues.</span></h1>
+      <p class="lede">Eight tiny characters. Every pose and line comes from the creature’s own SVG.</p>
+      <div class="meta"><span>Pose buttons are discovered after load</span><span>Try hover, focus, and click</span></div>
+    </header>
+    <section id="gallery" data-sprite-say="Pick a pose. I can wait.">
+      <div class="ph"><div><div class="tag"><span class="chip">01</span> Creature cards</div><h2>Meet the cast</h2></div><span class="small muted" id="load-status" aria-live="polite">Loading SVGs…</span></div>
+      <div class="lab-grid" id="creatures"></div>
+    </section>
+    <section id="roster" data-sprite-say="A small team, many moods.">
+      <div class="tag"><span class="chip">02</span> Explainer scene</div><h2>All together</h2>
+      <div class="explainer-sample">
+        <div class="kick">A smaller layer. Same decision.</div>
+        <p class="lede">Keep the answer, leave the bulk behind.</p>
+        <div class="mini-roster" id="roster-sprites" aria-label="All eight forest creatures"></div>
+        <p class="small muted">The compact layer preserves every plot’s original decision.</p>
+      </div>
+    </section>
+    <p class="endnote">Keyboard: Tab to a creature, Enter or Space to cycle poses. Type <code>forest</code> for a group surprise; press <kbd>P</kbd> for pixel leaves.</p>
+  </main></div>
+  <script src="../assets/sprites.js" defer></script>
+  <script>
+    (() => {
+      const names=['pip','stump','chippy','squish','lossy','zippy','hansen','jrc'];
+      const cards=document.querySelector('#creatures'), roster=document.querySelector('#roster-sprites');
+      let loaded=0;
+      function makeSprite(name,size,extra={}) {
+        const el=document.createElement('span'); el.className='sprite'; el.dataset.sprite=name; el.dataset.size=String(size);
+        Object.entries(extra).forEach(([k,v])=>el.setAttribute(k,v)); return el;
+      }
+      function build(name) {
+        const card=document.createElement('article'); card.className='creature';
+        const head=document.createElement('div'); head.className='creature-head';
+        const spr=makeSprite(name,128,{'data-hover':'happy','data-click':'dance'}); head.append(spr);
+        const intro=document.createElement('div'), title=document.createElement('h2'); title.textContent=name;
+        const personality=document.createElement('p'); personality.className='personality'; personality.textContent='Loading character notes…'; intro.append(title,personality); head.append(intro);
+        const poses=document.createElement('div'); poses.className='pose-list'; poses.setAttribute('aria-label',`${name} poses`);
+        const lines=document.createElement('ul'); lines.className='speech-lines';
+        const demo=document.createElement('div'); demo.className='demo-row';
+        const sayButton=document.createElement('button'); sayButton.type='button'; sayButton.textContent='Say idle line';
+        const hint=document.createElement('span'); hint.className='hint'; hint.textContent='Hover / focus · click sprite to cycle'; demo.append(sayButton,hint);
+        card.append(head,poses,lines,demo); cards.append(card);
+        card.addEventListener('sprite-ready',e=>{
+          const liveSprite=e.target;
+          const info=e.detail; personality.textContent=info.title;
+          poses.replaceChildren();
+          info.poses.forEach(p=>{ const b=document.createElement('button'); b.type='button'; b.textContent=p; b.setAttribute('aria-pressed',String(p==='idle'));
+            b.addEventListener('click',()=>{ window.Sprites.pose(liveSprite,p); poses.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); if(info.lines[p]) window.Sprites.say(liveSprite,info.lines[p]); }); poses.append(b); });
+          lines.replaceChildren(); Object.entries(info.lines).forEach(([p,line])=>{const li=document.createElement('li'); li.textContent=`${p}: “${line}”`; lines.append(li);});
+          sayButton.addEventListener('click',()=>window.Sprites.say(liveSprite,info.lines.idle||'Hello.'));
+          loaded++; document.querySelector('#load-status').textContent=`${loaded} / ${names.length} creatures loaded`;
+        },{once:true});
+        spr.addEventListener('error',()=>{card.classList.add('missing'); personality.textContent='Artwork not found yet';}, {once:true});
+        return spr;
+      }
+      names.forEach(n=>{ build(n); const mini=makeSprite(n,48,{'data-hover':'happy','data-idle-fidget':''}); roster.append(mini); });
+      document.addEventListener('sprite-ready',()=>{},true);
+      const observer=new MutationObserver(()=>{
+        for(const card of cards.querySelectorAll('.creature')) { const s=card.querySelector('.sprite'); if(s?.dataset.mounted==='missing'&&!card.classList.contains('missing')) {card.classList.add('missing');card.querySelector('.personality').textContent='Artwork not found yet';} }
+      }); observer.observe(cards,{subtree:true,attributes:true,attributeFilter:['data-mounted']});
+      window.addEventListener('load',()=>{setTimeout(()=>{const status=document.querySelector('#load-status'); if(loaded===0) status.textContent='No creature SVGs found yet'; else if(loaded<names.length) status.textContent+=` · ${names.length-loaded} artwork file(s) pending`;},1200);});
+    })();
+  </script>
+</body>
+</html>

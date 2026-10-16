@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles, prefixed cmp- */
 .cmp-ext { font-size: 15.5px; }
@@ -49,6 +50,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="stump" data-size="96" data-pose="idle" data-click="happy" data-idle-fidget></span>
   <div class="kick">Context · 20 min</div>
   <h1>SystemEarth and the EUDR: <span class="hl">plot checks that are repeated.</span></h1>
   <p class="lede">SystemEarth provides EUDR and supply-chain compliance software. For each farm plot it overlays geospatial layers to answer EUDR questions, with 31 December 2020 as the cut-off date. The check is repeated whenever plots or layers change, which makes it a data problem.</p>
@@ -143,6 +145,7 @@
 
 <!-- CUTOFF -->
 <section id="cutoff">
+  <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">3 · The cut-off</div>
     <h2>Loss counts only on forest, and only after 2020</h2>
@@ -447,5 +450,12 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('rule'); if(e) e.dataset.spriteSay='Rules are rules.';
+  var e=document.getElementById('cutoff'); if(e) e.dataset.spriteSay='31 December 2020. Remember it.';
+  var e=document.getElementById('workload'); if(e) e.dataset.spriteSay='Repeated checks add up.';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>

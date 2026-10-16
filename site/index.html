@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="assets/pack.css">
+<link rel="stylesheet" href="assets/sprites.css">
 <style>
 .hub-mast { font: 500 13px/1.3 var(--f-mono); color: var(--muted); padding: 18px 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .hub-mast b { color: var(--ink); font-weight: 600; }
@@ -62,6 +63,7 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
   <div class="hub-mast"><span><span class="dot"></span><b>Plotline</b> · Hack &amp; Hire Sustainability Edition 2026 · SystemEarth track</span><span>Explainer pack</span></div>
 
   <header class="hub-hero">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="wave" data-click="happy" data-idle-fidget></span>
     <div>
       <div class="kick">SystemEarth challenge · multi-layer, multi-year geospatial data</div>
       <h1>Forest layers reduced to <span class="hl">what the plot decision reads</span></h1>
@@ -184,5 +186,6 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
   setTimeout(cycle, 1200); setInterval(cycle, 4200);
 })();
 </script>
+<script src="assets/sprites.js"></script>
 </body>
 </html>

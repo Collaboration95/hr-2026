@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every class is prefixed sp- (speed). */
 .sp-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; margin-top: 16px; }
@@ -139,6 +140,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="zippy" data-size="96" data-pose="sprint" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive · 20 min</div>
   <h1>Five changes account for <span class="hl">most of the speed-up.</span></h1>
   <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a new boundary <strong>5.2× faster</strong>. A few changes produced those numbers; they are described here in the order they were made.</p>
@@ -201,6 +203,7 @@
 
 <!-- ============================================================ 2 -->
 <section id="race" data-toc="Results by phase">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="sprint" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">2 · Results by phase</div>
     <h2>Registered plots went 24× to 44×. New boundaries went 2.2× to 5.2×.</h2>
@@ -451,6 +454,7 @@
 
 <!-- ============================================================ -->
 <section id="clocks" data-toc="Hot, fresh and end-to-end">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="sleep" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">5 · The three clocks</div>
     <h2>The same paths give different multiples on the three clocks</h2>
@@ -553,6 +557,7 @@
 
 <!-- ============================================================ -->
 <section id="caveats" data-toc="Caveats">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="sad" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">9 · Caveats</div>
     <h2>Seven caveats on the figures</h2>
@@ -915,5 +920,15 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('b1'); if(e) e.dataset.spriteSay='Do less. Faster.';
+  var e=document.getElementById('b2'); if(e) e.dataset.spriteSay='Look up, do not search.';
+  var e=document.getElementById('b3'); if(e) e.dataset.spriteSay='Bit-planes are cheap.';
+  var e=document.getElementById('b5'); if(e) e.dataset.spriteSay='NumPy start-up costs 25 ms.';
+  var e=document.getElementById('clocks'); if(e) e.dataset.spriteSay='Hot, fresh, end-to-end.';
+  var e=document.getElementById('caveats'); if(e) e.dataset.spriteSay='Honest numbers only.';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>
