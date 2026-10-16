@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every class is prefixed pt- (pitch). */
 .pt-quote { margin: 26px 0 0; padding: 22px 26px; background: var(--sheet); border: 1px solid var(--rule); border-left: 6px solid var(--hi); border-radius: 14px; font: 700 clamp(22px, 3.2vw, 32px)/1.2 var(--f-display); letter-spacing: -.015em; max-width: 880px; }
@@ -181,6 +182,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="happy" data-click="happy" data-idle-fidget></span>
   <div class="kick">Presenting · 20 min</div>
   <h1>Presentation guide for the SystemEarth <span class="hl">finals</span></h1>
   <p class="lede">The finals take place on 17 October 2026. This guide covers the summary line, 30-second and 90-second versions, a timed three-minute demo, a slide outline, questions and answers, terminology and a readiness checklist.</p>
@@ -648,5 +650,6 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
 </body>
 </html>

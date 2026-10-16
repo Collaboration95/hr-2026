@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Prefix: sb- */
 .sb-chip { display: inline-flex; align-items: center; gap: 6px; font: 700 11.5px/1 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; white-space: nowrap; background: var(--mist); color: var(--muted); transition: background .35s, color .35s; }
@@ -118,6 +119,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="chippy" data-size="96" data-pose="happy" data-click="happy" data-idle-fidget></span>
   <div class="kick">Presentation · 10 min</div>
   <h1>Submission <span class="hl">readiness</span></h1>
   <p class="lede">SystemEarth's requirements are mapped to evidence in the repository, alongside the checks run on 16 October, run instructions, known gaps, open questions and a readiness checklist.</p>
@@ -261,6 +263,7 @@
 
 <!-- 6 -->
 <section id="final">
+  <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="happy" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">6 · Readiness checklist</div>
     <h2>Readiness checklist</h2>
@@ -494,5 +497,6 @@
   update();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
 </body>
 </html>

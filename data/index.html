@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles, prefixed dat- */
 .dat-sq rect { transition: fill .35s, stroke .35s, opacity .35s; }
@@ -51,6 +52,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="hansen" data-size="96" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive · 25 min</div>
   <h1>The data: <span class="hl">raster layers and one polygon per plot.</span></h1>
   <p class="lede">Plotline reads three kinds of input: the 17 supplier plots in the SystemEarth sample, a tree-cover loss map from the University of Maryland (Hansen) and a 2020 forest map from the EU's Joint Research Centre (JRC).</p>
@@ -192,6 +194,7 @@
 
 <!-- HANSEN -->
 <section id="hansen">
+  <span class="sprite sprite-spot" data-sprite="hansen" data-size="72" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">4 · Hansen Global Forest Change</div>
     <h2>Three bands, 744,732 cells, and one band holding most of the bytes</h2>
@@ -262,6 +265,7 @@
 
 <!-- JRC -->
 <section id="jrc">
+  <span class="sprite sprite-spot" data-sprite="jrc" data-size="72" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">5 · JRC Global Forest Cover 2020</div>
     <h2>The JRC 2020 forest map: forest or not, on a finer grid</h2>
@@ -702,5 +706,15 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('raster'); if(e) e.dataset.spriteSay='Think of it as a grid.';
+  var e=document.getElementById('geotiff'); if(e) e.dataset.spriteSay='Tiles inside a file.';
+  var e=document.getElementById('sample'); if(e) e.dataset.spriteSay='Plots, not outlines.';
+  var e=document.getElementById('hansen'); if(e) e.dataset.spriteSay='Hansen watches loss.';
+  var e=document.getElementById('jrc'); if(e) e.dataset.spriteSay='JRC watches 2020 forest.';
+  var e=document.getElementById('rule'); if(e) e.dataset.spriteSay='Three questions per cell.';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>

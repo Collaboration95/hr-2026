@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every new class is prefixed st- (this page's slug is "start"). */
 .st-go { margin-top: 18px; font: 600 14px var(--f-mono); }
@@ -107,6 +108,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
   <div class="kick">Overview · 15 min</div>
   <h1>Plotline <span class="hl">overview</span></h1>
   <p class="lede">Plotline is a compact store for EUDR forest-loss screening. It keeps <strong>only the facts the decision reads</strong> and gives the same answers as the original map layers.</p>
@@ -288,6 +290,7 @@
 
 <!-- 6 · PROOF -->
 <section id="proof" data-toc="The proof">
+  <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">6 · The proof</div>
     <h2>Identical answers, checked for every cell</h2>
@@ -695,5 +698,15 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('event'); if(e) e.dataset.spriteSay='The short version of the event.';
+  var e=document.getElementById('problem'); if(e) e.dataset.spriteSay='EUDR in one section.';
+  var e=document.getElementById('data'); if(e) e.dataset.spriteSay='Mind the grid.';
+  var e=document.getElementById('build'); if(e) e.dataset.spriteSay='This is the clever bit.';
+  var e=document.getElementById('plot'); if(e) e.dataset.spriteSay='One plot, start to finish.';
+  var e=document.getElementById('proof'); if(e) e.dataset.spriteSay='Every cell. Not a sample.';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>

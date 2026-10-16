@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every class starts with fnd- */
 .fnd-seg { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -92,6 +93,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="jrc" data-size="96" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive · 15 min</div>
   <h1>What the plots show: <span class="hl">declarations and mapped observations</span></h1>
   <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". Hansen and JRC map post-2020 loss on different plots. Two variants (an older Hansen release, a different cell-inclusion rule) do not reconcile the two, and the comparison does not establish the cause.</p>
@@ -125,6 +127,7 @@
 
 <!-- ============ 2 · hansen ============ -->
 <section id="hansen">
+  <span class="sprite sprite-spot" data-sprite="hansen" data-size="72" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">2 · What Hansen shows</div>
     <h2>Hansen alone maps loss after 2020 on 7 of 17 plots.</h2>
@@ -153,6 +156,7 @@
 
 <!-- ============ 3 · JRC ============ -->
 <section id="jrc">
+  <span class="sprite sprite-spot" data-sprite="jrc" data-size="72" data-pose="happy" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">3 · What the decision layer adds</div>
     <h2>Almost all post-2020 loss is on land JRC does not map as 2020 forest.</h2>
@@ -247,6 +251,7 @@
 
 <!-- ============ 6 · known vs unknown ============ -->
 <section id="known">
+  <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">6 · Known zero and unknown</div>
     <h2>"No loss seen" and "could not be read" are different answers.</h2>
@@ -535,5 +540,6 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
 </body>
 </html>

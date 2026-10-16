@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/pack.css">
+<link rel="stylesheet" href="../assets/sprites.css">
 <style>
 /* Page-only styles. Every class starts with sol- */
 .sol-seg { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -103,6 +104,7 @@
 <div class="wrap"><main>
 
 <header class="hero" id="top">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="squish" data-size="96" data-pose="squish" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive · 25 min</div>
   <h1>How Plotline works: <span class="hl">a 20-value decision code per map cell</span></h1>
   <p class="lede">The EU deforestation screen asks three questions of each map cell. Plotline identifies the facts those questions read, keeps them as a <strong>20-value code</strong> per cell, discards the rest, and <strong>verifies</strong> that every cell, and so every possible plot boundary, gives the same answer.</p>
@@ -226,6 +228,7 @@
 
 <!-- ============ 4 · encoding ============ -->
 <section id="encoding">
+  <span class="sprite sprite-spot" data-sprite="squish" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">4 · How the codes are stored</div>
     <h2>Four yes/no sheets and a short list of loss events.</h2>
@@ -281,6 +284,7 @@
 
 <!-- ============ 6 · proof ============ -->
 <section id="proof">
+  <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">6 · The proof</div>
     <h2>If every cell matches, every possible plot matches.</h2>
@@ -382,6 +386,7 @@
 
 <!-- ============ 9 · lost / limits ============ -->
 <section id="lost">
+  <span class="sprite sprite-spot" data-sprite="lossy" data-size="72" data-pose="crossed-out" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
     <div class="kick">9 · Negative results and scope</div>
     <h2>A learned codec selector did not beat a fixed codec.</h2>
@@ -746,5 +751,14 @@
   })();
 })();
 </script>
+<script src="../assets/sprites.js"></script>
+<script>(function(){
+  var e=document.getElementById('analysis'); if(e) e.dataset.spriteSay='Which facts get read?';
+  var e=document.getElementById('codes'); if(e) e.dataset.spriteSay='Twenty codes. That is all.';
+  var e=document.getElementById('encoding'); if(e) e.dataset.spriteSay='Small, and still exact.';
+  var e=document.getElementById('proof'); if(e) e.dataset.spriteSay='744,732 of 744,732.';
+  var e=document.getElementById('lost'); if(e) e.dataset.spriteSay='What did we throw away?';
+  Sprites.companion('pip');
+})();</script>
 </body>
 </html>
