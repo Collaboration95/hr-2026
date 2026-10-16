@@ -1,6 +1,6 @@
 # Plotline evidence engine
 
-Python3.14 native-grid forest-change queries on verified Hansen2025v1.13 chips and17supplied plot geometries. Supplier declarations remain separate from mapped observations. No legal/compliance label is computed.
+Python 3.14 native-grid forest-change queries on verified Hansen 2025 v1.13 chips and 17 supplied plot geometries. Supplier declarations remain separate from mapped observations. No legal/compliance label is computed.
 
 ## Run
 
@@ -32,7 +32,7 @@ For explicitly metric-free work during experiments:
 .venv-data/bin/python -B -m engine.synthetic
 ```
 
-Without a store, that metric-free export marks compact results pending. Synthetic examples remain separate from17realplots.
+Without a store, that metric-free export marks compact results pending. Synthetic examples remain separate from 17 real plots.
 
 ## Experiments and retained evidence
 
@@ -85,7 +85,7 @@ The derived EUDR screening and decision layers, their proof and their speed path
 
 ## Reproducibility and limits
 
-Pinned dependencies are in requirements.txt; Python3.14 supplies `compression.zstd`. Source inputs remain immutable. Encoded bytes are deterministic for fixed input/settings/libzstd; cross-version byte identity is not promised. Benchmark timing naturally varies. Retained files are content-addressed, and prior losing/failed experiments remain distinct evidence.
+Pinned dependencies are in requirements.txt; Python 3.14 supplies `compression.zstd`. Source inputs remain immutable. Encoded bytes are deterministic for fixed input/settings/libzstd; cross-version byte identity is not promised. Benchmark timing naturally varies. Retained files are content-addressed, and prior losing/failed experiments remain distinct evidence.
 
 Artifacts include supplied company values. The user subsequently authorized tracked publication to the existing GitHub repository (see root README); that authorization does not alter source licenses or establish company-approved conclusions. Full original source tiles are an ignored acquisition cache, unnecessary for normal queries/export/proof checks. Independent original-download readback verification can use that cache or reacquire official tiles.
 

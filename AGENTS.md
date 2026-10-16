@@ -4,7 +4,7 @@
 
 This is the working repository for Hack & Hire Sustainability Edition 2026, a one-week proof-of-work project with real companies. The build period is 10–17 October 2026, followed by pitches to company teams on 17 October. Teams may have one, two, or three participants. Build a useful, demonstrable project with clear reasoning and evidence.
 
-At setup, no track, team allocation, stack, or implementation is selected. `README.md` holds the current decision state. Use a recorded selection or the user's current instruction rather than inferring a track from an example or source document. Ask for the track only when an unresolved choice blocks the requested work.
+The SystemEarth track was selected on 10 October 2026 and the Plotline prototype (Python engine + React app) is implemented. `README.md` holds the current decision state. Use a recorded selection or the user's current instruction rather than inferring a track from an example or source document. Ask for the track only when an unresolved choice blocks the requested work.
 
 The six available challenges are:
 
@@ -41,7 +41,7 @@ For implementation, read both the selected printed brief and its spoken guidance
 
 - Focus on a small, complete project slice that can be demonstrated within the week. Record the selected track, agreed scope, data access, and important decisions in `README.md` as they become known.
 - Maintain the current references in place. Group points under a single category heading with ordinary bullets. Do not repeat category labels on individual points. Preserve meaningful qualifications when editing.
-- Choose implementation tools for the confirmed problem. No runtime, package manager, build, or test commands exist yet; document the actual commands once introduced. Verify changes using the checks appropriate to the resulting implementation.
+- Choose implementation tools for the confirmed problem. The actual setup, run and test commands are documented in `README.md`; keep them current. Verify changes using the checks appropriate to the resulting implementation.
 - When delegating user-authorized grunt work, prefer GPT-6 Luna when available. The main agent reviews and integrates the result.
 - For all GitHub access, use the authenticated `gh` CLI exclusively; do not use GitHub connectors, APIs, or browser access. Local Git operations use `git`.
 - Use the `guru/` prefix for new branches. Format commits as `<type>(<scope>): <imperative summary>`, such as `docs(context): update project guidance`.
