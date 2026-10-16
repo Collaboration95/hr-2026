@@ -52,4 +52,3 @@ button.sprite:focus-visible { outline: 3px solid var(--pen,#2F45FF); outline-off
 @media (max-width: 1099px) { .sprite-spot-hero { display: none; } }
 @media (prefers-reduced-motion: reduce) { .sprite > svg { animation: none !important; } .sprite-puff { display: none; } }
 
-:root[data-theme="dark"] .sprite > svg { filter: drop-shadow(0 0 1px rgba(255,255,255,.55)); }
