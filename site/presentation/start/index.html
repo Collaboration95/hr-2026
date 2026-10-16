@@ -255,10 +255,10 @@
   <div class="panel st-plot" id="st-plot">
     <div class="panel-in">
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A made-up plot on a made-up grid</span>
-        </div>
+        <div class="steps" aria-label="Steps"></div></div>
       <svg viewBox="0 0 560 360" id="st-psvg" role="img" aria-label="A grid of square map cells with a synthetic plot outline drawn on top; later steps mark the cells whose centres are inside and show their codes."></svg>
       <div class="legend"><span style="--c:var(--forest-wash)"><i style="border:1px solid var(--forest)"></i>F forest in 2020</span><span style="--c:var(--mist)"><i style="border:1px solid var(--rule-2)"></i>N not forest</span><span style="--c:var(--water-wash)"><i style="border:1px solid var(--water)"></i>W water</span><span style="--c:var(--loss)"><i></i>·22 lost in 2022</span></div>
-      
+      <div class="st-tally" id="st-tally"></div>
       <p class="say"><small id="st-psmall"></small><span id="st-psay"></span></p>
       <div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div>
     </div>
@@ -422,24 +422,6 @@
   const { $, $$, instrument, stepper, seg, ease, fmt } = Pack;
   const NS = 'http://www.w3.org/2000/svg';
   const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v)); if (parent) parent.append(e); return e; };
-
-  /* 1 · build sequence */
-  (() => {
-    const stages = [
-      ['Brief', 'The SystemEarth challenge asks for a use case, a choice of layers and time periods, and an encoded sample region compared with the originals.'],
-      ['Data', 'The company sample: 17 plots and their declarations, audited as a clean one-to-one join. The public Hansen and JRC layers are fetched.'],
-      ['Prototype', 'A written query rule, the original and compact paths, a proof that all 17 plot answers match, and receipts. The build is reproduced from a clean checkout, independently reviewed in a browser and recorded in a walkthrough.'],
-      ['Decision layers', 'Layer analysis of what each question reads, and the 6.1 KB decision layer.'],
-      ['Proof', 'An independent path compares the decision layer with the original layers for every one of the 744,732 cells.'],
-      ['Speed', 'Phases 1 to 4 of speed work, then a research pass of papers and options that found nothing better for small exact plots on a CPU.'],
-      ['App', 'A map-first app with map, cohort, proof, live query and receipt views.']
-    ];
-    const el = $('#st-time');
-    const st = stepper(el, stages.length, k => {
-      const d = stages[k]; $('#st-td').textContent = 'Stage ' + (k + 1) + ' of ' + stages.length; $('#st-th').textContent = d[0]; $('#st-tp').textContent = d[1];
-    });
-    $$('.steps button', el).forEach((b, i) => { b.textContent = i + 1; b.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + stages[i][0]); });
-  })();
 
   /* 2 · cut-off strip */
   (() => {
@@ -660,7 +642,6 @@
 </script>
 <script src="../../assets/sprites.js"></script>
 <script>(function(){
-  var e=document.getElementById('event'); if(e) e.dataset.spriteSay='The short version of the event.';
   var e=document.getElementById('problem'); if(e) e.dataset.spriteSay='EUDR in one section.';
   var e=document.getElementById('data'); if(e) e.dataset.spriteSay='Mind the grid.';
   var e=document.getElementById('build'); if(e) e.dataset.spriteSay='This is the clever bit.';
