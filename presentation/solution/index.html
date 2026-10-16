@@ -150,8 +150,8 @@
   <div class="panel" id="sol-shed">
     <div class="panel-in">
       <div class="ph"><span class="tag">Stepper · what the original layers store, and what is read</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      
-      
+      <div class="steps" style="margin-top:12px"></div>
+      <div class="sol-rows" id="sol-shed-rows" role="list" aria-label="Attributes stored for each map cell, with their compressed size"></div>
       <p class="say"><small id="sol-shed-n">Step 1 of 6</small><span id="sol-shed-say"></span></p>
     </div>
     <p class="foot"> Bars share one linear scale and one yardstick: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller: 38,513 B (screening) and 6,146 B (decision).</p>
@@ -198,12 +198,12 @@
           <span class="sol-lab">Hansen loss</span>
           <div class="sol-seg" data-g="y"><button type="button" data-v="0" aria-pressed="true">None</button><button type="button" data-v="1" aria-pressed="false">2021</button><button type="button" data-v="2" aria-pressed="false">2022</button><button type="button" data-v="3" aria-pressed="false">2023</button><button type="button" data-v="4" aria-pressed="false">2024</button><button type="button" data-v="5" aria-pressed="false">2025</button></div>
           <span class="sol-lab">Or select a code</span>
-          
+          <div class="sol-codes" id="sol-dec-codes"></div>
         </div>
         <div>
           <div class="sol-big"><span class="n" id="sol-dec-n">2</span><span class="f" id="sol-dec-f"></span></div>
-          
-          
+          <div class="sol-ans" style="margin-top:12px" id="sol-dec-lay"></div>
+          <div id="sol-dec-ans"></div>
         </div>
       </div>
     </div>
@@ -238,9 +238,9 @@
   <div class="panel" id="sol-enc">
     <div class="panel-in">
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Stepper · an invented 8 × 6 grid of codes</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
-      
+      <div class="steps" style="margin-top:12px"></div>
       <div class="sol-svgwrap"><svg id="sol-enc-svg" viewBox="0 0 640 330" role="img" aria-label="An invented grid of 48 map cells shown as codes, then split into four yes or no sheets, then as a short list of loss events"></svg></div>
-      
+      <div class="sol-ev" id="sol-enc-ev" hidden></div>
       <p class="say"><small id="sol-enc-n"></small><span id="sol-enc-say"></span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_sections</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event") and the research pass in <code>docs/lab/decision-layer-report.md</code> (each stream tries 10 compressor settings and keeps the smallest, mostly LZMA). The grid is invented; the real region has 744,732 cells.</p>
@@ -265,7 +265,7 @@
         <span class="sol-seg" data-g="scope" style="margin:0"><button type="button" data-v="region" aria-pressed="true">Sample region</button><button type="button" data-v="tile" aria-pressed="false">Whole real tile</button></span>
         <span class="sol-seg" data-g="scale" style="margin:0"><button type="button" data-v="lin" aria-pressed="true">Linear</button><button type="button" data-v="log" aria-pressed="false">Log</button></span>
         <button class="replay" type="button">↻ Replay</button></div></div>
-      
+      <div class="bars" id="sol-lad-bars" style="margin-top:18px"></div>
       <p class="say"><small id="sol-lad-small"></small><span id="sol-lad-say"></span></p>
     </div>
     <p class="foot"> Region: Hansen 3 bands + JRC chip, 34 × 17 km. Tile: Hansen 10N_090E + JRC N10_E90, 1.6 billion cells, every strip processed; the tile figures are storage sizes only, with no queries run at tile scale. On the log scale each tick is 10× the last, so 623 KB and 6 KB both stay visible.</p>
@@ -296,7 +296,7 @@
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Proof · 112 invented cells, then any boundary</span><button class="replay" type="button">↻ Replay</button></div>
       <div class="ph" style="margin-top:10px"><span class="tag" id="sol-proof-count" aria-live="polite">Cells matching the originals: 0 of 112</span></div>
       <div class="sol-svgwrap"><svg id="sol-proof-svg" viewBox="0 0 560 320" role="img" aria-label="A grid of 112 invented map cells. They turn green one by one as each is confirmed to match the original. Afterwards a boundary can be drawn and its answer compared on both sides."></svg></div>
-      
+      <div class="sol-legend" id="sol-proof-legend"></div>
       <div class="btns" style="margin-top:12px" id="sol-proof-btns">
         <button class="btn" type="button" data-p="tri" disabled>Triangle</button>
         <button class="btn" type="button" data-p="ell" disabled>L-shape</button>
@@ -306,8 +306,8 @@
         <button class="btn" type="button" data-p="clear" disabled>Clear</button>
       </div>
       <p class="small muted" style="margin:8px 0 0">Corners can also be placed by clicking on the grid (pointer only), then "Close polygon". A cell is selected when its centre is inside the polygon.</p>
-      
-      
+      <div class="sol-res" id="sol-proof-res" hidden></div>
+      <div class="sol-verdict ok" id="sol-proof-v" hidden></div>
       <p class="say"><small>Observation</small><span id="sol-proof-say">Each cell is compared with the original layers.</span></p>
     </div>
     <p class="foot"> Synthetic illustration: both sides match by construction. In the real run the match was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
@@ -478,7 +478,7 @@
     const R = {};
     rows.forEach(r => {
       const d = document.createElement('div'); d.className = 'sol-row'; d.setAttribute('role', 'listitem');
-      d.innerHTML = `<div class="nm">${r.name}<span class="sol-q">${(r.q.length ? r.q : ['read by nothing']).map(q => `<b class="${r.q.length ? '' : 'none'}">${q}</b>`).join('')}</span><small>${r.sub}</small></div><div class="sol-track"><i></i></div>`;
+      d.innerHTML = `<div class="nm">${r.name}<span class="sol-q">${(r.q.length ? r.q : ['read by nothing']).map(q => `<b class="${r.q.length ? '' : 'none'}">${q}</b>`).join('')}</span><small>${r.sub}</small></div><div class="sol-track"><i></i></div><div class="val"></div>`;
       box.append(d); R[r.id] = { d, bar: $('i', d), val: $('.val', d), nm: $('.nm', d) };
     });
     const says = [
