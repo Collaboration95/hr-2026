@@ -18,7 +18,7 @@ This repository holds the project context and working local implementation for t
 
 ## Scan to open the presentation pages
 
-<p align="center"><a href="https://collaboration95.github.io/hr-2026/presentation/"><img src="docs/qr-presentation.png" alt="QR code for the Plotline presentation pages" width="360"></a></p>
+<p align="center"><a href="https://collaboration95.github.io/hr-2026/presentation/"><img src="docs/qr-presentation.png" alt="QR code for the Plotline presentation pages" width="560"></a></p>
 
 <p align="center"><a href="https://collaboration95.github.io/hr-2026/presentation/">https://collaboration95.github.io/hr-2026/presentation/</a></p>
 
