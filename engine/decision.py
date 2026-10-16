@@ -19,16 +19,11 @@ and refuses a conflicting request. Outputs are mapped observations, never legal 
 """
 import numpy as np
 
-SCREEN_VERSION = 'eudr-screen.v1'
-DECISION_VERSION = 'eudr-decision.v1'
-LEVELS = (SCREEN_VERSION, DECISION_VERSION)
+from .decision_summary import (CODE_COUNT, DECISION_VERSION, FOREST_STATES, LAND, LEVELS, PERIODS, POST_YEARS,
+                               SCREEN_VERSION, UNKNOWN, WATER, summarize_counts, summarize_ints)
+
 CUTOFF_LOSSYEAR = 20  # Hansen lossyear 20 is 2020; EUDR cut-off is 31 Dec 2020.
-POST_YEARS = tuple(range(2021, 2026))
 MAX_LOSSYEAR = POST_YEARS[-1] - 2000  # the last year the code space holds (post index 1..5)
-PERIODS = {'2021-2023': (2021, 2023), '2024-2025': (2024, 2025)}
-FOREST_STATES = ('nonforest', 'forest', 'unknown')
-UNKNOWN, WATER, LAND = 0, 1, 2
-CODE_COUNT = LAND + 6 * len(FOREST_STATES)  # 20 codes: 0..19
 GRID_RULE = ('JRC 2020 class read at each Hansen cell centre; the JRC lattice nests '
              'the Hansen lattice by an odd integer ratio, so the centre is a JRC cell centre')
 
@@ -98,49 +93,6 @@ def project_decision(screen_codes):
     return codes
 
 
-def summarize_counts(counts, selected_count, outside_count, level):
-    """Contract outputs from a 20-bin code histogram plus out-of-chip selections."""
-    if level not in LEVELS:
-        raise ValueError('unknown contract level')
-    counts = [int(v) for v in counts]
-    if len(counts) != CODE_COUNT or selected_count != sum(counts) + outside_count or outside_count < 0:
-        raise ValueError('code histogram accounting mismatch')
-    by_state = [counts[LAND + 6 * s:LAND + 6 * s + 6] for s in range(3)]
-    land = sum(map(sum, by_state))
-    unknown = outside_count + counts[UNKNOWN]
-    analytical = land > 0
-    forest_counts = {name: sum(by_state[s]) for s, name in enumerate(FOREST_STATES)}
-    unknown_forest_loss = sum(by_state[2][1:])
-    deforested = {str(y): by_state[1][i + 1] for i, y in enumerate(POST_YEARS)}
-    total = sum(deforested.values())
-
-    def tri(count, blockers):
-        if not analytical:
-            return None
-        return True if count > 0 else (False if blockers == 0 else None)
-
-    out = {'contract': level, 'selected_cell_count': selected_count,
-           'out_of_coverage_cell_count': outside_count, 'valid_land_cell_count': land,
-           'water_cell_count': counts[WATER], 'unknown_cell_count': unknown,
-           'forest_2020': {'cell_counts': forest_counts if analytical else None,
-                           'present': tri(forest_counts['forest'], unknown + forest_counts['unknown'])},
-           'deforestation_after_2020': {
-               'yearly_cell_counts': deforested if analytical else None,
-               'cell_count': total if analytical else None,
-               'present': tri(total, unknown + unknown_forest_loss)}}
-    if level == SCREEN_VERSION:
-        loss = {str(y): sum(by_state[s][i + 1] for s in range(3)) for i, y in enumerate(POST_YEARS)}
-        out['hansen_loss_after_2020'] = {
-            'yearly_cell_counts': loss if analytical else None,
-            'periods': {key: {'observed_loss_cell_count': sum(loss[str(y)] for y in range(lo, hi + 1)) if analytical else None,
-                              'mapped_loss_present': tri(sum(loss[str(y)] for y in range(lo, hi + 1)), unknown)}
-                        for key, (lo, hi) in PERIODS.items()}}
-    # Support covers both layers: a land cell without a JRC 2020 class is partial.
-    out['support'] = ('none' if selected_count == 0 or land == 0 else
-                      'partial' if unknown or forest_counts['unknown'] else 'complete')
-    return out
-
-
 def evaluate_codes(codes, metadata, geometry, level):
     """Answer one polygon from a code raster of a known level with the shared centre rule.
 
@@ -166,13 +118,18 @@ def evaluate_store(codes, header, geometry, level=None, select=None):
     """Answer one polygon from a read_store result, at the level its header records.
 
     level, if given, must equal header['level']. select(header, geometry) -> (rows, cols)
-    defaults to engine.query.select_cells; the raster must have the header's shape.
+    defaults to engine.query.select_cells; the raster must have the header's shape. A select with a
+    `summarize(codes, header, geometry, level)` attribute is reduced through it, which must return what
+    summarize_selection would for the same selection.
     """
     held = bind_level(header, level)
     if list(codes.shape) != list(header['shape']):
         raise ValueError('code raster shape differs from the store header')
     if select is None:
         from .query import select_cells as select  # Lazy: registered-plot paths never need GEOS.
+    reduce = getattr(select, 'summarize', None)  # a selector may bring a reducer that skips the row and column arrays
+    if reduce is not None:
+        return reduce(codes, header, geometry, held)
     return summarize_selection(codes, *select(header, geometry), held)
 
 

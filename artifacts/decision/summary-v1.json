@@ -10,9 +10,9 @@
   "decision level only: loss years on JRC 2020 non-forest land"
  ],
  "evidence": {
-  "benchmark-v1.json": "7d8edd61297d7a5e5afd2ee7cc36753278f1c3927767655a655e7c0268efd1e4",
+  "benchmark-v1.json": "52b28ab31665546e0c11849c39216da0034dbb12fda9b392079ff60d4c6c4ae6",
   "layer-analysis-v1.json": "5fc2d25162ee116aabc8e29db185da012ece6d7e989f10578c4e523ca6090c5e",
-  "proof-v1.json": "e5c50d45369118c8afc4860d39b48702c4f315b26db5bddd95e9cff62b2f74e8",
+  "proof-v1.json": "027c85c89388a6b53447b91258081b98d32db1b8ee1123793197032d259ce889",
   "scale-v1.json": "b97496d16d5e443e901f6352b3f010dc9c92d956971b8287c141d287fec7f82f",
   "stores.json": "437a506dcd54e1f0d648fe60a29792d0fbc49244893193bfca75b8e48de555ac",
   "table.json": "02d7c9f9f5e81d23a631f4e870e31e7f1512368e2799b19ed901ca892c0aa491"
@@ -1489,13 +1489,13 @@
  "speed": [
   {
    "bytes_read": 585293,
-   "end_to_end_ms": 116.098416,
-   "hot_17_plots_ms": 1.451125,
-   "hot_per_plot_us": 85.360294,
+   "end_to_end_ms": 114.482376,
+   "hot_17_plots_ms": 1.436646,
+   "hot_per_plot_us": 84.508588,
    "label": "Original layers, retained v1 query",
    "path": "P0",
-   "peak_rss_mb": 74.743808,
-   "process_cold_ms": 11.264458,
+   "peak_rss_mb": 74.809344,
+   "process_cold_ms": 11.108792,
    "registered_plots_only": false,
    "speedup_vs_v1": {
     "end_to_end": 1.0,
@@ -1505,82 +1505,114 @@
   },
   {
    "bytes_read": 642946,
-   "end_to_end_ms": 125.23377,
-   "hot_17_plots_ms": 1.874146,
-   "hot_per_plot_us": 110.243882,
+   "end_to_end_ms": 124.920875,
+   "hot_17_plots_ms": 1.880063,
+   "hot_per_plot_us": 110.591941,
    "label": "Original layers, same EUDR question",
    "path": "P1d",
-   "peak_rss_mb": 97.091584,
-   "process_cold_ms": 19.277,
+   "peak_rss_mb": 97.140736,
+   "process_cold_ms": 18.947708,
    "registered_plots_only": false,
    "speedup_vs_v1": {
-    "end_to_end": 0.9270535894591371,
-    "hot": 0.7742859947944289,
-    "process_cold": 0.584347045702132
+    "end_to_end": 0.9164391139591361,
+    "hot": 0.7641477971748819,
+    "process_cold": 0.5862868479923798
    }
   },
   {
    "bytes_read": 6146,
-   "end_to_end_ms": 60.22002,
-   "hot_17_plots_ms": 1.209875,
-   "hot_per_plot_us": 71.169118,
+   "end_to_end_ms": 57.23675,
+   "hot_17_plots_ms": 1.17477,
+   "hot_per_plot_us": 69.104147,
    "label": "Decision layer",
    "path": "P3",
-   "peak_rss_mb": 46.268416,
-   "process_cold_ms": 4.917813,
+   "peak_rss_mb": 40.173568,
+   "process_cold_ms": 2.684916,
    "registered_plots_only": false,
    "speedup_vs_v1": {
-    "end_to_end": 1.9279039761195695,
-    "hot": 1.1994007645417915,
-    "process_cold": 2.2905421576623595
+    "end_to_end": 2.000155075192075,
+    "hot": 1.2229168262723766,
+    "process_cold": 4.137482140968284
    }
   },
   {
    "bytes_read": 6146,
-   "end_to_end_ms": 59.370812,
-   "hot_17_plots_ms": 0.662021,
-   "hot_per_plot_us": 38.942412,
+   "end_to_end_ms": 56.887084,
+   "hot_17_plots_ms": 0.274584,
+   "hot_per_plot_us": 16.152,
    "label": "Decision layer + exact fast selection",
    "path": "P4",
-   "peak_rss_mb": 46.12096,
-   "process_cold_ms": 4.259542,
+   "peak_rss_mb": 39.927808,
+   "process_cold_ms": 1.55075,
    "registered_plots_only": false,
    "speedup_vs_v1": {
-    "end_to_end": 1.9554796724019876,
-    "hot": 2.1919621885106366,
-    "process_cold": 2.644523284428232
+    "end_to_end": 2.0124493637255165,
+    "hot": 5.232081985840399,
+    "process_cold": 7.163496372722875
+   }
+  },
+  {
+   "bytes_read": 6146,
+   "end_to_end_ms": 56.946604,
+   "hot_17_plots_ms": 0.221625,
+   "hot_per_plot_us": 13.036765,
+   "label": "Decision layer + fast selection, whole batch in one call",
+   "path": "P4B",
+   "peak_rss_mb": 40.288256,
+   "process_cold_ms": 1.530584,
+   "registered_plots_only": false,
+   "speedup_vs_v1": {
+    "end_to_end": 2.0103459725183965,
+    "hot": 6.482328257191202,
+    "process_cold": 7.257878038709407
    }
   },
   {
    "bytes_read": 10242,
-   "end_to_end_ms": 52.38375,
-   "hot_17_plots_ms": 0.060375,
-   "hot_per_plot_us": 3.551471,
+   "end_to_end_ms": 49.99723,
+   "hot_17_plots_ms": 0.032333,
+   "hot_per_plot_us": 1.901941,
    "label": "Decision layer + registered-plot index",
    "path": "P5d",
-   "peak_rss_mb": 42.614784,
-   "process_cold_ms": 3.52575,
+   "peak_rss_mb": 36.667392,
+   "process_cold_ms": 1.281458,
    "registered_plots_only": true,
    "speedup_vs_v1": {
-    "end_to_end": 2.216305934569404,
-    "hot": 24.0351966873706,
-    "process_cold": 3.1949111536552506
+    "end_to_end": 2.289774373500292,
+    "hot": 44.43280858565552,
+    "process_cold": 8.668869365987804
+   }
+  },
+  {
+   "bytes_read": 10242,
+   "end_to_end_ms": 24.937479,
+   "hot_17_plots_ms": 0.017292,
+   "hot_per_plot_us": 1.017176,
+   "label": "Registered-plot index, no numpy, read from the packed layer",
+   "path": "P5Ld",
+   "peak_rss_mb": 22.921216,
+   "process_cold_ms": 1.015958,
+   "registered_plots_only": true,
+   "speedup_vs_v1": {
+    "end_to_end": 4.590775835841305,
+    "hot": 83.08154059680778,
+    "process_cold": 10.934302402264661
    }
   },
   {
    "bytes_read": 20650,
-   "end_to_end_ms": 21.457438,
-   "hot_17_plots_ms": 0.003459,
-   "hot_per_plot_us": 0.203471,
+   "end_to_end_ms": 21.631437,
+   "hot_17_plots_ms": 0.0035,
+   "hot_per_plot_us": 0.205882,
    "label": "Registered-plot answer table",
    "path": "P6d",
-   "peak_rss_mb": 20.594688,
-   "process_cold_ms": 0.251646,
+   "peak_rss_mb": 20.742144,
+   "process_cold_ms": 0.243999,
    "registered_plots_only": true,
    "speedup_vs_v1": {
-    "end_to_end": 5.4106373743221345,
-    "hot": 419.52153801676786,
-    "process_cold": 44.76311167274664
+    "end_to_end": 5.29240734214745,
+    "hot": 410.47028571428575,
+    "process_cold": 45.528022655830554
    }
   }
  ],

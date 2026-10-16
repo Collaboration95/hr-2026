@@ -9,7 +9,7 @@ Written 15 October 2026 to catch up on everything done so far, mostly by earlier
 | 3 | [What we ship](03-what-we-ship.md) | The scope for the finals, the deliberate cuts and open questions |
 | 4 | [The pitch](04-pitch.md) | One-liner, 30-second elevator pitch, 3-minute demo script, and likely judge questions |
 | 5 | [Redesign decisions](05-redesign-decisions.md) | What changed in the UI today and why, plus what was verified |
-| 6 | [Decision layers](../lab/decision-layer-report.md) | The layer analysis, the 6 KB decision layer, its proof, and the storage and speed results |
+| 6 | [Decision layers](../lab/decision-layer-report.md) | The layer analysis, the 6 KB decision layer, its proof, the storage and speed results, and the four speed-up phases |
 
 ## The two-minute version
 
@@ -21,7 +21,7 @@ Written 15 October 2026 to catch up on everything done so far, mostly by earlier
 - **What we built:** a written query rule, the original path and a lossless store, with a **proof that all 17 plot answers are identical**. On 15 Oct we added **decision layers**: we kept only what the EUDR decision reads and proved it gives the same answer for **every one of 744,732 cells**. It also has receipts, a live query API, and the **Plotline** app to explore it.
 - **Numbers:**
   - The decision layer is **6.1 KB vs 623 KB of original layers: 99% smaller**. On a whole 10° tile it is 98% smaller (94.5% vs a zstd recompression).
-  - Registered plots are re-checked **24× faster** hot (420× from a stored answer table). New boundaries are 2.2× faster.
+  - Registered plots are re-checked **44× faster** hot (83× with the numpy-free re-check, about 410× from a stored answer table). New boundaries are about 5× faster (5.2×), or about 16× when they arrive as a batch (a batch must be in hand). Fresh-process end-to-end time is dominated by Python and NumPy start-up; only the numpy-free re-check of registered plots moves it, from 50.0 to 24.9 ms. Four speed-up phases on 15 and 16 Oct took the index from 24× to 44× and new boundaries from 2.2× to about 5×, with no change to any output. A research pass found nothing that beats this approach for small exact plots on a CPU.
   - A plain GeoTIFF of our decision codes is already 98.6% smaller: the win is the layer analysis, and we show it. The lossless store is only 8.6% smaller and stays as the audit tier.
   - Our ML codec selector lost, and was rejected.
 - **The headline finding:** the supplier's five "indication of deforestation" plots show **no** loss on the layer they cite. Three plots they cleared **do** show loss. Neither the older data release nor a different boundary rule explains it. That is not an accusation. It is why decisions need receipts.

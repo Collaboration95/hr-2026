@@ -21,7 +21,7 @@ npm run build --prefix app
 npm run preview --prefix app -- --port 4173 --strictPort
 ```
 
-Build emits `app/dist/` for offline frozen review through a local HTTP server. It includes the supplied company sample. The user has authorized the tracked GitHub repository publication; this command does not deploy the app or change source terms.
+Build emits `app/dist/` for offline frozen review through a local HTTP server. It includes the supplied company sample (plot geometry and declarations in `dist/data/demo-v1.json`), which SystemEarth shared for local work only: never publish or deploy `app/dist/`. The repository is private since 15 October 2026; see the root README.
 
 ## Data boundary
 

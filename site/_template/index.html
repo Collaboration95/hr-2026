@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page title · Plotline explainers</title>
+<meta name="description" content="One sentence on what this page explains.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles go here. Reuse pack.css classes first; prefix new classes with the page slug. */
+.tpl-grid rect { transition: fill .3s; }
+</style>
+</head>
+<!-- TEMPLATE: copy this folder to site/<slug>/ and set data-page to the slug listed in assets/pack.js PAGES. -->
+<body data-page="_template">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Deep dive · 20 min</div>
+  <h1>A short, plain headline. <span class="hl">One marked phrase.</span></h1>
+  <p class="lede">Two or three sentences that say what the reader will understand by the end, in plain English.</p>
+  <div class="meta"><span>20 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md</span></div>
+  <div class="tldr"><b class="lab">If you read nothing else</b><ul><li>First takeaway, with a real number.</li><li>Second takeaway.</li><li>Third takeaway.</li></ul></div>
+</header>
+
+<section id="idea">
+  <div class="prose">
+    <div class="kick">1 · The idea</div>
+    <h2>Section headline as a claim.</h2>
+    <p>Prose paragraphs. Short sentences. Explain one idea, then show it in an instrument panel below.</p>
+  </div>
+
+  <!-- An instrument: animates when it scrolls into view; Replay restarts it. -->
+  <div class="panel" id="tpl-demo">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A 6 × 4 grid fills in</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg class="tpl-grid" viewBox="0 0 600 220" role="img" aria-label="A grid of 24 cells filling in one by one"></svg>
+      <p class="say"><small>What you are seeing</small><span id="tpl-say">Each cell is one map pixel.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> synthetic illustration. Real numbers on this page come from the files named in the header.</p>
+  </div>
+
+  <div class="stats">
+    <div class="big proof"><span class="num" data-count="744732"></span><span class="cap">cells identical</span></div>
+    <div class="big pen"><span class="num" data-count="99" data-suffix="%"></span><span class="cap">smaller</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="brow"><span class="lab">Original layers</span><span class="track"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="val">623 KB</span></div>
+    <div class="brow"><span class="lab">Decision layer</span><span class="track"><i data-w="1" style="background:var(--proof)"></i></span><span class="val">6.1 KB</span></div>
+  </div>
+
+  <div class="note"><b>Note</b><span>Use notes for an aside.</span></div>
+  <div class="note unknown"><b>Unknown</b><span>Use this for something nobody has confirmed yet.</span></div>
+  <div class="note warn"><b>Scope</b><span>Use this for a claim we must not make.</span></div>
+  <div class="note say-it"><b>Say it</b><span>Use this for a line to say out loud in the pitch.</span></div>
+
+  <details class="deeper"><summary>Go deeper: the exact rule <span class="lvl">technical</span></summary><div class="body"><p>Optional detail for readers who want more. Keep the main text readable without it.</p></div></details>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+// Page script. Pack.instrument(el, { ms, render(t) }) calls render with t from 0 to 1.
+(() => {
+  const { $, instrument, seg } = Pack;
+  const el = $('#tpl-demo'), svg = $('svg', el), say = $('#tpl-say');
+  const cells = [];
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) {
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    Object.entries({ x: 60 + c * 82, y: 14 + r * 50, width: 76, height: 44, rx: 6 }).forEach(([k, v]) => rect.setAttribute(k, v));
+    svg.append(rect); cells.push(rect);
+  }
+  instrument(el, { ms: 3000, render(t) {
+    cells.forEach((rect, j) => rect.setAttribute('fill', seg(t, j / 30, j / 30 + 0.1) > 0.5 ? 'var(--forest)' : 'var(--mist)'));
+    say.textContent = t < 1 ? 'Each cell is one map pixel.' : 'All 24 cells now hold a value.';
+  } });
+})();
+</script>
+</body>
+</html>

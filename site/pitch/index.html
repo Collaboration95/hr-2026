@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Presentation guide · Plotline explainers</title>
+<meta name="description" content="Storyline, summary line, 30- and 90-second versions, a timed three-minute demo run-through, a slide outline, questions and answers, terminology and a readiness checklist for the SystemEarth finals presentation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Every class is prefixed pt- (pitch). */
+.pt-quote { margin: 26px 0 0; padding: 22px 26px; background: var(--sheet); border: 1px solid var(--rule); border-left: 6px solid var(--hi); border-radius: 14px; font: 700 clamp(22px, 3.2vw, 32px)/1.2 var(--f-display); letter-spacing: -.015em; max-width: 880px; }
+.pt-quote small { display: block; font: 500 13px/1.4 var(--f-mono); color: var(--muted); letter-spacing: 0; margin-top: 10px; }
+.pt-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; margin-top: 18px; }
+.pt-two > * { min-width: 0; }
+@media (max-width: 800px) { .pt-two { grid-template-columns: 1fr; } }
+.pt-ctl { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.pt-tog { display: inline-flex; border: 1px solid var(--rule-2); border-radius: 9px; overflow: hidden; background: var(--sheet); }
+.pt-tog button { font: 600 13.5px var(--f-mono); border: 0; background: transparent; padding: 9px 14px; cursor: pointer; color: var(--muted); border-right: 1px solid var(--rule); }
+.pt-tog button:last-child { border-right: 0; }
+.pt-tog button[aria-pressed="true"] { background: var(--pen); color: #fff; }
+
+/* story stepper */
+.pt-beat { margin-top: 16px; display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; align-items: start; }
+.pt-beat .k { font: 800 74px/.9 var(--f-display); color: var(--pen); letter-spacing: -.04em; }
+.pt-beat h3 { margin-top: 0; }
+.pt-beat .when { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.pt-beat .big-n { display: inline-block; margin: 10px 14px 0 0; padding: 6px 12px; border-radius: 8px; background: var(--pen-wash); border: 1px solid var(--pen-wash-2); font: 700 17px var(--f-mono); color: var(--pen-deep); }
+.pt-rail { display: flex; height: 14px; gap: 3px; margin-top: 18px; }
+.pt-rail i { display: block; height: 100%; border-radius: 4px; background: var(--mist); transition: background .3s; }
+.pt-rail i.on { background: var(--pen); } .pt-rail i.done { background: var(--pen-wash-2); }
+@media (max-width: 640px) { .pt-beat { grid-template-columns: 1fr; gap: 6px; } .pt-beat .k { font-size: 48px; } }
+
+/* teleprompter */
+.pt-prompt { position: relative; height: 270px; overflow: hidden; border-radius: 12px; background: var(--ink); color: #6C7392; font: 650 30px/1.45 var(--f-display); letter-spacing: -.01em; padding: 0 28px; scroll-behavior: auto; }
+.pt-prompt .in { padding: 90px 0 150px; }
+.pt-prompt span.w { transition: color .25s; }
+.pt-prompt span.said { color: #F6F7F9; }
+.pt-prompt span.cur { color: var(--ink); background: var(--hi); border-radius: 4px; padding: 0 3px; margin: 0 -3px; }
+.pt-prompt span.w b { font-weight: 800; }
+.pt-prompt::before, .pt-prompt::after { content: ""; position: absolute; left: 0; right: 0; height: 56px; z-index: 1; pointer-events: none; }
+.pt-prompt::before { top: 0; background: linear-gradient(var(--ink), transparent); }
+.pt-prompt::after { bottom: 0; background: linear-gradient(transparent, var(--ink)); }
+.pt-clock { font: 700 28px var(--f-mono); font-variant-numeric: tabular-nums; min-width: 4.6ch; }
+.pt-prog { height: 6px; border-radius: 3px; background: var(--mist); margin-top: 12px; overflow: hidden; }
+.pt-prog i { display: block; height: 100%; width: 0; background: var(--pen); }
+@media (max-width: 640px) { .pt-prompt { font-size: 24px; padding: 0 16px; } }
+
+/* script blocks */
+.pt-script { max-width: 760px; margin-top: 16px; }
+.pt-script p { margin: 0; padding: 12px 16px 12px 18px; background: var(--sheet); border: 1px solid var(--rule); border-left: 4px solid var(--pen-wash-2); border-radius: 10px; margin-top: 10px; font-size: 17.5px; }
+.pt-script p b.l { display: block; font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--pen); margin-bottom: 4px; }
+.pt-script em { font-style: normal; background: linear-gradient(transparent 62%, var(--hi) 62%); }
+
+/* run of show */
+.pt-ros { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; margin-top: 16px; align-items: start; }
+@media (max-width: 860px) { .pt-ros { grid-template-columns: 1fr; } }
+.pt-ros > * { min-width: 0; }
+@media (max-width: 640px) { .pt-segs button { font-size: 9.5px; padding: 0; } .pt-app .top { flex-wrap: wrap; } .pt-app .top .sp { display: none; } .pt-app .body { height: 250px; } .pt-app .insp { width: 62%; } }
+.pt-app { border: 1px solid var(--rule-2); border-radius: 12px; background: #fff; overflow: hidden; font: 500 12px var(--f-mono); color: var(--ink-2); }
+.pt-app .top { display: flex; gap: 6px; align-items: center; padding: 8px 10px; background: var(--ink); color: #C8CCDA; }
+.pt-app .top b { color: #fff; margin-right: 8px; }
+.pt-app .top span { padding: 3px 9px; border-radius: 6px; }
+.pt-app .top span.on { background: #2B3046; color: #fff; }
+.pt-app .top .sp { flex: 1; padding: 0; }
+.pt-app .top .tg { border: 1px solid #555B70; }
+.pt-app .top .tg.on { background: var(--forest); border-color: var(--forest); color: #fff; }
+.pt-app .body { position: relative; height: 270px; background: #11201b; overflow: hidden; }
+.pt-app .map { position: absolute; inset: 0 0 38px 0; display: grid; grid-template-columns: repeat(24, 1fr); grid-template-rows: repeat(12, 1fr); gap: 1px; padding: 6px; }
+.pt-app .map i { background: #1d3229; border-radius: 1px; }
+.pt-app .map i.l { background: #ff7a3d; } .pt-app .map i.f { background: #2f7a53; } .pt-app .map i.lp { background: #5f3626; }
+.pt-app .plot { position: absolute; left: 34%; top: 26%; width: 22%; height: 34%; border: 2px solid #f3f7f2; border-radius: 3px; opacity: 0; transition: opacity .3s; }
+.pt-app .scrub { position: absolute; left: 0; right: 0; bottom: 0; height: 38px; background: #0c1814; border-top: 1px solid #1d3229; display: flex; align-items: center; gap: 10px; padding: 0 12px; color: #a3b4ab; }
+.pt-app .scrub .bar { flex: 1; height: 4px; border-radius: 2px; background: #1d3229; position: relative; }
+.pt-app .scrub .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: #c8f04f; border-radius: 2px; }
+.pt-app .insp { position: absolute; top: 0; right: 0; bottom: 38px; width: 46%; background: #0c1814; border-left: 1px solid #1d3229; padding: 12px; color: #e6eee8; transform: translateX(100%); transition: transform .35s var(--ease); line-height: 1.5; font-size: 11.5px; }
+.pt-app .insp div { margin-bottom: 8px; padding: 5px 7px; border-radius: 5px; background: #11201b; }
+.pt-app .insp b { color: #c8f04f; }
+.pt-app .page { position: absolute; inset: 0; padding: 16px; background: #0c1814; color: #e6eee8; display: none; line-height: 1.5; font-size: 12px; overflow: hidden; }
+.pt-app .page h4 { font: 700 15px var(--f-display); margin: 0 0 8px; color: #fff; }
+.pt-app .page .row { display: flex; gap: 8px; margin: 5px 0; align-items: center; }
+.pt-app .page .row i { display: block; height: 10px; border-radius: 3px; background: #c8f04f; }
+.pt-app .page .row i.g { background: #7f918a; }
+.pt-app .page .row i.o { background: #ff7a3d; }
+.pt-app .page .row span { min-width: 120px; }
+.pt-app .page .big { font: 800 26px var(--f-display); color: #c8f04f; }
+.pt-app .page .cg { display: grid; grid-template-columns: repeat(25, 1fr); gap: 1px; margin-top: 8px; }
+.pt-app .page .cg i { height: 9px; background: #1d3229; }
+.pt-app .page .cg i.l { background: #ff7a3d; }
+.pt-app .page .mono2 { font-family: var(--f-mono); color: #a3b4ab; }
+.pt-app .hot { outline: 3px solid var(--hi); outline-offset: 2px; }
+.pt-cap { margin-top: 8px; font: 500 12px/1.4 var(--f-mono); color: var(--muted); }
+.pt-now { padding: 16px 18px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; min-height: 280px; }
+.pt-now .t { font: 800 44px/1 var(--f-display); color: var(--pen); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.pt-now .t small { font: 500 13px var(--f-mono); color: var(--muted); letter-spacing: 0; margin-left: 10px; }
+.pt-now h4 { margin-top: 12px; }
+.pt-now .lab { display: block; margin-top: 12px; font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.pt-now .do { margin: 4px 0 0; font-size: 16.5px; color: var(--ink-2); }
+.pt-now .say2 { margin: 4px 0 0; font: 600 18px/1.4 var(--f-display); }
+.pt-track { position: relative; margin-top: 18px; padding: 0; }
+.pt-segs { display: flex; height: 34px; gap: 2px; }
+.pt-segs button { border: 0; border-radius: 6px; cursor: pointer; background: var(--pen-wash); color: var(--pen-deep); font: 600 11.5px var(--f-mono); padding: 0 4px; overflow: hidden; white-space: nowrap; }
+.pt-segs button.on { background: var(--pen); color: #fff; }
+.pt-segs button.done { background: var(--pen-wash-2); }
+.pt-range { width: 100%; margin: 12px 0 0; accent-color: var(--pen); height: 28px; }
+.pt-ticks { display: flex; justify-content: space-between; font: 500 11.5px var(--f-mono); color: var(--faint); }
+
+/* slides */
+.pt-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.pt-filter button { font: 600 13px var(--f-mono); border: 1px solid var(--rule-2); background: var(--sheet); border-radius: 999px; padding: 7px 13px; cursor: pointer; color: var(--ink-2); }
+.pt-filter button[aria-pressed="true"] { background: var(--pen); border-color: var(--pen); color: #fff; }
+.pt-slides { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 16px; }
+.pt-slide { position: relative; padding: 16px 18px 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; transition: opacity .3s, transform .3s; }
+.pt-slide.off { opacity: .22; transform: scale(.98); }
+.pt-slide .n { font: 800 34px/1 var(--f-display); color: var(--pen); letter-spacing: -.03em; }
+.pt-slide h3 { margin-top: 6px; font-size: 20px; }
+.pt-slide p { font-size: 15.5px; color: var(--ink-2); margin-top: 6px; }
+.pt-slide .vis { margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: var(--paper); border: 1px dashed var(--rule-2); font: 500 12.5px/1.45 var(--f-mono); color: var(--muted); }
+.pt-slide .vis b { color: var(--ink-2); }
+.pt-slide .ch { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.pt-slide.star { border-color: var(--hi); box-shadow: 0 0 0 3px var(--hi-wash); grid-column: span 2; }
+@media (max-width: 700px) { .pt-slide.star { grid-column: auto; } }
+.pt-slide.star ul { font-size: 15px; margin-top: 8px; }
+
+/* flip cards */
+.pt-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; margin-top: 18px; }
+.pt-flip { display: block; width: 100%; perspective: 1100px; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; font: inherit; color: inherit; height: 270px; }
+.pt-flip .inner { display: block; position: relative; width: 100%; height: 100%; transition: transform .6s var(--ease); transform-style: preserve-3d; }
+.pt-flip[aria-pressed="true"] .inner { transform: rotateY(180deg); }
+.pt-flip .f, .pt-flip .b { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; border: 1px solid var(--rule); padding: 18px 18px 14px; display: flex; flex-direction: column; overflow: auto; }
+.pt-flip .f { background: var(--sheet); border-top: 5px solid var(--pen); }
+.pt-flip .b { background: var(--ink); color: #E6EAF5; transform: rotateY(180deg); border-color: var(--ink); }
+.pt-flip .q { display: block; font: 700 20px/1.25 var(--f-display); letter-spacing: -.01em; }
+.pt-flip .hint { display: block; margin-top: auto; font: 600 11.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 10px; }
+.pt-flip .a { display: block; font-size: 15px; line-height: 1.5; }
+.pt-flip .a b { color: var(--hi); font-weight: 600; }
+.pt-flip .b .hint { color: #8A90A3; }
+.pt-flip .tg { display: block; font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--pen); margin-bottom: 8px; }
+.pt-flip .b .tg { color: var(--hi); }
+.pt-flip:focus-visible { outline: 3px solid var(--pen); outline-offset: 3px; border-radius: 14px; }
+@media (prefers-reduced-motion: reduce) { .pt-flip .inner { transition: none; } }
+
+/* say this, not that */
+.pt-sn { margin-top: 16px; display: grid; gap: 10px; }
+.pt-sn .r { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.pt-sn .y, .pt-sn .n { padding: 12px 16px; border-radius: 10px; font-size: 16.5px; border: 1px solid var(--rule); background: var(--sheet); }
+.pt-sn .y { border-left: 5px solid var(--proof); }
+.pt-sn .n { border-left: 5px solid var(--bad); color: var(--ink-2); }
+.pt-sn .n s { text-decoration-thickness: 1px; text-decoration-color: var(--bad); }
+.pt-sn b.l { display: block; font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+.pt-sn .y b.l { color: var(--proof); } .pt-sn .n b.l { color: var(--bad); }
+.pt-sn[data-mode="say"] .n { display: none; } .pt-sn[data-mode="say"] .r { grid-template-columns: 1fr; }
+.pt-sn[data-mode="not"] .y { display: none; } .pt-sn[data-mode="not"] .r { grid-template-columns: 1fr; }
+.pt-sn .why { grid-column: 1 / -1; font-size: 14px; color: var(--muted); margin: -2px 0 0 4px; }
+@media (max-width: 700px) { .pt-sn .r { grid-template-columns: 1fr; } }
+
+/* checklist + numbers */
+.pt-chk { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px; margin-top: 18px; }
+.pt-chk .g { padding: 16px 18px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; }
+.pt-chk h3 { margin-top: 0; font-size: 19px; }
+.pt-chk label { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; padding: 7px 0; border-top: 1px solid var(--rule); font-size: 16px; line-height: 1.45; cursor: pointer; }
+.pt-chk h3 + label { border-top: 0; margin-top: 6px; }
+.pt-chk input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--proof); }
+.pt-chk input:checked + span { color: var(--faint); text-decoration: line-through; }
+.pt-score { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font: 600 14px var(--f-mono); }
+.pt-score .meter { flex: 1; min-width: 160px; max-width: 360px; height: 10px; background: var(--mist); border-radius: 5px; overflow: hidden; }
+.pt-score .meter i { display: block; height: 100%; width: 0; background: var(--proof); transition: width .4s var(--ease); }
+.pt-nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 16px; }
+.pt-num { text-align: left; padding: 14px 16px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; cursor: default; font: inherit; color: inherit; }
+.pt-num .v { display: block; font: 800 34px/1 var(--f-display); letter-spacing: -.03em; color: var(--pen); font-variant-numeric: tabular-nums; transition: filter .3s; }
+.pt-num .c { display: block; margin-top: 8px; font: 500 12.5px/1.4 var(--f-mono); color: var(--muted); }
+.pt-nums.quiz .pt-num { cursor: pointer; }
+.pt-nums.quiz .pt-num:not(.show) .v { filter: blur(11px); }
+.pt-tag { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.pt-tbl td, .pt-tbl th { text-align: left; }
+</style>
+</head>
+<body data-page="pitch">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Presenting · 20 min</div>
+  <h1>Presentation guide for the SystemEarth <span class="hl">finals</span></h1>
+  <p class="lede">The finals take place on 17 October 2026. This guide covers the summary line, 30-second and 90-second versions, a timed three-minute demo, a slide outline, questions and answers, terminology and a readiness checklist.</p>
+  <div class="meta"><span>20 min read</span><span>Level: presenting</span><span>Sources: docs/writeups/04-pitch.md, docs/lab/demo-script.md, docs/lab/final-judge-review.md, docs/lab/decision-layer-report.md, docs/event_rules_and_open_questions.txt, docs/sustainability_kickoff_reference.txt</span></div>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li><b>Summary line:</b> a 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.</li>
+    <li><b>Key figures:</b> 99% smaller · 744,732 of 744,732 cells identical · 44× faster for registered plots · 5.2× for new boundaries · 98.6% (the plain-GeoTIFF control) · 2 cells in 2022 on P-0001.</li>
+    <li><b>Pitch length, format and judging weights are not confirmed.</b> Every piece is built to be cut: 30 s, 90 s and a 3-minute demo.</li>
+  </ul></div>
+</header>
+
+<!-- ============================================================ 1 -->
+<section id="known" data-toc="Format and evaluation">
+  <div class="prose">
+    <div class="kick">1 · Format and evaluation</div>
+    <h2>The finals date is confirmed; the pitch length is not</h2>
+    <p>The organisers' sources say teams <strong>pitch directly to the company teams at the finals on 17 October</strong>, and that online pitching is allowed for teams that cannot attend in person. They do not give the pitch length, the submission format, the submission channel or the scoring method; these are on the open-questions list.</p>
+  </div>
+  <div class="cols">
+    <div class="card" style="--c: var(--proof)"><span class="who">Confirmed</span><h3>What the sources say</h3><p>Finals on 17 October 2026. Teams pitch directly to the company teams. Online pitching is allowed for teams that cannot attend. The company's printed guidance lists what to measure (see the table below).</p></div>
+    <div class="card" style="--c: var(--review)"><span class="who">Unknown</span><h3>What is unconfirmed</h3><p>Pitch length. Finals schedule and venue. Submission format, channel and deadline. Evaluation criteria and scoring weights. Who presents. None of these is assumed in this guide.</p></div>
+    <div class="card" style="--c: var(--pen)"><span class="who">Approach</span><h3>Every piece can be cut</h3><p>The material is a summary line, 30-second and 90-second spoken versions, a 3-minute demo and a slide outline that maps one-to-one onto the company's own evaluation measures. Whatever the slot, material is cut from the end.</p></div>
+  </div>
+  <div class="prose">
+    <h3>Evaluation measures in the printed brief</h3>
+    <p>The printed brief asks for the essential layers to be identified, for what can be simplified or dropped to be stated (grounded in the regulation), for an encoding strategy to be described, and for a sample region to be encoded and queried in a <strong>working prototype</strong>. It then lists what is measured. The proposed slide structure follows this list in order, so each measure has its own slide.</p>
+  </div>
+  <div class="tbl"><table class="dt pt-tbl">
+    <thead><tr><th>Measure (printed guidance)</th><th>Slide</th><th>Key figure</th></tr></thead>
+    <tbody>
+      <tr><td>Layer analysis: essential and droppable layers and attributes, tied to the regulation</td><td>3</td><td>Canopy % is 72% of Hansen's bytes; no question reads it</td></tr>
+      <tr><td>Encoding strategy</td><td>4</td><td>One 20-value code per cell; bit-planes and sparse loss events</td></tr>
+      <tr><td>Storage against the original layers</td><td>5</td><td>623,237 B to 6,146 B: 99.0% smaller</td></tr>
+      <tr><td>Decision fidelity (and pixel fidelity where relevant)</td><td>6</td><td>744,732 of 744,732 cells identical; 17 of 17 plots</td></tr>
+      <tr><td>Query speed and resource needs</td><td>7</td><td>44× registered (hot); 5.2× new boundaries; 75 to 37 MB</td></tr>
+      <tr><td>A working prototype and a representative query</td><td>9</td><td>Live: P-0001, 2022</td></tr>
+      <tr><td>Infrastructure and processing cost (a bonus)</td><td>10</td><td>$0.0031 for 10 million new plots</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note unknown rv"><b>Unknown</b><span>The published sources give no scoring weights. The "mock judging rubric" in <code>skills/systemearth-hackathon-judge/SKILL.md</code> (and the 90/100 and 87/100 in <code>docs/lab/final-judge-review.md</code>) comes from a simulated reviewer inside the project. It is not the organisers' rubric and does not predict the result. That review dates from 14 October, before the decision layers existed.</span></div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="story" data-toc="The storyline">
+  <div class="prose">
+    <div class="kick">2 · Storyline</div>
+    <h2>Seven beats: problem, analysis, proof, numbers, demo, finding, next step.</h2>
+    <p>The first four beats are spoken, in about 90 seconds, and set up the demo. The last three run in the app. Each beat has a time budget, a main point and a key figure.</p>
+  </div>
+  <div class="panel" id="pt-story">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">The pitch in seven beats</span><span class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></span></div>
+      <div class="pt-rail" id="pt-rail"></div>
+      <div class="steps" style="margin-top:14px" role="group" aria-label="Beat"></div>
+      <div class="pt-beat" aria-live="polite">
+        <div class="k" id="pt-bk">1</div>
+        <div><div class="when" id="pt-bw"></div><h3 id="pt-bh"></h3><p id="pt-bp"></p><div id="pt-bn"></div></div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> beats follow <code>docs/writeups/04-pitch.md</code> (elevator pitch, longer version, three-minute demo). Time budgets are proposals; the sources fix none of them.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="lines" data-toc="Summary line, 30 s and 90 s">
+  <div class="prose">
+    <div class="kick">3 · Spoken versions</div>
+    <h2>Summary line, 30-second and 90-second versions</h2>
+    <p>All numbers come from the retained evidence files, and the wording is limited to what that evidence supports.</p>
+  </div>
+  <div class="pt-quote">A 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.<small>Summary line · the challenge brief's own slide title is "Keep the decision, not the data"</small></div>
+
+  <div class="prose" style="margin-top:44px">
+    <h3>30-second version: timed read-through</h3>
+    <p>About 60 words, read at three paces. The highlighted word marks the current position and the clock shows the time that pace takes.</p>
+  </div>
+  <div class="panel" id="pt-prompter">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Timed read-through · 30-second version</span>
+        <span class="pt-ctl">
+          <span class="pt-tog" role="group" aria-label="Pace" id="pt-pace"></span>
+          <button class="btn on" type="button" id="pt-go">Start</button><button class="btn" type="button" id="pt-reset">Reset</button>
+        </span></div>
+      <div class="pt-prompt" id="pt-win" tabindex="0" aria-label="Read-through text. Press Space to start or pause."><div class="in" id="pt-text"></div></div>
+      <div class="pt-prog"><i id="pt-pbar"></i></div>
+      <div class="pt-ctl" style="margin-top:12px"><span class="pt-clock" id="pt-clock">0:00</span><span class="muted small" id="pt-info"></span></div>
+    </div>
+    <p class="foot"><b>Source:</b> the elevator pitch in <code>docs/writeups/04-pitch.md</code>, reworded in the third person with the figures unchanged. <kbd>Space</kbd> starts or pauses the read-through while it is focused. The scroll keeps the current word in view; it is a timing aid, not a recording.</p>
+  </div>
+
+  <div class="prose" style="margin-top:44px">
+    <h3>The 90-second version</h3>
+    <p>The writeup's "longer version" runs about 420 words, nearer <strong>2¾ minutes</strong> at a normal 150 words a minute than 60 to 90 seconds. The trimmed version below is about 200 words (about 80 seconds) and uses only its sentences and numbers; the longer one suits a four-minute slot.</p>
+  </div>
+  <div class="pt-script">
+    <p><b class="l">Problem · 10 s</b>EUDR screening is a geospatial join that gets re-run: plot boundaries, forest at the 2020 cut-off, and annual loss since, every time a layer updates.</p>
+    <p><b class="l">Layer analysis · 20 s</b>The analysis identifies what the decision reads: is each map cell land or water, was it forest on 31 December 2020, and in what year was it lost since. Hansen's canopy percentages are <em>72% of its bytes</em>, and no question reads them. All of that is dropped, and <em>one 20-value code per cell</em> is kept.</p>
+    <p><b class="l">Proof · 20 s</b>An independent path rebuilds every code from the original GeoTIFFs: <em>744,732 of 744,732 cells identical</em>. Every output depends only on the selected cells' codes, so every possible plot boundary gets the same answer, not just the 17 supplied plots.</p>
+    <p><b class="l">Numbers · 25 s</b><em>6.1 kilobytes against 623: 99% smaller.</em> Registered plots are re-checked <em>44 times faster</em>, and new boundaries about <em>five times faster</em>. A plain GeoTIFF of the same codes is already 98.6% smaller, so the win is the layer analysis.</p>
+    <p><b class="l">What it finds · 10 s</b>Hansen alone flags 7 of the 17 plots for loss after 2020. Against JRC's 2020 forest map, only <em>P-0001</em> shows mapped loss on mapped 2020 forest: <em>2 cells in 2022</em>. The demo shows this plot.</p>
+  </div>
+  <div class="note warn rv"><b>Caveat</b><span>"44× faster" is a hot, per-plot time for plots registered in advance, against the project's own first version. Registered plots and new boundaries are always stated separately, never as one blended multiple. The batch figure (about 16×) needs a batch in hand.</span></div>
+  <details class="deeper"><summary>Go deeper: where each number comes from <span class="lvl">evidence</span></summary><div class="body">
+    <p>6.1 KB against 623 KB: 6,146 B against 623,237 B (<code>docs/lab/decision-layer-report.md</code>, "How much smaller"). 44× and 5.2× are the Phase 4 hot figures on the 17 supplied plots; 83× is the NumPy-free re-check; 410× is the answer table, a cache. The proof table is in the same report under "Same answers, proven for every cell". "Hansen alone flags 7 of 17" and P-0001's 2 cells are in <code>docs/writeups/04-pitch.md</code> and the report's "What the decision layer says about the 17 plots".</p>
+  </div></details>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="demo" data-toc="Demo run-through">
+  <div class="prose">
+    <div class="kick">4 · Demo run-through</div>
+    <h2>Three minutes, seven moments, one plot.</h2>
+    <p>The demo follows one plot, P-0001 in 2022, starting from <code>#/map/P-0001/2022</code>. Each moment lists what is on screen and the key points. If the live API is unavailable, Map, Cohort and Proof still work offline.</p>
+  </div>
+  <div class="panel" id="pt-ros">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Schematic</span>Demo run-through · 3:00</span><span class="pt-ctl"><button class="btn" type="button" id="pt-play">▶ Play ×10</button></span></div>
+      <div class="pt-track">
+        <div class="pt-segs" id="pt-segs"></div>
+        <input class="pt-range" id="pt-range" type="range" min="0" max="179" value="0" step="1" aria-label="Time in the demo, seconds">
+        <div class="pt-ticks"><span>0:00</span><span>0:45</span><span>1:30</span><span>2:15</span><span>3:00</span></div>
+      </div>
+      <div class="pt-ros">
+        <div>
+          <div class="pt-app" id="pt-app" role="img" aria-label="Schematic of the Plotline app at the current moment of the demo">
+            <div class="top"><b>Plotline</b><span data-tab="map">Map</span><span data-tab="cohort">Cohort</span><span data-tab="proof">Proof</span><span data-tab="receipt">Receipt</span><span class="sp"></span><span class="tg" id="pt-tg">JRC 2020 forest</span></div>
+            <div class="body">
+              <div class="map" id="pt-map"></div>
+              <div class="plot" id="pt-plot"></div>
+              <div class="insp" id="pt-insp"><div><b>P-0001</b> · 2022</div><div>Declared: <b>no indication</b></div><div>Hansen: <b>38</b> loss cells in 2022</div><div>Decision layer: 60 cells were 2020 forest; <b>2 lost in 2022</b></div></div>
+              <div class="scrub" id="pt-scrub"><span>▶</span><span>2001</span><div class="bar"><i id="pt-year"></i></div><span id="pt-yr">2022</span></div>
+              <div class="page" id="pt-pg"></div>
+            </div>
+          </div>
+          <div class="pt-cap">Schematic of the app's screens, drawn with invented shapes. It is not a screenshot and shows no real plot or loss pattern.</div>
+        </div>
+        <div class="pt-now" aria-live="polite">
+          <div class="t"><span id="pt-time">0:00</span><small id="pt-seg"></small></div>
+          <h4 id="pt-title"></h4>
+          <span class="lab">On screen</span><p class="do" id="pt-do"></p>
+          <span class="lab">Key points</span><p class="say2" id="pt-say"></p>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> the three-minute demo table in <code>docs/writeups/04-pitch.md</code> (current, redesigned UI); the older <code>docs/lab/demo-script.md</code> is superseded for the new screens but its interpretation rules still apply. Timings are the writeup's proposal, not an organiser format.</p>
+  </div>
+  <div class="note unknown rv"><b>Unknown</b><span>If the slot is shorter than three minutes, moments 4 (ladder and speed table) and 5 (Cohort) are cut first, keeping P-0001, the Proof tab and the Receipt. A longer slot can add the live query (<code>#/live</code>), which needs the optional local API.</span></div>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="slides" data-toc="The slide outline">
+  <div class="prose">
+    <div class="kick">5 · Slide outline</div>
+    <h2>Eleven slides in the order of the brief's evaluation measures</h2>
+    <p>Each slide has a title, one line and a visual. The slides map one-to-one onto the printed evaluation measures, with a prototype demo and the cost bonus at the end. Slide 8 covers the notable engineering: the speed changes and the every-cell proof.</p>
+    <p class="muted small">This outline is a proposal. The sources give no required slide format or count.</p>
+  </div>
+  <div class="pt-filter" id="pt-filter" role="group" aria-label="Filter slides"></div>
+  <div class="pt-slides" id="pt-slides"></div>
+  <div class="note say-it rv" style="max-width:var(--prose)"><b>Summary</b><span>Slide 8: the speed came from removing work rather than tuning, and after every round all 744,732 cells were re-checked as unchanged.</span></div>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="qa" data-toc="Questions and answers">
+  <div class="prose">
+    <div class="kick">6 · Questions and answers</div>
+    <h2>Thirteen anticipated questions with short answers</h2>
+    <p>Each card flips between the question and its answer. The answers are brief; supporting detail is on the other pages.</p>
+  </div>
+  <div class="pt-ctl" style="margin-top:14px"><button class="btn" type="button" id="pt-flipall">Show all answers</button><span class="muted small" id="pt-qcount"></span></div>
+  <div class="pt-cards" id="pt-cards"></div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="words" data-toc="Terminology">
+  <div class="prose">
+    <div class="kick">7 · Terminology</div>
+    <h2>Preferred terms and the reason for each</h2>
+    <p>These pairs come from the project's own wording table. The preferred term states what was measured; the avoided term claims more than the evidence supports.</p>
+  </div>
+  <div class="pt-ctl" style="margin-top:14px"><span class="pt-tog" role="group" aria-label="Terms shown"><button type="button" data-mode="both" aria-pressed="true">Both</button><button type="button" data-mode="say" aria-pressed="false">Preferred</button><button type="button" data-mode="not" aria-pressed="false">Avoided</button></span></div>
+  <div class="pt-sn" id="pt-sn" data-mode="both"></div>
+  <p class="muted small" style="max-width:700px">Source: the "Words to use / avoid" table in <code>docs/writeups/04-pitch.md</code>. The last two rows restate project rules from <code>AGENTS.md</code> and the decision-layer report: supplier declarations are declarations, and the answer table is a cache.</p>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="checklist" data-toc="Pre-presentation checklist">
+  <div class="prose">
+    <div class="kick">8 · Readiness</div>
+    <h2>Pre-presentation checklist</h2>
+    <p>Ticks are saved in this browser only. Items marked Unconfirmed are open questions rather than tasks.</p>
+  </div>
+  <div class="pt-score"><span id="pt-chk-n">0 of 0 ready</span><span class="meter"><i id="pt-chk-bar"></i></span></div>
+  <div class="pt-chk" id="pt-chk"></div>
+
+  <div class="prose" style="margin-top:44px">
+    <h3>Key figures</h3>
+    <p>The figures the presentation relies on. The self-check hides each value until it is selected.</p>
+  </div>
+  <div class="pt-ctl" style="margin-top:12px"><button class="btn" type="button" id="pt-quiz" aria-pressed="false">Self-check</button></div>
+  <div class="pt-nums" id="pt-nums"></div>
+  <div class="note warn rv"><b>Scope</b><span>Every speed figure carries its clock: hot, per plot, once the layer is local, against the project's first version, on one laptop with a warm cache, 17 plots. Whole-process time is mostly Python and NumPy start-up. See <a href="../speed/#caveats">the performance page</a>.</span></div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, ease, seg, REDUCE } = Pack;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const mmss = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+  /* ------------------------------------------------------ storyline stepper */
+  (() => {
+    const el = $('#pt-story');
+    const B = [
+      ['Spoken intro · about 10 s', 'Problem', 'To sell into the EU, every farm plot must be shown deforestation-free. EUDR screening is a geospatial join that gets re-run: plot boundaries, forest at the 2020 cut-off, and annual loss since, every time a layer updates.', ['EUDR cut-off: 31 Dec 2020']],
+      ['Spoken intro · about 20 s', 'Layer analysis', 'The analysis identifies what the decision actually reads and drops the rest. Canopy percentages are 72% of Hansen\'s bytes and no question reads them. What is kept: one 20-value code per map cell.', ['72% of Hansen bytes never read', '20 codes per cell']],
+      ['Spoken intro · about 20 s', 'Proof', 'An independent path rebuilds every code from the original GeoTIFFs. Every output depends only on the selected cells\' codes, so every possible plot boundary gets the same answer, not just the 17 supplied plots.', ['744,732 / 744,732 cells', '9,829 / 9,829 fuzzed']],
+      ['Spoken intro · about 25 s', 'Numbers', 'Smaller, faster, same answers. The control stays in the story: a plain GeoTIFF of the codes is already 98.6% smaller, so the win is the layer analysis. Registered plots and new boundaries are always separate numbers.', ['99% smaller (6.1 KB vs 623 KB)', '44× registered', '5.2× new boundaries']],
+      ['Demo · 0:00 to 1:15', 'Demo', 'The app opens on P-0001, 2022. Loss accumulates from 2001 to 2025, the EU 2020 forest map is stacked, then the plot is selected. The map is the data: the Hansen raster, recoloured in the browser.', ['Live app: #/map/P-0001/2022']],
+      ['Demo · 0:40 to 2:15', 'What it found', 'One plot. Hansen shows 38 loss cells in 2022. 60 cells were JRC 2020 forest, and 2 of those were lost in 2022. Plotline puts 2 cells, not 38, to the reviewer. These are mapped observations, not a compliance verdict.', ['2 of 60 forest cells', '38 → 2 cells to review']],
+      ['Demo · 2:15 to 3:00', 'Next step', 'Every answer has a receipt: layer versions, grid, rule and hashes. The proposed next step is one agreed query contract, one reference plot and a representative workload.', ['One query contract', 'One reference plot', 'A representative workload']]
+    ];
+    const rail = $('#pt-rail'); B.forEach(() => rail.append(document.createElement('i')));
+    const set = k => {
+      const b = B[k];
+      $('#pt-bk').textContent = k + 1; $('#pt-bw').textContent = b[0]; $('#pt-bh').textContent = b[1]; $('#pt-bp').textContent = b[2];
+      $('#pt-bn').innerHTML = b[3].map(n => '<span class="big-n">' + esc(n) + '</span>').join('');
+      $$('i', rail).forEach((r, j) => { r.className = j === k ? 'on' : j < k ? 'done' : ''; });
+    };
+    stepper(el, B.length, set);
+  })();
+
+  /* ------------------------------------------------------ teleprompter */
+  (() => {
+    const TEXT = "To sell into the EU, every farm plot must be shown deforestation-free: forest at the end of 2020, lost since? Plotline keeps only what that decision reads and drops the rest. On 17 real supplier plots, the decision layer is 99% smaller. Registered plots are re-checked 44× faster, and every one of 744,732 cells gives the same answer as the original layers.";
+    const box = $('#pt-text'), win = $('#pt-win'), go = $('#pt-go'), rs = $('#pt-reset'), clock = $('#pt-clock'), pbar = $('#pt-pbar'), info = $('#pt-info'), pace = $('#pt-pace');
+    const words = TEXT.split(/\s+/); const N = words.length;
+    const spans = words.map(w => { const s = document.createElement('span'); s.className = 'w'; s.innerHTML = /[\d%×]/.test(w) ? '<b>' + esc(w) + '</b>' : esc(w); box.append(s, ' '); return s; });
+    const PACES = [['Calm', 130], ['Normal', 150], ['Quick', 170]]; let wpm = 150;
+    PACES.forEach(([n, v]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.v = v; b.setAttribute('aria-pressed', v === wpm); pace.append(b); b.addEventListener('click', () => { wpm = v; refreshPace(); }); });
+    const dur = () => N / wpm * 60;
+    const refreshPace = () => { $$('button', pace).forEach((b, i) => { b.textContent = PACES[i][0] + ' · ' + Math.round(N / PACES[i][1] * 60) + ' s'; b.setAttribute('aria-pressed', PACES[i][1] === wpm); }); info.textContent = N + ' words at ' + wpm + ' words a minute: ' + Math.round(dur()) + ' seconds.'; };
+    let elapsed = -3000, running = false, last = 0, raf = 0, done = false;
+    const paint = () => {
+      const idx = elapsed < 0 ? 0 : Math.min(N, Math.floor(elapsed / 60000 * wpm));
+      spans.forEach((s, i) => { s.classList.toggle('said', elapsed >= 0 && i < idx); s.classList.toggle('cur', elapsed >= 0 && i === idx && idx < N); });
+      const cur = spans[Math.min(idx, N - 1)];
+      win.scrollTop = Math.max(0, cur.offsetTop - win.clientHeight * 0.4);
+      clock.textContent = elapsed < 0 ? (elapsed <= -3000 && !running ? '0:00' : String(Math.ceil(-elapsed / 1000))) : mmss(elapsed / 1000);
+      pbar.style.width = (elapsed < 0 ? 0 : clamp(elapsed / 1000 / dur()) * 100) + '%';
+      go.textContent = done ? 'Again' : running ? 'Pause' : elapsed > -3000 ? 'Resume' : 'Start';
+      go.classList.toggle('on', !running);
+    };
+    const tick = now => {
+      if (!running) return;
+      elapsed += now - last; last = now;
+      if (elapsed >= dur() * 1000) { elapsed = dur() * 1000; running = false; done = true; paint(); return; }
+      paint(); raf = requestAnimationFrame(tick);
+    };
+    const toggle = () => {
+      if (done) { reset(); }
+      running = !running;
+      if (running) { last = performance.now(); raf = requestAnimationFrame(tick); } else cancelAnimationFrame(raf);
+      paint();
+    };
+    const reset = () => { running = false; done = false; cancelAnimationFrame(raf); elapsed = -3000; paint(); win.scrollTop = 0; };
+    go.addEventListener('click', toggle); rs.addEventListener('click', reset);
+    win.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); toggle(); } });
+    refreshPace(); paint();
+    $$('button', pace).forEach(b => b.addEventListener('click', () => { if (!running) paint(); }));
+  })();
+
+  /* ------------------------------------------------------ run of show */
+  (() => {
+    const el = $('#pt-ros');
+    const S = [
+      { t: 0, n: 'Region', title: 'The map is the data', tab: 'map', scene: 'map', yr: 0.6,
+        doit: 'Region view. The year scrubber plays and pauses at 2022.',
+        say: 'The map is the data: the Hansen raster, recoloured in the browser. Loss accumulates from 2001 to 2025. This is rubber and oil-palm country.' },
+      { t: 20, n: 'JRC', title: 'Stack the EU 2020 forest map', tab: 'map', scene: 'jrc', yr: 0.86,
+        doit: 'JRC 2020 forest toggled on.',
+        say: 'The EU\'s 2020 forest map is stacked on the loss. Much of the mapped loss falls outside JRC\'s 2020 forest class. The cause needs further evidence, but one layer alone raises the wrong alarm.' },
+      { t: 40, n: 'P-0001', title: 'One plot, 2 cells to ask about', tab: 'map', scene: 'plot', yr: 0.86,
+        doit: 'P-0001 selected.',
+        say: 'One plot. The squares are the ~28 m cells; the dots are the centres, the written inclusion rule. Declared: no indication. Hansen: 38 loss cells in 2022. Decision layer: 60 cells were 2020 forest, and 2 of them were lost in 2022. Plotline puts those 2 cells to the reviewer, not all 38.' },
+      { t: 75, n: 'Proof', title: 'A 6 KB layer, every cell matches', tab: 'proof', scene: 'proof',
+        doit: 'Proof tab: the decision-layer hero.',
+        say: 'That answer came from a 6 KB decision layer, not 623 KB of layers. All 744,732 cells match the originals, so every plot boundary gets the same answer. 99% smaller; 44× faster for registered plots.' },
+      { t: 105, n: 'Ladder', title: 'What was dropped and why', tab: 'proof', scene: 'ladder',
+        doit: 'The ladder and the speed table.',
+        say: 'Dropped: canopy percentages, pre-2021 loss years and JRC sub-cell detail, each with its reason. The standard GeoTIFF control shows that most of the win is the layer analysis, not a codec. The lossless store stays as the audit tier.' },
+      { t: 135, n: 'Cohort', title: 'All 17 plots, 25 years', tab: 'cohort', scene: 'cohort',
+        doit: 'Cohort, then back to P-0001.',
+        say: 'Zoom out: 17 plots × 25 years. The declarations were tested against the documented rule and two data releases, and they do not line up. That is a question for the evidence files. The results do not establish supplier intent; the evidence files were not supplied.' },
+      { t: 160, n: 'Receipt', title: 'Every answer has a receipt', tab: 'receipt', scene: 'receipt',
+        doit: 'Receipt opened.',
+        say: 'Every answer has a receipt: layer versions, grid, rule and hashes. The proposed next step is one agreed query contract, one reference plot and a representative workload.' }
+    ];
+    const segs = $('#pt-segs'), range = $('#pt-range');
+    const end = 180;
+    S.forEach((s, i) => { const b = document.createElement('button'); b.type = 'button'; b.style.flex = String((i + 1 < S.length ? S[i + 1].t : end) - s.t); b.textContent = s.n; b.setAttribute('aria-label', 'Jump to ' + mmss(s.t) + ': ' + s.title); b.addEventListener('click', () => { stop(); go(s.t); }); segs.append(b); });
+    // schematic map
+    const map = $('#pt-map'); const cells = []; for (let i = 0; i < 288; i++) { const c = document.createElement('i'); map.append(c); cells.push(c); }
+    const hash = (a, b) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+    cells.forEach((c, i) => { const r = Math.floor(i / 24), q = i % 24, h = hash(r, q), blob = hash(Math.floor(r / 3), Math.floor(q / 3)); c.dataset.l = (h < .22 + blob * .35 ? 1 : 0); c.dataset.f = (blob > .55 && h > .3 ? 1 : 0); c.dataset.y = Math.floor(h * 25); });
+    const pg = $('#pt-pg'), plot = $('#pt-plot'), insp = $('#pt-insp'), tg = $('#pt-tg'), scrub = $('#pt-scrub');
+    const PAGES = {
+      proof: '<h4>Proof</h4><div class="big">744,732 / 744,732</div><div>cells give the same answer</div><div class="row" style="margin-top:12px"><span>Original layers</span><i class="g" style="width:150px"></i><span class="mono2">623 KB</span></div><div class="row"><span>Decision layer</span><i style="width:3px"></i><span class="mono2">6.1 KB</span></div><div class="row"><span>Registered re-check</span><i style="width:90px"></i><span class="mono2">44×</span></div>',
+      ladder: '<h4>What was kept and dropped</h4><div class="row"><span>Canopy % (2000)</span><i class="o" style="width:110px"></i><span class="mono2">dropped</span></div><div class="row"><span>Loss years to 2020</span><i class="o" style="width:70px"></i><span class="mono2">dropped</span></div><div class="row"><span>JRC sub-cell detail</span><i class="o" style="width:40px"></i><span class="mono2">dropped</span></div><div class="row"><span>Decision codes</span><i style="width:14px"></i><span class="mono2">kept</span></div><div class="row" style="margin-top:10px"><span>Plain GeoTIFF of codes</span><i class="g" style="width:19px"></i><span class="mono2">98.6% smaller</span></div><div class="row"><span>Our encoding</span><i style="width:14px"></i><span class="mono2">99.0% smaller</span></div>',
+      cohort: '<h4>Cohort · 17 plots × 25 years</h4><div class="cg" id="pt-cg"></div>',
+      receipt: '<h4>Receipt · P-0001 · 2022</h4><div class="mono2">layer versions<br>grid and cell-centre rule<br>store and registry hashes<br>input geometry hash<br>output: 2 / 60 cells</div><div class="row" style="margin-top:12px"><span class="mono2">sha256 · · · · · · · · ·</span></div>'
+    };
+    let timer = 0, cur = -1, t = 0;
+    const draw = () => {
+      let k = 0; S.forEach((s, i) => { if (t >= s.t) k = i; }); const s = S[k];
+      $('#pt-time').textContent = mmss(t); $('#pt-seg').textContent = (k + 1) + ' of ' + S.length + ' · ' + s.n;
+      $('#pt-title').textContent = s.title; $('#pt-do').textContent = s.doit; $('#pt-say').textContent = s.say;
+      range.value = t; $$('button', segs).forEach((b, i) => { b.classList.toggle('on', i === k); b.classList.toggle('done', i < k); });
+      $$('.top [data-tab]').forEach(x => x.classList.toggle('on', x.dataset.tab === s.tab));
+      const isMap = s.scene === 'map' || s.scene === 'jrc' || s.scene === 'plot';
+      pg.style.display = isMap ? 'none' : 'block'; map.style.display = isMap ? 'grid' : 'none'; scrub.style.display = isMap ? 'flex' : 'none';
+      if (!isMap) tg.classList.remove('on');
+      if (!isMap) { pg.innerHTML = PAGES[s.scene]; if (s.scene === 'cohort') { const cg = $('#pt-cg'); for (let i = 0; i < 17 * 25; i++) { const c = document.createElement('i'); if (hash(i % 25, Math.floor(i / 25) + 3) < .16 + (i % 25) * .008) c.className = 'l'; cg.append(c); } } }
+      if (isMap) {
+        const yrFrac = s.yr + (S[k + 1] && S[k + 1].scene !== 'proof' ? (t - s.t) / 120 * 0 : 0);
+        const yearN = s.scene === 'map' ? Math.round(2001 + (t / 20) * 21) : 2022;
+        const y = Math.min(25, yearN - 2000);
+        cells.forEach(c => { const lost = c.dataset.l === '1' && (+c.dataset.y + 1) <= y, past = lost && (+c.dataset.y + 2001) <= 2020; c.className = s.scene === 'map' ? (lost ? (past ? 'lp' : 'l') : '') : (c.dataset.f === '1' ? (lost && !past ? 'l' : 'f') : (lost ? (past ? 'lp' : 'l') : '')); });
+        $('#pt-year').style.width = ((yearN - 2001) / 24 * 100) + '%'; $('#pt-yr').textContent = yearN;
+        tg.classList.toggle('on', s.scene !== 'map'); tg.classList.toggle('hot', s.scene === 'jrc');
+        plot.style.opacity = s.scene === 'plot' ? 1 : 0; insp.style.transform = s.scene === 'plot' ? 'none' : 'translateX(100%)';
+        scrub.classList.toggle('hot', s.scene === 'map');
+      }
+      $('.pt-app .top .tg').classList.toggle('hot', s.scene === 'jrc');
+    };
+    const go = v => { t = clamp(Math.round(v), 0, end - 1); draw(); };
+    const stop = () => { clearInterval(timer); timer = 0; $('#pt-play').textContent = '▶ Play ×10'; };
+    $('#pt-play').addEventListener('click', () => { if (timer) { stop(); return; } if (t >= end - 1) go(0); $('#pt-play').textContent = '❚❚ Pause'; timer = setInterval(() => { if (t >= end - 1) { stop(); return; } go(t + 1); }, 100); });
+    range.addEventListener('input', () => { stop(); go(+range.value); });
+    go(0);
+  })();
+
+  /* ------------------------------------------------------ slide outline */
+  (() => {
+    const M = { layer: 'Layer analysis', enc: 'Encoding', store: 'Storage', fid: 'Fidelity', speed: 'Query speed and resources', demo: 'Prototype demo', cost: 'Cost (bonus)' };
+    const SL = [
+      { n: 1, t: 'A 6 KB decision layer gives the same EUDR answers as 623 KB', l: 'The summary line, opening the deck.', v: '<b>Visual:</b> 623 KB of layers stack collapsing into one 6 KB band.', m: [], c5: 1 },
+      { n: 2, t: 'EUDR plots are re-checked every time a layer updates', l: 'The use case: a geospatial join that gets re-run, with a 31 December 2020 cut-off.', v: '<b>Visual:</b> a plot polygon and three layer updates ticking past.', m: [], c5: 0 },
+      { n: 3, t: 'What the decision reads, and what it never does', l: 'Three questions need land/water, JRC 2020 forest and loss 2021 to 2025. Canopy % is 72% of Hansen\'s bytes and no question reads it.', v: '<b>Visual:</b> the three-question table with canopy % struck out.', m: ['layer'], c5: 1 },
+      { n: 4, t: 'One 20-value code per cell', l: 'Land or water, forest state at the cut-off, and loss year, stored as bit-planes plus sparse loss events.', v: '<b>Visual:</b> the 20-code legend and the stack of planes.', m: ['enc'], c5: 0 },
+      { n: 5, t: '99% smaller, with the control shown', l: '623,237 B to 6,146 B. A plain GeoTIFF of the same codes is 8,532 B (98.6%): the win is the analysis. Whole tile: 421.9 MB to 8.2 MB.', v: '<b>Visual:</b> the size ladder: original, GeoTIFF of codes, Plotline.', m: ['store'], c5: 1 },
+      { n: 6, t: 'Same answer for every one of 744,732 cells', l: 'Every output depends only on the selected cells\' codes, so every possible plot boundary matches. 17 of 17 plots; 9,829 of 9,829 fuzzed shapes; negative controls detected.', v: '<b>Visual:</b> one big number, three ticks.', m: ['fid'], c5: 1 },
+      { n: 7, t: '44× for registered plots, 5.2× for new boundaries', l: 'Two scoreboards, never blended. Hot, per plot, against the first version. Fresh-process load + query 11.1 to 1.3 ms; peak memory 75 to 37 MB (23 MB NumPy-free).', v: '<b>Visual:</b> the two-group bar race, with the clock stated under it.', m: ['speed'], c5: 1 },
+      { n: 8, t: 'Notable engineering: five changes made it fast, and none changed an answer', l: 'Work was removed instead of tuned, and every cell was re-proved after each round.', v: '<b>Visual:</b> the bar race Start to Phase 4 with a tick under each phase.', m: ['speed', 'fid'], c5: 0, star: 1,
+        li: ['Keep only what the decision reads: 99% smaller.', 'Find a registered plot\'s cells once: 24× to 44×. The 410× table is a cache.', 'Decode on packed bit-planes: store read 2.5 to 0.67 ms.', 'Scan small polygons in plain Python: new boundaries 2.2× to 5.2×.', 'Drop NumPy for re-checks: 44× to 83×; end-to-end 50.0 to 24.9 ms.', 'Every phase: 744,732 of 744,732 cells and 9,829 of 9,829 shapes, unchanged.'] },
+      { n: 9, t: 'Live: follow plot P-0001 in 2022', l: 'The working prototype and a representative query: 38 loss cells, 60 forest cells, 2 lost.', v: '<b>Visual:</b> the app at <code>#/map/P-0001/2022</code>.', m: ['demo'], c5: 1 },
+      { n: 10, t: 'Cost, and what is not covered', l: '10 million new plots cost about $0.0031 in Lambda compute (list-price assumptions). Not covered: EUDR\'s 0.5 ha minimum area, the "reach 5 m" test, protected areas.', v: '<b>Visual:</b> three cost bars, then a short limits list.', m: ['cost'], c5: 0 },
+      { n: 11, t: 'Proposed next step', l: 'One agreed query contract, one reference plot and a representative workload. On the roadmap: change-only re-checks and a direct GEOS binding.', v: '<b>Visual:</b> three-item checklist.', m: [], c5: 1 }
+    ];
+    const flt = $('#pt-filter'), box = $('#pt-slides');
+    SL.forEach(s => {
+      const d = document.createElement('div'); d.className = 'pt-slide' + (s.star ? ' star' : ''); d.dataset.n = s.n;
+      d.innerHTML = '<div class="n">' + s.n + '</div><h3>' + esc(s.t) + '</h3><p>' + esc(s.l) + '</p>' + (s.li ? '<ul>' + s.li.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') + '<div class="vis">' + s.v + '</div><div class="ch">' + s.m.map(k => '<span class="st">' + M[k] + '</span>').join('') + (s.c5 ? '<span class="st ok">5-minute cut</span>' : '') + (s.star ? '<span class="st review">notable engineering</span>' : '') + '</div>';
+      box.append(d); s.el = d;
+    });
+    const F = [['all', 'All 11'], ['c5', '5-minute cut'], ...Object.entries(M)];
+    let cur = 'all';
+    const apply = () => { SL.forEach(s => s.el.classList.toggle('off', !(cur === 'all' || (cur === 'c5' && s.c5) || s.m.includes(cur)))); $$('button', flt).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === cur)); };
+    F.forEach(([k, n]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.textContent = n; b.addEventListener('click', () => { cur = k; apply(); }); flt.append(b); });
+    apply();
+  })();
+
+  /* ------------------------------------------------------ flip cards */
+  (() => {
+    const Q = [
+      ['Layer', 'Isn\'t dropping data lossy?', 'It is lossy on what the decision does not read, and <b>exact</b> on what it does. The second part is proven for every cell, not by sampling. The lossless v1 store remains as the audit tier, and the public releases are pinned by hash, so a rule change can re-derive the layer.'],
+      ['Layer', 'Why not just a GeoTIFF?', 'A GeoTIFF of the decision codes is already 98.6% smaller, and that control is shown. The value is knowing <b>what to keep</b> and proving it is enough. The structure-aware encoding is a further 28% smaller, and either container can hold the codes.'],
+      ['Speed', 'Isn\'t the 410× just a cache?', 'Yes. It is a materialised view for <b>registered</b> plots, keyed by plot ID, geometry hash and layer hash, so a change in either misses. EUDR plots are registered once and re-checked as layers update, which is that workload. New boundaries get about 5×.'],
+      ['Rule', 'What if the rule changes?', 'The decision layer is re-derived from the pinned originals: seconds for this region, about 3 minutes for a full tile on a laptop with 8 workers. The rule (centre inclusion; JRC at the cell centre) is written down. A 3×3 majority or "any forest" changes <b>no plot decision</b> here, though only P-0001 has forest, so that is a weak test.'],
+      ['Scale', 'Does it scale?', 'Storage was measured on a whole real tile (1.6 billion cells): 98% smaller. <b>Query timing</b> was measured on 17 plots and 500 synthetic plots on one laptop, not at tile scale. Cost at list prices is cents. Time to answer and memory per worker matter more than the bill.'],
+      ['Supplier', 'Do the results show the supplier is lying?', 'No. The results do not establish supplier intent. The supplier\'s result cannot be reproduced from the layer it names, using the documented rule or the older release, and the evidence files were not supplied. This is <b>a question for the evidence files</b>.'],
+      ['AI', 'What about AI?', 'A learned codec selector was tried against a sealed holdout. It lost to a fixed setting and was rejected. The intelligence here is the <b>layer analysis</b>, grounded in the regulation\'s definitions.'],
+      ['Limits', 'What is not covered?', 'EUDR\'s 0.5 ha minimum area, the "able to reach 5 m" test and protected areas (licence unclear) are not covered. Counts are cells, not hectares. "Deforestation" here means <b>mapped loss on mapped 2020 forest</b>, not a legal finding.'],
+      ['Rule', 'What exact decision is preserved, and who approved the rule?', 'Two questions: was it forest on 31 Dec 2020 (JRC), and has that forest been lost since (Hansen, 2021 to 2025), under a written centre-inclusion rule. <b>The company has not approved the rule</b>; that is the next step, and no result here is a compliance verdict.'],
+      ['Proof', 'Why should a 17-plot test be trusted?', 'The proof is not 17 plots. It is <b>every cell</b> (744,732 of 744,732), and every output depends only on the selected cells\' codes. Fuzzing adds 9,829 shapes, and an independent validator re-derived the result with exact arithmetic, plus 216,360 adversarial polygons: 0 mismatches.'],
+      ['Repro', 'Can this be reproduced without the original machine?', 'Sources are pinned by hash and the report lists the commands (<code>scripts/setup-local.sh</code>, then the decision-layer steps). All 17 independent validators pass. Reproduction has been run on <b>one host</b> only; other platforms and a full reacquisition are untested.'],
+      ['Speed', 'Is it faster than Whisp or Global Forest Watch?', 'No such claim is made. Other EUDR tools publish no per-plot latency, so every multiple is against Plotline\'s own first version. The claim is per-plot cost once the layer is local.'],
+      ['Speed', 'Why not a GPU or a faster language?', 'A plot is about 120 cells; a GPU launch costs about 10 µs, the whole query. Cython (about 6% gain), the Python 3.14 JIT (2 to 3% slower where available) and others were measured: small or negative returns. <b>No better option was found for small exact plots on a CPU</b>; a direct GEOS binding and change-only re-checks are on the roadmap.']
+    ];
+    const box = $('#pt-cards');
+    Q.forEach((q, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pt-flip'; b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = '<span class="inner"><span class="f"><span class="tg">' + q[0] + ' · Q' + (i + 1) + '</span><span class="q">' + esc(q[1]) + '</span><span class="hint">Tap to flip ↻</span></span><span class="b" aria-hidden="true"><span class="tg">Answer</span><span class="a">' + q[2] + '</span><span class="hint">Tap to flip back ↻</span></span></span>';
+      b.addEventListener('click', () => { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); $('.b', b).setAttribute('aria-hidden', !on); $('.f', b).setAttribute('aria-hidden', on); count(); });
+      box.append(b);
+    });
+    const all = $('#pt-flipall'), qc = $('#pt-qcount');
+    const count = () => { const n = $$('.pt-flip[aria-pressed="true"]', box).length; qc.textContent = n + ' of ' + Q.length + ' flipped'; all.textContent = n === Q.length ? 'Hide all answers' : 'Show all answers'; };
+    all.addEventListener('click', () => { const on = $$('.pt-flip[aria-pressed="true"]', box).length !== Q.length; $$('.pt-flip', box).forEach(b => { b.setAttribute('aria-pressed', on); $('.b', b).setAttribute('aria-hidden', !on); $('.f', b).setAttribute('aria-hidden', on); }); count(); });
+    count();
+  })();
+
+  /* ------------------------------------------------------ say this, not that */
+  (() => {
+    const P = [
+      ['"mapped loss on mapped 2020 forest", "loss cells"', '"deforestation found", "hectares deforested"', 'The analysis maps cells, not hectares or legal findings.'],
+      ['"identical plot-query outputs under the documented rule"', '"accurate", "ground truth", "identical deforestation answers"', 'The proof shows agreement with the original layers, not accuracy against the real world.'],
+      ['"declarations tested against the documented rule and two data releases"', '"the supplier\'s own check was replayed"', 'The supplier\'s check could not be reproduced; its evidence files were not supplied.'],
+      ['"falls outside JRC\'s mapped 2020 forest class"', '"it\'s plantation rotation"', 'The cause has not been established.'],
+      ['"fresh-process load + query, excluding Python start-up"', '"disk-cold", "1.9× faster cold start"', 'The OS file cache was warm; nothing here is disk-cold.'],
+      ['"about 16× as a batch of hundreds"', '"16× faster" for a single new plot', 'The batch figure needs a batch in hand; a single plot gains nothing.'],
+      ['"per-plot cost once the layer is local"', '"faster than Whisp" or any other tool', 'None of the other tools publishes per-plot latency.'],
+      ['"registered plots" and "new boundaries", as two numbers', 'one blended "N× faster"', 'They are different jobs with different scoreboards.'],
+      ['"a question for the reviewer"', '"red flag", "non-compliant"', 'These are mapped observations, not a compliance verdict.'],
+      ['"the 410× is a materialised view for registered plots"', '"410× faster" with no qualifier', 'It is a cache, and it only answers registered plots.'],
+      ['"a supplier declaration that could not be reproduced"', '"a false declaration", "a violation"', 'Declarations are declarations, not proven violations.']
+    ];
+    const box = $('#pt-sn');
+    P.forEach(p => { const r = document.createElement('div'); r.className = 'r'; r.innerHTML = '<div class="y"><b class="l">Preferred</b>' + esc(p[0]) + '</div><div class="n"><b class="l">Avoided</b><s>' + esc(p[1]) + '</s></div><div class="why">Reason: ' + esc(p[2]) + '</div>'; box.append(r); });
+    $$('[data-mode]').forEach(b => b.addEventListener('click', () => { box.dataset.mode = b.dataset.mode; $$('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b)); }));
+  })();
+
+  /* ------------------------------------------------------ checklist and numbers */
+  (() => {
+    const G = [
+      ['Checklist', [
+        'App running: <code>npm run dev:local --prefix app</code> opens <code>http://127.0.0.1:5173/#/map/P-0001/2022</code>.',
+        'Map, Cohort and Proof views checked. They use a frozen export and work offline; only <code>#/live</code> needs the optional local API.',
+        'First-time setup done: <code>scripts/setup-local.sh</code> has been run and the app starts without an error.',
+        'Display set up: browser zoom and window size suit the projector; notifications and other tabs closed.',
+        'Fallback ready: the 55-second walkthrough <code>docs/lab/redesign-demo.webm</code> is open in a player tab.',
+        'Fallback trigger agreed: if the app stalls for 10 seconds, switch to the recording.',
+        'Power connected, and a copy of this guide available for the figures.',
+        'Timing: the 30-second version, the 90-second version and the 3-minute demo have each been run once aloud with the real app.',
+        'Terminology reviewed: "registered plots" and "new boundaries" are given as two separate numbers.',
+        'Questions and answers reviewed: all 13 cards.',
+        'Unconfirmed: length of the pitch slot, and whether there is Q&amp;A time.',
+        'Unconfirmed: who presents, and who runs the laptop.',
+        'Unconfirmed: submission format, channel and deadline.',
+        'Unconfirmed: whether the presentation is in person or online.'
+      ]]
+    ];
+    const box = $('#pt-chk'); let n = 0, ids = [];
+    const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { } } };
+    G.forEach((g, gi) => { const d = document.createElement('div'); d.className = 'g'; d.innerHTML = '<h3>' + g[0] + '</h3>' + g[1].map((t, i) => { const id = 'pt-r-' + gi + '-' + i; ids.push(id); return '<label><input type="checkbox" id="' + id + '"><span>' + t + '</span></label>'; }).join(''); box.append(d); });
+    const upd = () => { const c = ids.filter(id => $('#' + id).checked).length; $('#pt-chk-n').textContent = c + ' of ' + ids.length + ' ready'; $('#pt-chk-bar').style.width = (c / ids.length * 100) + '%'; };
+    ids.forEach(id => { const i = $('#' + id); i.checked = store.get(id) === '1'; i.addEventListener('change', () => { store.set(id, i.checked ? '1' : '0'); upd(); }); });
+    upd();
+    const N = [
+      ['99%', '6.1 KB against 623 KB of original layers (6,146 B against 623,237 B)'],
+      ['744,732 / 744,732', 'cells give the same answer; 17 of 17 plots'],
+      ['98.6%', 'a plain GeoTIFF of the codes is already this much smaller: the win is the analysis'],
+      ['44×', 'registered plots, hot, per plot (83× NumPy-free; ~410× is the answer-table cache)'],
+      ['5.2×', 'new boundaries, hot (about 16× as a batch of hundreds)'],
+      ['2 cells', 'P-0001, lost in 2022 on mapped 2020 forest (60 forest cells; Hansen alone shows 38 loss cells)'],
+      ['7 of 17', 'plots Hansen alone flags for loss after 2020'],
+      ['50.0 → 24.9 ms', 'end-to-end for a registered re-check without NumPy']
+    ];
+    const nb = $('#pt-nums');
+    N.forEach(([v, c]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'pt-num'; b.innerHTML = '<span class="v">' + v + '</span><span class="c">' + c + '</span>'; b.addEventListener('click', () => { if (nb.classList.contains('quiz')) b.classList.toggle('show'); }); nb.append(b); });
+    $('#pt-quiz').addEventListener('click', e => { const on = !nb.classList.contains('quiz'); nb.classList.toggle('quiz', on); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.textContent = on ? 'Show all figures' : 'Self-check'; $$('.pt-num', nb).forEach(x => x.classList.remove('show')); });
+  })();
+})();
+</script>
+</body>
+</html>

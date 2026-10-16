@@ -1,6 +1,7 @@
 {
  "imports": {
   "decision": [
+   ".decision_summary:CODE_COUNT,DECISION_VERSION,FOREST_STATES,LAND,LEVELS,PERIODS,POST_YEARS,SCREEN_VERSION,UNKNOWN,WATER,summarize_counts,summarize_ints",
    ".query:select_cells",
    "numpy"
   ],

@@ -10,7 +10,7 @@ It is one local app (React + TypeScript, Python engine). It runs offline with no
 | --- | --- | --- |
 | **Map** | The real Hansen raster as the map. Scrub or play 2001→2025 and watch loss burn in. Toggle canopy 2000, land/water and the JRC 2020 forest overlay. Click a plot to zoom in to its actual ~28 m native cells, with the centre rule drawn as dots. The side panel puts **Declared by supplier** next to **Mapped by Plotline** and ends with a question for a human reviewer. | Multi-layer, multi-year, a specific use case, and a working query, all visible in seconds |
 | **Cohort** | All 17 plots × 25 years in a single "loss barcode", plus the declared-vs-mapped matrix. Any cell opens that plot and year. CSV export. | The whole dataset and the headline finding on one screen |
-| **Proof** | Leads with **"Keep the decision, not the data"**: the 6.1 KB decision layer (99% smaller), 744,732/744,732 cells identical, registered plots 24× faster, the layer ladder, what we dropped and why, and the standard-format control. Below it is the lossless audit tier: 17/17 identical, 100% pixel fidelity, every losing candidate, and receipts. | Directly answers the brief's evaluation list: layer analysis, storage, speed, resources, decision fidelity, pixel fidelity |
+| **Proof** | Leads with **"Keep the decision, not the data"**: the 6.1 KB decision layer (99% smaller), 744,732/744,732 cells identical, registered plots 44× faster, the layer ladder, what we dropped and why, and the standard-format control. Below it is the lossless audit tier: 17/17 identical, 100% pixel fidelity, every losing candidate, and receipts. | Directly answers the brief's evaluation list: layer analysis, storage, speed, resources, decision fidelity, pixel fidelity |
 | **Live query** | Ask a new region (an exact plot or a rectangle) and get a fresh original-vs-compact answer with cell evidence and a downloadable receipt. | Proves it is a working system, not a slideshow |
 
 ## In scope (done)
@@ -21,7 +21,7 @@ It is one local app (React + TypeScript, Python engine). It runs offline with no
 - An infrastructure cost estimate (bonus) at list-price assumptions for one tile, the tropical belt and global land: [`cost-v1.json`](../../artifacts/decision/cost-v1.json)
 - A local live-query API with bounded limits
 - Tests and verifiers, reproducible setup (`scripts/setup-local.sh`, `scripts/verify-local.sh`) and a recorded walkthrough
-- **Decision layers (15 Oct):** layer analysis; screening and decision layers with an exhaustive cell proof, fuzzing, a registered-plot index and answer table; whole-tile storage; a cost estimate; independent validation. See the [report](../lab/decision-layer-report.md).
+- **Decision layers (15 Oct):** layer analysis; screening and decision layers with an exhaustive cell proof, fuzzing, a registered-plot index and answer table; whole-tile storage; a cost estimate; independent validation. Four speed-up phases followed over 15 and 16 Oct (faster decode, reduction and selection; a batch evaluator and a numpy-free re-check; a faster shared reducer; a leaner reducer entry and a better scan rule), plus a research pass, with no change to any output. See the [report](../lab/decision-layer-report.md).
 - **New today:** the redesigned UI (see [design decisions](05-redesign-decisions.md)) and a reusable design system for slides, videos and HTML writeups ([`design/`](../../design/DESIGN.md))
 
 ## Deliberately out of scope

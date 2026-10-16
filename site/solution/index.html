@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Plotline works · Plotline explainers</title>
+<meta name="description" content="Three screening questions, a 20-value code per map cell, a 6 KB decision layer, and an exhaustive check that every cell, and so every plot boundary, gives the same answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Every class starts with sol- */
+.sol-seg { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.sol-seg button { font: 600 13px var(--f-mono); color: var(--ink-2); background: var(--sheet); border: 1px solid var(--rule-2); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.sol-seg button[aria-pressed="true"] { background: var(--pen); border-color: var(--pen); color: #fff; }
+.sol-seg button:disabled { opacity: .35; cursor: not-allowed; }
+.sol-lab { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 16px; display: block; }
+.sol-lab:first-child { margin-top: 0; }
+
+/* layer-shedding stepper */
+.sol-rows { margin-top: 14px; display: grid; gap: 4px; }
+.sol-row { display: grid; grid-template-columns: minmax(120px, 270px) minmax(0, 1fr) 96px; gap: 12px; align-items: center; padding: 6px 0; transition: opacity .6s var(--ease); }
+.sol-row .nm { font: 500 13.5px/1.35 var(--f-mono); }
+.sol-row .nm small { display: block; font: 400 12px/1.4 var(--f-ui); color: var(--muted); }
+.sol-row .val { text-align: right; font: 500 13.5px var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.sol-track { position: relative; height: 24px; border-radius: 6px; background: var(--mist); overflow: hidden; }
+.sol-track i { position: absolute; inset: 0 auto 0 0; width: 0; min-width: 0; border-radius: 6px; background: var(--pen); transition: width .9s var(--ease), background-color .5s; }
+.sol-track i.unread { background: repeating-linear-gradient(45deg, #b9bfce 0 6px, #d9dde8 6px 12px); }
+.sol-track i.keep { background: var(--pen); }
+.sol-track i.code { background: var(--proof); }
+.sol-q { display: inline-flex; gap: 4px; margin-left: 6px; vertical-align: 1px; }
+.sol-q b { font: 600 10.5px var(--f-mono); padding: 2px 6px; border-radius: 5px; background: var(--pen-wash); color: var(--pen-deep); opacity: 0; transition: opacity .5s; }
+.sol-q b.none { background: var(--mist); color: var(--muted); }
+.sol-shed-q .sol-q b { opacity: 1; }
+.sol-row.gone .nm { text-decoration: line-through; text-decoration-color: var(--muted); }
+.sol-row.hid { opacity: .14; }
+.sol-row.dim { opacity: .4; }
+
+/* decoder */
+.sol-dec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; margin-top: 14px; }
+.sol-codes { display: grid; grid-template-columns: 78px repeat(6, minmax(0, 1fr)); gap: 4px; margin-top: 8px; align-items: stretch; }
+.sol-codes .h { font: 500 11px/1.2 var(--f-mono); color: var(--muted); align-self: center; }
+.sol-codes .hc { text-align: center; }
+.sol-codes button { font: 600 13px var(--f-mono); padding: 8px 0; border-radius: 7px; border: 1px solid var(--rule-2); background: var(--sheet); cursor: pointer; color: var(--ink-2); }
+.sol-codes button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sol-codes button.cf { background: var(--forest-wash); }
+.sol-codes button.cl { background: var(--loss-wash); }
+.sol-codes button.cu { background: repeating-linear-gradient(45deg, #dfe3ec 0 5px, var(--mist) 5px 10px); }
+.sol-codes button.cw { background: var(--water-wash); }
+.sol-codes button[aria-pressed="true"].cf, .sol-codes button[aria-pressed="true"].cl, .sol-codes button[aria-pressed="true"].cu, .sol-codes button[aria-pressed="true"].cw { background: var(--ink); }
+.sol-big { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.sol-big .n { font: 800 72px/.95 var(--f-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.sol-big .f { font: 500 13.5px/1.5 var(--f-mono); color: var(--muted); }
+.sol-ans { margin-top: 8px; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; }
+.sol-ans .q { font: 600 13px var(--f-mono); }
+.sol-ans .why { grid-column: 1 / -1; font-size: 15px; color: var(--muted); line-height: 1.4; }
+.sol-ans .lay { font: 500 11.5px var(--f-mono); color: var(--muted); }
+.sol-pill { display: inline-block; font: 700 12.5px var(--f-mono); padding: 4px 10px; border-radius: 999px; background: var(--mist); color: var(--ink-2); white-space: nowrap; }
+.sol-pill.yes-f { background: var(--forest-wash); color: var(--forest); }
+.sol-pill.yes-l { background: var(--loss-wash); color: var(--loss); }
+.sol-pill.unk { background: repeating-linear-gradient(45deg, #dfe3ec 0 5px, var(--mist) 5px 10px); color: var(--ink-2); }
+.sol-pill.na { background: var(--water-wash); color: var(--water); }
+
+/* grids */
+.sol-svgwrap { margin-top: 14px; }
+.sol-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 12.5px var(--f-mono); color: var(--muted); margin-top: 10px; }
+.sol-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--rule-2); vertical-align: -2px; margin-right: 6px; }
+.sol-cell { transition: opacity .35s, stroke .35s; }
+.sol-res { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+.sol-res > div { padding: 12px 14px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); font: 500 13.5px/1.6 var(--f-mono); }
+.sol-res h4 { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.sol-verdict { margin-top: 12px; padding: 10px 14px; border-radius: 10px; font: 650 18px/1.3 var(--f-display); }
+.sol-verdict.ok { background: var(--proof-wash); color: var(--proof); }
+.sol-verdict.bad { background: var(--bad-wash); color: var(--bad); }
+.sol-chk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 14px; align-items: center; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 10px; margin-top: 8px; background: var(--sheet); font: 500 14px/1.4 var(--f-mono); }
+.sol-chk .st { justify-self: end; }
+
+#sol-lad .brow { grid-template-columns: minmax(120px, 260px) minmax(0, 1fr) 150px; align-items: center; }
+#sol-lad .brow .lab { white-space: normal; }
+@media (max-width: 640px) { #sol-lad .brow { grid-template-columns: minmax(0, 1fr) 118px; } #sol-lad .brow .lab { grid-column: 1 / -1; } #sol-lad .brow .track { grid-column: 1; } }
+/* encoding */
+.sol-planes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.sol-ev { margin-top: 10px; padding: 10px 14px; border-radius: 10px; background: var(--paper); border: 1px solid var(--rule); font: 500 13px/1.7 var(--f-mono); overflow-wrap: anywhere; }
+
+.sol-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 22px; }
+
+@media (max-width: 760px) {
+  .sol-dec { grid-template-columns: 1fr; }
+  .sol-row { grid-template-columns: 110px minmax(0, 1fr) 70px; gap: 8px; }
+  .sol-row .nm { font-size: 12px; }
+  .sol-big .n { font-size: 56px; }
+  .sol-planes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .sol-track i, .sol-row, .sol-cell, .sol-q b { transition: none; } }
+</style>
+</head>
+<body data-page="solution">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <pattern id="sol-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#EEF0F5"/><rect width="3" height="8" fill="#CDD2DE"/></pattern>
+  <pattern id="sol-hatchf" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#DCF5E4"/><rect width="3" height="8" fill="#9BD3AF"/></pattern>
+</defs></svg>
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Deep dive · 25 min</div>
+  <h1>How Plotline works: <span class="hl">a 20-value decision code per map cell</span></h1>
+  <p class="lede">The EU deforestation screen asks three questions of each map cell. Plotline identifies the facts those questions read, keeps them as a <strong>20-value code</strong> per cell, discards the rest, and <strong>verifies</strong> that every cell, and so every possible plot boundary, gives the same answer.</p>
+  <div class="meta"><span>25 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4, latest), decision-scale-notes.md, validation/decision/report.md</span></div>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li>The screen reads land or water, JRC's 2020 forest class and the Hansen loss year from 2021. <b>No question reads the canopy percentages, which are 72% of Hansen's original bytes.</b></li>
+    <li>The decision layer is <b>6,146 B instead of 623,237 B (99.0% smaller)</b>. A plain GeoTIFF of the same codes is already 98.6% smaller, so most of the saving comes from the choice of what to keep. Plotline's encoding makes the layer a further 28% smaller than that GeoTIFF.</li>
+    <li><b>744,732 of 744,732 cells</b> decode to the same code as the original layers, so every plot boundary in the region gets identical outputs under the written rule. The check covers every cell, not a sample.</li>
+  </ul></div>
+</header>
+
+<!-- ============ 1 · questions ============ -->
+<section id="questions">
+  <div class="prose rv">
+    <div class="kick">1 · The job</div>
+    <h2>Three questions decide the screen.</h2>
+    <p>Selling into the EU requires showing that a farm plot is deforestation-free: <strong>was it forest at the end of 2020, and has that forest been lost since?</strong> The check is a map join, repeated when a layer updates. Plotline answers it with three questions about the map cells inside a plot boundary.</p>
+    
+  </div>
+  <div class="tbl rv">
+    <table class="dt">
+      <thead><tr><th>Question</th><th>Needs</th><th>Does not need</th></tr></thead>
+      <tbody>
+        <tr><td><b>Q1</b> Was it forest on 31 Dec 2020?</td><td>JRC 2020 forest class; land, water or unknown</td><td>Canopy % in 2000 (Hansen <code>treecover2000</code>)</td></tr>
+        <tr><td><b>Q2</b> Has that 2020 forest been lost since?</td><td>Q1, plus the Hansen loss year 2021–2025</td><td>Loss years 2001–2020</td></tr>
+        <tr><td><b>Q3</b> The supplier's own check: any Hansen loss in 2021–23?</td><td>The Hansen loss year 2021–2025, on all land</td><td>Canopy %, older loss years</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose rv">
+    <p class="small muted">Q3 mirrors the check the supplier's record describes. It uses Hansen alone, so it also counts loss on land that was not forest in 2020. Q1 and Q2 are the EUDR question itself. Source: <code>docs/lab/decision-layer-report.md</code>, "The questions and what each needs". Answers are mapped observations under a written rule, not legal verdicts.</p>
+  </div>
+</section>
+
+<!-- ============ 2 · layer analysis ============ -->
+<section id="analysis">
+  <div class="prose rv">
+    <div class="kick">2 · The core idea</div>
+    <h2>Layer analysis: <span class="hl">keep only what the questions read</span></h2>
+    <p>The layer analysis lists the questions, then the stored facts each one reads. Anything no question reads can be dropped.</p>
+  </div>
+
+  <div class="panel" id="sol-shed">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Stepper · what the original layers store, and what is read</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
+      <div class="steps" style="margin-top:12px"></div>
+      <div class="sol-rows" id="sol-shed-rows" role="list" aria-label="Attributes stored for each map cell, with their compressed size"></div>
+      <p class="say"><small id="sol-shed-n">Step 1 of 6</small><span id="sol-shed-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> (table "What each attribute costs, and who needs it", 744,732-cell chip) and <code>docs/lab/decision-layer-report.md</code>. Bars share one linear scale and one yardstick: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller: 38,513 B (screening) and 6,146 B (decision).</p>
+  </div>
+
+  <div class="sol-3">
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 1</div><h4>Canopy percentages</h4><p>Hansen's <code>treecover2000</code> records canopy cover in 2000. It is <b>414,142 of the 576,999 Hansen bytes (72%)</b>, and no question reads it.</p></div>
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 2</div><h4>Loss years 2001–2020</h4><p>These fall before the cut-off, and JRC's 2020 map already gives the forest state on the cut-off date. Earlier loss does not change that state.</p></div>
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 3</div><h4>JRC sub-cell detail</h4><p>JRC maps at about 9 m. A Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The written rule reads the centre cell, so 8 of every 9 JRC values are unused.</p></div>
+  </div>
+
+  <div class="note ok rv"><b>Checked</b><span>The proof also tests that these drops change nothing. Inverting the canopy percentages, reversing the 2001–2020 loss years, or inverting every JRC cell that is not a Hansen centre leaves <b>every code unchanged</b>. Missing-data masks differ from unused values: a cell with no valid canopy value is still "unknown", as before.</span></div>
+
+  <details class="deeper"><summary>Detail: the EUDR forest definition, and what no step captures <span class="lvl">technical</span></summary><div class="body">
+    <p>JRC's metadata states the forest definition: land over 0.5 ha with trees over 5 m and canopy over 10%, or trees able to reach those in situ, excluding land predominantly in agricultural or urban use. Cattle, cocoa, coffee, oil palm, rubber and soya plantations are excluded from forest. The cut-off is 31 December 2020. This is a summary; Regulation (EU) 2023/1115 is the authoritative text.</p>
+    <ul>
+      <li><b>Captured, through JRC only:</b> the plantation exclusion and the 10% / 5 m tests. The pipeline relies on JRC's own claim.</li>
+      <li><b>Captured at year resolution:</b> the cut-off. Loss in 2020 cannot be told from loss on 31 Dec 2020.</li>
+      <li><b>Not captured by any step:</b> the 0.5 ha minimum area (a Hansen cell is 0.076 ha, a JRC cell 0.0085 ha, and no contiguity test is applied), "trees able to reach the thresholds in situ", and degradation.</li>
+      <li><b>A proxy:</b> "deforestation" here means mapped tree-cover loss on mapped 2020 forest. Hansen loss includes fire and logging and does not say what the land became.</li>
+    </ul>
+    <p>4,813 JRC-forest cells on the chip carry 2001–2020 Hansen loss. They are kept as forest: JRC is the authority for the cut-off state, and Hansen loss only dates what happened after it. Source: <code>docs/lab/decision-scale-notes.md</code>, <code>engine/decision.py</code>.</p>
+  </div></details>
+</section>
+
+<!-- ============ 3 · codes ============ -->
+<section id="codes">
+  <div class="prose rv">
+    <div class="kick">3 · One byte per cell</div>
+    <h2>Each cell is reduced to one of 20 codes.</h2>
+    <p>Each Hansen cell keeps three small facts, combined into one number from 0 to 19: whether the cell is <b>unknown, water or land</b>; if land, whether it was <b>non-forest, forest or unknown</b> in 2020; and whether it has <b>no loss, or loss in 2021 … 2025</b>.</p>
+    <p>The count is 2 (unknown, water) + 3 forest states × 6 loss options = <b>20 codes</b>. The decoder below shows, for a chosen cell or code tile, the code, the two layers that hold it and the questions it answers.</p>
+  </div>
+
+  <div class="panel" id="sol-dec">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Decoder · one invented map cell</span></div>
+      <div class="sol-dec">
+        <div>
+          <span class="sol-lab">Cell is</span>
+          <div class="sol-seg" data-g="t"><button type="button" data-v="land" aria-pressed="true">Land</button><button type="button" data-v="water" aria-pressed="false">Water</button><button type="button" data-v="none" aria-pressed="false">No data</button></div>
+          <span class="sol-lab">JRC says, on 31 Dec 2020</span>
+          <div class="sol-seg" data-g="f"><button type="button" data-v="0" aria-pressed="true">Non-forest</button><button type="button" data-v="1" aria-pressed="false">Forest</button><button type="button" data-v="2" aria-pressed="false">Unknown</button></div>
+          <span class="sol-lab">Hansen loss</span>
+          <div class="sol-seg" data-g="y"><button type="button" data-v="0" aria-pressed="true">None</button><button type="button" data-v="1" aria-pressed="false">2021</button><button type="button" data-v="2" aria-pressed="false">2022</button><button type="button" data-v="3" aria-pressed="false">2023</button><button type="button" data-v="4" aria-pressed="false">2024</button><button type="button" data-v="5" aria-pressed="false">2025</button></div>
+          <span class="sol-lab">Or select a code</span>
+          <div class="sol-codes" id="sol-dec-codes"></div>
+        </div>
+        <div>
+          <div class="sol-big"><span class="n" id="sol-dec-n">2</span><span class="f" id="sol-dec-f"></span></div>
+          <div class="sol-ans" style="margin-top:12px" id="sol-dec-lay"></div>
+          <div id="sol-dec-ans"></div>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> <code>engine/decision_summary.py</code> (code layout: 0 unknown, 1 water, then 2 + 6 × forest state + loss index), <code>engine/decision.py</code> (<code>project_decision</code>), <code>docs/lab/decision-layer-report.md</code>. This panel shows one cell. A plot's answer counts many cells, and any "unknown" among them prevents a clean "no".</p>
+  </div>
+
+  <h3 class="rv">Two layers from the same codes</h3>
+  <div class="tbl rv">
+    <table class="dt">
+      <thead><tr><th>Layer</th><th>Contract</th><th>Answers</th><th>What it forgets</th><th class="r">Bytes</th></tr></thead>
+      <tbody>
+        <tr><td><b>Screening</b></td><td>eudr-screen.v1</td><td>Q1, Q2, Q3</td><td>Canopy %, loss 2001–2020, JRC sub-cell detail</td><td class="r">38,513</td></tr>
+        <tr class="pick"><td><b>Decision</b></td><td>eudr-decision.v1</td><td>Q1, Q2</td><td>All of the above, plus the loss year on land that was <i>not</i> forest in 2020</td><td class="r">6,146</td></tr>
+        <tr><td>Lossless v1 store</td><td>hansen-centers.v1</td><td>Anything the three Hansen bands can</td><td>Nothing (the audit tier)</td><td class="r">535,012</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose rv">
+    <p>The decision layer drops the loss year on land that was not forest in 2020. A Hansen-only check still counts that loss, and its cause is not established for any particular cell. The land was not forest in 2020, so its later loss cannot be "2020 forest lost since". The lossless store remains as the <b>audit tier</b>, and the public source releases are pinned by hash, so a rule change can re-derive the layer.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · encoding ============ -->
+<section id="encoding">
+  <div class="prose rv">
+    <div class="kick">4 · How the codes are stored</div>
+    <h2>Four yes/no sheets and a short list of loss events.</h2>
+    <p>Most cells are land with no loss, like their neighbours, so writing the full code for every cell wastes space. The store splits the codes into <b>four yes/no sheets</b> (bit-planes: unknown, water, forest, forest-state-unknown) and keeps the rare <b>loss events</b> as a sparse list, one year symbol per event.</p>
+  </div>
+
+  <div class="panel" id="sol-enc">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Stepper · an invented 8 × 6 grid of codes</span><div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div></div>
+      <div class="steps" style="margin-top:12px"></div>
+      <div class="sol-svgwrap"><svg id="sol-enc-svg" viewBox="0 0 640 330" role="img" aria-label="An invented grid of 48 map cells shown as codes, then split into four yes or no sheets, then as a short list of loss events"></svg></div>
+      <div class="sol-ev" id="sol-enc-ev" hidden></div>
+      <p class="say"><small id="sol-enc-n"></small><span id="sol-enc-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_sections</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event") and the research pass in <code>docs/lab/decision-layer-report.md</code> (each stream tries 10 compressor settings and keeps the smallest, mostly LZMA). The grid is invented; the real region has 744,732 cells.</p>
+  </div>
+
+  <details class="deeper"><summary>Detail: integrity checks when the file is read <span class="lvl">technical</span></summary><div class="body">
+    <p>The store is a single file: a short prefix, a CRC-protected header that names the grid, level, encoding and source identities, then the payload. Decoders are bounded: every declared size is checked before anything is allocated. The header, the payload hash and a digest of the decoded raster all have to agree. These checks catch accidents. A deliberate forgery that recomputes every hash is out of scope, and is caught only if the caller pins the genuine file hash. Source: <code>engine/decision_store.py</code>, <code>validation/decision/report.md</code>.</p>
+  </div></details>
+</section>
+
+<!-- ============ 5 · ladder ============ -->
+<section id="ladder">
+  <div class="prose rv">
+    <div class="kick">5 · How much smaller</div>
+    <h2>623,237 bytes become 6,146, mostly through layer analysis.</h2>
+    <p>Each rung drops something and states what it dropped. The hatched bar is a control: <b>a standard GeoTIFF of the same decision codes</b>, with no custom encoding.</p>
+  </div>
+
+  <div class="panel" id="sol-lad">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Storage ladder · bars to scale</span><div class="btns" style="gap:14px">
+        <span class="sol-seg" data-g="scope" style="margin:0"><button type="button" data-v="region" aria-pressed="true">Sample region</button><button type="button" data-v="tile" aria-pressed="false">Whole real tile</button></span>
+        <span class="sol-seg" data-g="scale" style="margin:0"><button type="button" data-v="lin" aria-pressed="true">Linear</button><button type="button" data-v="log" aria-pressed="false">Log</button></span>
+        <button class="replay" type="button">↻ Replay</button></div></div>
+      <div class="bars" id="sol-lad-bars" style="margin-top:18px"></div>
+      <p class="say"><small id="sol-lad-small"></small><span id="sol-lad-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "How much smaller". Region: Hansen 3 bands + JRC chip, 34 × 17 km. Tile: Hansen 10N_090E + JRC N10_E90, 1.6 billion cells, every strip processed; the tile figures are storage sizes only, with no queries run at tile scale. On the log scale each tick is 10× the last, so 623 KB and 6 KB both stay visible.</p>
+  </div>
+
+  <div class="stats rv">
+    <div class="big pen"><span class="num" data-count="99.0" data-dec="1" data-suffix="%"></span><span class="cap">smaller: 623,237 B → 6,146 B (101×)</span></div>
+    <div class="big proof"><span class="num" data-count="98.6" data-dec="1" data-suffix="%"></span><span class="cap">smaller already with a plain GeoTIFF of the same codes</span></div>
+    <div class="big forest"><span class="num" data-count="28" data-suffix="%"></span><span class="cap">smaller again with Plotline's encoding than that GeoTIFF (8,532 → 6,146 B)</span></div>
+  </div>
+  <div class="note say-it rv"><b>Summary line</b><span>Most of the saving comes from the layer analysis, not the codec. A plain GeoTIFF of the decision codes is already 98.6% smaller. Both are reported.</span></div>
+  <div class="prose rv">
+    <p>Two further baselines are less favourable to the decision layer. Against only the files the decision reads (lossyear + datamask + JRC, 209,095 B), the decision store is <b>97.1% smaller</b>. On the whole tile, a zstd-19 recompression of the originals is 148.9 MB; the decision layer is 94.5% smaller than that, and 98.0% smaller than the original files.</p>
+  </div>
+</section>
+
+<!-- ============ 6 · proof ============ -->
+<section id="proof">
+  <div class="prose rv">
+    <div class="kick">6 · The proof</div>
+    <h2>If every cell matches, every possible plot matches.</h2>
+    <p>A plot's answer is computed from <b>only two things</b>: the codes of the cells whose centres fall inside the boundary, and how many selected centres fall outside the stored region. If the decoded store has the same code as the original layers at <b>every</b> cell, <i>any</i> boundary selects the same cells with the same codes and gets the same answer. Checking 17 plots covers 17 cases; checking every cell covers all boundaries.</p>
+  </div>
+
+  <div class="panel" id="sol-proof">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Proof · 112 invented cells, then any boundary</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="ph" style="margin-top:10px"><span class="tag" id="sol-proof-count" aria-live="polite">Cells matching the originals: 0 of 112</span></div>
+      <div class="sol-svgwrap"><svg id="sol-proof-svg" viewBox="0 0 560 320" role="img" aria-label="A grid of 112 invented map cells. They turn green one by one as each is confirmed to match the original. Afterwards a boundary can be drawn and its answer compared on both sides."></svg></div>
+      <div class="sol-legend" id="sol-proof-legend"></div>
+      <div class="btns" style="margin-top:12px" id="sol-proof-btns">
+        <button class="btn" type="button" data-p="tri" disabled>Triangle</button>
+        <button class="btn" type="button" data-p="ell" disabled>L-shape</button>
+        <button class="btn" type="button" data-p="sliver" disabled>Thin sliver</button>
+        <button class="btn" type="button" data-p="hole" disabled>Ring with a hole</button>
+        <button class="btn" type="button" data-p="close" disabled>Close polygon</button>
+        <button class="btn" type="button" data-p="clear" disabled>Clear</button>
+      </div>
+      <p class="small muted" style="margin:8px 0 0">Corners can also be placed by clicking on the grid (pointer only), then "Close polygon". A cell is selected when its centre is inside the polygon.</p>
+      <div class="sol-res" id="sol-proof-res" hidden></div>
+      <div class="sol-verdict ok" id="sol-proof-v" hidden></div>
+      <p class="say"><small>Observation</small><span id="sol-proof-say">Each cell is compared with the original layers.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (the theorem and <code>exhaustive()</code>), <code>docs/lab/decision-layer-report.md</code>. Synthetic illustration: both sides match by construction. In the real run the match was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
+  </div>
+
+  <div class="panel" id="sol-neg">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Negative control: does the check detect an error?</span></div>
+      <div class="sol-seg" id="sol-neg-btns" style="margin-top:12px"><button type="button" data-v="none" aria-pressed="true">No change</button><button type="button" data-v="in" aria-pressed="false">Flip a cell inside the plot</button><button type="button" data-v="out" aria-pressed="false">Flip a cell outside the plot</button></div>
+      <div class="sol-svgwrap"><svg id="sol-neg-svg" viewBox="0 0 520 312" role="img" aria-label="A small invented grid with one dashed L-shaped plot. One cell of the compact copy can be flipped, inside or outside the plot."></svg></div>
+      <div class="sol-chk"><span>Check only this plot's answer</span><span class="st" id="sol-neg-a"></span></div>
+      <div class="sol-chk"><span>Check every cell</span><span class="st" id="sol-neg-b"></span></div>
+      <p class="say"><small>Observation</small><span id="sol-neg-say"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (<code>negative_controls</code>), <code>validation/decision/report.md</code> (verdict 2: "the 17-plot check misses an erased-2021-loss mutation"; the exhaustive check carries the weight). The grid is invented and shows the compact copy. The flipped cell is outlined in red and also stated in words.</p>
+  </div>
+
+  <h3 class="rv">What was run</h3>
+  <div class="tbl rv">
+    <table class="dt">
+      <thead><tr><th>Check</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Every cell: decoded store vs the original GeoTIFFs, via an independent float-affine path</td><td><span class="st ok">744,732 / 744,732</span> at both levels</td></tr>
+        <tr><td>The 17 supplied plots, every output field</td><td><span class="st ok">17 / 17</span> at both levels, across the store, registry and table paths</td></tr>
+        <tr><td>Fuzzed polygons: holes, multipolygons, edges through cell centres, chip edges, water</td><td><span class="st ok">9,829 / 9,829</span> (171 invalid shapes rejected identically by both paths)</td></tr>
+        <tr><td>Negative controls: one flipped cell, a moved vertex, a flipped JRC bit</td><td><span class="st ok">All detected</span></td></tr>
+        <tr><td>Dropped detail: inverted canopy %, reversed 2001–2020 loss years, inverted non-centre JRC cells</td><td><span class="st ok">0 codes change</span> (ignored as designed)</td></tr>
+        <tr><td>Independent validator with exact rational arithmetic and its own reducer</td><td><span class="st ok">Confirmed</span>; 216,360 extra adversarial polygons for the fast selector, 0 mismatches</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose rv">
+    <p>Pixel fidelity is 100% on every attribute the decision reads. Dropped attributes are listed rather than called lossless.</p>
+    <h3>Independent validation</h3>
+    <p>A separate validator wrote its own reader, its own exact-arithmetic point-in-polygon test and its own reducer, and never imported the main decision code. It confirmed the headline claims and found hardening problems: an unprotected store header, an overflow path, level mix-ups, memory blow-ups from crafted input, and missing content binding on the table and registry. Each was fixed with a test that fails on the old code, and all 17 validator scripts now exit 0. The one accepted risk is deliberate forgery with recomputed hashes; callers who need authenticity pin the genuine file hash.</p>
+    <h3>Receipts</h3>
+    <p>Every answer carries a receipt: source versions, grid, written rule, input and geometry hashes, and the supplier's exact fields, so the answer can be re-checked. A receipt proves integrity against local evidence, not satellite accuracy.</p>
+  </div>
+</section>
+
+<!-- ============ 7 · query paths ============ -->
+<section id="paths">
+  <div class="prose rv">
+    <div class="kick">7 · Three ways to answer</div>
+    <h2>New boundary, registered plot, saved answer</h2>
+    <p>A plot can be answered in three ways, reported separately; no blended "N× faster" figure is quoted. The <a href="../speed/">Performance page</a> covers how the speed was reached.</p>
+  </div>
+  <div class="sol-3">
+    <div class="card rv" style="--c: var(--pen)"><div class="who">Path 1</div><h3>A new boundary</h3><p>A polygon not seen before. The decision layer and exact scanline selection find its cells and count the codes. Hot time on the 17 plots: <b>5.2×</b> the retained v1 path. A batch evaluator reaches about 16× on 500 synthetic polygons, but needs the whole batch in hand.</p></div>
+    <div class="card rv" style="--c: var(--proof)"><div class="who">Path 2</div><h3>A registered plot</h3><p>EUDR plots are registered once and re-checked whenever a layer updates, so a plot's cells are found once and kept in an index. Hot time: <b>44×</b>, or 83× with a standard-library-only re-check.</p></div>
+    <div class="card rv" style="--c: var(--declared)"><div class="who">Path 3</div><h3>A saved answer</h3><p>For registered plots, the answer itself can be stored in a table keyed by plot ID, geometry hash and store hash. A change to any key makes the lookup miss. Hot time about <b>410×</b>. It is a materialised view and answers only plots it already holds.</p></div>
+  </div>
+  <div class="note warn rv"><b>Scope</b><span>These are <b>hot</b> times on the 17 plots, on one region and one laptop with a warm cache. They are not end-to-end times: from a fresh process most of the time is starting Python and importing NumPy. The new-boundary and registered-plot figures answer different jobs and are not averaged.</span></div>
+  <div class="prose rv">
+    <p class="small muted">Source: <code>docs/lab/decision-layer-report.md</code>, "How much faster" (Phase 4 figures). The registered-plot table is 20,650 B and its cell index 4,096 B, reported as sidecars next to the 6,146 B layer.</p>
+  </div>
+</section>
+
+<!-- ============ 8 · app ============ -->
+<section id="app">
+  <div class="prose rv">
+    <div class="kick">8 · The app</div>
+    <h2>The app presents the layers, answers and receipts.</h2>
+    <p>The app is one local program (React and TypeScript on the Python engine). It runs offline: no cloud, no keys, no map-tile service. The map <i>is</i> the Hansen raster, recoloured in the browser, so the display shows the encoded data. Screenshots are not shown on this page because they draw supplier plot outlines, which are private.</p>
+  </div>
+  <div class="cols">
+    <div class="card rv" style="--c: var(--forest)"><div class="who">View 1</div><h4>Map</h4><p>Plays the years 2001 to 2025 with loss accumulating, and can overlay the JRC 2020 forest. Selecting a plot shows its ~28 m cells with the centre rule drawn as dots. A side panel sets <b>Declared by supplier</b> beside <b>Mapped by Plotline</b> and ends with a question for a human reviewer.</p></div>
+    <div class="card rv" style="--c: var(--loss)"><div class="who">View 2</div><h4>Cohort</h4><p>All 17 plots by 25 years in a single "loss barcode", plus a declared-versus-mapped matrix. Any cell opens that plot and year, and counts can be exported as CSV.</p></div>
+    <div class="card rv" style="--c: var(--proof)"><div class="who">View 3</div><h4>Proof</h4><p>Opens with the framing "Keep the decision, not the data": storage, identical answers, registered-plot speed, the ladder, the layer analysis and the GeoTIFF control. Below it is the lossless audit tier with 17/17 identical, 100% pixel fidelity and the losing candidates.</p></div>
+    <div class="card rv" style="--c: var(--pen)"><div class="who">View 4</div><h4>Live query</h4><p>Takes a new region, an exact plot or a rectangle and returns a fresh original-versus-compact answer with cell evidence and a downloadable receipt. It needs the local engine service; the other three views work offline from a frozen export.</p></div>
+    <div class="card rv" style="--c: var(--declared)"><div class="who">Everywhere</div><h4>Receipts</h4><p>From any plot, a receipt shows readable fields (versions, grid, rule, hashes) plus the raw JSON, and can be downloaded.</p></div>
+    <div class="card rv" style="--c: var(--review)"><div class="who">Everywhere</div><h4>Notes</h4><p>A local analyst note per plot, kept in the browser only. Unknown is shown hatched and never as zero; no screen shows a compliance badge.</p></div>
+  </div>
+  <div class="prose rv"><p class="small muted">Sources: <code>docs/writeups/03-what-we-ship.md</code>, <code>app/README.md</code>, <code>design/DESIGN.md</code>, <code>docs/writeups/05-redesign-decisions.md</code>.</p></div>
+</section>
+
+<!-- ============ 9 · lost / limits ============ -->
+<section id="lost">
+  <div class="prose rv">
+    <div class="kick">9 · Negative results and scope</div>
+    <h2>A learned codec selector did not beat a fixed codec.</h2>
+    <p>Before the decision layers, a small learned selector picked a codec per map patch. On a sealed held-out region it saved 10,417 B (1.17%) among the candidates it could choose from, but <b>a fixed, tuned GeoTIFF at the same level was 10,217 B smaller than the selector</b>, and when it could pick between levels 3, 9 and 19 it lost 400 B to a fixed level 19. It was not integrated. The saving comes from the layer analysis, not from a model.</p>
+    <p>Two other results: a tuned standard GeoTIFF beat the lossless v1 store by 0.48%, and the early bit-packing candidates were sometimes bigger than the compressed originals.</p>
+    <h3>Region and scope</h3>
+    <ul>
+      <li><b>One region, 34 × 17 km.</b> It is 1,233 × 604 = 744,732 Hansen cells in Thailand's rubber and oil-palm country. The speed numbers come from one laptop with a warm file cache.</li>
+      <li><b>Cells, not hectares.</b> EUDR's 0.5 ha minimum area and the "able to reach 5 m in situ" test are not applied anywhere. "Deforestation" means mapped loss on mapped 2020 forest.</li>
+      <li><b>JRC is read at the Hansen cell centre.</b> Swapping that for a 3×3 majority or "any forest in the block" changes no plot decision, but only P-0001 has any forest, so this is a weak test.</li>
+      <li><b>Protected areas</b> are not included because their licence is unclear.</li>
+      <li><b>Registered-plot paths answer only registered plots.</b> New boundaries go through the decision layer.</li>
+    </ul>
+    <p class="small muted">Sources: <code>docs/lab/engine-selector-report.md</code>, <code>docs/writeups/02-what-we-tried-and-found.md</code>, "Honest limits" in <code>docs/lab/decision-layer-report.md</code>.</p>
+  </div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, seg, fmt } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.append(e); return e; };
+  const px = n => n.toLocaleString('en-GB');
+
+  /* ---------- shared: synthetic terrain in the real 20-code space ---------- */
+  // code 0 unknown, 1 water, then 2 + 6 * forest state (0 non, 1 forest, 2 unknown) + loss index (0 none, 1..5 = 2021..2025)
+  const split = k => ({ s: Math.floor((k - 2) / 6), y: (k - 2) % 6 });
+  function terrain(W, H, seed) {
+    const h = (r, c, k) => { let x = Math.imul(r + 1, 374761393) ^ Math.imul(c + 1, 668265263) ^ Math.imul(k + seed, 2147483647); x = Math.imul(x ^ (x >>> 13), 1274126177); return ((x ^ (x >>> 16)) >>> 0) % 1000 / 1000; };
+    return Array.from({ length: H }, (_, r) => Array.from({ length: W }, (_, c) => {
+      if (Math.abs(c - (W * 0.64 + Math.sin(r * 0.8) * 1.1)) < 0.8) return 1;
+      if (c === W - 1 && r < 2) return 0;
+      const f = c < W * 0.45 ? (h(r, c, 1) < .85 ? 1 : 0) : (h(r, c, 2) < .1 ? 1 : 0);
+      const u = h(r, c, 3) < .06 ? 2 : f;
+      const loss = h(r, c, 4) < .22 ? 1 + Math.floor(h(r, c, 5) * 5) : 0;
+      return 2 + 6 * u + loss;
+    }));
+  }
+  const fillOf = k => {
+    if (k === 0) return 'url(#sol-hatch)';
+    if (k === 1) return 'var(--water-wash)';
+    const { s, y } = split(k);
+    if (s === 1) return y ? 'var(--loss)' : 'var(--forest-wash)';
+    if (s === 2) return y ? 'var(--loss-wash)' : 'url(#sol-hatchf)';
+    return y ? 'var(--loss-wash)' : 'var(--mist)';
+  };
+  const legendHTML = '<span><i style="background:var(--water-wash)"></i>Water</span><span><i style="background:repeating-linear-gradient(45deg,#CDD2DE 0 3px,#EEF0F5 3px 6px)"></i>No data</span><span><i style="background:var(--mist)"></i>Non-forest</span><span><i style="background:var(--forest-wash)"></i>2020 forest</span><span><i style="background:repeating-linear-gradient(45deg,#9BD3AF 0 3px,#DCF5E4 3px 6px)"></i>Forest state unknown</span><span><i style="background:var(--loss)"></i>Loss on 2020 forest</span><span><i style="background:var(--loss-wash)"></i>Loss on other land</span>';
+  function drawGrid(svg, codes, S, gap = 2) {
+    const cells = [];
+    codes.forEach((row, r) => row.forEach((k, c) => {
+      const rect = el('rect', { x: c * S + gap / 2, y: r * S + gap / 2, width: S - gap, height: S - gap, rx: 4, fill: fillOf(k), stroke: '#CDD2DE', 'stroke-width': 1 }, svg);
+      rect.classList.add('sol-cell');
+      cells.push({ r, c, rect });
+    }));
+    return cells;
+  }
+  const inside = (rings, x, y) => { let c = false; for (const ring of rings) for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) { const [xi, yi] = ring[i], [xj, yj] = ring[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  const pick = (codes, rings, S) => { const out = []; codes.forEach((row, r) => row.forEach((_, c) => { if (inside(rings, (c + .5) * S, (r + .5) * S)) out.push([r, c]); })); return out; };
+  function answer(codes, cells) {
+    const a = { sel: cells.length, land: 0, water: 0, nodata: 0, forest: 0, ufor: 0, lossF: 0, lossU: 0, years: {} };
+    for (const [r, c] of cells) {
+      const k = codes[r][c];
+      if (k === 0) { a.nodata++; continue; }
+      if (k === 1) { a.water++; continue; }
+      a.land++;
+      const { s, y } = split(k);
+      if (s === 1) { a.forest++; if (y) { a.lossF++; a.years[2020 + y] = (a.years[2020 + y] || 0) + 1; } }
+      else if (s === 2) { a.ufor++; if (y) a.lossU++; }
+    }
+    return a;
+  }
+  const yearsTxt = a => Object.keys(a.years).map(y => `${y}: ${a.years[y]}`).join(', ');
+
+  /* ---------- 1 · layer-shedding stepper ---------- */
+  (() => {
+    const root = $('#sol-shed'), box = $('#sol-shed-rows', root), say = $('#sol-shed-say'), n = $('#sol-shed-n');
+    const MAX = 397973;
+    const rows = [
+      { id: 'cc', name: 'Canopy % in 2000', sub: 'treecover2000, exact %', v: 397973, q: [] },
+      { id: 'l0', name: 'Loss years 2001–2020', sub: 'before the cut-off', v: 107371, q: [] },
+      { id: 'l1', name: 'Loss years 2021–2025', sub: 'after the cut-off', v: 40688, q: ['Q2', 'Q3'] },
+      { id: 'dm', name: 'Land / water / no data', sub: 'datamask', v: 853, q: ['Q1', 'Q2', 'Q3'] },
+      { id: 'jr', name: 'JRC 2020 forest, every ~9 m cell', sub: 'forest class at the cut-off', v: 26558, q: ['Q1', 'Q2'] },
+      { id: 'sc', name: 'Screening codes (layer 1)', sub: 'one 0–19 code per cell', v: 45745, q: ['Q1', 'Q2', 'Q3'] },
+      { id: 'dc', name: 'Decision codes (layer 2)', sub: 'loss year forgotten on non-forest', v: 9874, q: ['Q1', 'Q2'] },
+    ];
+    const R = {};
+    rows.forEach(r => {
+      const d = document.createElement('div'); d.className = 'sol-row'; d.setAttribute('role', 'listitem');
+      d.innerHTML = `<div class="nm">${r.name}<span class="sol-q">${(r.q.length ? r.q : ['read by nothing']).map(q => `<b class="${r.q.length ? '' : 'none'}">${q}</b>`).join('')}</span><small>${r.sub}</small></div><div class="sol-track"><i></i></div><div class="val"></div>`;
+      box.append(d); R[r.id] = { d, bar: $('i', d), val: $('.val', d), nm: $('.nm', d) };
+    });
+    const says = [
+      'The original layers store five kinds of information for every map cell. Every bar uses the same yardstick (zstd level 19).',
+      'Each question reads only some of these. No question reads the canopy percentages or the 2001–2020 loss years, which are most of the bytes.',
+      'Attributes that no question reads are dropped. Canopy percentages alone are 72% of the original Hansen bytes.',
+      'JRC maps forest at about 9 m, but a Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The rule reads one of the nine, so only those values are kept.',
+      'The remaining facts combine into one small code per cell: unknown, water, or land × forest state × loss year. This is the screening layer, which answers all three questions.',
+      'The loss year on land that was not forest in 2020 is dropped. This is the decision layer, which answers Q1 and Q2.',
+    ];
+    const names = { jr3: 'JRC 2020 forest at the Hansen centres' };
+    const st = stepper(root, 6, k => {
+      n.textContent = `Step ${k + 1} of 6`; say.textContent = says[k];
+      root.classList.toggle('sol-shed-q', k >= 1);
+      const val = { cc: k >= 2 ? 0 : 397973, l0: k >= 2 ? 0 : 107371, l1: 40688, dm: 853, jr: k >= 3 ? 8726 : 26558, sc: k >= 4 ? 45745 : 0, dc: k >= 5 ? 9874 : 0 };
+      rows.forEach(r => {
+        const o = R[r.id], v = val[r.id];
+        o.d.classList.toggle('hid', (r.id === 'sc' && k < 4) || (r.id === 'dc' && k < 5));
+        o.d.classList.toggle('gone', v === 0 && (r.id === 'cc' || r.id === 'l0'));
+        o.d.classList.toggle('dim', (k >= 4 && ['l1', 'dm', 'jr'].includes(r.id)) || (k >= 5 && r.id === 'sc'));
+        o.bar.style.width = (v ? Math.max(0.6, 100 * v / MAX) : 0) + '%';
+        o.bar.className = (r.id === 'sc' || r.id === 'dc') ? 'code' : (k >= 1 && !r.q.length ? 'unread' : '');
+        o.val.textContent = (v === 0 && (r.id === 'cc' || r.id === 'l0')) ? 'dropped' : (v ? px(v) + ' B' : '');
+        if (r.id === 'jr') $('.nm', o.d).firstChild.textContent = k >= 3 ? names.jr3 : r.name;
+      });
+    });
+  })();
+
+  /* ---------- 2 · decoder ---------- */
+  (() => {
+    const root = $('#sol-dec'), S = { t: 'land', f: 0, y: 0 };
+    const codesBox = $('#sol-dec-codes', root), nEl = $('#sol-dec-n'), fEl = $('#sol-dec-f'), ansEl = $('#sol-dec-ans'), layEl = $('#sol-dec-lay');
+    const tiles = [];
+    const mk = (txt, cls = 'h hc') => { const d = document.createElement('div'); d.className = cls; d.textContent = txt; codesBox.append(d); };
+    const addTile = k => { const b = document.createElement('button'); b.type = 'button'; b.textContent = k; b.setAttribute('aria-label', 'Code ' + k); b.setAttribute('aria-pressed', 'false'); const { s, y } = k > 1 ? split(k) : { s: -1, y: 0 }; b.className = k === 0 ? 'cu' : k === 1 ? 'cw' : s === 1 ? (y ? 'cl' : 'cf') : s === 2 ? 'cu' : (y ? 'cl' : ''); b.addEventListener('click', () => setCode(k)); codesBox.append(b); tiles[k] = b; };
+    mk('', 'h'); ['no loss', '2021', '2022', '2023', '2024', '2025'].forEach(t => mk(t));
+    mk('no data / water', 'h'); addTile(0); addTile(1); for (let i = 0; i < 4; i++) mk('', 'h');
+    ['non-forest', 'forest', 'unknown'].forEach((nm, s) => { mk(nm, 'h'); for (let y = 0; y < 6; y++) addTile(2 + 6 * s + y); });
+    const code = () => S.t === 'none' ? 0 : S.t === 'water' ? 1 : 2 + 6 * S.f + S.y;
+    function setCode(k) { if (k === 0) S.t = 'none'; else if (k === 1) S.t = 'water'; else { const { s, y } = split(k); S.t = 'land'; S.f = s; S.y = y; } render(); }
+    const yes = (txt) => ['yes', txt];
+    function answers() {
+      if (S.t === 'none') return [['Q1', 'unk', 'Unknown', 'No data for this cell. Unknown never turns into "no".'], ['Q2', 'unk', 'Unknown', 'Nothing is known here either.'], ['Q3', 'unk', 'Unknown', 'Same.']];
+      if (S.t === 'water') return ['Q1', 'Q2', 'Q3'].map(q => [q, 'na', 'Not land', 'Water cells are counted, but water is never forest loss on land.']);
+      const { f, y } = S, yr = 2020 + y;
+      const q1 = f === 0 ? ['Q1', 'no', 'No', 'Mapped as not forest in 2020.'] : f === 1 ? ['Q1', 'yes-f', 'Yes', 'Mapped as forest in 2020.'] : ['Q1', 'unk', 'Unknown', 'JRC has no 2020 class for this cell.'];
+      const q2 = y === 0 ? ['Q2', 'no', 'No', 'Nothing lost since 2020.'] : f === 0 ? ['Q2', 'no', 'No', `Loss in ${yr}, but the land was not forest in 2020.`] : f === 1 ? ['Q2', 'yes-l', 'Yes · ' + yr, 'Mapped loss on mapped 2020 forest.'] : ['Q2', 'unk', 'Unknown', `Loss in ${yr}, but its 2020 forest state is unknown, so the answer is unknown.`];
+      const q3 = (y >= 1 && y <= 3) ? ['Q3', 'yes-l', 'Yes · ' + yr, 'Hansen shows loss in the 2021–23 window.'] : y === 0 ? ['Q3', 'no', 'No', 'No Hansen loss after 2020.'] : ['Q3', 'no', 'No', `Loss is in ${yr}, after the 2021–23 window this question asks about.`];
+      return [q1, q2, q3];
+    }
+    function render() {
+      const k = code(), { s, y } = k > 1 ? split(k) : { s: 0, y: 0 };
+      nEl.textContent = k;
+      fEl.textContent = k > 1 ? `= 2 + 6 × ${s} + ${y}` : (k === 1 ? 'water' : 'unknown');
+      $$('[data-g="t"] button', root).forEach(b => b.setAttribute('aria-pressed', b.dataset.v === S.t));
+      $$('[data-g="f"] button', root).forEach(b => { b.setAttribute('aria-pressed', S.t === 'land' && +b.dataset.v === S.f); b.disabled = S.t !== 'land'; });
+      $$('[data-g="y"] button', root).forEach(b => { b.setAttribute('aria-pressed', S.t === 'land' && +b.dataset.v === S.y); b.disabled = S.t !== 'land'; });
+      tiles.forEach((b, i) => b.setAttribute('aria-pressed', i === k));
+      const dk = (k > 1 && s === 0 && y > 0) ? 2 : k;
+      layEl.innerHTML = `<span class="q">Screening layer</span><span class="sol-pill">code ${k}</span><span class="why">Answers all three questions.</span><span class="q">Decision layer</span><span class="sol-pill ${dk !== k ? 'yes-l' : ''}">code ${dk}</span><span class="why">${dk !== k ? `This cell was <b>not forest in 2020</b>, so the decision layer forgets its loss year and stores plain non-forest land (code 2).` : 'Same code: nothing here is forgotten.'}</span>`;
+      ansEl.innerHTML = answers().map(([q, cls, txt, why]) => `<div class="sol-ans"><span class="q">${q} ${q === 'Q1' ? 'Forest on 31 Dec 2020?' : q === 'Q2' ? '2020 forest lost since?' : 'Any Hansen loss in 2021–23?'}</span><span class="sol-pill ${cls}">${txt}</span><span class="why">${why}</span><span class="lay">Screening ✓ · Decision ${q === 'Q3' ? '— (not in the decision contract)' : '✓'}</span></div>`).join('');
+    }
+    $$('.sol-seg button', root).forEach(b => b.addEventListener('click', () => { const g = b.parentElement.dataset.g; if (g === 't') S.t = b.dataset.v; else S[g] = +b.dataset.v; render(); }));
+    render();
+  })();
+
+  /* ---------- 3 · encoding stepper ---------- */
+  (() => {
+    const root = $('#sol-enc'), svg = $('#sol-enc-svg', root), ev = $('#sol-enc-ev', root), say = $('#sol-enc-say'), n = $('#sol-enc-n');
+    const G = [
+      [1, 1, 1, 2, 2, 2, 8, 8],
+      [1, 1, 2, 2, 4, 2, 8, 8],
+      [1, 2, 2, 2, 2, 8, 10, 8],
+      [2, 2, 14, 14, 2, 8, 8, 9],
+      [0, 2, 14, 16, 8, 8, 8, 8],
+      [0, 0, 2, 8, 8, 12, 8, 8],
+    ];
+    const W = 8, H = 6;
+    const says = [
+      'An invented 8 × 6 grid, one code per cell. Most cells repeat their neighbours; a few carry a loss year.',
+      'The codes split into four yes/no sheets: unknown, water, forest, forest-state-unknown. A sheet of mostly the same answer compresses very well.',
+      'Loss is rare, so it is stored as a short list of events, each with the gap since the previous event and a year. Years appear only where there is loss.',
+      'Each sheet and the event list is compressed separately. The encoder tries about 10 compressor settings per stream and keeps the smallest (usually LZMA). The result is one small file.',
+    ];
+    function cellsAt(x0, y0, S, f, label) {
+      const g = el('g', {}, svg);
+      G.forEach((row, r) => row.forEach((k, c) => {
+        el('rect', { x: x0 + c * S, y: y0 + r * S, width: S - 2, height: S - 2, rx: 3, fill: f(k, r, c) }, g);
+      }));
+      if (label) { const t = el('text', { x: x0, y: y0 - 6, 'font-size': 11, fill: 'var(--muted)' }, g); t.textContent = label; }
+      return g;
+    }
+    function show(k) {
+      svg.innerHTML = ''; ev.hidden = k !== 2; n.textContent = `Step ${k + 1} of 4`; say.textContent = says[k];
+      if (k === 0) {
+        const S = 53;
+        G.forEach((row, r) => row.forEach((code, c) => {
+          el('rect', { x: 10 + c * S, y: 10 + r * S, width: S - 3, height: S - 3, rx: 5, fill: fillOf(code), stroke: '#CDD2DE' }, svg);
+          const t = el('text', { x: 10 + c * S + (S - 3) / 2, y: 10 + r * S + 28, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 600, fill: code >= 8 && code <= 13 && (code - 2) % 6 ? '#fff' : 'var(--ink-2)' }, svg); t.textContent = code;
+        }));
+      } else if (k === 1) {
+        const planes = [['unknown', c => c === 0], ['water', c => c === 1], ['forest', c => c > 1 && split(c).s === 1], ['forest unknown', c => c > 1 && split(c).s === 2]];
+        planes.forEach(([nm, fn], i) => cellsAt(8 + i * 158, 30, 18, c => fn(c) ? 'var(--ink)' : 'var(--mist)', nm));
+        const t = el('text', { x: 8, y: 190, 'font-size': 12, fill: 'var(--muted)' }, svg); t.textContent = 'Dark = 1 (yes), pale = 0 (no).  Non-forest land is "none of these four".';
+        const t2 = el('text', { x: 8, y: 214, 'font-size': 12, fill: 'var(--muted)' }, svg); t2.textContent = 'Four 1-bit sheets replace one byte per cell. The loss year is not in them.';
+      } else if (k === 2) {
+        cellsAt(10, 14, 36, (c) => fillOf(c).includes('--loss') ? 'var(--loss)' : 'var(--mist)', 'loss events (orange)');
+        const list = []; let prev = -1;
+        G.forEach((row, r) => row.forEach((code, c) => { if (code > 1 && split(code).y > 0) { const p = r * W + c; list.push(`gap ${p - prev} → ${2020 + split(code).y}`); prev = p; } }));
+        const t = el('text', { x: 330, y: 40, 'font-size': 12, fill: 'var(--muted)' }, svg); t.textContent = 'cells in strip order, row by row';
+        for (let i = 0; i < 4; i++) { const t3 = el('text', { x: 330, y: 70 + i * 22, 'font-size': 12, fill: 'var(--ink-2)' }, svg); t3.textContent = list.slice(i * 2, i * 2 + 2).join('   '); }
+        ev.textContent = 'events = ' + list.join(' · ') + '    (' + list.length + ' events in 48 cells)';
+      } else {
+        const names = ['unknown sheet', 'water sheet', 'forest sheet', 'forest-unknown sheet', 'loss events'];
+        names.forEach((nm, i) => {
+          el('rect', { x: 10, y: 14 + i * 50, width: 190, height: 36, rx: 6, fill: i === 4 ? 'var(--loss-wash)' : 'var(--mist)', stroke: '#CDD2DE' }, svg);
+          const t = el('text', { x: 22, y: 37 + i * 50, 'font-size': 13, fill: 'var(--ink-2)' }, svg); t.textContent = nm;
+          el('path', { d: `M200 ${32 + i * 50} C 300 ${32 + i * 50}, 300 125, 400 125`, fill: 'none', stroke: 'var(--rule-2)', 'stroke-width': 2 }, svg);
+        });
+        const c = el('rect', { x: 400, y: 80, width: 130, height: 90, rx: 8, fill: 'var(--ink)' }, svg);
+        const ct = el('text', { x: 465, y: 115, 'text-anchor': 'middle', 'font-size': 13, fill: '#fff' }, svg); ct.textContent = 'try ~10 settings';
+        const ct2 = el('text', { x: 465, y: 138, 'text-anchor': 'middle', 'font-size': 13, fill: '#fff' }, svg); ct2.textContent = 'per stream, keep';
+        const ct3 = el('text', { x: 465, y: 156, 'text-anchor': 'middle', 'font-size': 13, fill: '#fff' }, svg); ct3.textContent = 'the smallest';
+        el('path', { d: 'M530 125 L 560 125', stroke: 'var(--ink)', 'stroke-width': 2, 'marker-end': '' }, svg);
+        el('rect', { x: 560, y: 95, width: 74, height: 60, rx: 8, fill: 'var(--proof-wash)', stroke: 'var(--proof)' }, svg);
+        const f1 = el('text', { x: 597, y: 122, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: 'var(--proof)' }, svg); f1.textContent = 'one file';
+        const f2 = el('text', { x: 597, y: 142, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--proof)' }, svg); f2.textContent = '6,146 B';
+      }
+    }
+    stepper(root, 4, show);
+  })();
+
+  /* ---------- 4 · storage ladder ---------- */
+  (() => {
+    const root = $('#sol-lad'), box = $('#sol-lad-bars', root), say = $('#sol-lad-say'), small = $('#sol-lad-small');
+    const data = {
+      region: { max: 623237, unit: 'B', fmt: v => px(v) + ' B', say: 'Dropping what no question reads gives 6,146 B. A plain GeoTIFF of the same codes would be 8,532 B: already 98.6% smaller, so the layer analysis does most of the work.', rows: [
+        ['Original layers: Hansen 3 bands + JRC chip', 623237, 'baseline', 'var(--loss-past)'],
+        ['L0 lossless store (retained v1, Hansen only)', 535012, '14% smaller', 'var(--faint)'],
+        ['L1 screening layer', 38513, '93.8% smaller · 16×', 'var(--pen)'],
+        ['L2 decision layer', 6146, '99.0% smaller · 101×', 'var(--proof)'],
+        ['Control: best standard GeoTIFF of the decision codes', 8532, '98.6% smaller', 'hatch'],
+      ] },
+      tile: { max: 421910035, unit: 'MB', fmt: v => (v / 1e6).toLocaleString('en-GB', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' MB', say: 'On a whole real 10° tile (1.6 billion cells), 421.9 MB of original files become 8.2 MB. Against a zstd-19 recompression of the originals as yardstick, the decision layer is 94.5% smaller.', rows: [
+        ['Original files: Hansen 3 bands + JRC', 421910035, 'baseline', 'var(--loss-past)'],
+        ['Lossless zstd-19 yardstick', 148892092, '64.7% smaller', 'var(--faint)'],
+        ['L1 screening layer', 13647704, '96.8% smaller · 90.8% vs yardstick', 'var(--pen)'],
+        ['L2 decision layer', 8242423, '98.0% smaller · 94.5% vs yardstick', 'var(--proof)'],
+      ] },
+    };
+    const S = { scope: 'region', scale: 'lin' };
+    let t = 0;
+    function build() {
+      const d = data[S.scope]; box.innerHTML = '';
+      d.rows.forEach(([nm, v, pct, col]) => {
+        const r = document.createElement('div'); r.className = 'brow';
+        r.innerHTML = `<span class="lab" title="${nm}">${nm}</span><span class="track"><i style="background:${col === 'hatch' ? 'repeating-linear-gradient(45deg,var(--pen) 0 6px,var(--pen-wash-2) 6px 12px)' : col}"></i></span><span class="val">${d.fmt(v)}<br><small style="color:var(--muted)">${pct}</small></span>`;
+        r.firstChild.style.whiteSpace = 'normal';
+        box.append(r);
+      });
+      small.textContent = (S.scope === 'region' ? 'Sample region, 744,732 cells' : 'Whole real tile') + ' · ' + (S.scale === 'lin' ? 'linear scale' : 'log scale (each tick 10×)');
+      say.textContent = d.say; paint();
+    }
+    function paint() {
+      const d = data[S.scope], lo = d.max / 1000;
+      $$('.track i', box).forEach((i, k) => {
+        const v = d.rows[k][1];
+        const w = S.scale === 'lin' ? 100 * v / d.max : 100 * Math.log10(Math.max(v, lo) / lo) / 3;
+        i.style.width = Math.max(.8, w * t) + '%';
+      });
+    }
+    $$('.sol-seg button', root).forEach(b => b.addEventListener('click', () => {
+      const g = b.parentElement.dataset.g; S[g] = b.dataset.v;
+      $$('button', b.parentElement).forEach(x => x.setAttribute('aria-pressed', x === b));
+      build();
+    }));
+    instrument(root, { ms: 1400, render(p) { t = Pack.ease(p); paint(); } });
+    build();
+  })();
+
+  /* ---------- 5 · proof animation + any polygon ---------- */
+  (() => {
+    const root = $('#sol-proof'), svg = $('#sol-proof-svg', root), res = $('#sol-proof-res', root), verdict = $('#sol-proof-v', root), say = $('#sol-proof-say'), cnt = $('#sol-proof-count', root), btns = $('#sol-proof-btns', root);
+    $('#sol-proof-legend', root).innerHTML = legendHTML;
+    const W = 14, H = 8, S = 40, TOT = W * H;
+    const codes = terrain(W, H, 7), decoded = codes.map(r => r.slice());
+    const cells = drawGrid(svg, codes, S);
+    const ticks = cells.map(c => { const k = codes[c.r][c.c], strong = k > 1 && split(k).s === 1 && split(k).y > 0; const t = el('text', { x: c.c * S + S / 2, y: c.r * S + S / 2 + 5, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: strong ? '#fff' : 'var(--proof)', opacity: 0 }, svg); t.textContent = '✓'; t.style.pointerEvents = 'none'; return t; });
+    // seeded shuffle for the order cells are confirmed
+    const order = Array.from({ length: TOT }, (_, i) => i); let sd = 12345; const rnd = () => (sd = (Math.imul(sd, 1103515245) + 12345) >>> 0) / 4294967296;
+    for (let i = TOT - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+    const rank = new Array(TOT); order.forEach((cell, i) => rank[cell] = i);
+    const overlay = el('g', {}, svg), pathEl = el('path', { fill: 'rgba(47,69,255,.12)', stroke: 'var(--pen)', 'stroke-width': 2.5, 'fill-rule': 'evenodd' }, overlay), dots = el('g', {}, overlay);
+    pathEl.style.pointerEvents = 'none'; dots.style.pointerEvents = 'none';
+    let shown = 0, enabled = false, ring = [], rings = null;
+    const presets = {
+      tri: [[[70, 50], [250, 90], [130, 240]]],
+      ell: [[[300, 40], [420, 40], [420, 140], [520, 140], [520, 270], [300, 270]]],
+      sliver: [[[40, 285], [520, 252], [520, 266], [40, 299]]],
+      hole: [[[60, 40], [260, 40], [260, 250], [60, 250]], [[110, 90], [210, 90], [210, 200], [110, 200]]],
+    };
+    function mark(n) {
+      for (let i = shown; i < n; i++) { const k = order[i]; cells[k].rect.setAttribute('stroke', 'var(--proof)'); cells[k].rect.setAttribute('stroke-width', 2); ticks[k].setAttribute('opacity', 1); }
+      for (let i = n; i < shown; i++) { const k = order[i]; cells[k].rect.setAttribute('stroke', '#CDD2DE'); cells[k].rect.setAttribute('stroke-width', 1); ticks[k].setAttribute('opacity', 0); }
+      shown = n;
+    }
+    function setEnabled(on) { enabled = on; $$('button', btns).forEach(b => b.disabled = !on); }
+    function clearSel() { cells.forEach(c => { c.rect.setAttribute('opacity', 1); }); ring = []; rings = null; pathEl.setAttribute('d', ''); dots.innerHTML = ''; res.hidden = true; verdict.hidden = true; }
+    function apply() {
+      const sel = pick(codes, rings, S), set = new Set(sel.map(([r, c]) => r * W + c));
+      cells.forEach((c, i) => c.rect.setAttribute('opacity', set.has(i) ? 1 : .35));
+      pathEl.setAttribute('d', rings.map(rg => 'M' + rg.map(p => p.join(',')).join('L') + 'Z').join(' ')); dots.innerHTML = '';
+      const a = answer(codes, sel), b = answer(decoded, sel);
+      const box = (t, a) => `<div><h4>${t}</h4>Cells selected: <b>${a.sel}</b> (water ${a.water}, no data ${a.nodata})<br>Forest on 31 Dec 2020: <b>${a.forest}</b>${a.ufor ? ` (+${a.ufor} forest-state unknown)` : ''}<br>Mapped loss on mapped 2020 forest: <b>${a.lossF}</b>${a.lossF ? ' (' + yearsTxt(a) + ')' : ''}${a.lossU ? `<br>Loss on land of unknown 2020 state: <b>${a.lossU}</b>` : ''}</div>`;
+      res.hidden = false; res.innerHTML = box('Original layers say', a) + box('Decision store says', b);
+      const same = JSON.stringify(a) === JSON.stringify(b);
+      verdict.hidden = false; verdict.className = 'sol-verdict ' + (same && a.sel ? 'ok' : 'bad');
+      verdict.textContent = !a.sel ? 'No cell centre is inside this shape, so there is nothing to compare.' : `Same answer: all ${a.sel} selected cells matched.`;
+      say.textContent = 'Any shape selects some of the 112 cells. Every one already matched, so the answers cannot differ.';
+    }
+    btns.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b || !enabled) return; const p = b.dataset.p;
+      if (p === 'clear') { clearSel(); return; }
+      if (p === 'close') { if (ring.length >= 3) { rings = [ring]; ring = []; apply(); } return; }
+      clearSel(); rings = presets[p]; apply();
+    });
+    svg.addEventListener('click', e => {
+      if (!enabled) return;
+      const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * 560 / r.width, y = (e.clientY - r.top) * 320 / r.height;
+      if (rings) clearSel();
+      ring.push([Math.round(x), Math.round(y)]);
+      pathEl.setAttribute('d', 'M' + ring.map(p => p.join(',')).join('L')); pathEl.setAttribute('fill', 'none');
+      dots.innerHTML = ''; ring.forEach(p => el('circle', { cx: p[0], cy: p[1], r: 4, fill: 'var(--pen)' }, dots));
+      say.textContent = ring.length < 3 ? 'Click to add more corners.' : 'Press "Close polygon" to finish.';
+    });
+    instrument(root, { ms: 4200, render(t) {
+      const n = Math.floor(Pack.ease(t) * TOT + (t >= 1 ? 1e-9 : 0)); mark(Math.min(TOT, t >= 1 ? TOT : n));
+      cnt.textContent = `Cells matching the originals: ${shown} of ${TOT}` + (shown === TOT ? '   (real run: 744,732 of 744,732)' : '');
+      if (t < 1) { if (enabled) setEnabled(false); if (!res.hidden || ring.length || rings) { clearSel(); pathEl.setAttribute('fill', 'rgba(47,69,255,.12)'); } say.textContent = 'Each cell is compared with the original layers and turns green when its code is identical.'; }
+      else if (!enabled) { setEnabled(true); pathEl.setAttribute('fill', 'rgba(47,69,255,.12)'); say.textContent = 'All 112 cells match. A preset shape or a drawn polygon now selects only cells that already match.'; }
+    } });
+  })();
+
+  /* ---------- 6 · negative control ---------- */
+  (() => {
+    const root = $('#sol-neg'), svg = $('#sol-neg-svg', root), a = $('#sol-neg-a'), b = $('#sol-neg-b'), say = $('#sol-neg-say');
+    const W = 10, H = 6, S = 52, codes = terrain(W, H, 3), decoded = codes.map(r => r.slice());
+    const cells = drawGrid(svg, codes, S);
+    const plot = [[[104, 52], [312, 52], [312, 156], [208, 156], [208, 260], [104, 260]]];
+    el('path', { d: 'M' + plot[0].map(p => p.join(',')).join('L') + 'Z', fill: 'rgba(47,69,255,.10)', stroke: 'var(--pen)', 'stroke-width': 2.5, 'stroke-dasharray': '7 5' }, svg).style.pointerEvents = 'none';
+    const sel = pick(codes, plot, S), selSet = new Set(sel.map(([r, c]) => r * W + c));
+    const flip = k => { const { s, y } = split(k); return 2 + 6 * (s === 1 ? 0 : 1) + y; };
+    const landOf = (r, c) => codes[r][c] > 1 && split(codes[r][c]).s < 2;
+    const inCell = sel.find(([r, c]) => landOf(r, c) && split(codes[r][c]).s === 1) || sel.find(([r, c]) => landOf(r, c));
+    let outCell = null; for (let c = W - 1; c >= 0 && !outCell; c--) for (let r = H - 1; r >= 0; r--) if (!selSet.has(r * W + c) && landOf(r, c)) { outCell = [r, c]; break; }
+    const mark = el('rect', { width: S - 2, height: S - 2, rx: 4, fill: 'none', stroke: 'var(--bad)', 'stroke-width': 4 }, svg); mark.style.display = 'none'; mark.style.pointerEvents = 'none';
+    function run(v) {
+      for (let r = 0; r < H; r++) decoded[r] = codes[r].slice();
+      let cell = null; if (v === 'in') cell = inCell; if (v === 'out') cell = outCell;
+      if (cell) decoded[cell[0]][cell[1]] = flip(codes[cell[0]][cell[1]]);
+      cells.forEach(c => c.rect.setAttribute('fill', fillOf(decoded[c.r][c.c])));
+      mark.style.display = cell ? '' : 'none'; if (cell) { mark.setAttribute('x', cell[1] * S + 1); mark.setAttribute('y', cell[0] * S + 1); }
+      const A = answer(codes, sel), B = answer(decoded, sel), same = JSON.stringify(A) === JSON.stringify(B);
+      a.className = 'st ' + (same ? 'ok' : 'bad'); a.textContent = same ? 'Same answer: pass' : `Different: forest cells ${A.forest} → ${B.forest}`;
+      b.className = 'st ' + (cell ? 'bad' : 'ok'); b.textContent = cell ? `1 cell differs (row ${cell[0] + 1}, col ${cell[1] + 1}): caught` : `All ${W * H} cells match: pass`;
+      say.textContent = v === 'none' ? 'No cell is changed, so both checks pass.' : v === 'in' ? 'A cell inside the plot is wrong, so the plot answer changes and both checks catch it.' : 'The wrong cell is outside this plot, so a plot-only check passes. A different boundary that includes that cell would return a wrong answer. Only the every-cell check detects it.';
+    }
+    $$('button', $('#sol-neg-btns', root)).forEach(x => x.addEventListener('click', () => { $$('#sol-neg-btns button').forEach(y => y.setAttribute('aria-pressed', y === x)); run(x.dataset.v); }));
+    run('none');
+  })();
+})();
+</script>
+</body>
+</html>

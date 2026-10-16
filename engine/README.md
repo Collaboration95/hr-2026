@@ -1,6 +1,6 @@
 # Plotline evidence engine
 
-Python3.14 native-grid forest-change queries on verified Hansen2025v1.13 chips and17supplied plot geometries. Supplier declarations remain separate from mapped observations. No legal/compliance label is computed.
+Python 3.14 native-grid forest-change queries on verified Hansen 2025 v1.13 chips and 17 supplied plot geometries. Supplier declarations remain separate from mapped observations. No legal/compliance label is computed.
 
 ## Run
 
@@ -32,7 +32,7 @@ For explicitly metric-free work during experiments:
 .venv-data/bin/python -B -m engine.synthetic
 ```
 
-Without a store, that metric-free export marks compact results pending. Synthetic examples remain separate from17realplots.
+Without a store, that metric-free export marks compact results pending. Synthetic examples remain separate from 17 real plots.
 
 ## Experiments and retained evidence
 
@@ -62,9 +62,30 @@ With partial support, a witnessed event remains true; absent events remain null 
 
 Malformed, unclosed, self-intersecting, non-polygon, nonfinite or oversized geometries are rejected; no silent repair occurs. Production query limits are100000vertices and10000000candidatecells. The independent oracle has lower bounded-work limits. Dataset raw validation occurs at loading/decoding; the shared internal reduction expects validated samples.
 
+## Decision layers
+
+The derived EUDR screening and decision layers, their proof and their speed paths. Results and the speed-up phases are in the [decision-layer report](../docs/lab/decision-layer-report.md).
+
+- `decision.py` defines the semantics: derives one code per Hansen cell from the original layers (screen and decision levels) and evaluates a polygon's contract outputs from those codes. It re-exports `decision_summary`.
+- `decision_summary.py` holds the code space and the shared reducer, standard library only. `summarize_counts` accepts any histogram; `summarize_ints` is the same reducer for callers that already hold a list of Python ints, and skips the conversion.
+- `decision_store.py` writes and reads the single-file lossless stores (screen and decision levels), with bounded decoders and controls.
+- `decision_format.py` holds the store file format without NumPy (constants, header rules, stream decoders), shared by `decision_store.py` and `decision_lite.py`.
+- `decision_index.py` has the registered-plot index, the answer table and exact fast polygon selection (`fast_select_cells`). New polygons use a pure-Python scan up to 500 rows × edges, and up to 2,000 unless the boundary changes rows more than 150 times in total; larger shapes (over 2,000 rows × edges or 4,096 cells) and sawtooth shapes use the NumPy scan.
+- `decision_batch.py` answers many new polygons in one vectorized pass (`evaluate_many`, path P4B).
+- `decision_lite.py` re-checks registered plots without NumPy, straight from the compressed bit-planes (paths P5Ls and P5Ld).
+- `decision_proof.py` checks fidelity: every cell, the 17 plots and a polygon fuzz, plus deliberately broken inputs.
+- `decision_benchmark.py` times every path in isolated child processes and writes `artifacts/decision/benchmark-v1.json`.
+- `decision_scale.py` runs the layer analysis, the whole-tile scale run and the cost estimate.
+- `decision_export.py` condenses the retained decision evidence into the app summary.
+
+```sh
+.venv-data/bin/python -B -m unittest discover -s engine/tests -p 'test_decision*.py' -v
+.venv-data/bin/python -B -m engine.decision_benchmark          # about 2.5 minutes; --quick is a 6-second smoke test
+```
+
 ## Reproducibility and limits
 
-Pinned dependencies are in requirements.txt; Python3.14 supplies `compression.zstd`. Source inputs remain immutable. Encoded bytes are deterministic for fixed input/settings/libzstd; cross-version byte identity is not promised. Benchmark timing naturally varies. Retained files are content-addressed, and prior losing/failed experiments remain distinct evidence.
+Pinned dependencies are in requirements.txt; Python 3.14 supplies `compression.zstd`. Source inputs remain immutable. Encoded bytes are deterministic for fixed input/settings/libzstd; cross-version byte identity is not promised. Benchmark timing naturally varies. Retained files are content-addressed, and prior losing/failed experiments remain distinct evidence.
 
 Artifacts include supplied company values. The user subsequently authorized tracked publication to the existing GitHub repository (see root README); that authorization does not alter source licenses or establish company-approved conclusions. Full original source tiles are an ignored acquisition cache, unnecessary for normal queries/export/proof checks. Independent original-download readback verification can use that cache or reacquire official tiles.
 
