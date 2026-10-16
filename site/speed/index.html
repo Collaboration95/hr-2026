@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The speed story · Plotline explainers</title>
-<meta name="description" content="The few ideas that made Plotline's decision layer fast, phase by phase, with the honest caveats about what each speed-up multiple does and does not mean.">
+<title>Performance · Plotline explainers</title>
+<meta name="description" content="The changes that made Plotline's decision layer fast, phase by phase, with the caveats on what each speed-up multiple does and does not mean.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -140,33 +140,33 @@
 
 <header class="hero" id="top">
   <div class="kick">Deep dive · 20 min</div>
-  <h1>Five ideas did <span class="hl">most of the work.</span></h1>
-  <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a brand-new boundary <strong>5.2× faster</strong>. This page tells the few breakthroughs behind those numbers, in the order they happened, so you can say them on stage and defend them when someone pushes back.</p>
+  <h1>Five changes account for <span class="hl">most of the speed-up.</span></h1>
+  <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a new boundary <strong>5.2× faster</strong>. A few changes produced those numbers; they are described here in the order they were made.</p>
   <div class="meta"><span>20 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4 figures), docs/lab/decision-benchmark-notes.md, docs/lab/decision-scale-notes.md, engine/decision_*.py</span></div>
-  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
-    <li><b>Five ideas:</b> keep only what the decision reads; find a registered plot's cells once; decode on the packed bit-planes; scan small polygons in plain Python; drop NumPy for re-checks. A leaner shared reducer helped all of them.</li>
-    <li><b>Two separate scoreboards, never blended.</b> Registered plots: 24× at the start, <b>44×</b> now (83× without NumPy). New boundaries: 2.2× at the start, <b>5.2×</b> now. All measured hot, against the retained original path (P0).</li>
-    <li><b>No phase changed an answer, a stored byte or a file format.</b> The same proof, 744,732 of 744,732 cells, was re-run after every phase. The caveat to say out loud: whole-process time is mostly Python and NumPy start-up.</li>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li><b>Five changes:</b> keep only what the decision reads; find a registered plot's cells once; decode on the packed bit-planes; scan small polygons in plain Python; drop NumPy for re-checks. A leaner shared reducer helped all of them.</li>
+    <li><b>Two separate scoreboards.</b> Registered plots: 24× at the start, <b>44×</b> now (83× without NumPy). New boundaries: 2.2× at the start, <b>5.2×</b> now. All measured hot, against the retained original path (P0). The two are never combined into one multiple.</li>
+    <li><b>No phase changed an answer, a stored byte or a file format.</b> The same proof, 744,732 of 744,732 cells, was re-run after every phase. Whole-process time is mostly Python and NumPy start-up.</li>
   </ul></div>
 </header>
 
 <!-- ============================================================ 1 -->
-<section id="frame" data-toc="How to read a speed number">
+<section id="frame" data-toc="Reading a speed number">
   <div class="prose">
-    <div class="kick">1 · Before the numbers</div>
-    <h2>A speed-up multiple only means something with its clock and its baseline.</h2>
-    <p>Every multiple on this page is measured <strong>against the original query path from version 1</strong>, which we kept so we could keep comparing. Call it <strong>P0</strong>. It reads three Hansen bands and builds a 101-bin canopy histogram. P0 is re-measured in every benchmark run, so a multiple can drift about half a percent without any code change.</p>
-    <p>Each multiple also belongs to one of three clocks. Mixing them is the easiest way to say something untrue.</p>
+    <div class="kick">1 · Measurement basis</div>
+    <h2>Each multiple depends on its baseline and its clock</h2>
+    <p>Every multiple here is measured <strong>against the original query path from version 1</strong>, retained as the baseline and called <strong>P0</strong>. It reads three Hansen bands and builds a 101-bin canopy histogram. P0 is re-measured in every benchmark run, so a multiple can drift about half a percent without any code change.</p>
+    <p>Each multiple also belongs to one of three clocks, and multiples from different clocks are not comparable.</p>
   </div>
 
   <div class="sp-clock">
-    <div><b>Hot</b><p>The layer is already loaded and the code has warmed up. We time one pass over the 17 supplied plots, repeated hundreds of times. This is the per-plot cost once the layer is local.</p></div>
-    <div style="--x:1"><b>Fresh process</b><p>A new Python process loads the layer and answers the 17 plots. Imports are done first; start-up is not counted. This is where a smaller layer shows.</p></div>
-    <div><b>End-to-end</b><p>Launch Python from scratch and print the answer. It includes interpreter start-up (about 14.6 ms) and importing NumPy (about 25 ms). A do-nothing child in the harness already costs 20.1 ms.</p></div>
+    <div><b>Hot</b><p>The layer is already loaded and the code has warmed up. One pass over the 17 supplied plots is timed and repeated hundreds of times. This is the per-plot cost once the layer is local.</p></div>
+    <div style="--x:1"><b>Fresh process</b><p>A new Python process loads the layer and answers the 17 plots. Imports are done first; start-up is not counted. A smaller layer shows up here.</p></div>
+    <div><b>End-to-end</b><p>Python is launched from scratch and prints the answer. The time includes interpreter start-up (about 14.6 ms) and importing NumPy (about 25 ms). A do-nothing child in the harness already costs 20.1 ms.</p></div>
   </div>
 
   <div class="prose">
-    <h3>The path codes, once</h3>
+    <h3>Path codes</h3>
     <p>Each path is a different way of answering the same question. The suffix <code>d</code> means the decision level (<code>s</code> is the slightly larger screening level).</p>
   </div>
   <div class="tbl"><table class="dt sp-leg">
@@ -184,15 +184,15 @@
   </table></div>
 
   <div class="prose">
-    <h3>The clock of the project</h3>
-    <p>Skip everything before 14 October; the retained v1 path is the only part of that history that matters here. The speed work was one afternoon and four short rounds. The cards show what each round did.</p>
+    <h3>Phases</h3>
+    <p>The decision-layer work was followed by four short rounds of speed-up. History before 14 October is out of scope; the retained v1 path is the only part of it that matters here.</p>
   </div>
   <div class="sp-tl">
-    <div style="--k:1"><b>Decision layers</b><small>15 Oct afternoon</small><p>Keep only what the decision reads. Registered-plot index and answer table. Benchmarked once: the starting line.</p></div>
-    <div style="--k:2"><b>Phase 1</b><small>15 Oct evening</small><p>Same code, made faster: decode on packed planes, a quicker reducer, a quicker polygon selection.</p></div>
-    <div style="--k:3"><b>Phase 2</b><small>15 Oct night</small><p>Shaped to the workload: scan small polygons in plain Python, a batch evaluator, a NumPy-free re-check.</p></div>
-    <div style="--k:4"><b>Phase 3</b><small>15 Oct late night</small><p>Two small wins: a reducer twice as lean, and no hidden import in the batch path.</p></div>
-    <div style="--k:5"><b>Phase 4</b><small>16 Oct early morning</small><p>A trusted-integer reducer entry, a smarter rule for when to scan in Python, and a research pass.</p></div>
+    <div style="--k:1"><b>Decision layers</b><small>starting point</small><p>Keep only what the decision reads. Registered-plot index and answer table. Benchmarked once, as the starting point.</p></div>
+    <div style="--k:2"><b>Phase 1</b><small>same code, faster</small><p>Same code, made faster: decode on packed planes, a quicker reducer, a quicker polygon selection.</p></div>
+    <div style="--k:3"><b>Phase 2</b><small>shaped to the workload</small><p>Shaped to the workload: scan small polygons in plain Python, a batch evaluator, a NumPy-free re-check.</p></div>
+    <div style="--k:4"><b>Phase 3</b><small>leaner reducer</small><p>Two small wins: a reducer twice as lean, and no hidden import in the batch path.</p></div>
+    <div style="--k:5"><b>Phase 4</b><small>trusted-integer entry</small><p>A trusted-integer reducer entry, a smarter rule for when to scan in Python, and a research pass.</p></div>
   </div>
   <details class="deeper"><summary>Go deeper: the commits behind each round <span class="lvl">technical</span></summary><div class="body">
     <p>Phase 1: <code>3286654</code> decode split stores on packed planes, <code>52868a5</code> speed up <code>fast_select_cells</code>, <code>9552776</code> cut <code>summarize_counts</code> overhead. Phase 2: <code>1c3b6e8</code> scalar scan, <code>531cdac</code> batch evaluator, <code>c580acf</code> NumPy-free re-check. Phase 3: <code>a8a296d</code> unpack the histogram by name, <code>0275811</code> dedupe batch cells without <code>np.unique</code>. Phase 4: <code>d208289</code> trusted-integer reducer entry, <code>30d9780</code> new scan-selection rule, <code>fcf2833</code> drop an unused variable. Evidence re-measured after each round in <code>artifacts/decision/</code>.</p>
@@ -200,11 +200,11 @@
 </section>
 
 <!-- ============================================================ 2 -->
-<section id="race" data-toc="The race, phase by phase">
+<section id="race" data-toc="Results by phase">
   <div class="prose">
-    <div class="kick">2 · The whole story in one picture</div>
+    <div class="kick">2 · Results by phase</div>
     <h2>Registered plots went 24× to 44×. New boundaries went 2.2× to 5.2×.</h2>
-    <p>Step through the five columns. Each bar is a multiple against P0, measured hot on the 17 plots. The two groups have different scales on purpose: a registered-plot re-check and a brand-new boundary are different jobs, and we never quote them as one number.</p>
+    <p>Each bar is a multiple against P0, measured hot on the 17 plots. The two groups have separate scales: a registered-plot re-check and a new-boundary check are different jobs and are never quoted as one number.</p>
   </div>
 
   <div class="panel sp-race" id="sp-race">
@@ -216,14 +216,14 @@
         <div class="steps" role="group" aria-label="Phase"></div>
         <button class="btn next" type="button">Next →</button>
       </div>
-      <p class="say"><small id="sp-race-ph">Decision layers · 15 Oct afternoon</small><span id="sp-race-say">A small decision layer and a registered-plot index.</span></p>
+      <p class="say"><small id="sp-race-ph">Decision layers · starting point</small><span id="sp-race-say">A small decision layer and a registered-plot index.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Speed-up phases" table. Each column is that phase's own full benchmark re-run (2 runs, every timed answer bound to the same digests). The answer table (P6d), about 420× then 410× now, is off this chart on purpose: it is a cache, explained below. The NumPy-free re-check did not exist before Phase 2.</p>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Speed-up phases" table. Each column is that phase's own full benchmark re-run (2 runs, every timed answer bound to the same digests). The answer table (P6d), about 420× at the start and 410× now, is left off this chart because it is a cache (see breakthrough 2). The NumPy-free re-check did not exist before Phase 2.</p>
   </div>
 
   <div class="prose" style="margin-top:36px">
-    <h3>Every row, every phase</h3>
-    <p>The same data as a table, one column per phase. A green bar and a bold value mean that cell improved on the column before it by more than about 3%. Everything else is flat within noise. Lower is better for rows marked ↓.</p>
+    <h3>All rows by phase</h3>
+    <p>The same data as a table, one column per phase. A green bar and a bold value mark a cell that improved on the previous column by more than about 3%; everything else is flat within noise. Lower is better for rows marked ↓.</p>
   </div>
   <div class="panel" id="sp-pt">
     <div class="panel-in">
@@ -235,11 +235,11 @@
 </section>
 
 <!-- ============================================================ 3 -->
-<section id="breakthroughs" data-toc="The five breakthroughs">
+<section id="breakthroughs" data-toc="The five changes">
   <div class="prose">
-    <div class="kick">3 · The breakthroughs</div>
-    <h2>Five ideas explain nearly all of the gain.</h2>
-    <p>We list them in the order they happened. That is also a sensible order to tell them: each one answers the question the one before it leaves open. The cards say which clock each one moves; the numbers are step-on-step multiples, so they do not multiply together.</p>
+    <div class="kick">3 · The five changes</div>
+    <h2>What each of the five changes contributes</h2>
+    <p>The changes are listed in the order they were made; each answers a question the previous one leaves open. The cards show which clock each one moves. The numbers are step-on-step multiples, so they do not multiply together.</p>
   </div>
   <div class="sp-five">
     <a href="#b1"><b>1 · Representation</b><strong>Keep only what the decision reads</strong><em>99% smaller<br>1.6× hot · 7.0× fresh</em></a>
@@ -252,16 +252,16 @@
     <thead><tr><th>Step (decision level)</th><th>Hot, 17 plots</th><th>Fresh process</th><th>End-to-end</th></tr></thead>
     <tbody></tbody>
   </table></div>
-  <p class="muted small" style="max-width:700px">What each step is worth, measured one step at a time on the same machine and questions. Source: <code>docs/lab/decision-benchmark-notes.md</code>, "What each step is worth". The hot and end-to-end columns are almost never both big: that mismatch is the main caveat on the whole page.</p>
+  <p class="muted small" style="max-width:700px">What each step is worth, measured one step at a time on the same machine and questions. Source: <code>docs/lab/decision-benchmark-notes.md</code>, "What each step is worth". The hot and end-to-end columns are almost never both large; that mismatch is the main caveat on this page.</p>
 </section>
 
 <!-- ---------------------------------------------------------- B1 -->
 <section id="b1" data-toc="1 · Keep only what the decision reads">
   <div class="prose">
-    <div class="kick">Breakthrough 1 · decision layers, 15 Oct afternoon</div>
+    <div class="kick">Breakthrough 1 · decision layers</div>
     <h2>Keep only what the decision reads.</h2>
-    <p>The EUDR screen asks whether a cell was forest on 31 December 2020 and whether that forest has been lost since. Nothing in that question reads the 2000 canopy percentage, which is 72% of Hansen's bytes, or the loss years before the cut-off. Yet the original query loaded three Hansen bands and built a 101-bin canopy histogram on every call.</p>
-    <p>The decision layer throws all of that away and keeps one small band: a 20-value code per cell. The original layers are <strong>623,237 B</strong>; the decision store is <strong>6,146 B</strong>, 99.0% smaller.</p>
+    <p>The EUDR screen asks whether a cell was forest on 31 December 2020 and whether that forest has been lost since. Nothing in that question reads the 2000 canopy percentage, which is 72% of Hansen's bytes, or the loss years before the cut-off. The original query still loaded three Hansen bands and built a 101-bin canopy histogram on every call.</p>
+    <p>The decision layer drops all of that and keeps one small band: a 20-value code per cell. The original layers are <strong>623,237 B</strong>; the decision store is <strong>6,146 B</strong>, 99.0% smaller.</p>
   </div>
   <div class="panel" id="sp-b1">
     <div class="panel-in">
@@ -277,12 +277,12 @@
           </div>
         </div>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="sp-b1-say">Four layers, plus a canopy histogram that no question reads.</span></p>
+      <p class="say"><small>Figure</small><span id="sp-b1-say">Four layers, plus a canopy histogram that no question reads.</span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code> ("How much smaller", "How much faster"); the multiples are P1 to P3 in <code>docs/lab/decision-benchmark-notes.md</code> (same EUDR question, original layers against decision store). The shapes drawn are illustrative, not the real rasters.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"We worked out what the EUDR decision actually reads, and kept only that. Six kilobytes instead of six hundred, and loading it in a fresh process is about seven times faster. The answers are identical for every cell."</span></div>
-  <div class="note warn rv"><b>Careful</b><span>Hot, this step is only 1.6×, because both paths still pay to find the cells inside a polygon. And a plain GeoTIFF of the same decision codes is already 98.6% smaller: the win is the layer analysis, not a magic codec. Our structure-aware encoding adds the last 28%.</span></div>
+  <div class="note say-it rv"><b>Summary</b><span>The decision layer keeps only what the EUDR decision reads: 6,146 B instead of 623,237 B, about seven times faster to load in a fresh process, with identical answers for every cell.</span></div>
+  <div class="note warn rv"><b>Caveat</b><span>Hot, this step is worth only 1.6×, because both paths still pay to find the cells inside a polygon. A plain GeoTIFF of the same decision codes is already 98.6% smaller, so the gain comes from the layer analysis, not from a codec. The structure-aware encoding adds the last 28%.</span></div>
   <details class="deeper"><summary>Go deeper: what the 20 codes are <span class="lvl">technical</span></summary><div class="body">
     <p>Each Hansen cell becomes one of 20 codes: unknown, water, or land crossed with three forest states (not forest, forest, forest unknown in 2020) and six loss states (none, 2021 to 2025). The decision level additionally forgets the loss year on land that was not forest in 2020. The code space and the one reducer that turns a 20-bin histogram into the contract answer live in <code>engine/decision_summary.py</code>.</p>
   </div></details>
@@ -291,10 +291,10 @@
 <!-- ---------------------------------------------------------- B2 -->
 <section id="b2" data-toc="2 · Find a registered plot's cells once">
   <div class="prose">
-    <div class="kick">Breakthrough 2 · registered-plot index and answer table, 15 Oct afternoon</div>
+    <div class="kick">Breakthrough 2 · registered-plot index and answer table</div>
     <h2>Find a registered plot's cells once, then reuse them.</h2>
-    <p>EUDR plots are <strong>registered once and re-checked every time a layer updates</strong>. Which cells sit inside a plot depends on the plot's boundary and the grid. It does not depend on the layer's values. So the expensive part, finding the cells, can be done once and saved as a short list of cell numbers. A re-check is then: count the codes at those cells, and turn the count into the answer.</p>
-    <p>That took the re-check from 85.4 µs per plot to 3.55 µs at the start (24×), and to 1.90 µs now (44×). The index was the idea; a leaner reducer (breakthrough 5) made it faster still.</p>
+    <p>EUDR plots are <strong>registered once and re-checked every time a layer updates</strong>. Which cells sit inside a plot depends on the plot's boundary and the grid, not on the layer's values. So the expensive part, finding the cells, can be done once and saved as a short list of cell numbers. A re-check then counts the codes at those cells and turns the count into the answer.</p>
+    <p>That took the re-check from 85.4 µs per plot to 3.55 µs at the start (24×), and to 1.90 µs now (44×). The index gave the initial gain; a leaner reducer (breakthrough 5) improved it further.</p>
   </div>
   <div class="panel" id="sp-b2">
     <div class="panel-in">
@@ -311,12 +311,12 @@
           </div>
         </div>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="sp-b2-say">Scan the polygon once.</span></p>
+      <p class="say"><small>Figure</small><span id="sp-b2-say">Scan the polygon once.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> per-plot hot times from <code>docs/lab/decision-benchmark-notes.md</code>: P0 84.51 µs, P4 16.15 µs, P5 decision 1.90 µs, P6 decision 0.206 µs. Registering a plot costs one selection, once; we did not time that separately, so it is not in the bars. The grid and polygon are invented.</p>
+    <p class="foot"><b>Source:</b> per-plot hot times from <code>docs/lab/decision-benchmark-notes.md</code>: P0 84.51 µs, P4 16.15 µs, P5 decision 1.90 µs, P6 decision 0.206 µs. Registering a plot costs one selection, once; that was not timed separately, so it is not in the bars. The grid and polygon are invented.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"Plots are registered once and re-checked every time a layer updates, so we find each plot's cells once. A re-check is then 44 times faster. The answer table, around 410 times, is a cache, and we say so."</span></div>
-  <div class="note warn rv"><b>Why the 410× is honestly a cache</b><span>The answer table is a materialised view: each registered plot's full answer, stored under a key of plot ID, geometry hash and layer (store) hash. Change the boundary or the layer and the key misses and nothing wrong comes back. It only answers plots registered in advance. New boundaries do not get it; they get the P4 path at about 5×.</span></div>
+  <div class="note say-it rv"><b>Summary</b><span>Each registered plot's cells are found once, which makes re-checks 44× faster; the answer table, around 410×, is a cache.</span></div>
+  <div class="note warn rv"><b>Why the 410× is a cache</b><span>The answer table is a materialised view: each registered plot's full answer, stored under a key of plot ID, geometry hash and layer (store) hash. A changed boundary or layer misses the key, so a stale answer is never returned. It only answers plots registered in advance. New boundaries do not get it; they get the P4 path at about 5×.</span></div>
   <details class="deeper"><summary>Go deeper: how the index and table work, and what hashing costs <span class="lvl">technical</span></summary><div class="body">
     <p><code>build_registry</code> in <code>engine/decision_index.py</code> stores each plot's in-chip flat cell indices (row × width + column, int32, sorted). <code>registry_evaluate</code> is a bincount of the codes at those indices, passed to the shared reducer. <code>table_lookup</code> returns the stored output only on an exact plot, geometry, layer and level match, otherwise nothing.</p>
     <p>The realistic workflow stores each plot's geometry hash at registration. If a service instead re-hashes the polygon on every call, cost rises: P5d 1.90 to 5.97 µs, P6d 0.21 to 3.65 µs per plot. The 44× and 410× figures use the precomputed key.</p>
@@ -326,7 +326,7 @@
 <!-- ---------------------------------------------------------- B3 -->
 <section id="b3" data-toc="3 · Decode on the packed bit-planes">
   <div class="prose">
-    <div class="kick">Breakthrough 3 · Phase 1, 15 Oct evening</div>
+    <div class="kick">Breakthrough 3 · Phase 1</div>
     <h2>Decode on the packed bit-planes.</h2>
     <p>The decision store keeps the map as a few yes/no <em>planes</em> (is it unknown? water? forest?) packed eight cells to a byte, plus a short list of loss-year events. The first reader unpacked every plane into 744,732 separate cells before it checked or used any of them.</p>
     <p>Phase 1 does its checks on the packed bytes (93 KB), places the sparse loss years only where an event is, and finds ranked event cells by counting set bits. <strong>The file bytes and format did not change.</strong> Reading the decision store went from 2.5 ms to 0.67 ms (3.8×).</p>
@@ -341,12 +341,12 @@
           <div class="bars sp-live" id="sp-b3-bars"></div>
         </div>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="sp-b3-say">Before: expand every plane to one cell per byte.</span></p>
+      <p class="say"><small>Figure</small><span id="sp-b3-say">Before: expand every plane to one cell per byte.</span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, Phase 1. Store read 2.5 to 0.67 ms; registered index fresh-process load + query 3.5 to 1.3 ms; peak memory 43 to 37 MB. The picture is schematic: the real chip is 1,233 × 604 cells.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"Our store keeps the map as packed yes-or-no flags. We stopped unpacking them into three-quarters of a million cells just to read a few hundred. Loading the store got almost four times faster."</span></div>
-  <div class="note unknown rv"><b>Careful</b><span>This is a load-time gain. Hot times are measured after loading, so the decode change cannot move them; Phase 1's hot gains (24× to 31×, 2.2× to 3.0×) came from the other two Phase 1 changes, the reducer and the selection. Phase 1 shipped the three together and we did not separate the memory drop by change. Do not quote Phase 1 as an end-to-end gain: that barely moved (index path 52.4 to 50.0 ms).</span></div>
+  <div class="note say-it rv"><b>Summary</b><span>The store keeps the map as packed yes-or-no flags and no longer unpacks them into 744,732 cells before reading a few hundred; reading the store is 3.8× faster (2.5 to 0.67 ms).</span></div>
+  <div class="note unknown rv"><b>Caveat</b><span>This is a load-time gain. Hot times are measured after loading, so the decode change does not move them; Phase 1's hot gains (24× to 31×, 2.2× to 3.0×) came from the other two Phase 1 changes, the reducer and the selection. The three shipped together, and the memory drop was not separated by change. Phase 1 is not an end-to-end gain: that barely moved (index path 52.4 to 50.0 ms).</span></div>
   <details class="deeper"><summary>Go deeper: the three Phase 1 changes <span class="lvl">technical</span></summary><div class="body">
     <p><code>_decode_split</code> and <code>read_store</code> in <code>engine/decision_store.py</code>: the plane checks run on strip-order packed bytes and only the dense forest plane is expanded. A side effect: the validator's crafted-blob memory case now peaks near 6 MB instead of about 50 MB. The other two changes: the histogram reduction in <code>summarize_counts</code> (1.6 to 2.2× on its own) and polygon selection in <code>fast_select_cells</code>, which now builds the polygon straight from one coordinate array and paints ambiguous-cell rectangles without <code>np.add.at</code>. It calls a few <code>shapely.lib</code> functions directly, so it depends on the pinned shapely 2.1.2.</p>
   </div></details>
@@ -357,8 +357,8 @@
   <div class="prose">
     <div class="kick">Breakthrough 4 · Phase 2 (tuned in Phase 4)</div>
     <h2>For a small polygon, a plain Python loop beats NumPy.</h2>
-    <p>For a brand-new boundary there is no saved list of cells, so we have to find them. The rule is the centre rule: a cell counts if its centre is inside the plot. A scanline does it: for each map row, find where the boundary crosses the row; the centres between crossings are inside.</p>
-    <p>A plot is only about 120 cells. NumPy pays a fixed cost on every call, and at that size the cost is larger than the work. So Phase 2 scans small windows in plain Python and builds the histogram straight from the runs of selected centres. Ambiguous centres, such as an edge exactly through a centre, still go to exact GEOS geometry tests, so the result stays exact.</p>
+    <p>For a new boundary there is no saved list of cells, so they must be found. The rule is the centre rule: a cell counts if its centre is inside the plot. A scanline does it: for each map row, find where the boundary crosses the row; the centres between crossings are inside.</p>
+    <p>A plot is only about 120 cells. NumPy pays a fixed cost on every call, and at that size the cost exceeds the work. Phase 2 therefore scans small windows in plain Python and builds the histogram straight from the runs of selected centres. Ambiguous centres, such as an edge exactly through a centre, still go to exact GEOS geometry tests, so the result stays exact.</p>
     <p>New boundaries went <strong>3.0× to 5.0×</strong> in Phase 2 (2.2× at the start, 5.2× now).</p>
   </div>
   <div class="panel" id="sp-b4">
@@ -372,11 +372,11 @@
           <div class="sp-chips"><span class="st ok">17 plots: 2.2× → 3.0× → 5.0× → 5.3× → 5.2×</span></div>
         </div>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="sp-b4-say">Sweep one row at a time.</span></p>
+      <p class="say"><small>Figure</small><span id="sp-b4-say">Sweep one row at a time.</span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>docs/lab/decision-benchmark-notes.md</code>, "New polygons": seeded random concave shapes of 0.5 to 20 ha, 15% with a hole, 5 to 267 cells each (median 36). They are not company data. P4B's figure is the batch time divided by 500, so it needs the whole batch in hand.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"For one new boundary we are about five times faster than the original path, with the same exact answer. If a whole batch arrives, about sixteen times on hundreds of polygons, but only with the batch in hand."</span></div>
+  <div class="note say-it rv"><b>Summary</b><span>A new boundary is about 5× faster than on the original path with the same exact answer; a batch of hundreds reaches about 16×, but only with the batch in hand.</span></div>
   <div class="note warn rv"><b>The batch caveat</b><span>The batch evaluator (P4B, 146,000 polygons a second, 15.8×) answers many polygons in one vectorised pass. A single new plot gains nothing, and on the 17-plot batch it is only 1.2× ahead of one-at-a-time. From a cold start it was slower until Phase 3, because NumPy's <code>np.unique</code> imports a module on first use (about 2 ms); a small sort-and-dedupe helper fixed that.</span></div>
   <details class="deeper"><summary>Go deeper: when the Python scan is used, and the Phase 4 tuning <span class="lvl">technical</span></summary><div class="body">
     <p>In <code>engine/decision_index.py</code>: windows up to 500 rows × edges (and 4,096 cells) always use the Python scan. Phase 4 also lets it take 500 to 2,000, unless the boundary changes rows more than 150 times in total (a "sawtooth"), where the NumPy scan is faster. The reason: a 224-shape sweep found the Python scan costs about 0.17 µs per row an edge crosses, and rows × edges predicts its time poorly (R² of 0.66, against 0.99 for a fit on edges and row crossings). The two scans were already proven identical. On the 17 plots every polygon was already under the first threshold, so the Phase 4 rule change did not touch them.</p>
@@ -388,7 +388,7 @@
   <div class="prose">
     <div class="kick">Breakthrough 5 · Phases 2 to 4</div>
     <h2>Drop NumPy for re-checks, and make the shared reducer lean.</h2>
-    <p>This is the only change that moves the <em>whole-process</em> time. A fresh Python process spends about 25 ms just importing NumPy. A registered re-check only needs the codes at a few hundred cells, so it never needed NumPy at all.</p>
+    <p>This is the only change that moves the <em>whole-process</em> time. A fresh Python process spends about 25 ms just importing NumPy. A registered re-check only needs the codes at a few hundred cells, so it never needed NumPy.</p>
     <p>The NumPy-free re-check (<code>engine/decision_lite.py</code>) reads and validates the store using only the standard library, then decodes codes only at the registered cells, straight from the packed planes. It never builds the 744,732-cell raster. End-to-end time for a registered re-check halves, <strong>50.0 to 24.9 ms</strong>, and peak memory drops from 37 to 23 MB.</p>
   </div>
   <div class="panel" id="sp-b5">
@@ -400,13 +400,13 @@
         <div class="r"><div class="lab"><b>Answer table (P6d)</b><span>standard library only</span></div><div class="bar"><i class="f"></i><i class="m"></i><i class="o"></i></div><div class="v">0 ms</div></div>
       </div>
       <div class="legend" style="margin-top:14px"><span><i style="--c:#CDD2DE"></i>harness floor (20.1 ms)</span><span><i style="--c:var(--ink-2)"></i>imports</span><span><i style="--c:var(--pen)"></i>load, query and the rest</span></div>
-      <p class="say"><small>What you are seeing</small><span id="sp-b5-say">Registered index: half the bar is the harness floor, a third is imports.</span></p>
+      <p class="say"><small>Figure</small><span id="sp-b5-say">Registered index: half the bar is the harness floor, a third is imports.</span></p>
     </div>
     <p class="foot"><b>Source:</b> end-to-end medians and import times from <code>docs/lab/decision-benchmark-notes.md</code> (P0 114.5, P5 50.0, P5L 24.9, P6 21.6 ms; imports about 73, 24, 3.4 and 1.15 ms; a do-nothing harness child 20.1 ms). The third segment is computed by subtraction, not measured separately. P0 and P5 import times are the notes' "about" figures.</p>
   </div>
 
   <div class="prose">
-    <h3>And the reducer got twice as lean</h3>
+    <h3>A reducer twice as lean</h3>
     <p>Every live answer ends in one function, the reducer, that turns the 20-bin histogram into the contract answer. In Phase 3 it unpacks the 20 numbers by name instead of slicing, zipping and calling a nested helper: about <strong>1.6 to 0.8 µs</strong> per call. That alone lifted the registered index from 33× to 44× and the NumPy-free re-check from 44× to 65×. In Phase 4 a trusted-integer entry skips a list conversion that callers who already hold ints do not need: the NumPy-free re-check goes from 65× to <strong>83×</strong> (1.31 to 1.02 µs per plot).</p>
   </div>
   <div class="panel" id="sp-red">
@@ -426,7 +426,7 @@
     </div>
     <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, Phase 3 and Phase 4 tables; per-plot starting and Phase 1 values (3.55, 2.80 µs) from the cost-input history in <code>docs/lab/decision-benchmark-notes.md</code>. The NumPy-free re-check begins in Phase 2.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"For re-checking registered plots we do not need NumPy at all. That alone halves the whole start-to-answer time, and gets the hot re-check to 83 times the original path. End-to-end it is 4.6 times."</span></div>
+  <div class="note say-it rv"><b>Summary</b><span>Re-checking registered plots does not need NumPy: dropping it halves the whole start-to-answer time (50.0 to 24.9 ms) and takes the hot re-check to 83× the original path; end-to-end it is 4.6×.</span></div>
   <div class="note unknown rv"><b>What it does not check</b><span>The NumPy-free path validates the store (header CRC, payload sha256, every split-decode check over the whole payload) and the registry. It does not check the decoded raster's own hash, because that needs every cell decoded. The benchmark pins the store file's sha256 instead, which closes the gap. Without that pin, the NumPy index path is the one that checks the decoded raster.</span></div>
 </section>
 
@@ -434,13 +434,13 @@
 <section id="sixteen" data-toc="Where the 16 µs goes">
   <div class="prose">
     <div class="kick">4 · What is left</div>
-    <h2>No single big cost is left in a new-boundary check.</h2>
-    <p>A new boundary now costs about 16 µs. An independent audit of the 17 plots measured each stage. The biggest, scanning the rows, is 30% of the total. Everything else is smaller, so there is no "one more trick" that would double the speed.</p>
-    <p>One correction we made on ourselves: Phase 3 wrote that about 5 µs of the 16 was the required geometry validity check. That was wrong. The check itself is 0.84 µs.</p>
+    <h2>No single stage dominates a new-boundary check</h2>
+    <p>A new boundary now costs about 16 µs. An independent audit of the 17 plots measured each stage. The largest, scanning the rows, is 30% of the total. Every other stage is smaller, so no single remaining change would double the speed.</p>
+    <p>Correction: Phase 3 reported about 5 µs of the 16 as the required geometry validity check. The check itself is 0.84 µs.</p>
   </div>
   <div class="panel" id="sp-16">
     <div class="panel-in">
-      <div class="ph"><span class="tag">New boundary (P4), per plot, 17 plots · tap a segment</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="ph"><span class="tag">New boundary (P4), per plot, 17 plots · select a segment</span><button class="replay" type="button">↻ Replay</button></div>
       <div class="sp-seg" id="sp-16-bar" style="margin-top:14px" role="group" aria-label="Stages of a new-boundary check"></div>
       <div class="sp-key" id="sp-16-key"></div>
       <div class="sp-detail" id="sp-16-det" aria-live="polite"><b>Total 16.35 µs</b><span>Select a stage to see what it is.</span></div>
@@ -452,10 +452,10 @@
 <!-- ============================================================ -->
 <section id="clocks" data-toc="Hot, fresh and end-to-end">
   <div class="prose">
-    <div class="kick">5 · The caveat that matters most</div>
-    <h2>The same paths look very different on the three clocks.</h2>
-    <p>Switch clocks below. The bars are the same seven paths, same 17 plots. Hot is where the index and the table dominate. Fresh-process time rewards the small layer. End-to-end barely moves, because 20 ms of it is the harness and a fresh Python and NumPy import is most of the rest.</p>
-    <p>Registered-only paths (P5d, P5Ld, P6d) are shown in their own group so they are never read as a speed-up for a new plot.</p>
+    <div class="kick">5 · The three clocks</div>
+    <h2>The same paths give different multiples on the three clocks</h2>
+    <p>The bars show the same seven paths on the same 17 plots under each clock. Hot is where the index and the table dominate. Fresh-process time rewards the small layer. End-to-end barely moves, because 20 ms of it is the harness and a fresh Python and NumPy import is most of the rest.</p>
+    <p>Registered-only paths (P5d, P5Ld, P6d) are shown in their own group so they are not read as a speed-up for a new plot.</p>
   </div>
   <div class="panel sp-views" id="sp-views">
     <div class="panel-in">
@@ -473,13 +473,13 @@
 <!-- ============================================================ -->
 <section id="research" data-toc="The research pass">
   <div class="prose">
-    <div class="kick">6 · Did we miss something?</div>
-    <h2>We looked for something better. For small exact plots on a CPU, there isn't one.</h2>
-    <p>In Phase 4 we also checked papers, forums and engineering options. The centre rule is the standard zonal-statistics default (GDAL, rasterstats). The closest research, Raster Join, does what we do in its exact form (a fast interior pass and exact checks at the border); its bounded form gives up exactness, which we cannot. Other approaches do not fit plots of about 120 cells.</p>
-    <p>Other EUDR tools publish no per-plot latency, so every multiple here is against our own P0. We make no "faster than" claim about anyone else. The honest claim is <strong>per-plot cost once the layer is local</strong>.</p>
+    <div class="kick">6 · Alternatives considered</div>
+    <h2>No better option was found for small exact plots on a CPU</h2>
+    <p>Phase 4 included a review of papers, forums and engineering options. The centre rule is the standard zonal-statistics default (GDAL, rasterstats). The closest research, Raster Join, does what Plotline does in its exact form (a fast interior pass and exact checks at the border); its bounded form gives up exactness, which this use case cannot accept. Other approaches do not fit plots of about 120 cells.</p>
+    <p>Other EUDR tools publish no per-plot latency, so every multiple here is against Plotline's own P0, and no "faster than" claim is made about any other tool. The claim is <strong>per-plot cost once the layer is local</strong>.</p>
   </div>
   <div class="tbl"><table class="dt">
-    <thead><tr><th>Option</th><th>What we found</th><th>Verdict</th></tr></thead>
+    <thead><tr><th>Option</th><th>Finding</th><th>Verdict</th></tr></thead>
     <tbody>
       <tr><td>GPU for queries</td><td><span class="t">A plot is about 120 cells; GPU launch and transfer is around 10 µs, about the cost of the whole query. Apple GPUs have no float64, so the exact centre maths would change. GEOS runs on the CPU.</span></td><td><span class="st">skipped</span></td></tr>
       <tr><td>GPU for building the layer</td><td><span class="t">Building is 92% compression, which tries 10 settings per stream and mostly picks LZMA (no GPU version). Free code derivation would make the build only about 1.06× faster.</span></td><td><span class="st">skipped</span></td></tr>
@@ -497,7 +497,7 @@
     <div class="panel-in">
       <div class="ph"><span class="tag">Where building the layer spends its time · per strip</span><button class="replay" type="button">↻ Replay</button></div>
       <div class="sp-build" id="sp-build-bar" role="img" aria-label="Read 2 percent, derive codes 6 percent, compression 92 percent"></div>
-      <p class="say"><small>What you are seeing</small><span>Compression is 92% of building a layer. A GPU would speed up the 8% that is not compression, so the build would be about 1.06× faster.</span></p>
+      <p class="say"><small>Figure</small><span>Compression is 92% of building a layer. A GPU would speed up the 8% that is not compression, so the build would be about 1.06× faster.</span></p>
     </div>
     <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, "Research pass". A scratch measurement on 6 of the 160 strips of one coastal tile, in a single process; not a committed artifact. The estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is a rough one, since inland tiles encode more slowly.</p>
   </div>
@@ -507,8 +507,8 @@
 <section id="unchanged" data-toc="What never changed">
   <div class="prose">
     <div class="kick">7 · What never changed</div>
-    <h2>Nothing the user sees moved. Same answers, same bytes, same format, every phase.</h2>
-    <p>This is why we can speed things up in the last hours without fear. No phase changed any output, any stored byte or any file format. After each one we re-ran the benchmark with every timed answer bound to the same expected digests, and re-ran the proof. The check below is what each phase was compared against, in addition.</p>
+    <h2>Answers, stored bytes and file format are identical in every phase</h2>
+    <p>No phase changed any output, any stored byte or any file format. After each one the benchmark was re-run with every timed answer bound to the same expected digests, and the proof was re-run. The table lists what each phase was compared against in addition.</p>
   </div>
   <div class="panel" id="sp-proof">
     <div class="panel-in">
@@ -523,16 +523,16 @@
         </tbody>
       </table></div>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, each phase's "How it was checked". The report does not state the validators result for Phases 2 and 3, so none is shown for them. "Identical" means every output field under our documented centre rule, not accuracy against the real world.</p>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code>, each phase's "How it was checked". The report does not state the validators result for Phases 2 and 3, so none is shown for them. "Identical" means every output field under the documented centre rule, not accuracy against the real world.</p>
   </div>
 </section>
 
 <!-- ============================================================ -->
 <section id="cost" data-toc="What it costs">
   <div class="prose">
-    <div class="kick">8 · The bonus</div>
+    <div class="kick">8 · Cost estimate</div>
     <h2>Re-checking 10 million new plots costs about three-tenths of a cent.</h2>
-    <p>Cost estimation is a bonus in SystemEarth's brief. This is Lambda compute for re-checking 10 million plots over the tropical belt, at <strong>list-price assumptions</strong> dated 15 October 2026 with no web lookup, so verify before quoting. The tile counts are assumptions too. The bill is not the point: the case for the work is time to answer, memory per worker and being able to re-run.</p>
+    <p>Cost estimation is a bonus item in the challenge brief. The figures are Lambda compute for re-checking 10 million plots over the tropical belt, at <strong>list-price assumptions</strong> dated 15 October 2026 with no web lookup, so they need verifying before being quoted. The tile counts are assumptions too. The bill is not the main argument: the case for the work is time to answer, memory per worker and the ability to re-run.</p>
   </div>
   <div class="panel" id="sp-cost">
     <div class="panel-in">
@@ -552,31 +552,31 @@
 </section>
 
 <!-- ============================================================ -->
-<section id="caveats" data-toc="Honest caveats">
+<section id="caveats" data-toc="Caveats">
   <div class="prose">
-    <div class="kick">9 · Say these before you are asked</div>
-    <h2>Seven honest caveats.</h2>
+    <div class="kick">9 · Caveats</div>
+    <h2>Seven caveats on the figures</h2>
     <ul>
-      <li><b>Three clocks.</b> Hot, fresh-process and end-to-end are different measurements. We say which one every time. Python and NumPy start-up dominate end-to-end, except for the NumPy-free re-check.</li>
+      <li><b>Three clocks.</b> Hot, fresh-process and end-to-end are different measurements, and each multiple is labelled with its clock. Python and NumPy start-up dominate end-to-end, except for the NumPy-free re-check.</li>
       <li><b>Two scoreboards.</b> Registered plots (44×, 83×, ~410×) and new boundaries (5.2×, batch ~15.8×) are separate and never one blended "N× faster".</li>
-      <li><b>The answer table is a cache.</b> It is keyed by plot, geometry and layer, it only answers registered plots, and it is right about the workload EUDR creates.</li>
+      <li><b>The answer table is a cache.</b> It is keyed by plot, geometry and layer, and it only answers registered plots, which is the workload EUDR creates.</li>
       <li><b>The batch needs a batch.</b> About 16× on 500 synthetic polygons; 1.2× over one-at-a-time on 17; nothing for a single plot.</li>
-      <li><b>Small, warm, single-machine.</b> One 34 × 17 km region (a 1,233 × 604 chip), 17 real plots, one Apple M5 laptop, a warm file cache. Whole-tile figures are storage sizes only; we did not run queries at tile scale.</li>
+      <li><b>Small, warm, single-machine.</b> One 34 × 17 km region (a 1,233 × 604 chip), 17 real plots, one Apple M5 laptop, a warm file cache. Whole-tile figures are storage sizes only; queries were not run at tile scale.</li>
       <li><b>P0 moves.</b> The baseline is re-measured in each run, so multiples drift about 0.5% (the Phase 4 differences of 417× to 410× and 5.3× to 5.2× are this, not slowdowns). Between-run spread was 0.5% typical and 2.3% at most.</li>
-      <li><b>Only against ourselves.</b> No other EUDR tool publishes per-plot latency, so we claim nothing against them.</li>
+      <li><b>Only against itself.</b> No other EUDR tool publishes per-plot latency, so no comparison with other tools is claimed.</li>
     </ul>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<section id="stage" data-toc="Telling it on stage">
+<section id="stage" data-toc="Short version">
   <div class="prose">
-    <div class="kick">10 · If you get one slide</div>
-    <h2>The speed story in about 40 seconds.</h2>
-    <p>Use this when the judges ask "how did you get that fast?". It only uses numbers from this page.</p>
+    <div class="kick">10 · Short version</div>
+    <h2>The speed story in one paragraph</h2>
+    <p>A short account of how the speed was reached.</p>
   </div>
-  <div class="note say-it rv" style="max-width:var(--prose)"><b>Say it</b><span>"We got fast by deleting work, not by tuning. First, we kept only what the decision reads, so there is almost nothing to load. Second, EUDR plots are re-checked every time a layer updates, so we find each plot's cells once: re-checks are 44 times faster for registered plots. Third, we stopped unpacking the map into three-quarters of a million cells. Fourth, for new boundaries, we scan small polygons in plain Python: about five times faster. Fifth, for re-checks, we dropped NumPy, which halves the whole run. Nothing changed an answer: every one of the 744,732 cells still matches."</span></div>
-  <div class="note rv" style="max-width:var(--prose)"><b>Then add</b><span>"These are hot, per-plot times on one laptop with a warm cache, against our own first version. Whole-process time is mostly Python start-up."</span></div>
+  <div class="note say-it rv" style="max-width:var(--prose)"><b>Summary</b><span>Plotline gets its speed by deleting work, not by tuning. It keeps only what the decision reads, so there is almost nothing to load. It finds each registered plot's cells once, which makes re-checks 44× faster for registered plots. It no longer unpacks the map into 744,732 cells. For new boundaries it scans small polygons in plain Python, about 5× faster. For re-checks it drops NumPy, which halves the whole run. No change altered an answer: all 744,732 cells still match.</span></div>
+  <div class="note rv" style="max-width:var(--prose)"><b>Scope</b><span>These are hot, per-plot times on one laptop with a warm cache, against the project's own first version. Whole-process time is mostly Python start-up.</span></div>
 </section>
 
 </main></div>
@@ -596,11 +596,11 @@
   (() => {
     const el = $('#sp-race'), box = $('#sp-race-rows', el);
     const PH = [
-      ['Decision layers · 15 Oct afternoon', 'A small decision layer plus a registered-plot index. Registered plots re-check 24× faster than the original path; a new boundary is 2.2× faster.'],
-      ['Phase 1 · 15 Oct evening', 'Packed-plane decoding, a quicker reducer and a quicker polygon selection. Index 31×; new boundaries 3.0×.'],
-      ['Phase 2 · 15 Oct night', 'Small polygons scanned in plain Python with a fused reduction: new boundaries jump to 5.0×. The NumPy-free re-check appears, already at 44×.'],
-      ['Phase 3 · 15 Oct late night', 'A reducer twice as lean: the index goes from 33× to 44× and the NumPy-free re-check from 44× to 65×.'],
-      ['Phase 4 · 16 Oct early morning', 'A trusted-integer reducer entry: NumPy-free reaches 83×. New boundaries are flat: 5.3× reads 5.2× only because P0 re-measured 0.5% lower.']
+      ['Decision layers · starting point', 'A small decision layer plus a registered-plot index. Registered plots re-check 24× faster than the original path; a new boundary is 2.2× faster.'],
+      ['Phase 1 · same code, faster', 'Packed-plane decoding, a quicker reducer and a quicker polygon selection. Index 31×; new boundaries 3.0×.'],
+      ['Phase 2 · shaped to the workload', 'Small polygons scanned in plain Python with a fused reduction: new boundaries jump to 5.0×. The NumPy-free re-check appears, already at 44×.'],
+      ['Phase 3 · leaner reducer', 'A reducer twice as lean: the index goes from 33× to 44× and the NumPy-free re-check from 44× to 65×.'],
+      ['Phase 4 · trusted-integer entry', 'A trusted-integer reducer entry: NumPy-free reaches 83×. New boundaries are flat: 5.3× reads 5.2× only because P0 re-measured 0.5% lower.']
     ];
     const G = [
       { name: 'Registered plots', note: 'own scale 0 to 90×', max: 90, rows: [
@@ -639,7 +639,7 @@
   /* ---------------------------------------------------------- phase table */
   (() => {
     const el = $('#sp-pt'), box = $('#sp-pt-box');
-    const H = [['Decision layers', '15 Oct afternoon'], ['Phase 1', '15 Oct evening'], ['Phase 2', '15 Oct night'], ['Phase 3', '15 Oct late night'], ['Phase 4', '16 Oct early morning']];
+    const H = [['Decision layers', 'starting point'], ['Phase 1', 'same code, faster'], ['Phase 2', 'shaped to the workload'], ['Phase 3', 'leaner reducer'], ['Phase 4', 'trusted-integer entry']];
     const R = [
       { g: 'New boundaries' },
       { l: 'Fast selection (P4), 17 plots', hi: 1, c: [['0.66 ms (2.2×)', 2.2], ['0.49 ms (3.0×)', 3.0], ['0.29 ms (5.0×)', 5.0], ['0.27 ms (5.3×)', 5.3], ['0.27 ms (5.2×)', 5.2]] },
@@ -715,7 +715,7 @@
       fill.style.width = Math.max(0.9, b / 623237 * 100) + '%';
       bytes.textContent = fmt(Math.round(b), 0) + ' B';
       pct.textContent = q < .02 ? 'original layers' : q > .98 ? 'decision store · 99.0% smaller' : Math.round((1 - b / 623237) * 100) + '% smaller so far';
-      say.textContent = t < .28 ? 'Four layers, plus a canopy histogram that no question reads.' : t < .75 ? 'Drop what the decision never reads: canopy %, loss years before the cut-off.' : 'One band of 20-value codes. 6,146 bytes. Same answers for all 744,732 cells.';
+      say.textContent = t < .28 ? 'Four layers, plus a canopy histogram that no question reads.' : t < .75 ? 'Dropping what the decision never reads: canopy %, loss years before the cut-off.' : 'One band of 20-value codes. 6,146 bytes. Same answers for all 744,732 cells.';
     } });
   })();
 
@@ -745,7 +745,7 @@
       scan.setAttribute('opacity', s > 0 && s < 1 ? 1 : 0); scan.setAttribute('y1', Y0 + s * H * C); scan.setAttribute('y2', Y0 + s * H * C);
       tag.textContent = t < .3 ? 'finding the cells…' : t < .4 ? inside.length + ' cells found: saved as a list of cell numbers' : round >= 5 ? '5 layer updates re-checked, 0 re-scans' : 'layer update ' + (k + 1) + ' of 5: count codes at the saved cells';
       rows.forEach((r, i) => { const done = round * per[i]; $('i', r).style.width = Math.max(round > 0 ? 0.5 : 0, done / tot * 100) + '%'; $('.val', r).textContent = (done < 10 ? done.toFixed(2) : done.toFixed(0)) + ' µs'; });
-      say.textContent = t < .3 ? 'Scan the polygon once to find which cells it covers.' : t < .4 ? 'Save the list. That is the registration.' : round >= 5 ? 'Five re-checks: the index spent about 9.5 µs where the original path spent about 423.' : 'Each layer update only counts the codes at the saved cells. No geometry work.';
+      say.textContent = t < .3 ? 'The polygon is scanned once to find which cells it covers.' : t < .4 ? 'The list is saved. That is the registration.' : round >= 5 ? 'Five re-checks: the index spent about 9.5 µs where the original path spent about 423.' : 'Each layer update only counts the codes at the saved cells. No geometry work.';
     } });
   })();
 
@@ -799,7 +799,7 @@
       info.textContent = s <= 0 ? '' : runs + ' runs → ' + cnt.length + ' cells → histogram, no extra pass';
       const b = ease(seg(t, .5, 1));
       rowsD.forEach(r => { r.fill.style.width = (b * r.d[1] / 108.1 * 100) + '%'; r.val.textContent = (b < .02 ? '0' : (r.d[1] * b).toFixed(r.d[1] < 10 ? 2 : 1)) + ' µs'; });
-      say.textContent = t < .5 ? 'A line sweeps the rows. Where it crosses the boundary, the centres between crossings are inside.' : t < .98 ? 'Per polygon, plain Python avoids NumPy\'s fixed cost on a window this small.' : 'New boundary: 108 µs on the original path, 21.7 µs now. The batch is 6.9 µs per polygon, if you have the batch.';
+      say.textContent = t < .5 ? 'A line sweeps the rows. Where it crosses the boundary, the centres between crossings are inside.' : t < .98 ? 'Per polygon, plain Python avoids NumPy\'s fixed cost on a window this small.' : 'New boundary: 108 µs on the original path, 21.7 µs now. The batch is 6.9 µs per polygon, with a batch in hand.';
     } });
   })();
 
@@ -902,7 +902,7 @@
   /* ---------------------------------------------------------- build time */
   (() => {
     const el = $('#sp-build'), bar = $('#sp-build-bar');
-    const D = [['Read 2%', 2, '#8A90A3'], ['Derive codes 6%', 6, '#2F45FF'], ['Our compression 92%', 92, '#1B1F3A']];
+    const D = [['Read 2%', 2, '#8A90A3'], ['Derive codes 6%', 6, '#2F45FF'], ['Compression 92%', 92, '#1B1F3A']];
     const ds = D.map(d => { const x = document.createElement('div'); x.style.background = d[2]; x.textContent = d[1] > 20 ? d[0] : ''; x.title = d[0]; bar.append(x); return x; });
     const lg = document.createElement('div'); lg.className = 'legend'; lg.innerHTML = D.map(d => '<span><i style="--c:' + d[2] + '"></i>' + d[0] + '</span>').join(''); bar.after(lg);
     instrument(el, { ms: 1800, render(t) { const q = ease(t); ds.forEach((x, i) => x.style.width = D[i][1] * q + '%'); } });

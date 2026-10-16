@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SystemEarth and the EUDR · Plotline explainers</title>
-<meta name="description" content="Who SystemEarth is, what the EU Deforestation Regulation requires, why a plot check is a geospatial data problem that gets re-run, and what we are careful not to claim.">
+<meta name="description" content="SystemEarth in brief, what the EU Deforestation Regulation requires, why a plot check is a repeated geospatial data problem, and the limits of what the results show.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -50,13 +50,13 @@
 
 <header class="hero" id="top">
   <div class="kick">Context · 20 min</div>
-  <h1>SystemEarth and the EUDR: <span class="hl">a plot check that keeps getting re-run.</span></h1>
-  <p class="lede">SystemEarth helps companies prove that farm plots behind their goods are not on land cleared for farming after 31 December 2020. This page explains the company, the EU rule, and why checking a plot against satellite layers is a data problem that never finishes.</p>
+  <h1>SystemEarth and the EUDR: <span class="hl">plot checks that are repeated.</span></h1>
+  <p class="lede">SystemEarth provides EUDR and supply-chain compliance software. For each farm plot it overlays geospatial layers to answer EUDR questions, with 31 December 2020 as the cut-off date. The check is repeated whenever plots or layers change, which makes it a data problem.</p>
   <div class="meta"><span>20 min read</span><span>Level: context</span><span>Event sources: docs/problem_statement_reference.txt, docs/sustainability_kickoff_reference.txt</span><span>Public facts checked 16 Oct 2026</span></div>
-  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
-    <li>The EU Deforestation Regulation (EUDR) says certain goods may only be sold into the EU if they come from plots that were not deforested after <strong>31 December 2020</strong>. Plot boundaries must be supplied and checked.</li>
-    <li>Today's application dates, checked 16 October 2026: <strong>30 December 2026</strong> for large and medium operators, <strong>30 June 2027</strong> for micro and small ones.</li>
-    <li>SystemEarth's slide was titled <strong>"keep the decision, not the data"</strong>. Plotline is our answer, and it is screening evidence, not a legal finding.</li>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li>The EU Deforestation Regulation (EUDR) allows certain goods onto the EU market only if they come from plots not deforested after <strong>31 December 2020</strong>. Plot boundaries must be supplied and checked.</li>
+    <li>Application dates, checked 16 October 2026: <strong>30 December 2026</strong> for large and medium operators, <strong>30 June 2027</strong> for micro and small ones.</li>
+    <li>The challenge brief asks for compact, query-efficient layers that preserve plot-level decisions. Plotline's results are screening evidence, not a legal finding.</li>
   </ul></div>
 </header>
 
@@ -64,27 +64,27 @@
 <section id="who">
   <div class="prose">
     <div class="kick">1 · The company</div>
-    <h2>SystemEarth checks farm plots against map layers.</h2>
-    <p>The challenge slides carry the footer <em>© 2026 SystemEarth Pte Ltd</em>. They describe what the company does in one sentence: <strong>for every farm plot, it overlays several geospatial layers to answer EUDR questions.</strong> Was the land forested at the cut-off date? Has it been deforested since? Is it legal to produce there?</p>
-    <p>The layers named on the kickoff slides are:</p>
+    <h2>SystemEarth overlays farm plots with map layers.</h2>
+    <p>The challenge brief carries the footer <em>© 2026 SystemEarth Pte Ltd</em>. It summarises the company's work in one sentence: <strong>for every farm plot, it overlays several geospatial layers to answer EUDR questions.</strong></p>
+    <p>The brief names these layers:</p>
     <ul>
       <li>a <strong>natural forest baseline</strong>: forest presence on 31 December 2020;</li>
       <li><strong>tree cover loss and deforestation alerts</strong>: annual loss, plus near-real-time alerts;</li>
-      <li><strong>protected and restricted-use areas</strong>, and <strong>land legality</strong> layers from national and international datasets;</li>
+      <li><strong>protected and restricted-use areas</strong> and <strong>land legality</strong> layers;</li>
       <li><strong>plot geometries, monitored over time</strong>: polygons checked against every layer and "re-checked as layers update year after year".</li>
     </ul>
-    <p>The printed booklet (p. 9) adds the problem: the decision "rarely needs the entire raw value of data", only segments of pixel information, so the challenge is handling vast amounts of it "in a performant and accurate manner".</p>
+    <p>The printed booklet (p. 9) states the problem: a decision "rarely needs the entire raw value of data", only segments of pixel information, so the challenge is handling large volumes of it "in a performant and accurate manner".</p>
   </div>
 
   <div class="cols">
-    <div class="card" style="--c: var(--pen)"><div class="who">From the event</div><h4>The ask, in their words</h4><p>"Present on a specific use case and demonstrate how SystemEarth can represent multiple geospatial layers across time and space in a compact and query-efficient form, while preserving the information required to reproduce plot-level compliance decisions."</p><p class="muted small">Kickoff slide and booklet p. 9.</p></div>
-    <div class="card" style="--c: var(--review)"><div class="who">From the public web</div><h4>What the company says about itself</h4><p>Its site calls it "the trusted platform to manage sustainable procurement and compliance (EUDR, Human Rights, CSDDD and more)". It collects supplier data through a portal, validates GeoJSON, and offers forest cover and loss maps. It claims 5 million sites screened, 62.5 million hectares analysed, 15 countries and $5 billion of trade.</p><p class="muted small">All self-reported marketing figures. <a href="https://www.systemearth.com/" target="_blank" rel="noopener">systemearth.com</a>, checked 16 Oct 2026.</p></div>
+    <div class="card" style="--c: var(--pen)"><div class="who">From the challenge brief</div><h4>The task as stated</h4><p>"Present on a specific use case and demonstrate how SystemEarth can represent multiple geospatial layers across time and space in a compact and query-efficient form, while preserving the information required to reproduce plot-level compliance decisions."</p><p class="muted small">Kickoff slide and booklet p. 9.</p></div>
+    <div class="card" style="--c: var(--review)"><div class="who">From the public web</div><h4>The company's own description</h4><p>Its site describes the company as "the trusted platform to manage sustainable procurement and compliance (EUDR, Human Rights, CSDDD and more)". It collects supplier data through a portal, validates GeoJSON, and offers forest cover and loss maps. It reports 5 million sites screened, 62.5 million hectares analysed, 15 countries and $5 billion of trade.</p><p class="muted small">Self-reported figures, not independently verified. <a href="https://www.systemearth.com/" target="_blank" rel="noopener">systemearth.com</a>, checked 16 Oct 2026.</p></div>
   </div>
 
-  <div class="note unknown"><b>Thin</b><span>Public information on SystemEarth is thin. We found the company's own marketing site and a startup directory listing (<a href="https://pitchbook.com/profiles/company/742181-68" target="_blank" rel="noopener">PitchBook</a>, seen through a search result on 16 Oct 2026; the page itself refused us with HTTP 403, so we have not read it). We found no technical documentation, methodology, accuracy figures or independent coverage. So we do not describe its product beyond what the event slides and its own site say, and none of the numbers above are verified.</span></div>
+  <div class="note unknown"><b>Source limits</b><span>Public information on SystemEarth is limited to its own site and a startup directory listing (<a href="https://pitchbook.com/profiles/company/742181-68" target="_blank" rel="noopener">PitchBook</a>, seen through a search result on 16 Oct 2026; HTTP 403, not read). No technical documentation, methodology, accuracy figures or independent coverage was found, so the description stays within the challenge brief and the company's site, and none of the figures above is verified.</span></div>
 
-  <details class="deeper"><summary>Go deeper: what we do not know about their stack <span class="lvl">technical</span></summary><div class="body">
-    <p>The sources do not say which forest or loss datasets SystemEarth uses in production, at what resolution, or how its internal query works. They do not say how many plots a typical customer checks, how often layers are refreshed, or what latency matters. Those are exactly the workload questions in the <a href="#questions">last section</a>. Until they are answered, our benchmark is on 17 supplied plots and 500 synthetic ones, on one laptop.</p>
+  <details class="deeper"><summary>Go deeper: what is not known about the production stack <span class="lvl">technical</span></summary><div class="body">
+    <p>The sources do not say which datasets SystemEarth uses in production, at what resolution, how its queries work, how many plots a customer checks, how often layers are refreshed, or which latency matters. These questions are listed in <a href="#questions">Open questions</a>. Until they are answered, the benchmark covers 17 supplied plots and 500 synthetic ones, on one laptop.</p>
   </div></details>
 </section>
 
@@ -92,19 +92,19 @@
 <section id="rule">
   <div class="prose">
     <div class="kick">2 · The rule</div>
-    <h2>The EUDR in plain English: show where it grew, and that it wasn't cleared.</h2>
-    <p>The EU Deforestation Regulation is Regulation (EU) 2023/1115. In one sentence: companies that bring certain goods into the EU market, or export them, must show those goods did not come from land deforested after a fixed date, and were legally produced.</p>
+    <h2>What the EUDR requires</h2>
+    <p>The EU Deforestation Regulation is Regulation (EU) 2023/1115. Companies that place certain goods on the EU market, or export them, must show that the goods did not come from land deforested after a fixed date and were legally produced.</p>
     <h3>What is covered</h3>
-    <p>Seven commodities, plus products made from them: <strong>cattle, wood, cocoa, soy, palm oil, coffee and rubber</strong> (so leather, chocolate, tyres, furniture and similar). The Commission's own page lists them, and notes a delegated act adding some palm oil derivatives, soluble coffee and frozen cattle tongues from 30 December 2027. <span class="muted">Source: <a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" target="_blank" rel="noopener">European Commission, environment.ec.europa.eu</a>, checked 16 Oct 2026.</span></p>
-    <h3>Where it grew: geolocation of production plots</h3>
-    <p>The operator must know the <strong>plot of land</strong> where each commodity was produced. For plots over <strong>4 hectares</strong> (cattle excepted) that means a polygon outlining the boundary. For smaller plots a single latitude and longitude point can be enough. Coordinates need at least six decimal places. <span class="muted">Source: <a href="https://www.fairtrade.net/content/dam/fairtrade/global/fairthrive/Geolocation%20data%20requirements%20EUDR.pdf" target="_blank" rel="noopener">Fairtrade guide on EUDR geolocation data</a>, which states "Last update: 16 April 2026"; checked 16 Oct 2026.</span> The supplier plots we were given range from 0.53 to 20.07 ha, and all come as polygons.</p>
+    <p>Seven commodities, plus products made from them: <strong>cattle, wood, cocoa, soy, palm oil, coffee and rubber</strong> (leather, chocolate, tyres, furniture and similar). The Commission lists them and notes a delegated act adding some palm oil derivatives, soluble coffee and frozen cattle tongues from 30 December 2027. <span class="muted">Source: <a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" target="_blank" rel="noopener">European Commission, environment.ec.europa.eu</a>, checked 16 Oct 2026.</span></p>
+    <h3>Geolocation of production plots</h3>
+    <p>The operator must know the <strong>plot of land</strong> where each commodity was produced. For plots over <strong>4 hectares</strong> (cattle excepted) that means a polygon outlining the boundary. For smaller plots a single latitude and longitude point can be enough. Coordinates need at least six decimal places. <span class="muted">Source: <a href="https://www.fairtrade.net/content/dam/fairtrade/global/fairthrive/Geolocation%20data%20requirements%20EUDR.pdf" target="_blank" rel="noopener">Fairtrade guide on EUDR geolocation data</a>, which states "Last update: 16 April 2026"; checked 16 Oct 2026.</span> The 17 supplier plots in the sample range from 0.53 to 20.07 ha, and all are polygons.</p>
     <h3>"Deforestation-free" and the cut-off</h3>
-    <p>"Deforestation-free" means the goods were not produced on land that was <strong>deforested after 31 December 2020</strong>. Anything cleared before that date is outside the rule; anything cleared after it is the problem. The rule also needs the production to be legal, which is why the slides list land legality and protected areas too.</p>
+    <p>"Deforestation-free" means the goods were not produced on land <strong>deforested after 31 December 2020</strong>; clearing before that date is outside the rule. Production must also be legal, which is why the brief lists land legality and protected areas.</p>
     <h3>What counts as forest</h3>
-    <p>The forest definition we ground our work in, from the JRC product metadata quoted in our layer notes: land over <strong>0.5 ha</strong> with trees higher than <strong>5 m</strong> and canopy cover over <strong>10%</strong> (or trees able to reach those thresholds where they stand), <strong>excluding land predominantly in agricultural or urban use</strong>. Cattle, cocoa, coffee, oil palm, rubber and soya plantations are not forest. That last line matters for us: a rubber or oil-palm block that is cut and replanted is not automatically "deforestation".</p>
-    <div class="note warn"><b>Check</b><span>We could not open the EUR-Lex text of the Regulation in this session (<a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj/eng" target="_blank" rel="noopener">the official text</a> returned no readable content on 16 Oct 2026). The forest wording above comes from our own layer notes (<code>docs/lab/decision-scale-notes.md</code>), which say to check it against Article 2 before quoting. Do the same before saying it on stage.</span></div>
+    <p>The forest definition used in this project comes from the JRC product metadata quoted in the layer notes: land over <strong>0.5 ha</strong> with trees higher than <strong>5 m</strong> and canopy cover over <strong>10%</strong> (or trees able to reach those thresholds in place), <strong>excluding land predominantly in agricultural or urban use</strong>. Cattle, cocoa, coffee, oil palm, rubber and soya plantations are not forest, so a rubber or oil-palm block that is cut and replanted is not automatically "deforestation".</p>
+    <div class="note warn"><b>Unverified</b><span><a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj/eng" target="_blank" rel="noopener">The official EUR-Lex text</a> returned no readable content on 16 Oct 2026. The forest wording above comes from the project's layer notes (<code>docs/lab/decision-scale-notes.md</code>), which call for a check against Article 2 before it is quoted.</span></div>
     <h3>Due diligence</h3>
-    <p>Before the goods are placed on the EU market, the importer (called the <em>operator</em>) must collect information including plot geolocation, assess the risk that the goods are not compliant, reduce that risk if it is more than negligible, and file a <strong>due diligence statement</strong> in the EU information system. SystemEarth's own site mentions fixing GeoJSON errors "before they cause issues on submission to the EU Information System", which fits that step. The plot check sits inside the risk assessment.</p>
+    <p>Before goods are placed on the EU market, the importer (the <em>operator</em>) must collect information including plot geolocation, assess the risk of non-compliance, reduce any more-than-negligible risk, and file a <strong>due diligence statement</strong> in the EU information system. SystemEarth's site mentions fixing GeoJSON errors "before they cause issues on submission to the EU Information System", which fits that step. The plot check belongs to the risk assessment.</p>
   </div>
 
   <div class="panel" id="cmp-chainp">
@@ -114,11 +114,11 @@
         <ol>
           <li class="cmp-node" data-i="0">
             <svg viewBox="0 0 54 40" role="img" aria-label="A farm plot drawn as a polygon with corner points"><polygon points="8,30 14,8 38,6 48,26 24,35" fill="var(--forest-wash)" stroke="var(--forest)" stroke-width="2"/><g fill="var(--forest)"><circle cx="8" cy="30" r="2.5"/><circle cx="14" cy="8" r="2.5"/><circle cx="38" cy="6" r="2.5"/><circle cx="48" cy="26" r="2.5"/><circle cx="24" cy="35" r="2.5"/></g></svg>
-            <div><b>Farm plot</b><span class="cmp-who">Farmer</span><span>Where the crop grows. Its boundary is recorded as a polygon (or a point if small).</span></div>
+            <div><b>Farm plot</b><span class="cmp-who">Farmer</span><span>Where the crop grows. Boundary recorded as a polygon, or a point if small.</span></div>
           </li>
           <li class="cmp-node" data-i="1">
             <svg viewBox="0 0 54 40" role="img" aria-label="A mill or warehouse with a chimney"><rect x="6" y="16" width="34" height="20" rx="2" fill="var(--declared-wash)" stroke="var(--declared)" stroke-width="2"/><rect x="32" y="6" width="7" height="12" fill="var(--declared-wash)" stroke="var(--declared)" stroke-width="2"/><rect x="12" y="24" width="8" height="12" fill="var(--declared)"/></svg>
-            <div><b>Mill and exporter</b><span class="cmp-who">Supplier</span><span>Crop from many plots is pooled into lots. The supplier records which plots fed which lot, and declares its own checks.</span></div>
+            <div><b>Mill and exporter</b><span class="cmp-who">Supplier</span><span>Crop from many plots is pooled into lots. The supplier records which plots fed each lot and declares its own checks.</span></div>
           </li>
           <li class="cmp-node" data-i="2">
             <svg viewBox="0 0 54 40" role="img" aria-label="An EU importer building with a flag"><rect x="10" y="16" width="32" height="20" rx="2" fill="var(--pen-wash)" stroke="var(--pen)" stroke-width="2"/><line x1="26" y1="16" x2="26" y2="4" stroke="var(--pen)" stroke-width="2"/><polygon points="26,4 40,8 26,12" fill="var(--pen)"/></svg>
@@ -135,9 +135,9 @@
         </ol>
         <div class="cmp-prog" aria-hidden="true"><i></i></div>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="cmp-chain-say">Goods start on a farm plot.</span></p>
+      <p class="say"><small>Current view</small><span id="cmp-chain-say">Goods start on a farm plot.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> generic supply chain as described by the EUDR coverage above and the SystemEarth kickoff slides. The sample we were given is one supplier and one lot at step 2 (<code>docs/research/company-sample-audit.md</code>). Our sample's commodity is not recorded in the project notes.</p>
+    <p class="foot"><b>Source:</b> generic supply chain as described by the EUDR coverage above and the challenge brief. The sample covers one supplier and one lot at step 2 (<code>docs/research/company-sample-audit.md</code>). The sample's commodity is not recorded in the project notes.</p>
   </div>
 </section>
 
@@ -145,8 +145,8 @@
 <section id="cutoff">
   <div class="prose">
     <div class="kick">3 · The cut-off</div>
-    <h2>Loss only matters if it is on forest, and after 2020.</h2>
-    <p>Two map layers do two jobs. One says <strong>which land was forest at the end of 2020</strong> (we use the EU Joint Research Centre's 2020 forest map). The other says <strong>which year each map cell lost its tree cover</strong> (we use the Hansen Global Forest Change maps). Put them together and the questions become simple.</p>
+    <h2>Loss counts only on forest, and only after 2020</h2>
+    <p>Two map layers do two jobs. One shows <strong>which land was forest at the end of 2020</strong> (the EU Joint Research Centre's 2020 forest map). The other shows <strong>the year each map cell lost its tree cover</strong> (the Hansen Global Forest Change maps). Together they answer three questions.</p>
     <div class="tbl"><table class="dt cmp-q">
       <thead><tr><th>Question</th><th>Needs</th><th>Does not need</th></tr></thead>
       <tbody>
@@ -155,13 +155,13 @@
         <tr><td>Q3. The supplier's own check: any Hansen loss in 2021–23?</td><td>Hansen loss year 2021–2025 on all land</td><td>Canopy %, older loss years</td></tr>
       </tbody>
     </table></div>
-    <p class="muted small">Source: the questions table in <code>docs/lab/decision-layer-report.md</code> (Phase 4, latest). Q3 exists because the supplier's declarations say they used "Hansen Tree Cover Loss 2021-2023".</p>
-    <p>Drag the year below. The little plot is a <strong>synthetic</strong> shape on a synthetic map. Loss before 2021 is context. Loss after 2020 on <em>forest</em> is the question Q2 asks. Loss after 2020 on land that was not forest in 2020 is a different thing (a plantation cut and replanted, for instance), and Q2 does not count it.</p>
+    <p class="muted small">Source: <code>docs/lab/decision-layer-report.md</code> (Phase 4, latest). Q3 exists because the supplier's declarations cite "Hansen Tree Cover Loss 2021-2023".</p>
+    <p>The panel below uses a <strong>synthetic</strong> plot on a synthetic map, and the slider sets the year. Loss before 2021 is context. Q2 counts loss after 2020 on <em>forest</em>. Loss after 2020 on land that was not forest in 2020, such as a replanted plantation, is a different case that Q2 does not count.</p>
   </div>
 
   <div class="panel" id="cmp-cut">
     <div class="panel-in">
-      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A made-up plot, 2001 to 2025</span><div class="btns"><button class="replay" type="button">▶ Play years</button></div></div>
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A synthetic plot, 2001 to 2025</span><div class="btns"><button class="replay" type="button">▶ Play years</button></div></div>
       <div class="cmp-year">
         <div class="cmp-yr" id="cmp-yr" aria-live="polite">2000</div>
         <div class="cmp-slide"><input type="range" id="cmp-range" min="2000" max="2025" step="1" value="2000" aria-label="Year, 2000 to 2025"><span class="cmp-tick" aria-hidden="true"><em>cut-off 31 Dec 2020</em></span></div>
@@ -169,8 +169,8 @@
       <div class="cmp-two">
         <svg class="cmp-grid" id="cmp-grid" viewBox="0 0 450 316" role="img" aria-label="A synthetic map of 12 by 8 cells with a plot outline. Cells light up as loss years pass; the left side was forest in 2020, the right side was not."></svg>
         <div class="cmp-tally">
-          <div class="a"><b id="cmp-a">0</b>cells: mapped loss on mapped 2020 forest, after the cut-off. The Q2 question.</div>
-          <div class="c"><b id="cmp-c">0</b>cells: loss after the cut-off on land that was not forest in 2020. Not counted by Q2.</div>
+          <div class="a"><b id="cmp-a">0</b>cells: mapped loss on mapped 2020 forest, after the cut-off (the Q2 count).</div>
+          <div class="c"><b id="cmp-c">0</b>cells: loss after the cut-off on land not forest in 2020. Not counted by Q2.</div>
           <div class="b"><b id="cmp-b">0</b>cells: loss up to 2020. Context only.</div>
         </div>
       </div>
@@ -182,14 +182,14 @@
         <span style="--c: var(--loss-past)"><i></i>Loss up to 2020</span>
         <span>Thick outline: the plot</span>
       </div>
-      <p class="say"><small>What you are seeing</small><span id="cmp-cut-say">Before any year, nothing has been lost.</span></p>
+      <p class="say"><small>Current view</small><span id="cmp-cut-say">Before any year, nothing has been lost.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> synthetic illustration of the rule in <code>docs/lab/decision-layer-report.md</code> and <code>engine/decision.py</code>. Counts are map cells, not hectares, and the cells here are invented. The real plots are not shown anywhere in this pack.</p>
+    <p class="foot"><b>Source:</b> synthetic illustration of the rule in <code>docs/lab/decision-layer-report.md</code> and <code>engine/decision.py</code>. Counts are map cells, not hectares, and the cells are invented. No real plot is shown in this pack.</p>
   </div>
 
   <details class="deeper"><summary>Go deeper: two details of the cut-off <span class="lvl">technical</span></summary><div class="body">
-    <p><strong>Year resolution.</strong> Hansen records the <em>year</em> of loss, so loss in 2020 cannot be told apart from loss on 31 December 2020. We treat 2021 as the first year after the cut-off.</p>
-    <p><strong>Loss before 2021 on forest.</strong> If the 2020 forest map says a cell is forest, an earlier Hansen loss in that cell does not override it (the forest may have grown back, or the two maps may differ). The 2020 forest map is the baseline.</p>
+    <p><strong>Year resolution.</strong> Hansen records the <em>year</em> of loss, so loss in 2020 cannot be told apart from loss on 31 December 2020. The project treats 2021 as the first year after the cut-off.</p>
+    <p><strong>Loss before 2021 on forest.</strong> If the 2020 forest map says a cell is forest, an earlier Hansen loss in that cell does not override it (the forest may have regrown, or the two maps may differ). The 2020 forest map is the baseline.</p>
   </div></details>
 </section>
 
@@ -197,15 +197,15 @@
 <section id="workload">
   <div class="prose">
     <div class="kick">4 · Why it is a data problem</div>
-    <h2>Every plot, against every layer, every year, again.</h2>
-    <p>One plot check is easy: take the boundary, find the map cells inside it, read the forest and loss values, answer. The hard part is the multiplication.</p>
+    <h2>Repeated checks across plots, layers and years</h2>
+    <p>A single plot check takes the boundary, finds the map cells inside it, reads the forest and loss values, and answers. The workload comes from multiplication.</p>
     <ul>
-      <li><strong>Many plots.</strong> A company's suppliers can register millions of boundaries.</li>
+      <li><strong>Many plots.</strong> Suppliers can register large numbers of boundaries.</li>
       <li><strong>Several layers.</strong> Forest baseline, annual loss, alerts, protected areas, legality.</li>
-      <li><strong>Many years.</strong> Loss maps add a new year, and a new release can also revise earlier years.</li>
-      <li><strong>Re-checking.</strong> The slides say plot polygons are "re-checked as layers update year after year". A plot that was fine last year has to be asked again.</li>
+      <li><strong>Many years.</strong> A loss map gains a year with each release, and a release can also revise earlier years.</li>
+      <li><strong>Re-checking.</strong> The brief says plot polygons are "re-checked as layers update year after year". A plot that passed last year is checked again.</li>
     </ul>
-    <p>So there are two different workloads, and Plotline was shaped around telling them apart. <strong>A new layer release</strong> means every registered plot is checked again against the same, unchanged boundaries. <strong>A new plot</strong> means one boundary arrives and needs one check. They behave differently in practice: the first can reuse the cells found for each plot last time, the second cannot.</p>
+    <p>Two workloads follow, and Plotline treats them separately. <strong>A new layer release</strong> means every registered plot is checked again against unchanged boundaries. <strong>A new plot</strong> means one new boundary and one check. The first can reuse the cells found for each plot last time; the second cannot.</p>
   </div>
 
   <div class="panel cmp-loop" id="cmp-loop">
@@ -218,32 +218,32 @@
       <svg id="cmp-loop-svg" viewBox="0 0 640 270" role="img" aria-label="Left: a stack of map layers. Right: 24 registered plots as dots plus one empty slot. A new layer release re-checks every dot. A new plot is checked once."></svg>
       <p class="say"><small id="cmp-loop-count">Checks run: 0</small><span id="cmp-loop-say">Registered plots wait for the next event.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> the workload described on the SystemEarth kickoff slides (re-checking polygons as layers update) and in <code>docs/lab/decision-layer-report.md</code>. 24 dots is a synthetic number chosen for the drawing.</p>
+    <p class="foot"><b>Source:</b> the workload described in the challenge brief (re-checking polygons as layers update) and in <code>docs/lab/decision-layer-report.md</code>. The 24 dots are synthetic.</p>
   </div>
 
-  <div class="note"><b>Our numbers</b><span>These are measured separately and never blended. <strong>Registered plots</strong> re-checked: <strong>44× faster</strong> than our retained original-layers query (hot, 17 plots, one laptop). <strong>New boundaries</strong>: <strong>5.2× faster</strong>. A batch of hundreds of new boundaries reaches about 16×, but needs the batch in hand. Hot times are not end-to-end times. Details and caveats: <a href="../speed/">the speed story</a>.</span></div>
+  <div class="note"><b>Measured results</b><span>Measured separately, never blended, against the retained original-layers query (hot, 17 plots, one laptop; not end-to-end). <strong>Registered plots</strong>: <strong>44× faster</strong>. <strong>New boundaries</strong>: <strong>5.2× faster</strong>, or about 16× for a batch of hundreds, which needs the batch in hand. Details and caveats: <a href="../speed/">Performance</a>.</span></div>
 </section>
 
 <!-- WHO USES IT -->
 <section id="user">
   <div class="prose">
     <div class="kick">5 · The user</div>
-    <h2>An analyst with a pile of supplier claims, and a sceptical engineer.</h2>
-    <p>Plotline's recommended direction (<code>docs/planning/systemearth-product-direction.md</code>, a recommendation, not an extra company requirement) has two readers in mind.</p>
+    <h2>Two intended readers: an analyst and a technical reviewer</h2>
+    <p>Plotline's recommended direction (<code>docs/planning/systemearth-product-direction.md</code>; a recommendation, not a company requirement) names two readers.</p>
   </div>
   <div class="cols">
-    <div class="card" style="--c: var(--declared)"><div class="who">Primary user</div><h3>The analyst</h3><p>A company analyst reconciling a supplier's due-diligence spreadsheet with farm boundaries and mapped observations. The question they bring: <strong>which supplier claims need review?</strong> They need to see what the supplier declared next to what the maps show, and what evidence is missing.</p></div>
-    <div class="card" style="--c: var(--proof)"><div class="who">Second reader</div><h3>The technical reviewer</h3><p>Someone at SystemEarth deciding whether a smaller representation can be trusted. Their question: <strong>can we answer using less data without changing the evidence?</strong> They need the proof: same answer from original and compact data, plus size and speed.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">Primary user</div><h3>The analyst</h3><p>A company analyst reconciling a supplier's due-diligence spreadsheet with farm boundaries and mapped observations. Question: <strong>which supplier claims need review?</strong> Needs each declaration beside what the maps show, plus a record of missing evidence.</p></div>
+    <div class="card" style="--c: var(--proof)"><div class="who">Second reader</div><h3>The technical reviewer</h3><p>Someone at SystemEarth deciding whether a smaller representation can be trusted. Question: <strong>can the answer be produced from less data without changing the evidence?</strong> Needs the same answer from original and compact data, plus size and speed.</p></div>
   </div>
-  <div class="note"><b>Not a risk score</b><span>The product keeps four things apart: input or join problems, supplier claim versus mapped observation, disagreement between source layers, and encoding mismatches. An unknown is never shown as "clear".</span></div>
+  <div class="note"><b>Not a risk score</b><span>The product keeps four things apart: input or join problems, supplier claim versus mapped observation, disagreement between source layers, and encoding mismatches. Unknown is never shown as "clear".</span></div>
 </section>
 
 <!-- ASKED -->
 <section id="asked">
   <div class="prose">
-    <div class="kick">6 · What they asked for</div>
-    <h2>Keep the decision, not the data. Then show three things.</h2>
-    <p>The SystemEarth slide is titled <strong>"keep the decision, not the data"</strong>. Their evaluation slide scores three questions, each in one line: <em>How much smaller? How much faster? Same decisions?</em> The numbers below are what <strong>we</strong> measured. SystemEarth set no numeric target.</p>
+    <div class="kick">6 · What the brief asks for</div>
+    <h2>Evaluation measures and requirements</h2>
+    <p>The challenge brief frames the task as <strong>"keep the decision, not the data"</strong>. Its evaluation slide poses three questions: <em>How much smaller? How much faster? Same decisions?</em> The figures below are Plotline's measurements. No numeric target appears in the sources.</p>
   </div>
   <div class="stats">
     <div class="big pen"><span class="num" data-count="99" data-suffix="%"></span><span class="cap">How much smaller? 623,237 B of original layers → 6,146 B</span></div>
@@ -254,17 +254,17 @@
 
   <div class="prose">
     <h3>Required, optional, constrained, unknown</h3>
-    <p>These are kept apart on purpose (<code>AGENTS.md</code>).</p>
+    <p>Required work, constraints, allowances, suggestions and unknowns are kept separate (<code>AGENTS.md</code>).</p>
   </div>
   <div class="tbl"><table class="dt">
     <thead><tr><th>Kind</th><th>What the sources say</th></tr></thead>
     <tbody>
-      <tr><td><span class="st ok">Required</span></td><td>Pick a specific use case. Say which layers and attributes are essential and which can be simplified, summarised or dropped, grounded in the regulation's definitions and cut-off. Encode a sample region and query it. Compare with the original layers on storage, query speed, resource use, <strong>decision fidelity</strong> (the share of plots where all outputs match) and <strong>pixel fidelity</strong> where relevant. Explain pipeline choices and any AI output.</td></tr>
+      <tr><td><span class="st ok">Required</span></td><td>A specific use case. Which layers and attributes are essential and which can be simplified, summarised or dropped, grounded in the regulation's definitions and cut-off. A sample region, encoded and queried. A comparison with the original layers on storage, query speed, resource use, <strong>decision fidelity</strong> (the share of plots where all outputs match) and <strong>pixel fidelity</strong> where relevant. An explanation of pipeline choices and any AI output.</td></tr>
       <tr><td><span class="st">Constraint</span></td><td>Compact, query-efficient, and preserving what is needed to reproduce plot-level decisions.</td></tr>
       <tr><td><span class="st">Allowed</span></td><td>Any dataset, region and use case; existing algorithms, models and encodings. A new compression algorithm is explicitly not required.</td></tr>
       <tr><td><span class="st review">Bonus</span></td><td>Estimate infrastructure and processing costs for storage, updates and queries.</td></tr>
-      <tr><td><span class="st declared">Mixed signal</span></td><td>The printed slides ask for a <strong>working prototype</strong>; the spoken guidance is less firm. We built one and plan to deliver it.</td></tr>
-      <tr><td><span class="st bad">Unknown</span></td><td>Any numeric passing threshold, the pitch length, the judging weights and the submission method. Not in any source we hold.</td></tr>
+      <tr><td><span class="st declared">Mixed signal</span></td><td>The printed slides ask for a <strong>working prototype</strong>; the spoken guidance is less firm. Plotline is a working prototype.</td></tr>
+      <tr><td><span class="st bad">Unknown</span></td><td>Any numeric passing threshold, the pitch length, the judging weights and the submission method. Not in any source held.</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -272,50 +272,50 @@
 <!-- CAREFUL -->
 <section id="careful">
   <div class="prose">
-    <div class="kick">7 · What we are careful about</div>
+    <div class="kick">7 · Scope of the results</div>
     <h2>Screening evidence is not a legal determination.</h2>
-    <p>Everything Plotline reports is <strong>mapped loss on mapped 2020 forest</strong>, under a written rule, on two public map products. That is useful evidence for a reviewer. It is not a finding that anyone broke the law.</p>
+    <p>Plotline reports <strong>mapped loss on mapped 2020 forest</strong>, under a written rule, on two public map products. This is evidence for a reviewer, not a finding that anyone broke the law.</p>
   </div>
   <div class="cols">
-    <div class="card" style="--c: var(--proof)"><div class="who">What we can say</div><h4>Preservation</h4><p>The compact layer gives <em>identical plot-query outputs under our documented rule</em>, for every cell and so every possible plot boundary in the region. That measures preservation of the answer, not the accuracy of the maps.</p></div>
-    <div class="card" style="--c: var(--review)"><div class="who">A question for the reviewer</div><h4>Declarations</h4><p>Supplier statuses are declarations, not facts and not proven violations. Where they do not line up with the maps, that is a question for the evidence files. We never say "red flag" or "non-compliant".</p></div>
-    <div class="card" style="--c: var(--bad)"><div class="who">What we do not cover</div><h4>Gaps in the rule</h4><p>The 0.5 ha minimum area, the "able to reach 5 m in place" test, degradation, protected areas (WDPA licence unclear), land legality. Our counts are cells, not hectares.</p></div>
+    <div class="card" style="--c: var(--proof)"><div class="who">What the results show</div><h4>Preservation</h4><p>The compact layer gives <em>identical plot-query outputs under the documented rule</em>, for every cell and so every possible plot boundary in the region. This measures preservation of the answer, not map accuracy.</p></div>
+    <div class="card" style="--c: var(--review)"><div class="who">A question for the reviewer</div><h4>Declarations</h4><p>Supplier statuses are declarations, not facts and not proven violations. Where they do not line up with the maps, that is a question for the evidence files. The terms "red flag" and "non-compliant" are not used.</p></div>
+    <div class="card" style="--c: var(--bad)"><div class="who">What is not covered</div><h4>Gaps in the rule</h4><p>Not covered: the 0.5 ha minimum area, the "able to reach 5 m in place" test, degradation, protected areas (WDPA licence unclear) and land legality. Counts are cells, not hectares.</p></div>
   </div>
-  <div class="note warn"><b>Careful</b><span>Do not say "deforestation found", "hectares deforested", "accurate" or "ground truth". Do not say the supplier is lying: their five "indication of deforestation" records cannot be reproduced from the layer they name, but their evidence files were not supplied. Wording table: <code>docs/writeups/04-pitch.md</code>.</span></div>
-  <div class="note unknown"><b>Unknown</b><span>Whether SystemEarth lets us show the sample in a public pitch is unconfirmed. The plot boundaries and declaration rows are private, so this pack uses only synthetic shapes and quotes only aggregates.</span></div>
+  <div class="note warn"><b>Scope</b><span>These are mapped observations, not findings of deforestation, deforested hectares, accuracy or ground truth. The results do not establish supplier intent: the five "indication of deforestation" records cannot be reproduced from the layer they name, and the evidence files were not supplied. Terminology: <code>docs/writeups/04-pitch.md</code>.</span></div>
+  <div class="note unknown"><b>Unknown</b><span>Whether the sample may appear in a public pitch is unconfirmed. The plot boundaries and declaration rows are private, so this pack uses only synthetic shapes and quotes only aggregates.</span></div>
 </section>
 
 <!-- QUESTIONS -->
 <section id="questions">
   <div class="prose">
     <div class="kick">8 · Open questions</div>
-    <h2>What we would ask SystemEarth next.</h2>
-    <p>These come from <code>docs/lab/company-next-conversation.md</code>, an unsent discussion brief, not a statement from the company. The smallest useful next step it proposes is one short review of <strong>one plot and one receipt</strong>.</p>
+    <h2>Questions for SystemEarth</h2>
+    <p>These come from <code>docs/lab/company-next-conversation.md</code>, an unsent discussion brief, not a statement from the company. It proposes one short review of <strong>one plot and one receipt</strong> as the smallest useful next step.</p>
   </div>
   <div class="cols">
-    <div class="card" style="--c: var(--pen)"><div class="who">Question 1</div><h4>What should the reference query reproduce?</h4><p>Which exact historical layer release, spatial inclusion rule, forest definitions and missing-data rules produced the supplied results? For one plot, our rule sees no mapped loss in 2021–23 among 87 selected cells while its row declares an indication. That is an investigation prompt, not an accusation.</p></div>
-    <div class="card" style="--c: var(--declared)"><div class="who">Question 2</div><h4>What evidence should the reviewer inspect next?</h4><p>The sample gives opaque reference keys, not files. What do they point to, and what is the review step that follows an unresolved one?</p></div>
-    <div class="card" style="--c: var(--loss)"><div class="who">Question 3</div><h4>Which workload should pick the representation?</h4><p>One interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after updates? A plain GeoTIFF of our decision codes is 8,532 B against our store's 6,146 B, so the best container depends on the operation.</p></div>
+    <div class="card" style="--c: var(--pen)"><div class="who">Question 1</div><h4>What should the reference query reproduce?</h4><p>Which exact historical layer release, spatial inclusion rule, forest definitions and missing-data rules produced the supplied results? For one plot, the project's rule finds no mapped loss in 2021–23 among 87 selected cells while its row declares an indication. This is a prompt for investigation, not an accusation.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">Question 2</div><h4>What evidence should the reviewer inspect next?</h4><p>The sample gives opaque reference keys, not files. What do they point to, and what review step follows an unresolved one?</p></div>
+    <div class="card" style="--c: var(--loss)"><div class="who">Question 3</div><h4>Which workload should pick the representation?</h4><p>One interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after updates? A plain GeoTIFF of the decision codes is 8,532 B against the store's 6,146 B, so the best container depends on the operation.</p></div>
   </div>
-  <p class="muted small">Also open: allowed use of the sample in a public repo, demo and slides; the final commodity and region; the actual submission and pitch logistics.</p>
+  <p class="muted small">Also open: allowed use of the sample in a public repo, demo and slides; the final commodity and region; submission and pitch logistics.</p>
 </section>
 
 <!-- SOURCES -->
 <section id="sources">
   <div class="prose">
     <div class="kick">9 · Public sources and dates checked</div>
-    <h2>Where the outside facts come from.</h2>
-    <p>All checked on <strong>16 October 2026</strong>. Dates move: confirm the application dates again before quoting them tomorrow.</p>
+    <h2>Sources of the outside facts</h2>
+    <p>All checked on <strong>16 October 2026</strong>. Application dates may change; confirm before quoting.</p>
   </div>
   <ul class="cmp-src prose">
-    <li><strong>Application dates.</strong> <a href="https://trade.ec.europa.eu/access-to-markets/en/news/delay-until-december-2026-and-other-developments-implementation-eudr-regulation" target="_blank" rel="noopener">European Commission, Access2Markets news, 28 Jan 2026</a>: Regulation (EU) 2025/2650 postpones application. Large operators comply from <strong>30 December 2026</strong>; <strong>30 June 2027</strong> for the smallest operators. Its text says "micro and small" in the intro and "micro-enterprises" in its table, so the Commission's <a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" target="_blank" rel="noopener">EUDR page</a> is the cleaner reference: large and medium operators 30 December 2026; micro and small 30 June 2027; micro and small operators already under the EU Timber Regulation 30 December 2026.</li>
-    <li><strong>The May 2026 review.</strong> A Baker McKenzie note found through search (<a href="https://www.bakermckenzie.com/en/insight/publications/2026/05/eu-commission-publishes-simplification-review-of-eudr" target="_blank" rel="noopener">link</a>; we read the search summary, not the page) says the Commission's simplification review of early May 2026 did not reopen the Regulation or change the dates, and came with a draft delegated act on product scope. We did not confirm a final adopted outcome for that act.</li>
-    <li><strong>Commodities.</strong> The Commission EUDR page above: cattle, wood, cocoa, soy, palm oil, coffee, rubber and derived products.</li>
+    <li><strong>Application dates.</strong> <a href="https://trade.ec.europa.eu/access-to-markets/en/news/delay-until-december-2026-and-other-developments-implementation-eudr-regulation" target="_blank" rel="noopener">European Commission, Access2Markets news, 28 Jan 2026</a>: Regulation (EU) 2025/2650 postpones application. Large operators comply from <strong>30 December 2026</strong>; <strong>30 June 2027</strong> for the smallest operators. Its text is inconsistent ("micro and small" in the intro, "micro-enterprises" in its table), so the Commission's <a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" target="_blank" rel="noopener">EUDR page</a> is the cleaner reference: large and medium operators 30 December 2026; micro and small 30 June 2027; micro and small operators already under the EU Timber Regulation 30 December 2026.</li>
+    <li><strong>The May 2026 review.</strong> A Baker McKenzie note found through search (<a href="https://www.bakermckenzie.com/en/insight/publications/2026/05/eu-commission-publishes-simplification-review-of-eudr" target="_blank" rel="noopener">link</a>; only the search summary was read, not the page) says the Commission's simplification review of early May 2026 did not reopen the Regulation or change the dates, and came with a draft delegated act on product scope. A final adopted outcome for that act was not confirmed.</li>
+    <li><strong>Commodities.</strong> The Commission EUDR page above.</li>
     <li><strong>Geolocation.</strong> <a href="https://www.fairtrade.net/content/dam/fairtrade/global/fairthrive/Geolocation%20data%20requirements%20EUDR.pdf" target="_blank" rel="noopener">Fairtrade, geolocation data requirements</a> (updated 16 Apr 2026): polygons over 4 ha except cattle, six decimal places.</li>
-    <li><strong>The Regulation.</strong> <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj/eng" target="_blank" rel="noopener">Regulation (EU) 2023/1115 on EUR-Lex</a>. Not readable in our session; the definitions on this page should be checked against Articles 2, 3, 4, 8 to 11 and Annex I.</li>
-    <li><strong>SystemEarth.</strong> <a href="https://www.systemearth.com/" target="_blank" rel="noopener">systemearth.com</a> (own claims, no methodology) and <a href="https://pitchbook.com/profiles/company/742181-68" target="_blank" rel="noopener">PitchBook</a> (not read; HTTP 403). Public information is thin.</li>
+    <li><strong>The Regulation.</strong> <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj/eng" target="_blank" rel="noopener">Regulation (EU) 2023/1115 on EUR-Lex</a>. Not readable when checked; the definitions on this page should be verified against Articles 2, 3, 4, 8 to 11 and Annex I.</li>
+    <li><strong>SystemEarth.</strong> <a href="https://www.systemearth.com/" target="_blank" rel="noopener">systemearth.com</a> (own claims, no methodology) and <a href="https://pitchbook.com/profiles/company/742181-68" target="_blank" rel="noopener">PitchBook</a> (not read; HTTP 403). Public information is limited.</li>
   </ul>
-  <p class="muted small prose">Repo documents used: <code>docs/problem_statement_reference.txt</code>, <code>docs/transcript_rules_and_constraints.txt</code>, <code>docs/sustainability_kickoff_reference.txt</code> and the kickoff PDF slides 18 to 25, <code>SystemEarth-track.md</code>, <code>docs/planning/systemearth-product-direction.md</code>, <code>docs/lab/decision-layer-report.md</code>, <code>docs/lab/decision-scale-notes.md</code>, <code>docs/lab/company-next-conversation.md</code>, <code>docs/writeups/01-the-brief-and-the-data.md</code> and <code>docs/writeups/04-pitch.md</code>. Next: <a href="../data/">the data</a> shows what the layers and the sample look like.</p>
+  <p class="muted small prose">Repository documents used: the brief references in <code>docs/</code> (<code>problem_statement_reference.txt</code>, <code>transcript_rules_and_constraints.txt</code>, <code>sustainability_kickoff_reference.txt</code>, kickoff slides 18 to 25), <code>SystemEarth-track.md</code>, <code>docs/planning/systemearth-product-direction.md</code>, <code>docs/lab/decision-layer-report.md</code>, <code>decision-scale-notes.md</code>, <code>company-next-conversation.md</code> and <code>docs/writeups/01</code> and <code>04</code>. Related: <a href="../data/">The data</a>.</p>
 </section>
 
 </main></div>
@@ -333,14 +333,14 @@
       'Goods start on a farm plot. Its boundary is recorded as a polygon.',
       'Crop from many plots is pooled by a mill or exporter. The supplier declares its own checks.',
       'The EU importer is the party legally responsible for the goods.',
-      'Here. Every plot boundary is checked against the forest and loss layers, and re-checked when they change.',
+      'Plotline\'s step: every plot boundary is checked against the forest and loss layers, and re-checked when they change.',
       'The result feeds the risk assessment and the due diligence statement.'
     ];
     instrument(el, { ms: 7500, render(t) {
       const k = Math.min(4, Math.floor(t * 5 + 0.0001));
       nodes.forEach((n, i) => { n.classList.toggle('on', t > 0 && t >= i / 5 - 0.001); n.classList.toggle('now', t > 0 && i === k && t < 1); });
       bar.style.width = (t * 100) + '%';
-      say.textContent = t === 0 ? 'Press replay, or scroll here.' : lines[k];
+      say.textContent = t === 0 ? 'Press replay to start.' : lines[k];
     } });
   })();
 
@@ -384,8 +384,8 @@
       });
       yr.textContent = Y;
       $('#cmp-a').textContent = a; $('#cmp-b').textContent = b; $('#cmp-c').textContent = cc;
-      say.textContent = Y === 2000 ? 'Before any year, nothing has been lost.'
-        : Y <= 2020 ? 'Up to the cut-off: ' + b + ' plot cells have lost cover, shown in tan. Context only, they do not count.'
+      say.textContent = Y === 2000 ? 'Nothing has been lost yet.'
+        : Y <= 2020 ? 'Up to the cut-off: ' + b + ' plot cells have lost cover, shown in tan. Context only, not counted.'
         : a + ' plot cells show mapped loss on mapped 2020 forest since the cut-off. A further ' + cc + ' lost cover on land that was not forest in 2020.';
     };
     range.addEventListener('input', () => { Y = +range.value; paint(); });
@@ -439,7 +439,7 @@
         if (join > 0) { slot.d.style.strokeDasharray = ''; slot.d.style.fill = 'var(--proof-wash)'; slot.d.style.stroke = 'var(--proof)'; }
         n = chk > 0 ? 1 : 0;
         count.textContent = 'Checks run: ' + n;
-        say.textContent = t === 0 ? 'Registered plots wait for the next event.' : t < 0.4 ? 'A new plot boundary arrives from a supplier.' : t < 0.7 ? 'It is checked once. The 24 others are not touched.' : 'It joins the registered plots. Next layer release, it will be re-checked with the rest.';
+        say.textContent = t === 0 ? 'Registered plots wait for the next event.' : t < 0.4 ? 'A new plot boundary arrives from a supplier.' : t < 0.7 ? 'It is checked once. The 24 others are not touched.' : 'It joins the registered plots and is re-checked with the rest at the next layer release.';
       }
     };
     const inst = instrument(el, { ms: 6500, render: paint });

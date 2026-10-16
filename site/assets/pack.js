@@ -4,15 +4,15 @@
    scroll reveals, count-ups, bar fills, and a tiny "instrument" helper for animations that play on view. */
 (() => {
   const PAGES = [
-    { slug: 'start',    title: 'The whole story',            mins: 15, level: 'Basics' },
+    { slug: 'start',    title: 'Overview',                   mins: 15, level: 'Overview' },
     { slug: 'event',    title: 'The event and the brief',    mins: 15, level: 'Context' },
     { slug: 'company',  title: 'SystemEarth and the EUDR',   mins: 20, level: 'Context' },
-    { slug: 'data',     title: 'The data',                   mins: 25, level: 'Deep dive' },
-    { slug: 'solution', title: 'How Plotline works',         mins: 25, level: 'Deep dive' },
-    { slug: 'speed',    title: 'The speed story',            mins: 20, level: 'Deep dive' },
-    { slug: 'findings', title: 'What the plots show',        mins: 15, level: 'Deep dive' },
-    { slug: 'pitch',    title: "Tomorrow's pitch",           mins: 20, level: 'Presenting' },
-    { slug: 'submit',   title: 'Submission checklist',       mins: 10, level: 'Presenting' },
+    { slug: 'data',     title: 'The data',                   mins: 25, level: 'Detail' },
+    { slug: 'solution', title: 'How Plotline works',         mins: 25, level: 'Detail' },
+    { slug: 'speed',    title: 'Performance',            mins: 20, level: 'Detail' },
+    { slug: 'findings', title: 'What the plots show',        mins: 15, level: 'Detail' },
+    { slug: 'pitch',    title: 'Presentation guide',         mins: 20, level: 'Presentation' },
+    { slug: 'submit',   title: 'Submission readiness',       mins: 10, level: 'Presentation' },
     { slug: 'glossary', title: 'Glossary',                   mins: 0,  level: 'Reference' },
   ];
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;

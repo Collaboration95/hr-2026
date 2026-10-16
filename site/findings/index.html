@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>What the plots show · Plotline explainers</title>
-<meta name="description" content="What 17 suppliers' plots declare, what Hansen and JRC maps show, where they do not line up, and what we are careful not to claim.">
+<meta name="description" content="Supplier declarations on 17 plots compared with mapped observations from Hansen and JRC, the variants tested, and the limits of the comparison.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -93,13 +93,13 @@
 
 <header class="hero" id="top">
   <div class="kick">Deep dive · 15 min</div>
-  <h1>What the plots show: <span class="hl">questions, not verdicts.</span></h1>
-  <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". The maps point somewhere else. This page lays the declarations beside what Hansen and JRC show, says which easy explanations we ruled out, and is careful about what none of this proves.</p>
+  <h1>What the plots show: <span class="hl">declarations and mapped observations</span></h1>
+  <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". Hansen and JRC map post-2020 loss on different plots. Two variants (an older Hansen release, a different cell-inclusion rule) do not reconcile the two, and the comparison does not establish the cause.</p>
   <div class="meta"><span>15 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md, docs/writeups/02 and 04, README.md, docs/research/company-sample-audit.md (prose), docs/lab/engine-vintage-report.md, engine-spatial-sensitivity-report.md, company-next-conversation.md</span></div>
-  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
-    <li>Five plots declared an indication, mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. Those are declarations; we were not given the evidence files.</li>
-    <li>Hansen alone shows loss after 2020 on <b>7 of 17</b> plots. Stack JRC's 2020 forest map and only <b>P-0001</b> has mapped loss on mapped 2020 forest: <b>2 cells in 2022</b>. Region-wide it is 341 of 80,429 post-2020 loss cells (0.4%).</li>
-    <li>The declarations and the maps do not line up, and neither an older Hansen release nor a different boundary rule closes the gap. That is a <b>question for the reviewer</b>, not an accusation.</li>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li>Five plots carry a declared indication, recorded mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. These are declarations; the evidence files were not supplied.</li>
+    <li>Hansen alone maps loss after 2020 on <b>7 of 17</b> plots. With JRC's 2020 forest map, only <b>P-0001</b> has mapped loss on mapped 2020 forest: <b>2 cells in 2022</b>. Region-wide, 341 of 80,429 post-2020 loss cells (0.4%) are on mapped 2020 forest.</li>
+    <li>The declared plots and the mapped plots differ, and neither an older Hansen release nor a different boundary rule reconciles them. This is a <b>question for the reviewer</b>; the mapped observations are not compliance findings.</li>
   </ul></div>
 </header>
 
@@ -108,8 +108,8 @@
   <div class="prose rv">
     <div class="kick">1 · What suppliers declared</div>
     <h2>Five plots declare an indication, then a compliant status.</h2>
-    <p>The supplier's record covers 17 plots (we use IDs only here). On <b>five</b> of them the record says an "indication of deforestation" was found using <i>Hansen Tree Cover Loss 2021–2023</i>, that on-site verification with evidence was recorded, and that the final status is <b>"Deforestation-free"</b> and <b>"Compliant"</b> for EUDR.</p>
-    <p>That is a good review lead and nothing more. It does not show a violation, a false statement or a legal status. The evidence references in the record are opaque keys, not links, so we cannot see what the mitigation actually was.</p>
+    <p>The supplier's record covers 17 plots (plot IDs only are used here). For <b>five</b>, the record states that an "indication of deforestation" was found using <i>Hansen Tree Cover Loss 2021–2023</i>, that on-site verification with evidence was recorded, and that the final status is <b>"Deforestation-free"</b> and <b>"Compliant"</b> for EUDR.</p>
+    <p>This pattern is a review lead. It does not establish a violation, an error in the record or a legal status. The evidence references in the record are opaque keys, not links, so the mitigation itself is not visible.</p>
   </div>
   <div class="fnd-chain" id="fnd-chain">
     <div class="fnd-link rv"><b>1 · Indication</b>"Indication of deforestation", using Hansen Tree Cover Loss 2021–2023</div>
@@ -120,15 +120,15 @@
   <div class="fnd-ids rv" aria-label="The 17 supplied plot IDs; five declared an indication">
     <span class="d">◆ P-0003</span><span>P-0001</span><span>P-0004</span><span class="d">◆ P-0005</span><span>P-0006</span><span class="d">◆ P-0008</span><span>P-0009</span><span class="d">◆ P-0010</span><span>P-0011</span><span class="d">◆ P-0013</span><span>P-0014</span><span>P-0015</span><span>P-0016</span><span>P-0017</span><span>P-0018</span><span>P-0019</span><span>P-0020</span>
   </div>
-  <p class="small muted rv">◆ = declared an indication in the supplier's record. Source: <code>docs/research/company-sample-audit.md</code>, "Dates and supplier-declared review leads". The other plots declared no indication.</p>
+  <p class="small muted rv">◆ = declared an indication. Source: <code>docs/research/company-sample-audit.md</code>, "Dates and supplier-declared review leads".</p>
 </section>
 
 <!-- ============ 2 · hansen ============ -->
 <section id="hansen">
   <div class="prose rv">
     <div class="kick">2 · What Hansen shows</div>
-    <h2>Hansen alone shows loss after 2020 on 7 of 17 plots.</h2>
-    <p>Hansen's map records, for every ~28 m cell, the year of any tree-cover loss. Counting the cells whose centre falls inside each plot gives the barcode below: <b>plot by year, one colour, count as intensity</b>. The supplier named the 2021–23 window; the current Hansen release also covers 2024 and 2025.</p>
+    <h2>Hansen alone maps loss after 2020 on 7 of 17 plots.</h2>
+    <p>Hansen's map records the year of any tree-cover loss for every ~28 m cell. Counting the cells whose centre falls inside each plot gives the barcode: <b>plot by year, with count as colour intensity</b>. The supplier's record names the 2021–23 window; the current Hansen release also covers 2024 and 2025.</p>
   </div>
 
   <div class="panel" id="fnd-bar">
@@ -155,8 +155,8 @@
 <section id="jrc">
   <div class="prose rv">
     <div class="kick">3 · What the decision layer adds</div>
-    <h2>Stack JRC's 2020 forest map and almost all of it falls away.</h2>
-    <p>EUDR asks about <i>forest on 31 December 2020</i>, not about any tree loss. Hansen loss also records harvests on land that was never forest. The decision layer therefore combines Hansen with JRC's 2020 forest class, and counts only <b>mapped loss on mapped 2020 forest</b>.</p>
+    <h2>Almost all post-2020 loss is on land JRC does not map as 2020 forest.</h2>
+    <p>EUDR asks about <i>forest on 31 December 2020</i>, not about any tree loss. Hansen loss also records harvests on land that was not forest in 2020. The decision layer therefore combines Hansen with JRC's 2020 forest class, and counts only <b>mapped loss on mapped 2020 forest</b>.</p>
   </div>
 
   <div class="panel" id="fnd-fun">
@@ -181,10 +181,10 @@
       <li><b>P-0001:</b> 60 of its 121 cells are JRC 2020 forest. Of its 38 loss cells in 2022, <b>2</b> are on mapped 2020 forest (mapped loss on mapped 2020 forest). The other 36 are on land JRC did not map as forest.</li>
       <li><b>The other 16 plots:</b> no mapped 2020 forest, so no mapped loss on mapped 2020 forest, with complete support. Six of them (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) do have Hansen loss after 2020. All of it falls outside JRC's mapped 2020 forest class.</li>
     </ul>
-    <p>Why those cells are not forest in the JRC map is not established. It could be a plantation harvest cycle, or something else. We say "falls outside JRC's mapped 2020 forest class", nothing stronger.</p>
+    <p>Why those cells are not forest in the JRC map is not established; a plantation harvest cycle is one possibility. The wording used is "falls outside JRC's mapped 2020 forest class", nothing stronger.</p>
   </div>
-  <div class="note warn rv"><b>Careful</b><span>These are mapped observations from public layers under a written rule. They are not a compliance verdict, and "deforestation found" is not what we are saying.</span></div>
-  <details class="deeper"><summary>Go deeper: why one layer alone raises the wrong alarm <span class="lvl">technical</span></summary><div class="body">
+  <div class="note warn rv"><b>Scope</b><span>These are mapped observations from public layers under a written rule. They are not compliance findings.</span></div>
+  <details class="deeper"><summary>Detail: why one layer alone overstates post-2020 loss <span class="lvl">technical</span></summary><div class="body">
     <p>On the region, 42.9% of land cells show Hansen loss at some point since 2001 (319,011 of 743,418). A Hansen-only forest proxy (canopy above 10%, no loss to 2020) marks 58.4% of land as forest and counts 71,030 post-2020 loss cells on it; JRC marks 15.9% as forest. That gap is why a rubber and oil-palm mosaic needs the second layer. At JRC's native ~9 m resolution, P-0001 has 554 forest cells out of 1,083 JRC cells. Sources: <code>docs/lab/decision-scale-notes.md</code>, <code>docs/writeups/02-what-we-tried-and-found.md</code>.</p>
     <p>The JRC rule reads one JRC cell per Hansen cell (the centre). Reading a 3×3 majority or "any forest in the block" instead changes no plot decision, but only P-0001 has forest, so it is a weak test. "Any forest" moves the regional total of loss-on-forest cells from 341 to 506 and P-0001's from 2 to 4.</p>
   </div></details>
@@ -194,8 +194,8 @@
 <section id="lineup">
   <div class="prose rv">
     <div class="kick">4 · Declared against mapped</div>
-    <h2>The declared plots and the mapped plots are different plots.</h2>
-    <p>Put the sets side by side. Step through them: first the plots that declared an indication, then the plots Hansen shows loss on, widening the window and then adding JRC's forest map.</p>
+    <h2>The declared plots and the plots with mapped loss do not coincide.</h2>
+    <p>The sets are compared in three views: the supplier's 2021–23 window, all Hansen loss after 2020, and mapped loss on mapped 2020 forest.</p>
   </div>
 
   <div class="panel" id="fnd-set">
@@ -210,7 +210,7 @@
   </div>
 
   <div class="prose rv">
-    <p>The honest summary is that <b>no declared plot has mapped loss in the window the supplier named</b>, and the one plot with mapped loss on mapped 2020 forest is not a declared plot. Two declared plots (P-0005 and P-0013) do show later Hansen loss, in 2024 and 2025, which is after the 2021–23 layer the supplier cites. We do not read anything into that. We do not know the supplier's method, so these are things to ask, not conclusions.</p>
+    <p><b>No declared plot has mapped loss in the window the supplier named</b>, and the one plot with mapped loss on mapped 2020 forest is not a declared plot. Two declared plots (P-0005 and P-0013) show later Hansen loss, in 2024 and 2025, after the 2021–23 window the supplier cites. The supplier's method is not known, so these are open questions rather than conclusions.</p>
   </div>
   <ul class="fnd-q rv">
     <li><b>Question for the reviewer</b>Which layer release, inclusion rule and forest definition produced each declared indication?</li>
@@ -221,15 +221,15 @@
 <!-- ============ 5 · ruled out ============ -->
 <section id="ruled">
   <div class="prose rv">
-    <div class="kick">5 · The easy explanations</div>
-    <h2>Neither an older release nor a different rule closes the gap.</h2>
-    <p>Two obvious explanations: the supplier used an older Hansen release, or counted a cell for a plot by a different rule. We tested both, fixing the method before looking at the results. Try them below. In every variant, <b>none of the five declared indications is reproduced</b> in the 2021–23 window.</p>
+    <div class="kick">5 · Variants tested</div>
+    <h2>Neither an older release nor a different rule reconciles the declarations with the maps.</h2>
+    <p>Two candidate explanations were tested: the supplier used an older Hansen release, or assigned cells to plots by a different rule. The method was fixed before the results were examined. In every variant, <b>none of the five declared indications is reproduced</b> in the 2021–23 window.</p>
   </div>
 
   <div class="panel" id="fnd-test">
     <div class="panel-in">
       <div class="ph"><span class="tag">Explanation tester · 2021–23 Hansen loss cells on the five declared plots</span></div>
-      <div class="fnd-seg" id="fnd-test-v" style="margin-top:12px"><button type="button" data-v="a" aria-pressed="true">Our rule, Hansen 2025 v1.13</button><button type="button" data-v="b" aria-pressed="false">Older release: Hansen 2023 v1.11</button><button type="button" data-v="c" aria-pressed="false">Any overlap, not centre inside</button></div>
+      <div class="fnd-seg" id="fnd-test-v" style="margin-top:12px"><button type="button" data-v="a" aria-pressed="true">Written rule, Hansen 2025 v1.13</button><button type="button" data-v="b" aria-pressed="false">Older release: Hansen 2023 v1.11</button><button type="button" data-v="c" aria-pressed="false">Any overlap, not centre inside</button></div>
       <div class="fnd-test" id="fnd-test-rows"></div>
       <div style="margin-top:14px"><span class="fnd-ovl" id="fnd-test-rep"></span></div>
       <div class="sol-lab" style="font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:16px">Other plots with 2021–23 loss under this variant (cells)</div>
@@ -240,17 +240,17 @@
   </div>
 
   <div class="prose rv">
-    <p>Two things to keep straight. First, a different rule is not a harmless toggle: switching from "centre inside" to "any overlap" changes five plot-period answers on <i>other</i> plots (the rule is part of the decision), yet it creates no 2021–23 signal on the five declared plots. Second, these tests cannot say what the supplier actually did. They may have used manual review, a threshold, another layer or a buffer. That is exactly the problem SystemEarth described: a plot-level decision is only trustworthy if the layers, versions and rules behind it can be replayed. That is what Plotline's receipts are for.</p>
+    <p>Switching from "centre inside" to "any overlap" changes five plot-period answers on <i>other</i> plots, so the inclusion rule is part of the decision, yet it creates no 2021–23 signal on the five declared plots. These tests cannot establish what the supplier did: manual review, a threshold, another layer or a buffer are all possible. A plot-level decision can be checked only if the layers, versions and rules behind it can be replayed; Plotline's receipts record these.</p>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"We tested the declarations against our documented rule and two data releases, and they don't line up. That's a question for the evidence files, not an accusation."</span></div>
+  <div class="note say-it rv"><b>Summary line</b><span>The declarations were compared against a documented rule, an older Hansen release and an alternative inclusion rule. The declared indications are not reproduced; the open question concerns the evidence files.</span></div>
 </section>
 
 <!-- ============ 6 · known vs unknown ============ -->
 <section id="known">
   <div class="prose rv">
-    <div class="kick">6 · Zero is not the same as unknown</div>
-    <h2>"No loss seen" and "we could not look" are different answers.</h2>
-    <p>Every Plotline answer carries one of four truth states. The important rule: <b>missing data never turns into a reassuring zero.</b> Click the cells below to build a plot, or use a preset, and watch the answer change.</p>
+    <div class="kick">6 · Known zero and unknown</div>
+    <h2>"No loss seen" and "could not be read" are different answers.</h2>
+    <p>Every Plotline answer carries one of four truth states. <b>Missing data is never reported as zero.</b></p>
   </div>
 
   <div class="panel" id="fnd-truth">
@@ -276,8 +276,8 @@
 
   <div class="fnd-4">
     <div class="card rv" style="--c: var(--ok)"><div class="who">Known zero</div><p>Every selected cell was read and none shows loss. Shown as "none" with complete support.</p></div>
-    <div class="card rv" style="--c: var(--loss)"><div class="who">Positive</div><p>At least one loss cell was seen. It stays positive even if other cells are missing: missing data cannot cancel something we saw.</p></div>
-    <div class="card rv" style="--c: var(--unknown)"><div class="who">Unknown</div><p>Some cells could not be read, and none of the rest shows loss. We cannot say "no loss", only "none seen so far".</p></div>
+    <div class="card rv" style="--c: var(--loss)"><div class="who">Positive</div><p>At least one loss cell was seen. It stays positive even if other cells are missing: missing data cannot cancel loss that was seen.</p></div>
+    <div class="card rv" style="--c: var(--unknown)"><div class="who">Unknown</div><p>Some cells could not be read, and none of the rest shows loss. The answer cannot be "no loss", only "none seen".</p></div>
     <div class="card rv" style="--c: var(--faint)"><div class="who">Unavailable</div><p>Nothing can be computed: no cell centres, no valid land, or a required layer is missing.</p></div>
   </div>
 </section>
@@ -285,8 +285,8 @@
 <!-- ============ 7 · limits ============ -->
 <section id="limits">
   <div class="prose rv">
-    <div class="kick">7 · What these numbers cannot tell you</div>
-    <h2>Honest limits, said once.</h2>
+    <div class="kick">7 · Limits</div>
+    <h2>Limits of the comparison</h2>
     <ul>
       <li><b>Cells, not hectares.</b> Every count is a number of ~28 m map cells.</li>
       <li><b>The 0.5 ha minimum area and the "able to reach 5 m" test</b> from the EUDR forest definition are not applied by any layer here. "Deforestation" here means mapped tree-cover loss on mapped 2020 forest.</li>
@@ -294,7 +294,7 @@
       <li><b>Protected areas</b> are not included, because their licence is unclear.</li>
       <li><b>One region, one laptop.</b> The 34 × 17 km sample region is the only area measured. JRC is read at the Hansen cell centre, a documented simplification.</li>
       <li><b>The supplier's release, rule and method are unknown.</b> A current Hansen release may differ from the one they used.</li>
-      <li><b>Source and compact agreeing</b> shows the representation keeps the answer under our rule. It does not show the maps are right, nor that anyone complied.</li>
+      <li><b>Source and compact agreeing</b> shows the representation keeps the answer under the written rule. It does not show the maps are right, nor that anyone complied.</li>
     </ul>
     <p class="small muted">Sources: "Honest limits" in <code>docs/lab/decision-layer-report.md</code>, <code>docs/writeups/04-pitch.md</code>, <code>docs/lab/interface-v1.md</code>.</p>
   </div>
@@ -303,17 +303,17 @@
 <!-- ============ 8 · next ============ -->
 <section id="next">
   <div class="prose rv">
-    <div class="kick">8 · Next conversation</div>
-    <h2>What we would ask SystemEarth next.</h2>
-    <p>Our smallest useful next step is <b>one plot and one receipt</b>: ask them to mark which fields answer their real review question, where the decision rules differ, and what happens to an unresolved evidence reference. A corrected query contract is worth more than another dataset.</p>
+    <div class="kick">8 · Open questions</div>
+    <h2>Open questions for review</h2>
+    <p>A small next step is <b>one plot and one receipt</b>: marking which fields answer the real review question, where the decision rules differ, and how an unresolved evidence reference is handled. A corrected query contract would add more than another dataset.</p>
   </div>
   <ul class="fnd-q rv">
     <li><b>Question 1 · The reference query</b>What exact historical layer release, spatial inclusion rule, canopy and forest definitions and missing-data rules produced the supplied results?</li>
-    <li><b>Question 2 · The evidence</b>What do the opaque reference keys resolve to? Can you share one representative mitigation or evidence item and the expected review steps?</li>
+    <li><b>Question 2 · The evidence</b>What do the opaque reference keys resolve to? Can one representative mitigation or evidence item and the expected review steps be shared?</li>
     <li><b>Question 3 · The workload</b>Is the common operation one interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after layer updates? The workload should pick the representation.</li>
-    <li><b>Also confirm</b>Whether the supplied sample may appear in slides, the final commodity and region, and the real submission and pitch logistics (still unknown).</li>
+    <li><b>Also to confirm</b>Whether the supplied sample may appear in published material, and the commodity and region of interest beyond this sample.</li>
   </ul>
-  <div class="prose rv"><p class="small muted">Source: <code>docs/lab/company-next-conversation.md</code>, <code>docs/writeups/03-what-we-ship.md</code> ("Still open"). Future company-reviewed cases should stay separate from the 17-record test set, and no classifier should be trained on supplier final declarations as if they were independent truth.</p></div>
+  <div class="prose rv"><p class="small muted">Source: <code>docs/lab/company-next-conversation.md</code>, <code>docs/writeups/03-what-we-ship.md</code> ("Still open"). Company-reviewed cases are best kept separate from the 17-record test set, and supplier final declarations are not independent ground truth for training a classifier.</p></div>
 </section>
 
 </main></div>
@@ -394,7 +394,7 @@
     ];
     const SAY = [
       '80,429 cells in the region show Hansen loss after 2020: 10.8% of the region\'s land. One orange dot is one cell.',
-      'Now ask JRC: was that cell mapped as forest on 31 Dec 2020? Most are not (pale orange). 217 edge cells have no JRC value (grey). 341 are mapped 2020 forest (green).',
+      'JRC then classifies each cell: was it mapped as forest on 31 Dec 2020? Most are not (pale orange). 217 edge cells have no JRC value (grey). 341 are mapped 2020 forest (green).',
       'Keep only mapped loss on mapped 2020 forest: 341 cells, 0.4% of the 80,429.',
       'Of those 341 cells in the whole region, 2 sit inside a supplied plot: P-0001, in 2022. The other 16 plots have none.',
     ];
@@ -490,7 +490,7 @@
   (() => {
     const root = $('#fnd-test'), rows = $('#fnd-test-rows', root), chips = $('#fnd-test-chips', root), rep = $('#fnd-test-rep', root), say = $('#fnd-test-say'), small = $('#fnd-test-small');
     const V = {
-      a: { name: 'Our written rule', say: 'Cell centre inside the plot, Hansen 2025 v1.13. The five declared plots show no loss in 2021–23. The loss in the window is on three other plots.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0016', 1], ['P-0018', 1]] },
+      a: { name: 'Written rule', say: 'Cell centre inside the plot, Hansen 2025 v1.13. The five declared plots show no loss in 2021–23. The loss in the window is on three other plots.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0016', 1], ['P-0018', 1]] },
       b: { name: 'Older release', say: 'Hansen 2023 v1.11, the same rule, chosen before looking at the results. All 2021–23 counts are identical to the current release on every plot. Only 47 later-year cells (2024 and 2025) differ, because the old release ends in 2023.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0016', 1], ['P-0018', 1]] },
       c: { name: 'Any overlap', say: 'Any positive overlap selects 1,385 plot/cell memberships instead of 1,048 (+337). Five plot-period flags change: P-0014 and P-0015 gain 2021–23 loss; P-0003, P-0004 and P-0019 gain 2024–25 loss. Still no loss in 2021–23 on the five declared plots.', c: { 'P-0003': 0, 'P-0005': 0, 'P-0008': 0, 'P-0010': 0, 'P-0013': 0 }, o: [['P-0001', 38], ['P-0014', 4], ['P-0015', 6], ['P-0016', 5], ['P-0018', 1]] },
     };
@@ -526,9 +526,9 @@
       sup.textContent = missing ? 'unavailable' : support; sup.className = 'fnd-pill ' + (missing || support === 'none' ? 'na' : support === 'partial' ? 'unk' : 'zero'); sup.style.fontSize = '20px';
       let cls, txt, w;
       if (missing || support === 'none') { cls = 'na'; txt = 'Unavailable'; w = missing ? 'A required layer is missing, so nothing can be computed. This is not the same as "no loss".' : 'There is no valid land in the selection (water is counted but is not land), so there is nothing to answer about.'; }
-      else if (loss > 0) { cls = 'pos'; txt = `${loss} loss cell${loss > 1 ? 's' : ''}`; w = support === 'partial' ? 'Loss was seen, so the answer is positive even though some cells have no data. Missing cells cannot cancel something we saw.' : 'Loss was seen on read cells, with complete support.'; }
+      else if (loss > 0) { cls = 'pos'; txt = `${loss} loss cell${loss > 1 ? 's' : ''}`; w = support === 'partial' ? 'Loss was seen, so the answer is positive even though some cells have no data. Missing cells cannot cancel loss that was seen.' : 'Loss was seen on read cells, with complete support.'; }
       else if (gap === 0) { cls = 'zero'; txt = 'None · known zero'; w = 'Every cell was read and none shows loss. This is the only case that may be shown as a zero.'; }
-      else { cls = 'unk'; txt = 'Unknown'; w = 'Some cells could not be read, and none of the rest shows loss. We can say "none seen", never a clean "no". The app draws this hatched.'; }
+      else { cls = 'unk'; txt = 'Unknown'; w = 'Some cells could not be read, and none of the rest shows loss. The answer is "none seen", never a clean "no". The app draws this hatched.'; }
       flag.textContent = txt; flag.className = 'fnd-pill ' + cls; why.textContent = w;
     }
     render();

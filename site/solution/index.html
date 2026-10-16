@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How Plotline works · Plotline explainers</title>
-<meta name="description" content="Three questions, a 20-value code per map cell, a 6 KB decision layer and a proof that every cell, and so every plot boundary, gets the same answer.">
+<meta name="description" content="Three screening questions, a 20-value code per map cell, a 6 KB decision layer, and an exhaustive check that every cell, and so every plot boundary, gives the same answer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -104,13 +104,13 @@
 
 <header class="hero" id="top">
   <div class="kick">Deep dive · 25 min</div>
-  <h1>How Plotline works: <span class="hl">keep the decision, not the data.</span></h1>
-  <p class="lede">An EU deforestation screen asks only three questions of a map cell. Plotline works out exactly which facts those questions read, keeps a <strong>20-value code</strong> per cell, throws the rest away, and then <strong>proves</strong> that every cell, and so every possible plot boundary, still gets the same answer.</p>
+  <h1>How Plotline works: <span class="hl">a 20-value decision code per map cell</span></h1>
+  <p class="lede">The EU deforestation screen asks three questions of each map cell. Plotline identifies the facts those questions read, keeps them as a <strong>20-value code</strong> per cell, discards the rest, and <strong>verifies</strong> that every cell, and so every possible plot boundary, gives the same answer.</p>
   <div class="meta"><span>25 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4, latest), decision-scale-notes.md, validation/decision/report.md</span></div>
-  <div class="tldr"><b class="lab">If you read nothing else</b><ul>
-    <li>Three questions decide the screen. They read land or water, JRC's 2020 forest class and the Hansen loss year from 2021. <b>None reads the canopy percentages, which are 72% of Hansen's original bytes.</b></li>
-    <li>The decision layer is <b>6,146 B instead of 623,237 B (99.0% smaller)</b>. A plain GeoTIFF of the same codes is already 98.6% smaller, so most of the win is knowing what to keep. Our encoding adds the last 28%.</li>
-    <li><b>744,732 of 744,732 cells</b> decode to the same code as the original layers, so every plot boundary in the region gets identical outputs under the written rule. Not a sample: every cell.</li>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li>The screen reads land or water, JRC's 2020 forest class and the Hansen loss year from 2021. <b>No question reads the canopy percentages, which are 72% of Hansen's original bytes.</b></li>
+    <li>The decision layer is <b>6,146 B instead of 623,237 B (99.0% smaller)</b>. A plain GeoTIFF of the same codes is already 98.6% smaller, so most of the saving comes from the choice of what to keep. Plotline's encoding makes the layer a further 28% smaller than that GeoTIFF.</li>
+    <li><b>744,732 of 744,732 cells</b> decode to the same code as the original layers, so every plot boundary in the region gets identical outputs under the written rule. The check covers every cell, not a sample.</li>
   </ul></div>
 </header>
 
@@ -118,9 +118,9 @@
 <section id="questions">
   <div class="prose rv">
     <div class="kick">1 · The job</div>
-    <h2>Three questions are the whole job.</h2>
-    <p>To sell into the EU, a farm plot must be shown to be deforestation-free: <strong>was it forest at the end of 2020, and has that forest been lost since?</strong> The check is a map join that gets re-run whenever a layer updates. Plotline's engine answers it for a plot boundary using three questions about the map cells inside it.</p>
-    <p>Plotline's answers are <em>mapped observations under a written rule</em>. They are not a legal verdict.</p>
+    <h2>Three questions decide the screen.</h2>
+    <p>Selling into the EU requires showing that a farm plot is deforestation-free: <strong>was it forest at the end of 2020, and has that forest been lost since?</strong> The check is a map join, repeated when a layer updates. Plotline answers it with three questions about the map cells inside a plot boundary.</p>
+    
   </div>
   <div class="tbl rv">
     <table class="dt">
@@ -133,7 +133,7 @@
     </table>
   </div>
   <div class="prose rv">
-    <p class="small muted">Q3 is the check the supplier says it ran. It uses Hansen alone, so it also catches loss on land that was never forest in 2020. Q1 and Q2 are the EUDR question itself. Source: <code>docs/lab/decision-layer-report.md</code>, "The questions and what each needs".</p>
+    <p class="small muted">Q3 mirrors the check the supplier's record describes. It uses Hansen alone, so it also counts loss on land that was not forest in 2020. Q1 and Q2 are the EUDR question itself. Source: <code>docs/lab/decision-layer-report.md</code>, "The questions and what each needs". Answers are mapped observations under a written rule, not legal verdicts.</p>
   </div>
 </section>
 
@@ -141,8 +141,8 @@
 <section id="analysis">
   <div class="prose rv">
     <div class="kick">2 · The core idea</div>
-    <h2>Look at what the questions read. <span class="hl">Drop everything else.</span></h2>
-    <p>This is the layer analysis SystemEarth asked for, and it is where almost all of the saving comes from. Write down the questions, then list which stored facts each one actually reads. Anything no question reads can go.</p>
+    <h2>Layer analysis: <span class="hl">keep only what the questions read</span></h2>
+    <p>The layer analysis lists the questions, then the stored facts each one reads. Anything no question reads can be dropped.</p>
   </div>
 
   <div class="panel" id="sol-shed">
@@ -152,21 +152,21 @@
       <div class="sol-rows" id="sol-shed-rows" role="list" aria-label="Attributes stored for each map cell, with their compressed size"></div>
       <p class="say"><small id="sol-shed-n">Step 1 of 6</small><span id="sol-shed-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> (table "What each attribute costs, and who needs it", 744,732-cell chip) and <code>docs/lab/decision-layer-report.md</code>. Bars are drawn to one linear scale, using one yardstick for every part: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller still: 38,513 B (screening) and 6,146 B (decision).</p>
+    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> (table "What each attribute costs, and who needs it", 744,732-cell chip) and <code>docs/lab/decision-layer-report.md</code>. Bars share one linear scale and one yardstick: zstd level 19 of the raw plane. Separable planes are not additive, so the parts do not sum to a total. The shipped store files are smaller: 38,513 B (screening) and 6,146 B (decision).</p>
   </div>
 
   <div class="sol-3">
-    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 1</div><h4>Canopy percentages</h4><p>Hansen's <code>treecover2000</code> says how leafy each cell was in the year 2000. It is <b>414,142 of the 576,999 Hansen bytes (72%)</b>, and no question reads it.</p></div>
-    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 2</div><h4>Loss years 2001–2020</h4><p>These fall before the cut-off, and JRC's 2020 map already says what was forest on the cut-off date. Loss before it does not change a 2020 forest cell's state.</p></div>
-    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 3</div><h4>JRC sub-cell detail</h4><p>JRC maps at about 9 m. A Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The written rule reads the centre one, so 8 of every 9 JRC values are never used.</p></div>
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 1</div><h4>Canopy percentages</h4><p>Hansen's <code>treecover2000</code> records canopy cover in 2000. It is <b>414,142 of the 576,999 Hansen bytes (72%)</b>, and no question reads it.</p></div>
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 2</div><h4>Loss years 2001–2020</h4><p>These fall before the cut-off, and JRC's 2020 map already gives the forest state on the cut-off date. Earlier loss does not change that state.</p></div>
+    <div class="card rv" style="--c: var(--loss-past)"><div class="who">Dropped · 3</div><h4>JRC sub-cell detail</h4><p>JRC maps at about 9 m. A Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The written rule reads the centre cell, so 8 of every 9 JRC values are unused.</p></div>
   </div>
 
-  <div class="note ok rv"><b>Checked</b><span>The proof also tests that these drops really change nothing. Inverting the canopy percentages, reversing the 2001–2020 loss years, or inverting every JRC cell that is not a Hansen centre leaves <b>every code unchanged</b>. Unused values and missing-data masks are different: a cell with no valid canopy value is still "unknown", exactly as before.</span></div>
+  <div class="note ok rv"><b>Checked</b><span>The proof also tests that these drops change nothing. Inverting the canopy percentages, reversing the 2001–2020 loss years, or inverting every JRC cell that is not a Hansen centre leaves <b>every code unchanged</b>. Missing-data masks differ from unused values: a cell with no valid canopy value is still "unknown", as before.</span></div>
 
-  <details class="deeper"><summary>Go deeper: what the EUDR definition says, and what no step here captures <span class="lvl">technical</span></summary><div class="body">
-    <p>JRC's metadata states the forest definition: land over 0.5 ha with trees over 5 m and canopy over 10%, or trees able to reach those in situ, excluding land predominantly in agricultural or urban use. Cattle, cocoa, coffee, oil palm, rubber and soya plantations are excluded from forest. The cut-off is 31 December 2020. (Check the wording against Regulation (EU) 2023/1115 before quoting it.)</p>
+  <details class="deeper"><summary>Detail: the EUDR forest definition, and what no step captures <span class="lvl">technical</span></summary><div class="body">
+    <p>JRC's metadata states the forest definition: land over 0.5 ha with trees over 5 m and canopy over 10%, or trees able to reach those in situ, excluding land predominantly in agricultural or urban use. Cattle, cocoa, coffee, oil palm, rubber and soya plantations are excluded from forest. The cut-off is 31 December 2020. This is a summary; Regulation (EU) 2023/1115 is the authoritative text.</p>
     <ul>
-      <li><b>Captured, through JRC only:</b> the plantation exclusion and the 10% / 5 m tests. We rely on JRC's own claim.</li>
+      <li><b>Captured, through JRC only:</b> the plantation exclusion and the 10% / 5 m tests. The pipeline relies on JRC's own claim.</li>
       <li><b>Captured at year resolution:</b> the cut-off. Loss in 2020 cannot be told from loss on 31 Dec 2020.</li>
       <li><b>Not captured by any step:</b> the 0.5 ha minimum area (a Hansen cell is 0.076 ha, a JRC cell 0.0085 ha, and no contiguity test is applied), "trees able to reach the thresholds in situ", and degradation.</li>
       <li><b>A proxy:</b> "deforestation" here means mapped tree-cover loss on mapped 2020 forest. Hansen loss includes fire and logging and does not say what the land became.</li>
@@ -179,9 +179,9 @@
 <section id="codes">
   <div class="prose rv">
     <div class="kick">3 · One byte per cell</div>
-    <h2>Everything that is left fits in a 20-value code.</h2>
-    <p>For each Hansen cell we keep three small facts and glue them into one number from 0 to 19. Is the cell <b>unknown, water or land</b>? If land, was it <b>non-forest, forest or unknown</b> in 2020? And was there <b>no loss, or loss in 2021 … 2025</b>?</p>
-    <p>That is 2 (unknown, water) + 3 forest states × 6 loss options = <b>20 codes</b>. Play with it below. Pick a cell and see its code, the two layers it lives in, and which questions it answers. Or click a code tile.</p>
+    <h2>Each cell is reduced to one of 20 codes.</h2>
+    <p>Each Hansen cell keeps three small facts, combined into one number from 0 to 19: whether the cell is <b>unknown, water or land</b>; if land, whether it was <b>non-forest, forest or unknown</b> in 2020; and whether it has <b>no loss, or loss in 2021 … 2025</b>.</p>
+    <p>The count is 2 (unknown, water) + 3 forest states × 6 loss options = <b>20 codes</b>. The decoder below shows, for a chosen cell or code tile, the code, the two layers that hold it and the questions it answers.</p>
   </div>
 
   <div class="panel" id="sol-dec">
@@ -195,7 +195,7 @@
           <div class="sol-seg" data-g="f"><button type="button" data-v="0" aria-pressed="true">Non-forest</button><button type="button" data-v="1" aria-pressed="false">Forest</button><button type="button" data-v="2" aria-pressed="false">Unknown</button></div>
           <span class="sol-lab">Hansen loss</span>
           <div class="sol-seg" data-g="y"><button type="button" data-v="0" aria-pressed="true">None</button><button type="button" data-v="1" aria-pressed="false">2021</button><button type="button" data-v="2" aria-pressed="false">2022</button><button type="button" data-v="3" aria-pressed="false">2023</button><button type="button" data-v="4" aria-pressed="false">2024</button><button type="button" data-v="5" aria-pressed="false">2025</button></div>
-          <span class="sol-lab">Or click a code</span>
+          <span class="sol-lab">Or select a code</span>
           <div class="sol-codes" id="sol-dec-codes"></div>
         </div>
         <div>
@@ -205,7 +205,7 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_summary.py</code> (code layout: 0 unknown, 1 water, then 2 + 6 × forest state + loss index), <code>engine/decision.py</code> (<code>project_decision</code>), <code>docs/lab/decision-layer-report.md</code>. This shows one cell. A plot's answer counts many cells; any "unknown" among them stops the plot from being called a clean "no".</p>
+    <p class="foot"><b>Source:</b> <code>engine/decision_summary.py</code> (code layout: 0 unknown, 1 water, then 2 + 6 × forest state + loss index), <code>engine/decision.py</code> (<code>project_decision</code>), <code>docs/lab/decision-layer-report.md</code>. This panel shows one cell. A plot's answer counts many cells, and any "unknown" among them prevents a clean "no".</p>
   </div>
 
   <h3 class="rv">Two layers from the same codes</h3>
@@ -220,7 +220,7 @@
     </table>
   </div>
   <div class="prose rv">
-    <p>The decision layer forgets the loss year on non-forest land. The decision report calls this plantation rotation, the loss a Hansen-only check trips over (we have not established the cause in any particular cell). Either way the land was not forest in 2020, so its later loss cannot be "2020 forest lost since". The lossless store stays as the <b>audit tier</b>, and the public source releases are pinned by hash, so a rule change can re-derive the layer.</p>
+    <p>The decision layer drops the loss year on land that was not forest in 2020. A Hansen-only check still counts that loss, and its cause is not established for any particular cell. The land was not forest in 2020, so its later loss cannot be "2020 forest lost since". The lossless store remains as the <b>audit tier</b>, and the public source releases are pinned by hash, so a rule change can re-derive the layer.</p>
   </div>
 </section>
 
@@ -229,7 +229,7 @@
   <div class="prose rv">
     <div class="kick">4 · How the codes are stored</div>
     <h2>Four yes/no sheets and a short list of loss events.</h2>
-    <p>Most cells are boring: land, no loss, same as their neighbours. Writing the full code down for every cell wastes space. So the store splits the codes into <b>four yes/no sheets</b> (bit-planes: unknown, water, forest, forest-state-unknown) and keeps the rare <b>loss events</b> as a sparse list, one year symbol per event. Each piece is then compressed on its own.</p>
+    <p>Most cells are land with no loss, like their neighbours, so writing the full code for every cell wastes space. The store splits the codes into <b>four yes/no sheets</b> (bit-planes: unknown, water, forest, forest-state-unknown) and keeps the rare <b>loss events</b> as a sparse list, one year symbol per event.</p>
   </div>
 
   <div class="panel" id="sol-enc">
@@ -243,7 +243,7 @@
     <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_sections</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event") and the research pass in <code>docs/lab/decision-layer-report.md</code> (each stream tries 10 compressor settings and keeps the smallest, mostly LZMA). The grid is invented; the real region has 744,732 cells.</p>
   </div>
 
-  <details class="deeper"><summary>Go deeper: how the file is checked on the way back in <span class="lvl">technical</span></summary><div class="body">
+  <details class="deeper"><summary>Detail: integrity checks when the file is read <span class="lvl">technical</span></summary><div class="body">
     <p>The store is a single file: a short prefix, a CRC-protected header that names the grid, level, encoding and source identities, then the payload. Decoders are bounded: every declared size is checked before anything is allocated. The header, the payload hash and a digest of the decoded raster all have to agree. These checks catch accidents. A deliberate forgery that recomputes every hash is out of scope, and is caught only if the caller pins the genuine file hash. Source: <code>engine/decision_store.py</code>, <code>validation/decision/report.md</code>.</p>
   </div></details>
 </section>
@@ -252,8 +252,8 @@
 <section id="ladder">
   <div class="prose rv">
     <div class="kick">5 · How much smaller</div>
-    <h2>623,237 bytes become 6,146. Most of that is the analysis.</h2>
-    <p>Each rung of the ladder drops something and says what it dropped. The decision layer sits at the bottom. The hatched bar is the honest control: <b>a plain, standard GeoTIFF of the same decision codes</b>, with no clever encoding at all.</p>
+    <h2>623,237 bytes become 6,146, mostly through layer analysis.</h2>
+    <p>Each rung drops something and states what it dropped. The hatched bar is a control: <b>a standard GeoTIFF of the same decision codes</b>, with no custom encoding.</p>
   </div>
 
   <div class="panel" id="sol-lad">
@@ -270,12 +270,12 @@
 
   <div class="stats rv">
     <div class="big pen"><span class="num" data-count="99.0" data-dec="1" data-suffix="%"></span><span class="cap">smaller: 623,237 B → 6,146 B (101×)</span></div>
-    <div class="big proof"><span class="num" data-count="98.6" data-dec="1" data-suffix="%"></span><span class="cap">a plain GeoTIFF of the same codes already is</span></div>
-    <div class="big forest"><span class="num" data-count="28" data-suffix="%"></span><span class="cap">our encoding adds on top of that GeoTIFF (8,532 → 6,146 B)</span></div>
+    <div class="big proof"><span class="num" data-count="98.6" data-dec="1" data-suffix="%"></span><span class="cap">smaller already with a plain GeoTIFF of the same codes</span></div>
+    <div class="big forest"><span class="num" data-count="28" data-suffix="%"></span><span class="cap">smaller again with Plotline's encoding than that GeoTIFF (8,532 → 6,146 B)</span></div>
   </div>
-  <div class="note say-it rv"><b>Say it</b><span>"Most of the gain is the layer analysis, not the codec. A plain GeoTIFF of our decision codes is already 98.6% smaller. We show both."</span></div>
+  <div class="note say-it rv"><b>Summary line</b><span>Most of the saving comes from the layer analysis, not the codec. A plain GeoTIFF of the decision codes is already 98.6% smaller. Both are reported.</span></div>
   <div class="prose rv">
-    <p>Two fair comparisons so nobody can say we picked a flattering baseline. Against only the files the decision reads (lossyear + datamask + JRC, 209,095 B) the decision store is <b>97.1% smaller</b>. On the whole tile, a zstd-19 recompression of the originals is 148.9 MB, so the decision layer is 94.5% smaller than <i>that</i> as well as 98.0% smaller than the original files.</p>
+    <p>Two further baselines are less favourable to the decision layer. Against only the files the decision reads (lossyear + datamask + JRC, 209,095 B), the decision store is <b>97.1% smaller</b>. On the whole tile, a zstd-19 recompression of the originals is 148.9 MB; the decision layer is 94.5% smaller than that, and 98.0% smaller than the original files.</p>
   </div>
 </section>
 
@@ -284,41 +284,41 @@
   <div class="prose rv">
     <div class="kick">6 · The proof</div>
     <h2>If every cell matches, every possible plot matches.</h2>
-    <p>This is the argument that makes a smaller file trustworthy. A plot's answer is computed from <b>only two things</b>: the codes of the cells whose centres fall inside the boundary, and how many selected centres fall outside the stored region. Nothing else. So if the decoded store has the same code as the original layers at <b>every</b> cell, then <i>any</i> boundary anyone could draw selects the same cells with the same codes, and gets the same answer. Checking 17 plots would only show 17 cases. Checking every cell covers all of them.</p>
+    <p>A plot's answer is computed from <b>only two things</b>: the codes of the cells whose centres fall inside the boundary, and how many selected centres fall outside the stored region. If the decoded store has the same code as the original layers at <b>every</b> cell, <i>any</i> boundary selects the same cells with the same codes and gets the same answer. Checking 17 plots covers 17 cases; checking every cell covers all boundaries.</p>
   </div>
 
   <div class="panel" id="sol-proof">
     <div class="panel-in">
       <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Proof · 112 invented cells, then any boundary</span><button class="replay" type="button">↻ Replay</button></div>
       <div class="ph" style="margin-top:10px"><span class="tag" id="sol-proof-count" aria-live="polite">Cells matching the originals: 0 of 112</span></div>
-      <div class="sol-svgwrap"><svg id="sol-proof-svg" viewBox="0 0 560 320" role="img" aria-label="A grid of 112 invented map cells. They turn green one by one as each is confirmed to match the original. Afterwards you can draw a boundary and see its answer is identical on both sides."></svg></div>
+      <div class="sol-svgwrap"><svg id="sol-proof-svg" viewBox="0 0 560 320" role="img" aria-label="A grid of 112 invented map cells. They turn green one by one as each is confirmed to match the original. Afterwards a boundary can be drawn and its answer compared on both sides."></svg></div>
       <div class="sol-legend" id="sol-proof-legend"></div>
       <div class="btns" style="margin-top:12px" id="sol-proof-btns">
         <button class="btn" type="button" data-p="tri" disabled>Triangle</button>
         <button class="btn" type="button" data-p="ell" disabled>L-shape</button>
         <button class="btn" type="button" data-p="sliver" disabled>Thin sliver</button>
         <button class="btn" type="button" data-p="hole" disabled>Ring with a hole</button>
-        <button class="btn" type="button" data-p="close" disabled>Close my polygon</button>
+        <button class="btn" type="button" data-p="close" disabled>Close polygon</button>
         <button class="btn" type="button" data-p="clear" disabled>Clear</button>
       </div>
-      <p class="small muted" style="margin:8px 0 0">Or click on the grid to place your own corners (pointer only), then press "Close my polygon". Cells are in the polygon when their centre is.</p>
+      <p class="small muted" style="margin:8px 0 0">Corners can also be placed by clicking on the grid (pointer only), then "Close polygon". A cell is selected when its centre is inside the polygon.</p>
       <div class="sol-res" id="sol-proof-res" hidden></div>
       <div class="sol-verdict ok" id="sol-proof-v" hidden></div>
-      <p class="say"><small>What you are seeing</small><span id="sol-proof-say">Each cell is compared with the original layers.</span></p>
+      <p class="say"><small>Observation</small><span id="sol-proof-say">Each cell is compared with the original layers.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (the theorem and <code>exhaustive()</code>), <code>docs/lab/decision-layer-report.md</code>. Synthetic illustration: both sides here match by construction. In the real run, the matching is what was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
+    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (the theorem and <code>exhaustive()</code>), <code>docs/lab/decision-layer-report.md</code>. Synthetic illustration: both sides match by construction. In the real run the match was <i>measured</i>: 744,732 of 744,732 cells, at both levels. The 112 cells and their codes are invented.</p>
   </div>
 
   <div class="panel" id="sol-neg">
     <div class="panel-in">
-      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Negative control · does the proof catch a mistake?</span></div>
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>Negative control: does the check detect an error?</span></div>
       <div class="sol-seg" id="sol-neg-btns" style="margin-top:12px"><button type="button" data-v="none" aria-pressed="true">No change</button><button type="button" data-v="in" aria-pressed="false">Flip a cell inside the plot</button><button type="button" data-v="out" aria-pressed="false">Flip a cell outside the plot</button></div>
       <div class="sol-svgwrap"><svg id="sol-neg-svg" viewBox="0 0 520 312" role="img" aria-label="A small invented grid with one dashed L-shaped plot. One cell of the compact copy can be flipped, inside or outside the plot."></svg></div>
       <div class="sol-chk"><span>Check only this plot's answer</span><span class="st" id="sol-neg-a"></span></div>
       <div class="sol-chk"><span>Check every cell</span><span class="st" id="sol-neg-b"></span></div>
-      <p class="say"><small>What you are seeing</small><span id="sol-neg-say"></span></p>
+      <p class="say"><small>Observation</small><span id="sol-neg-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (<code>negative_controls</code>), <code>validation/decision/report.md</code> (verdict 2: "the 17-plot check misses an erased-2021-loss mutation"; the exhaustive check carries the weight). The grid is invented. The grid shows the compact copy. The flipped cell is outlined in red, a failure signal that is also stated in words.</p>
+    <p class="foot"><b>Source:</b> <code>engine/decision_proof.py</code> (<code>negative_controls</code>), <code>validation/decision/report.md</code> (verdict 2: "the 17-plot check misses an erased-2021-loss mutation"; the exhaustive check carries the weight). The grid is invented and shows the compact copy. The flipped cell is outlined in red and also stated in words.</p>
   </div>
 
   <h3 class="rv">What was run</h3>
@@ -337,10 +337,10 @@
   </div>
   <div class="prose rv">
     <p>Pixel fidelity is 100% on every attribute the decision reads. Dropped attributes are listed rather than called lossless.</p>
-    <h3>The examiner who tried to break it</h3>
-    <p>A separate validator wrote its own reader, its own exact-arithmetic point-in-polygon test and its own reducer, and never imported the main decision code. It confirmed the headline claims, and also found real hardening problems: an unprotected store header, an overflow path, level mix-ups, memory blow-ups from crafted input, and missing content binding on the table and registry. Each was fixed with a test that fails on the old code, and all 17 validator scripts now exit 0. The one accepted risk is deliberate forgery with recomputed hashes, which integrity checks cannot catch. Callers who need authenticity pin the genuine file hash.</p>
+    <h3>Independent validation</h3>
+    <p>A separate validator wrote its own reader, its own exact-arithmetic point-in-polygon test and its own reducer, and never imported the main decision code. It confirmed the headline claims and found hardening problems: an unprotected store header, an overflow path, level mix-ups, memory blow-ups from crafted input, and missing content binding on the table and registry. Each was fixed with a test that fails on the old code, and all 17 validator scripts now exit 0. The one accepted risk is deliberate forgery with recomputed hashes; callers who need authenticity pin the genuine file hash.</p>
     <h3>Receipts</h3>
-    <p>Every answer carries a receipt: the source versions, the grid, the written rule and the hashes of the inputs and the geometry, plus the supplier's exact fields. Anyone can re-check the answer from it. A receipt proves integrity against local evidence, not satellite accuracy.</p>
+    <p>Every answer carries a receipt: source versions, grid, written rule, input and geometry hashes, and the supplier's exact fields, so the answer can be re-checked. A receipt proves integrity against local evidence, not satellite accuracy.</p>
   </div>
 </section>
 
@@ -348,15 +348,15 @@
 <section id="paths">
   <div class="prose rv">
     <div class="kick">7 · Three ways to answer</div>
-    <h2>New boundary, registered plot, saved answer.</h2>
-    <p>Once the layer is small, there are three ways to answer a plot, and they are kept separate on purpose. We never quote one blended "N× faster". The how and why of the speed lives on <a href="../speed/">the speed page</a>.</p>
+    <h2>New boundary, registered plot, saved answer</h2>
+    <p>A plot can be answered in three ways, reported separately; no blended "N× faster" figure is quoted. The <a href="../speed/">Performance page</a> covers how the speed was reached.</p>
   </div>
   <div class="sol-3">
-    <div class="card rv" style="--c: var(--pen)"><div class="who">Path 1</div><h3>A new boundary</h3><p>Someone sends a polygon we have never seen. The decision layer plus exact scanline selection finds its cells and counts the codes. Hot time on the 17 plots: <b>5.2×</b> the retained v1 path. If hundreds arrive as a batch, a batch evaluator reaches about 16× on 500 synthetic polygons, but it needs the batch in hand.</p></div>
+    <div class="card rv" style="--c: var(--pen)"><div class="who">Path 1</div><h3>A new boundary</h3><p>A polygon not seen before. The decision layer and exact scanline selection find its cells and count the codes. Hot time on the 17 plots: <b>5.2×</b> the retained v1 path. A batch evaluator reaches about 16× on 500 synthetic polygons, but needs the whole batch in hand.</p></div>
     <div class="card rv" style="--c: var(--proof)"><div class="who">Path 2</div><h3>A registered plot</h3><p>EUDR plots are registered once and re-checked whenever a layer updates, so a plot's cells are found once and kept in an index. Hot time: <b>44×</b>, or 83× with a standard-library-only re-check.</p></div>
-    <div class="card rv" style="--c: var(--declared)"><div class="who">Path 3</div><h3>A saved answer</h3><p>For registered plots, the answer itself can be stored in a table keyed by plot ID, geometry hash and store hash. Change any of those and the lookup misses. Hot time about <b>410×</b>. It is a materialised view, not a trick, and it can only answer plots it already holds.</p></div>
+    <div class="card rv" style="--c: var(--declared)"><div class="who">Path 3</div><h3>A saved answer</h3><p>For registered plots, the answer itself can be stored in a table keyed by plot ID, geometry hash and store hash. A change to any key makes the lookup miss. Hot time about <b>410×</b>. It is a materialised view and answers only plots it already holds.</p></div>
   </div>
-  <div class="note warn rv"><b>Careful</b><span>These are <b>hot</b> times on the 17 plots, on one region and one laptop with a warm cache. They are not end-to-end times: from a fresh process most of the time is starting Python and importing NumPy. The new-boundary and registered figures answer different jobs. Do not average them.</span></div>
+  <div class="note warn rv"><b>Scope</b><span>These are <b>hot</b> times on the 17 plots, on one region and one laptop with a warm cache. They are not end-to-end times: from a fresh process most of the time is starting Python and importing NumPy. The new-boundary and registered-plot figures answer different jobs and are not averaged.</span></div>
   <div class="prose rv">
     <p class="small muted">Source: <code>docs/lab/decision-layer-report.md</code>, "How much faster" (Phase 4 figures). The registered-plot table is 20,650 B and its cell index 4,096 B, reported as sidecars next to the 6,146 B layer.</p>
   </div>
@@ -366,32 +366,32 @@
 <section id="app">
   <div class="prose rv">
     <div class="kick">8 · The app</div>
-    <h2>Plotline puts all of this in front of a person.</h2>
-    <p>The app is one local program (React and TypeScript on top of the Python engine). It runs offline: no cloud, no keys, no map-tile service. The map <i>is</i> the Hansen raster, recoloured in the browser, so what you see is the data we encode. There are screenshots in the repository, but we deliberately show none on this page: they draw supplier plot outlines, which are private.</p>
+    <h2>The app presents the layers, answers and receipts.</h2>
+    <p>The app is one local program (React and TypeScript on the Python engine). It runs offline: no cloud, no keys, no map-tile service. The map <i>is</i> the Hansen raster, recoloured in the browser, so the display shows the encoded data. Screenshots are not shown on this page because they draw supplier plot outlines, which are private.</p>
   </div>
   <div class="cols">
-    <div class="card rv" style="--c: var(--forest)"><div class="who">View 1</div><h4>Map</h4><p>Play the years 2001 to 2025 and watch loss burn in. Stack the JRC 2020 forest overlay. Click a plot to see its ~28 m cells with the centre rule drawn as dots. A side panel puts <b>Declared by supplier</b> next to <b>Mapped by Plotline</b> and ends with a question for a human reviewer.</p></div>
-    <div class="card rv" style="--c: var(--loss)"><div class="who">View 2</div><h4>Cohort</h4><p>All 17 plots by 25 years in a single "loss barcode", plus a declared-versus-mapped matrix. Any cell opens that plot and year. Counts can be exported as CSV.</p></div>
-    <div class="card rv" style="--c: var(--proof)"><div class="who">View 3</div><h4>Proof</h4><p>Opens with "Keep the decision, not the data": storage, identical answers, registered-plot speed, the ladder, the layer analysis and the GeoTIFF control. Below it is the lossless audit tier with 17/17 identical, 100% pixel fidelity and the losing candidates.</p></div>
-    <div class="card rv" style="--c: var(--pen)"><div class="who">View 4</div><h4>Live query</h4><p>Ask a new region, an exact plot or a rectangle, and get a fresh original-versus-compact answer with the cell evidence and a downloadable receipt. This one needs the local engine service; the other three work offline from a frozen export.</p></div>
+    <div class="card rv" style="--c: var(--forest)"><div class="who">View 1</div><h4>Map</h4><p>Plays the years 2001 to 2025 with loss accumulating, and can overlay the JRC 2020 forest. Selecting a plot shows its ~28 m cells with the centre rule drawn as dots. A side panel sets <b>Declared by supplier</b> beside <b>Mapped by Plotline</b> and ends with a question for a human reviewer.</p></div>
+    <div class="card rv" style="--c: var(--loss)"><div class="who">View 2</div><h4>Cohort</h4><p>All 17 plots by 25 years in a single "loss barcode", plus a declared-versus-mapped matrix. Any cell opens that plot and year, and counts can be exported as CSV.</p></div>
+    <div class="card rv" style="--c: var(--proof)"><div class="who">View 3</div><h4>Proof</h4><p>Opens with the framing "Keep the decision, not the data": storage, identical answers, registered-plot speed, the ladder, the layer analysis and the GeoTIFF control. Below it is the lossless audit tier with 17/17 identical, 100% pixel fidelity and the losing candidates.</p></div>
+    <div class="card rv" style="--c: var(--pen)"><div class="who">View 4</div><h4>Live query</h4><p>Takes a new region, an exact plot or a rectangle and returns a fresh original-versus-compact answer with cell evidence and a downloadable receipt. It needs the local engine service; the other three views work offline from a frozen export.</p></div>
     <div class="card rv" style="--c: var(--declared)"><div class="who">Everywhere</div><h4>Receipts</h4><p>From any plot, a receipt shows readable fields (versions, grid, rule, hashes) plus the raw JSON, and can be downloaded.</p></div>
-    <div class="card rv" style="--c: var(--review)"><div class="who">Everywhere</div><h4>Notes</h4><p>A local analyst note per plot, kept in the browser only. Unknown is shown hatched and never as zero; no screen ever shows a compliance badge.</p></div>
+    <div class="card rv" style="--c: var(--review)"><div class="who">Everywhere</div><h4>Notes</h4><p>A local analyst note per plot, kept in the browser only. Unknown is shown hatched and never as zero; no screen shows a compliance badge.</p></div>
   </div>
-  <div class="prose rv"><p class="small muted">Sources: <code>docs/writeups/03-what-we-ship.md</code>, <code>app/README.md</code>, <code>design/DESIGN.md</code>, <code>docs/writeups/05-redesign-decisions.md</code>. The decision-layer block in the plot inspector only appears when the decision summary is present.</p></div>
+  <div class="prose rv"><p class="small muted">Sources: <code>docs/writeups/03-what-we-ship.md</code>, <code>app/README.md</code>, <code>design/DESIGN.md</code>, <code>docs/writeups/05-redesign-decisions.md</code>.</p></div>
 </section>
 
 <!-- ============ 9 · lost / limits ============ -->
 <section id="lost">
   <div class="prose rv">
-    <div class="kick">9 · What lost, and what this covers</div>
-    <h2>The machine-learned codec lost. We kept the evidence.</h2>
-    <p>Before the decision layers, the lab tried to be clever about compression. A small learned selector picked a codec per map patch. On a sealed held-out region it saved 10,417 B (1.17%) inside the candidates it was allowed to choose from, but <b>a fixed, tuned GeoTIFF at the same level was 10,217 B smaller than the selector</b>, and when it could pick between levels 3, 9 and 19 it lost 400 B to a fixed level 19. It was not integrated. The intelligence here is the layer analysis, not a model.</p>
-    <p>Two other honest results: a tuned standard GeoTIFF beat our lossless v1 store by 0.48%, and the early bit-packing candidates were sometimes bigger than the compressed originals. Both are shown in the app.</p>
-    <h3>The region, and the edges of the claim</h3>
+    <div class="kick">9 · Negative results and scope</div>
+    <h2>A learned codec selector did not beat a fixed codec.</h2>
+    <p>Before the decision layers, a small learned selector picked a codec per map patch. On a sealed held-out region it saved 10,417 B (1.17%) among the candidates it could choose from, but <b>a fixed, tuned GeoTIFF at the same level was 10,217 B smaller than the selector</b>, and when it could pick between levels 3, 9 and 19 it lost 400 B to a fixed level 19. It was not integrated. The saving comes from the layer analysis, not from a model.</p>
+    <p>Two other results: a tuned standard GeoTIFF beat the lossless v1 store by 0.48%, and the early bit-packing candidates were sometimes bigger than the compressed originals.</p>
+    <h3>Region and scope</h3>
     <ul>
       <li><b>One region, 34 × 17 km.</b> It is 1,233 × 604 = 744,732 Hansen cells in Thailand's rubber and oil-palm country. The speed numbers come from one laptop with a warm file cache.</li>
       <li><b>Cells, not hectares.</b> EUDR's 0.5 ha minimum area and the "able to reach 5 m in situ" test are not applied anywhere. "Deforestation" means mapped loss on mapped 2020 forest.</li>
-      <li><b>JRC is read at the Hansen cell centre.</b> Swapping that for a 3×3 majority or "any forest in the block" changes no plot decision, but only P-0001 has any forest, so that is a weak test and we say so.</li>
+      <li><b>JRC is read at the Hansen cell centre.</b> Swapping that for a 3×3 majority or "any forest in the block" changes no plot decision, but only P-0001 has any forest, so this is a weak test.</li>
       <li><b>Protected areas</b> are not included because their licence is unclear.</li>
       <li><b>Registered-plot paths answer only registered plots.</b> New boundaries go through the decision layer.</li>
     </ul>
@@ -477,12 +477,12 @@
       box.append(d); R[r.id] = { d, bar: $('i', d), val: $('.val', d), nm: $('.nm', d) };
     });
     const says = [
-      'The original layers store five kinds of information for every map cell. Every bar uses the same yardstick (zstd level 19), so the parts can be compared fairly.',
-      'Now ask what each question reads. The canopy percentages and the 2001–2020 loss years are read by none of them. They are most of the bytes.',
-      'Drop what nothing reads. Canopy percentages alone are 72% of the original Hansen bytes.',
-      'JRC maps forest at about 9 m, but a Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The rule reads one of the nine, so we keep only those.',
-      'Glue what is left into one small code per cell: unknown, water, or land × forest state × loss year. This is the screening layer. It still answers all three questions.',
-      'Forget the loss year on land that was not forest in 2020. This is the decision layer, and it answers Q1 and Q2.',
+      'The original layers store five kinds of information for every map cell. Every bar uses the same yardstick (zstd level 19).',
+      'Each question reads only some of these. No question reads the canopy percentages or the 2001–2020 loss years, which are most of the bytes.',
+      'Attributes that no question reads are dropped. Canopy percentages alone are 72% of the original Hansen bytes.',
+      'JRC maps forest at about 9 m, but a Hansen cell is about 28 m and nests exactly 3 × 3 JRC cells. The rule reads one of the nine, so only those values are kept.',
+      'The remaining facts combine into one small code per cell: unknown, water, or land × forest state × loss year. This is the screening layer, which answers all three questions.',
+      'The loss year on land that was not forest in 2020 is dropped. This is the decision layer, which answers Q1 and Q2.',
     ];
     const names = { jr3: 'JRC 2020 forest at the Hansen centres' };
     const st = stepper(root, 6, k => {
@@ -516,11 +516,11 @@
     function setCode(k) { if (k === 0) S.t = 'none'; else if (k === 1) S.t = 'water'; else { const { s, y } = split(k); S.t = 'land'; S.f = s; S.y = y; } render(); }
     const yes = (txt) => ['yes', txt];
     function answers() {
-      if (S.t === 'none') return [['Q1', 'unk', 'Unknown', 'No data for this cell. Unknown never turns into "no".'], ['Q2', 'unk', 'Unknown', 'Same: nothing is known here.'], ['Q3', 'unk', 'Unknown', 'Same.']];
+      if (S.t === 'none') return [['Q1', 'unk', 'Unknown', 'No data for this cell. Unknown never turns into "no".'], ['Q2', 'unk', 'Unknown', 'Nothing is known here either.'], ['Q3', 'unk', 'Unknown', 'Same.']];
       if (S.t === 'water') return ['Q1', 'Q2', 'Q3'].map(q => [q, 'na', 'Not land', 'Water cells are counted, but water is never forest loss on land.']);
       const { f, y } = S, yr = 2020 + y;
       const q1 = f === 0 ? ['Q1', 'no', 'No', 'Mapped as not forest in 2020.'] : f === 1 ? ['Q1', 'yes-f', 'Yes', 'Mapped as forest in 2020.'] : ['Q1', 'unk', 'Unknown', 'JRC has no 2020 class for this cell.'];
-      const q2 = y === 0 ? ['Q2', 'no', 'No', 'Nothing lost since 2020.'] : f === 0 ? ['Q2', 'no', 'No', `Loss in ${yr}, but the land was not forest in 2020.`] : f === 1 ? ['Q2', 'yes-l', 'Yes · ' + yr, 'Mapped loss on mapped 2020 forest.'] : ['Q2', 'unk', 'Unknown', `Loss in ${yr}, but its 2020 forest state is unknown, so we cannot say.`];
+      const q2 = y === 0 ? ['Q2', 'no', 'No', 'Nothing lost since 2020.'] : f === 0 ? ['Q2', 'no', 'No', `Loss in ${yr}, but the land was not forest in 2020.`] : f === 1 ? ['Q2', 'yes-l', 'Yes · ' + yr, 'Mapped loss on mapped 2020 forest.'] : ['Q2', 'unk', 'Unknown', `Loss in ${yr}, but its 2020 forest state is unknown, so the answer is unknown.`];
       const q3 = (y >= 1 && y <= 3) ? ['Q3', 'yes-l', 'Yes · ' + yr, 'Hansen shows loss in the 2021–23 window.'] : y === 0 ? ['Q3', 'no', 'No', 'No Hansen loss after 2020.'] : ['Q3', 'no', 'No', `Loss is in ${yr}, after the 2021–23 window this question asks about.`];
       return [q1, q2, q3];
     }
@@ -533,7 +533,7 @@
       $$('[data-g="y"] button', root).forEach(b => { b.setAttribute('aria-pressed', S.t === 'land' && +b.dataset.v === S.y); b.disabled = S.t !== 'land'; });
       tiles.forEach((b, i) => b.setAttribute('aria-pressed', i === k));
       const dk = (k > 1 && s === 0 && y > 0) ? 2 : k;
-      layEl.innerHTML = `<span class="q">Screening layer</span><span class="sol-pill">code ${k}</span><span class="why">Holds all three questions.</span><span class="q">Decision layer</span><span class="sol-pill ${dk !== k ? 'yes-l' : ''}">code ${dk}</span><span class="why">${dk !== k ? `This cell was <b>not forest in 2020</b>, so the decision layer forgets its loss year and stores plain non-forest land (code 2).` : 'Same code: nothing here is forgotten.'}</span>`;
+      layEl.innerHTML = `<span class="q">Screening layer</span><span class="sol-pill">code ${k}</span><span class="why">Answers all three questions.</span><span class="q">Decision layer</span><span class="sol-pill ${dk !== k ? 'yes-l' : ''}">code ${dk}</span><span class="why">${dk !== k ? `This cell was <b>not forest in 2020</b>, so the decision layer forgets its loss year and stores plain non-forest land (code 2).` : 'Same code: nothing here is forgotten.'}</span>`;
       ansEl.innerHTML = answers().map(([q, cls, txt, why]) => `<div class="sol-ans"><span class="q">${q} ${q === 'Q1' ? 'Forest on 31 Dec 2020?' : q === 'Q2' ? '2020 forest lost since?' : 'Any Hansen loss in 2021–23?'}</span><span class="sol-pill ${cls}">${txt}</span><span class="why">${why}</span><span class="lay">Screening ✓ · Decision ${q === 'Q3' ? '— (not in the decision contract)' : '✓'}</span></div>`).join('');
     }
     $$('.sol-seg button', root).forEach(b => b.addEventListener('click', () => { const g = b.parentElement.dataset.g; if (g === 't') S.t = b.dataset.v; else S[g] = +b.dataset.v; render(); }));
@@ -554,8 +554,8 @@
     const W = 8, H = 6;
     const says = [
       'An invented 8 × 6 grid, one code per cell. Most cells repeat their neighbours; a few carry a loss year.',
-      'Split the codes into four yes/no sheets: unknown, water, forest, forest-state-unknown. A sheet of mostly the same answer compresses to almost nothing.',
-      'Loss is rare, so it is kept as a short list of events: where the next one is (a gap), and which year. Years only appear where there is loss.',
+      'The codes split into four yes/no sheets: unknown, water, forest, forest-state-unknown. A sheet of mostly the same answer compresses very well.',
+      'Loss is rare, so it is stored as a short list of events, each with the gap since the previous event and a year. Years appear only where there is loss.',
       'Each sheet and the event list is compressed separately. The encoder tries about 10 compressor settings per stream and keeps the smallest (usually LZMA). The result is one small file.',
     ];
     function cellsAt(x0, y0, S, f, label) {
@@ -610,14 +610,14 @@
   (() => {
     const root = $('#sol-lad'), box = $('#sol-lad-bars', root), say = $('#sol-lad-say'), small = $('#sol-lad-small');
     const data = {
-      region: { max: 623237, unit: 'B', fmt: v => px(v) + ' B', say: 'Dropping what nothing reads gets to 6,146 B. A plain GeoTIFF of the same codes would be 8,532 B: already 98.6% smaller, so the layer analysis does most of the work.', rows: [
+      region: { max: 623237, unit: 'B', fmt: v => px(v) + ' B', say: 'Dropping what no question reads gives 6,146 B. A plain GeoTIFF of the same codes would be 8,532 B: already 98.6% smaller, so the layer analysis does most of the work.', rows: [
         ['Original layers: Hansen 3 bands + JRC chip', 623237, 'baseline', 'var(--loss-past)'],
         ['L0 lossless store (retained v1, Hansen only)', 535012, '14% smaller', 'var(--faint)'],
         ['L1 screening layer', 38513, '93.8% smaller · 16×', 'var(--pen)'],
         ['L2 decision layer', 6146, '99.0% smaller · 101×', 'var(--proof)'],
         ['Control: best standard GeoTIFF of the decision codes', 8532, '98.6% smaller', 'hatch'],
       ] },
-      tile: { max: 421910035, unit: 'MB', fmt: v => (v / 1e6).toLocaleString('en-GB', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' MB', say: 'On a whole real 10° tile (1.6 billion cells), 421.9 MB of original files become 8.2 MB. Against a fair yardstick, a zstd-19 recompression of the originals, the decision layer is 94.5% smaller.', rows: [
+      tile: { max: 421910035, unit: 'MB', fmt: v => (v / 1e6).toLocaleString('en-GB', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' MB', say: 'On a whole real 10° tile (1.6 billion cells), 421.9 MB of original files become 8.2 MB. Against a zstd-19 recompression of the originals as yardstick, the decision layer is 94.5% smaller.', rows: [
         ['Original files: Hansen 3 bands + JRC', 421910035, 'baseline', 'var(--loss-past)'],
         ['Lossless zstd-19 yardstick', 148892092, '64.7% smaller', 'var(--faint)'],
         ['L1 screening layer', 13647704, '96.8% smaller · 90.8% vs yardstick', 'var(--pen)'],
@@ -691,8 +691,8 @@
       res.hidden = false; res.innerHTML = box('Original layers say', a) + box('Decision store says', b);
       const same = JSON.stringify(a) === JSON.stringify(b);
       verdict.hidden = false; verdict.className = 'sol-verdict ' + (same && a.sel ? 'ok' : 'bad');
-      verdict.textContent = !a.sel ? 'No cell centre is inside this shape, so there is nothing to compare. Try a bigger one.' : `Same answer, because all ${a.sel} cells it touches matched.`;
-      say.textContent = 'Any shape you draw selects some of the 112 cells. Every one of them already matched, so the answer cannot differ.';
+      verdict.textContent = !a.sel ? 'No cell centre is inside this shape, so there is nothing to compare.' : `Same answer: all ${a.sel} selected cells matched.`;
+      say.textContent = 'Any shape selects some of the 112 cells. Every one already matched, so the answers cannot differ.';
     }
     btns.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b || !enabled) return; const p = b.dataset.p;
@@ -707,13 +707,13 @@
       ring.push([Math.round(x), Math.round(y)]);
       pathEl.setAttribute('d', 'M' + ring.map(p => p.join(',')).join('L')); pathEl.setAttribute('fill', 'none');
       dots.innerHTML = ''; ring.forEach(p => el('circle', { cx: p[0], cy: p[1], r: 4, fill: 'var(--pen)' }, dots));
-      say.textContent = ring.length < 3 ? 'Keep clicking to add corners.' : 'Press "Close my polygon" when you are done.';
+      say.textContent = ring.length < 3 ? 'Click to add more corners.' : 'Press "Close polygon" to finish.';
     });
     instrument(root, { ms: 4200, render(t) {
       const n = Math.floor(Pack.ease(t) * TOT + (t >= 1 ? 1e-9 : 0)); mark(Math.min(TOT, t >= 1 ? TOT : n));
       cnt.textContent = `Cells matching the originals: ${shown} of ${TOT}` + (shown === TOT ? '   (real run: 744,732 of 744,732)' : '');
       if (t < 1) { if (enabled) setEnabled(false); if (!res.hidden || ring.length || rings) { clearSel(); pathEl.setAttribute('fill', 'rgba(47,69,255,.12)'); } say.textContent = 'Each cell is compared with the original layers and turns green when its code is identical.'; }
-      else if (!enabled) { setEnabled(true); pathEl.setAttribute('fill', 'rgba(47,69,255,.12)'); say.textContent = 'All 112 cells match. Now pick a shape, or click to draw your own, and see what it inherits.'; }
+      else if (!enabled) { setEnabled(true); pathEl.setAttribute('fill', 'rgba(47,69,255,.12)'); say.textContent = 'All 112 cells match. A preset shape or a drawn polygon now selects only cells that already match.'; }
     } });
   })();
 
@@ -739,7 +739,7 @@
       const A = answer(codes, sel), B = answer(decoded, sel), same = JSON.stringify(A) === JSON.stringify(B);
       a.className = 'st ' + (same ? 'ok' : 'bad'); a.textContent = same ? 'Same answer: pass' : `Different: forest cells ${A.forest} → ${B.forest}`;
       b.className = 'st ' + (cell ? 'bad' : 'ok'); b.textContent = cell ? `1 cell differs (row ${cell[0] + 1}, col ${cell[1] + 1}): caught` : `All ${W * H} cells match: pass`;
-      say.textContent = v === 'none' ? 'Nothing is wrong, so both checks pass.' : v === 'in' ? 'A cell inside the plot is wrong, so the plot answer changes and both checks catch it.' : 'The wrong cell is outside this plot, so a plot-only check passes. A different boundary that includes that cell would get a wrong answer. Only the every-cell check sees it.';
+      say.textContent = v === 'none' ? 'No cell is changed, so both checks pass.' : v === 'in' ? 'A cell inside the plot is wrong, so the plot answer changes and both checks catch it.' : 'The wrong cell is outside this plot, so a plot-only check passes. A different boundary that includes that cell would return a wrong answer. Only the every-cell check detects it.';
     }
     $$('button', $('#sol-neg-btns', root)).forEach(x => x.addEventListener('click', () => { $$('#sol-neg-btns button').forEach(y => y.setAttribute('aria-pressed', y === x)); run(x.dataset.v); }));
     run('none');
