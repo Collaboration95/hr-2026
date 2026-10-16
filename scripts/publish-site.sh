@@ -21,7 +21,8 @@ else
   git worktree add --quiet --detach "$TMP"
   git -C "$TMP" checkout --quiet --orphan gh-pages
 fi
-git -C "$TMP" rm -rq --ignore-unmatch . >/dev/null
+git -C "$TMP" read-tree --empty
+find "$TMP" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 rsync -a --exclude '_template' site/ "$TMP"/
 git -C "$TMP" add -A
 if git -C "$TMP" diff --cached --quiet; then
