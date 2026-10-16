@@ -190,3 +190,9 @@ kbd { font: 600 11px var(--f-mono); border: 1px solid var(--rule-2); border-bott
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
 @media print { .mast, .toc, .pager, .replay { display: none; } .rv { opacity: 1; transform: none; } }
+
+/* persistent QR code (every page); shown only where the margin has room */
+.qr-fixed { position: fixed; z-index: 40; right: 18px; bottom: 112px; display: none; width: 136px; padding: 8px; background: #fff; border: 1px solid var(--rule-2); border-radius: 14px; box-shadow: 0 10px 30px -18px rgba(15, 18, 34, .35); }
+.qr-fixed img { display: block; width: 100%; height: auto; }
+@media (min-width: 1380px) { .qr-fixed { display: block; } }
+@media print { .qr-fixed { display: block; } }

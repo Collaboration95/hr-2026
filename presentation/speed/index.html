@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles. Every class is prefixed sp- (speed). */
 .sp-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; margin-top: 16px; }
@@ -141,10 +141,9 @@
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="zippy" data-size="96" data-pose="sprint" data-click="happy" data-idle-fidget></span>
-  <div class="kick">Deep dive · 20 min</div>
+  <div class="kick">Deep dive</div>
   <h1>Five changes account for <span class="hl">most of the speed-up.</span></h1>
   <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a new boundary <strong>5.2× faster</strong>. A few changes produced those numbers; they are described here in the order they were made.</p>
-  <div class="meta"><span>20 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4 figures), docs/lab/decision-benchmark-notes.md, docs/lab/decision-scale-notes.md, engine/decision_*.py</span></div>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li><b>Five changes:</b> keep only what the decision reads; find a registered plot's cells once; decode on the packed bit-planes; scan small polygons in plain Python; drop NumPy for re-checks. A leaner shared reducer helped all of them.</li>
     <li><b>Two separate scoreboards.</b> Registered plots: 24× at the start, <b>44×</b> now (83× without NumPy). New boundaries: 2.2× at the start, <b>5.2×</b> now. All measured hot, against the retained original path (P0). The two are never combined into one multiple.</li>
@@ -585,7 +584,7 @@
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, ease, seg, fmt, REDUCE } = Pack;
@@ -920,7 +919,7 @@
   })();
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 <script>(function(){
   var e=document.getElementById('b1'); if(e) e.dataset.spriteSay='Do less. Faster.';
   var e=document.getElementById('b2'); if(e) e.dataset.spriteSay='Look up, do not search.';

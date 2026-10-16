@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles. Every class starts with sol- */
 .sol-seg { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -105,10 +105,9 @@
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="squish" data-size="96" data-pose="squish" data-click="happy" data-idle-fidget></span>
-  <div class="kick">Deep dive · 25 min</div>
+  <div class="kick">Deep dive</div>
   <h1>How Plotline works: <span class="hl">a 20-value decision code per map cell</span></h1>
   <p class="lede">The EU deforestation screen asks three questions of each map cell. Plotline identifies the facts those questions read, keeps them as a <strong>20-value code</strong> per cell, discards the rest, and <strong>verifies</strong> that every cell, and so every possible plot boundary, gives the same answer.</p>
-  <div class="meta"><span>25 min read</span><span>Level: deep dive</span><span>Sources: docs/lab/decision-layer-report.md (Phase 4, latest), decision-scale-notes.md, validation/decision/report.md</span></div>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li>The screen reads land or water, JRC's 2020 forest class and the Hansen loss year from 2021. <b>No question reads the canopy percentages, which are 72% of Hansen's original bytes.</b></li>
     <li>The decision layer is <b>6,146 B instead of 623,237 B (99.0% smaller)</b>. A plain GeoTIFF of the same codes is already 98.6% smaller, so most of the saving comes from the choice of what to keep. Plotline's encoding makes the layer a further 28% smaller than that GeoTIFF.</li>
@@ -405,7 +404,7 @@
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 (() => {
   const { $, $$, instrument, stepper, seg, fmt } = Pack;
@@ -751,7 +750,7 @@
   })();
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 <script>(function(){
   var e=document.getElementById('analysis'); if(e) e.dataset.spriteSay='Which facts get read?';
   var e=document.getElementById('codes'); if(e) e.dataset.spriteSay='Twenty codes. That is all.';
