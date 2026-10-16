@@ -42,7 +42,7 @@
   /* persistent QR code on every page: it points at the presentation hub */
   const qr = document.createElement('a');
   qr.className = 'qr-fixed'; qr.href = SITE + 'presentation/'; qr.setAttribute('aria-label', 'Plotline presentation pages');
-  qr.innerHTML = `<img src="${SITE}assets/qr.svg" alt="QR code for the Plotline presentation pages" width="120" height="120">`;
+  qr.innerHTML = `<img src="${SITE}assets/qr.svg" alt="QR code for the Plotline presentation pages" width="180" height="180">`;
   document.body.append(qr);
 
   /* table of contents */
