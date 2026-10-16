@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Submission readiness · Plotline explainers</title>
+<meta name="description" content="SystemEarth requirements mapped to evidence, the checks run on 16 October, how to run Plotline, known gaps, open questions for the organisers, and a printable readiness checklist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Prefix: sb- */
+.sb-chip { display: inline-flex; align-items: center; gap: 6px; font: 700 11.5px/1 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; white-space: nowrap; background: var(--mist); color: var(--muted); transition: background .35s, color .35s; }
+.sb-chip.done { background: var(--ok-wash); color: var(--ok); }
+.sb-chip.partial { background: var(--review-wash); color: var(--review); }
+.sb-chip.missing { background: var(--bad-wash); color: var(--bad); }
+.sb-chip.unknown { background: var(--unknown-wash); color: var(--muted); border: 1px dashed var(--rule-2); }
+.sb-chip.wait { background: var(--mist); color: var(--faint); }
+.sb-chip.sev-hi { background: var(--bad-wash); color: var(--bad); }
+.sb-chip.sev-md { background: var(--review-wash); color: var(--review); }
+.sb-chip.sev-lo { background: var(--mist); color: var(--muted); }
+
+/* matrix */
+.sb-sum { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; align-items: center; }
+.sb-sum button { all: unset; cursor: pointer; }
+.sb-sum button:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; border-radius: 999px; }
+.sb-sum button[aria-pressed="true"] .sb-chip { box-shadow: 0 0 0 2px var(--ink); }
+.sb-sum b { font-size: 15px; margin-left: 2px; }
+.sb-mx { margin-top: 12px; width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.4; }
+.sb-mxw { overflow-x: auto; }
+.sb-mx { min-width: 720px; }
+.sb-mx th { text-align: left; font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 10px 10px; border-bottom: 1px solid var(--rule-2); white-space: nowrap; }
+.sb-mx td { padding: 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.sb-mx tr { transition: opacity .4s; }
+.sb-mx tr.hid { display: none; }
+.sb-mx tr.pend td:not(:first-child) { opacity: .25; }
+.sb-mx td.rq { font-weight: 600; width: 26%; }
+.sb-mx td.rq small { display: block; font: 500 11px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; font-weight: 500; }
+.sb-mx td.ev code { display: inline-block; margin: 2px 2px 2px 0; font-size: 12px; }
+.sb-mx td.ev .why { display: block; color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+.sb-mx td.st { width: 110px; }
+
+/* checks table */
+.sb-checks td .out { font: 500 12.5px/1.45 var(--f-mono); color: var(--ink-2); display: block; margin-top: 3px; }
+
+/* repo tour */
+.sb-tour { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 20px; }
+.sb-dir { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 14px 16px; }
+.sb-dir .p { font: 700 16px var(--f-mono); color: var(--pen-deep); display: flex; justify-content: space-between; gap: 8px; }
+.sb-dir .p span { font: 500 11.5px var(--f-mono); color: var(--muted); align-self: center; }
+.sb-dir p { font-size: 15px; margin-top: 8px; color: var(--ink-2); }
+.sb-dir code { font-size: 12px; }
+
+/* terminal */
+.sb-term { margin: 14px 0 0; padding: 16px 18px; background: var(--paper); border: 1px solid var(--rule-2); border-radius: 10px; font: 500 13px/1.65 var(--f-mono); color: var(--ink-2); min-height: 420px; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+.sb-term .pr { color: var(--pen); font-weight: 700; }
+.sb-term .cm { color: var(--faint); }
+.sb-term .ok { color: var(--ok); font-weight: 600; }
+.sb-term .cur { display: inline-block; width: .55em; height: 1.05em; background: var(--ink); vertical-align: -2px; animation: sbblink 1s steps(2) infinite; }
+@keyframes sbblink { 50% { opacity: 0; } }
+
+/* drift */
+.sb-drift text { font: 500 11px var(--f-mono); fill: var(--muted); }
+.sb-drift .big { font: 700 13px var(--f-mono); fill: var(--ink); }
+
+/* gaps */
+.sb-gaps { display: grid; gap: 12px; margin-top: 20px; }
+.sb-gap { display: grid; grid-template-columns: auto 1fr; gap: 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+.sb-gap > .sb-chip { align-self: start; }
+.sb-gap h4 { margin: 0; font-size: 17px; }
+.sb-gap p { margin-top: 6px; font-size: 15.5px; color: var(--ink-2); }
+.sb-gap .fix { font: 500 13px/1.5 var(--f-mono); color: var(--muted); margin-top: 8px; }
+
+/* questions */
+.sb-q { list-style: none; padding: 0; margin: 18px 0 0; counter-reset: q; display: grid; gap: 10px; }
+.sb-q li { counter-increment: q; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px 12px 52px; position: relative; margin: 0; font-size: 16.5px; }
+.sb-q li::before { content: counter(q); position: absolute; left: 14px; top: 12px; width: 26px; height: 26px; border-radius: 50%; background: var(--pen-wash); color: var(--pen-deep); font: 700 13px/26px var(--f-mono); text-align: center; }
+.sb-q li small { display: block; color: var(--muted); font-size: 14px; margin-top: 3px; }
+.sb-q .who { font: 600 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--review); }
+
+/* checklist */
+.sb-cl { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; margin-top: 18px; align-items: start; }
+.sb-ring { position: sticky; top: 76px; text-align: center; }
+.sb-ring svg { width: 170px; height: 170px; margin: 0 auto; }
+.sb-ring .bg { stroke: var(--mist); } .sb-ring .fg { stroke: var(--proof); transition: stroke-dashoffset .6s var(--ease); }
+.sb-ring .pc { font: 800 34px var(--f-display); fill: var(--ink); letter-spacing: -.02em; }
+.sb-ring .ct { font: 500 12px var(--f-mono); fill: var(--muted); }
+.sb-ring .btns { justify-content: center; margin-top: 10px; }
+.sb-grp h3 { margin-top: 0; font-size: 21px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.sb-grp h3 span { font: 600 12px var(--f-mono); color: var(--muted); }
+.sb-grp + .sb-grp { margin-top: 26px; }
+.sb-items { list-style: none; padding: 0; margin: 10px 0 0; }
+.sb-items li { margin: 0; border-bottom: 1px solid var(--rule); }
+.sb-items label { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 4px; cursor: pointer; align-items: start; font-size: 16.5px; line-height: 1.45; }
+.sb-items input { appearance: none; width: 24px; height: 24px; border: 2px solid var(--rule-2); border-radius: 7px; margin: 1px 0 0; cursor: pointer; display: grid; place-content: center; background: var(--sheet); transition: background .2s, border-color .2s; }
+.sb-items input:checked { background: var(--proof); border-color: var(--proof); }
+.sb-items input:checked::after { content: "✓"; color: #fff; font: 700 15px/1 var(--f-ui); }
+.sb-items input:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; }
+.sb-items input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rule-2); }
+.sb-items small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+.sb-items code { font-size: 12.5px; }
+
+@media (max-width: 860px) { .sb-cl { grid-template-columns: 1fr; } .sb-ring { position: static; } .sb-gap { grid-template-columns: 1fr; } }
+
+/* print only the checklist when the button asks for it */
+@media print {
+  body.sb-printing header.hero, body.sb-printing section:not(#final), body.sb-printing .endnote { display: none !important; }
+  body.sb-printing section#final { padding-top: 0; }
+  body.sb-printing .sb-ring { position: static; }
+  body.sb-printing .sb-ring .btns { display: none; }
+  .sb-cl { grid-template-columns: 150px 1fr; }
+  .sb-items li { break-inside: avoid; }
+}
+</style>
+</head>
+<body data-page="submit">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Presentation · 10 min</div>
+  <h1>Submission <span class="hl">readiness</span></h1>
+  <p class="lede">SystemEarth's requirements are mapped to evidence in the repository, alongside the checks run on 16 October, run instructions, known gaps, open questions and a readiness checklist.</p>
+  <div class="meta"><span>10 min read</span><span>Level: presentation</span><span>Checks run 16 Oct 2026, 12:23 to 12:24 SGT</span><span>Sources: README.md, SystemEarth-track.md, scripts/, docs/lab/decision-layer-report.md, git history</span></div>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li><strong>All four checks passed</strong> on 16 October: 361 Python tests, 311 app tests, the app build, and <code>scripts/verify-local.sh</code>.</li>
+    <li><strong>The default branch <code>Main</code> is 31 commits behind</strong> the latest work (<code>guru/perf-squeeze</code>). A pull request into <code>Main</code>, or naming the branch to read, is outstanding.</li>
+    <li>Submission format, place, deadline and pitch length are <strong>unknown</strong>. <code>app/dist</code> contains the supplier plot outlines and is never hosted.</li>
+  </ul></div>
+</header>
+
+<!-- 1 -->
+<section id="matrix">
+  <div class="prose">
+    <div class="kick">1 · Requirement to evidence</div>
+    <h2>Requirements mapped to evidence</h2>
+    <p>Each row is a requirement from SystemEarth's brief (or a precondition for submitting), the file or number that answers it, and a status. <strong>Done</strong>: the evidence exists and was checked. <strong>Partial</strong>: it exists with a caveat. <strong>Missing</strong>: it can be fixed. <strong>Unknown</strong>: no source gives an answer.</p>
+  </div>
+
+  <div class="panel" id="sb-mx">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Matrix · requirement → evidence → status</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="sb-sum" id="sb-sum" role="group" aria-label="Filter rows by status">
+        <button type="button" data-f="all" aria-pressed="true"><span class="sb-chip">All <b id="sb-n-all">0</b></span></button>
+        <button type="button" data-f="done" aria-pressed="false"><span class="sb-chip done">✓ Done <b id="sb-n-done">0</b></span></button>
+        <button type="button" data-f="partial" aria-pressed="false"><span class="sb-chip partial">◐ Partial <b id="sb-n-partial">0</b></span></button>
+        <button type="button" data-f="missing" aria-pressed="false"><span class="sb-chip missing">✗ Missing <b id="sb-n-missing">0</b></span></button>
+        <button type="button" data-f="unknown" aria-pressed="false"><span class="sb-chip unknown">? Unknown <b id="sb-n-unknown">0</b></span></button>
+      </div>
+      <div class="sb-mxw"><table class="sb-mx" id="sb-mt"><thead><tr><th>Requirement</th><th>Evidence in the repository</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+      <p class="say" aria-live="polite"><small>Summary</small><span id="sb-mx-say">Checking each requirement against the repository…</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> requirements from docs/sustainability_kickoff_reference.txt, docs/transcript_rules_and_constraints.txt and SystemEarth-track.md; evidence from the files named in each row. Numbers are the Phase 4 figures in docs/lab/decision-layer-report.md. Statuses are the project's own reading on 16 October 2026.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="checks">
+  <div class="prose">
+    <div class="kick">2 · Checks run on 16 October</div>
+    <h2>Four checks, four passes</h2>
+    <p>The documented README checks ran on 16 October 2026 between 12:23 and 12:24 SGT on one machine (macOS, Python 3.14.7, Node v26.3.1, npm 11.16.0). Nothing that downloads data, rewrites the evidence files or re-benchmarks was run. The repository's tracked files did not change.</p>
+  </div>
+  <div class="tbl"><table class="dt sb-checks">
+    <thead><tr><th>Check</th><th>Result</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td><code>.venv-data/bin/python -B -m unittest discover -s engine/tests</code></td><td><span class="sb-chip done">✓ Passed</span><span class="out">Ran 361 tests in 43.408s · OK</span></td><td>12:23, took 44 s</td></tr>
+      <tr><td><code>npm test --prefix app</code></td><td><span class="sb-chip done">✓ Passed</span><span class="out">tests 311 · pass 311 · fail 0 · skipped 0</span></td><td>12:23, under 1 s</td></tr>
+      <tr><td><code>npm run build --prefix app</code></td><td><span class="sb-chip done">✓ Passed</span><span class="out">sync-data copied 4 files, 91 modules transformed, built in 476 ms, exit 0</span></td><td>12:23</td></tr>
+      <tr><td><code>scripts/verify-local.sh</code></td><td><span class="sb-chip done">✓ Passed</span><span class="out">private data present · engine.verify valid (17 plots) · JRC verify valid · P-0003 full and indexed queries match · decision proof all pass · app build ok · exit 0</span></td><td>12:24, took 12 s</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>Note</b><span>These checks need the private sample bundle and Python 3.14. They show that the code and the retained evidence agree on this laptop. They are not an independent legal or accuracy check.</span></div>
+  <div class="note unknown"><b>Unknown</b><span>A fresh clone was <strong>not</strong> tested end to end (clone, unpack the bundle, set up, verify). The README says a clean-export audit did this on 13–14 October; it has not been re-run since the decision-layer and speed work.</span></div>
+</section>
+
+<!-- 3 -->
+<section id="run">
+  <div class="prose">
+    <div class="kick">3 · Run instructions</div>
+    <h2>Eight folders, five commands</h2>
+    <p>Counts are tracked files at the current commit.</p>
+  </div>
+  <div class="sb-tour">
+    <div class="sb-dir"><div class="p">engine/ <span>68 files</span></div><p>The Python 3.14 engine: the written query rule, the original and compact paths, the decision layers, the proofs and the live API. <code>decision.py</code>, <code>decision_store.py</code>, <code>decision_index.py</code>, <code>decision_proof.py</code>, <code>live_server.py</code>, plus 25 test files in <code>engine/tests/</code>.</p></div>
+    <div class="sb-dir"><div class="p">app/ <span>105 files</span></div><p>The React, TypeScript and Vite evidence workspace: Map, Cohort, Proof and Live query views. <code>src/</code>, 311 tests in <code>checks/</code> and <code>tests/</code>, and <code>app/README.md</code>.</p></div>
+    <div class="sb-dir"><div class="p">artifacts/ <span>213 files</span></div><p>Computed exports and retained measurements. <code>artifacts/decision/</code> holds the benchmark, proof, cost and scale results behind every quoted number.</p></div>
+    <div class="sb-dir"><div class="p">docs/ <span>247 files</span></div><p>Everything written down: <code>HANDOVER.md</code>, plain-English <code>writeups/</code> (including the pitch), <code>lab/</code> reports, <code>research/</code>, the older <code>explainer/</code> course and the two source PDFs in <code>sources/</code>.</p></div>
+    <div class="sb-dir"><div class="p">validation/ <span>58 files</span></div><p>Independent checks written to try to break the work. <code>validation/decision/report.md</code> is the independent validator's report.</p></div>
+    <div class="sb-dir"><div class="p">scripts/ <span>6 files</span></div><p><code>setup-local.sh</code>, <code>verify-local.sh</code>, <code>private-data.sh</code>, and three data helpers (<code>acquire_public_sample.py</code>, <code>inspect_company_sample.py</code>, <code>explore_cross_layer.py</code>).</p></div>
+    <div class="sb-dir"><div class="p">design/ <span>2 files</span></div><p><code>DESIGN.md</code> and <code>style-guide.html</code>: the visual system, meant to be reused for slides and videos.</p></div>
+    <div class="sb-dir"><div class="p">data/ <span>657 files</span></div><p>Public Hansen and JRC chips and experiment records. The supplier sample lives here too but is <strong>not in git</strong>; <code>data/PRIVATE_FILES.txt</code> lists the 31 private files.</p></div>
+  </div>
+
+  <div class="note warn"><b>Scope</b><span>A fresh clone <strong>cannot run anything</strong> until the private bundle is restored. SystemEarth shared its sample for local work only, so it was removed from git and its history on 15 October. The bundle (<code>bundle.tar.gz</code>) is passed between teammates over a private channel and restored with <code>scripts/private-data.sh unpack</code>. It is never committed or uploaded.</span></div>
+
+  <div class="panel" id="sb-term">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Terminal · from a fresh clone to the app</span><button class="replay" type="button">↻ Replay</button></div>
+      <pre class="sb-term" id="sb-pre" aria-label="Commands to run Plotline and the output each one prints" tabindex="0"></pre>
+      <p class="say" aria-live="polite"><small>Terminal</small><span id="sb-term-say">Typing the commands…</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> README.md ("Running the local lab", "Repository publication and private data"), scripts/*.sh. Output under <b>verify-local.sh</b> was captured on 16 Oct 2026 at 12:24 SGT and trimmed. Output under <b>unpack</b>, <b>setup</b> and <b>dev:local</b> is the message printed by the script's source, not run on 16 October; <b>unpack</b> and <b>setup</b> would change local files, so they were not run.</p>
+  </div>
+
+  <details class="deeper"><summary>What each script does <span class="lvl">technical</span></summary><div class="body">
+    <p><code>setup-local.sh</code> needs <code>python3.14</code> (or <code>PLOTLINE_PYTHON</code>) and Node. It creates <code>.venv-data</code>, installs <code>engine/requirements.txt</code> and runs <code>npm ci --prefix app</code>.</p>
+    <p><code>verify-local.sh</code> checks the private data is present, confirms Python 3.14, runs <code>engine.verify</code> and <code>engine.jrc --verify</code>, queries P-0003 against the retained compact store two ways, re-runs the decision-layer proof into a temporary file, and builds the app. It does not rebenchmark.</p>
+    <p>Deep links once the app is up: <code>#/map</code>, <code>#/map/P-0001/2022</code>, <code>#/cohort</code>, <code>#/proof/P-0005/2025</code>, <code>#/live</code>. Map, Cohort and Proof work offline from a frozen export; Live query needs the optional local API on port 8765.</p>
+  </div></details>
+</section>
+
+<!-- 4 -->
+<section id="gaps">
+  <div class="prose">
+    <div class="kick">4 · Known gaps and risks</div>
+    <h2>Known gaps and risks</h2>
+    <p>Found by reading the repository, the git history and the docs. Items are ordered roughly by potential impact; resolved items come last.</p>
+  </div>
+
+  <div class="panel" id="sb-drift">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">The default branch is behind</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg class="sb-drift" viewBox="0 0 960 190" role="img" aria-label="Main sits at the end of 15 October at 17:17. guru/perf-squeeze carries 31 more commits, up to 16 October 01:26, in four speed-up phases."></svg>
+      <p class="say" aria-live="polite"><small id="sb-dr-sm">guru/perf-squeeze, oldest first</small><span id="sb-dr-say">Each dot is one commit.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> <code>git rev-list --left-right --count Main...guru/perf-squeeze</code> gives 1 and 31 (the one commit only on <code>Main</code> is the merge of PR #3, whose files equal the shared ancestor). 37 files differ: 16 in engine/, 10 in docs/, 6 in validation/, 4 in artifacts/ and README.md. Phase boundaries follow the "re-measure" evidence commits. <code>guru/explainer-pack</code> adds two commits on top of <code>guru/perf-squeeze</code> (the setup-notes fix and this pack), so it is 33 commits ahead of <code>Main</code>.</p>
+  </div>
+
+  <div class="sb-gaps">
+    <div class="sb-gap"><span class="sb-chip sev-hi">High</span><div><h4><code>Main</code> lacks Phases 1 to 4</h4><p>Main is the repository's default branch (confirmed with <code>gh repo view</code>). It stops at the decision layers of 15 Oct at 17:17 and still shows 24× and 2.2×. All the 44×, 83× and 5.2× work lives on <code>guru/perf-squeeze</code>. Because Main's files equal the shared ancestor, merging should be clean (no trial merge was run). <code>guru/explainer-pack</code> contains everything on <code>guru/perf-squeeze</code> plus the corrected setup notes and this pack.</p><p class="fix">Fix: open a pull request from <code>guru/perf-squeeze</code> into Main with <code>gh pr create</code>, or state which branch to read.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-hi">High</span><div><h4>Plot outlines are in the demo, the videos and the screenshots</h4><p>Per the README, screenshots and the walkthrough video still show plot outlines. 78 PNG and WebM files are tracked (for example <code>docs/lab/redesign-demo.webm</code>). The live app shows them too. Whether the supplied sample may appear in slides or a public demo is an open question to SystemEarth.</p><p class="fix">Fix: ask SystemEarth (question 8 below); until answered, the demo is for the company's own team and the repository stays private.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-hi">High</span><div><h4><code>app/dist</code> is not for hosting</h4><p>The build copies <code>demo-v1.json</code> (about 1.5 MB, containing the plot geometries) into <code>app/dist/data/</code>. <code>app/README.md</code> was corrected in commit 77e95b9 and now says never to publish or deploy <code>app/dist/</code>. This explainer pack contains no plot geometry; <code>app/dist</code> does.</p><p class="fix">Fix: <code>app/dist</code> is never deployed.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-md">Medium</span><div><h4>The repository is private, and only teammates can run it</h4><p>The repository is private (<code>gh repo view</code>: PRIVATE), so judges and the company cannot open it. A fresh clone also needs the 31-file private bundle, and where the current bundle is stored is unconfirmed.</p><p class="fix">Fix: run <code>scripts/private-data.sh pack</code> to a private location and confirm a second teammate can unpack it. Decide how the pitch is shown (live app, recording, slides).</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-md">Medium</span><div><h4>The explainer pack is committed but not published</h4><p><code>site/</code> is committed on branch <code>guru/explainer-pack</code>. Publication requires pushing that branch. GitHub Pages from a private repository depends on the owner's plan, which has not been checked. The <code>.gitignore</code> line for <code>app/.vite/</code> was committed in 77e95b9.</p><p class="fix">Fix: push the branch and confirm the Pages plan, or share the pack another way.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-lo">Low</span><div><h4>Environment is strict</h4><p>Python must be exactly 3.14 (<code>setup-local.sh</code> and <code>verify-local.sh</code> both refuse anything else) and <code>shapely</code> is pinned because the fast selector calls its internals directly. The live query service is optional; the offline views work without it.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip sev-lo">Low</span><div><h4>Documentation links are healthy</h4><p>Every relative Markdown link in the 102 Markdown files outside the dependency folders was checked: <strong>0 broken</strong>. External URLs were not checked. Numbers in the README, writeups, pitch and the app's decision summary agree with the Phase 4 report.</p></div></div>
+    <div class="sb-gap"><span class="sb-chip done">Resolved</span><div><h4>Stale setup notes, corrected</h4><p><code>AGENTS.md</code> no longer says that no track is selected or that no build or test commands exist. <code>app/README.md</code> no longer says publication is authorised. <code>engine/README.md</code> no longer has run-together words ("Python3.14", "and17supplied"). All three were corrected in commit 77e95b9.</p></div></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="ask">
+  <div class="prose">
+    <div class="kick">5 · Questions for the organisers</div>
+    <h2>Open questions for the organisers and SystemEarth</h2>
+    <p>None of these is answered in the sources. The first six are for the organisers; the last two are for SystemEarth.</p>
+  </div>
+  <ol class="sb-q">
+    <li><span class="who">Organisers</span> What exactly is submitted (format and artifacts), and where?<small>The sources do not state a submission method or format.</small></li>
+    <li><span class="who">Organisers</span> What is the deadline, and what does the challenge page's "17 Oct, 00:00 SGT" end time close?<small>Applications or project submissions? The project plan treats 16 October as the readiness date.</small></li>
+    <li><span class="who">Organisers</span> How long is the pitch, and is there Q&amp;A on top?</li>
+    <li><span class="who">Organisers</span> In person or online, and can a live app be demoed, or only slides and a recording?<small>Event notes allow online pitching; the 11 October screenshot says on-site. Power, screen sharing and internet access are also unconfirmed.</small></li>
+    <li><span class="who">Organisers</span> What are the judging criteria and weights?<small>The project's mock judge review is not an official rubric. The spoken targets for other tracks (100 emails, 30,000 views) are not universal criteria.</small></li>
+    <li><span class="who">Organisers</span> What time and where are the finals, and who pitches, and is the team membership recorded correctly?</li>
+    <li><span class="who">SystemEarth</span> Is a working prototype strictly required, and are there any passing thresholds or a reference answer set?<small>The slides ask for one; the spoken guidance is softer. No numeric benchmark is given anywhere.</small></li>
+    <li><span class="who">SystemEarth</span> May the supplied sample (plot outlines, declaration rows) appear in slides, the demo and the recording?<small>README: no external publication was authorised. Any attribution or anonymisation rules are also unconfirmed.</small></li>
+  </ol>
+  <p><button class="btn" type="button" id="sb-copy">Copy the questions</button> <span class="muted small" id="sb-copied" role="status"></span></p>
+</section>
+
+<!-- 6 -->
+<section id="final">
+  <div class="prose">
+    <div class="kick">6 · Readiness checklist</div>
+    <h2>Readiness checklist</h2>
+    <p>Ticks are saved in this browser only (local storage). <em>Print</em> produces a paper copy of this list alone.</p>
+  </div>
+
+  <div class="sb-cl">
+    <div class="sb-ring">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Checklist progress" id="sb-ringsvg">
+        <circle class="bg" cx="60" cy="60" r="50" fill="none" stroke-width="10"/>
+        <circle class="fg" cx="60" cy="60" r="50" fill="none" stroke-width="10" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+        <text class="pc" x="60" y="66" text-anchor="middle" id="sb-pc">0%</text>
+        <text class="ct" x="60" y="86" text-anchor="middle" id="sb-ct">0 of 0</text>
+      </svg>
+      <div class="btns"><button class="btn" type="button" id="sb-print">Print</button><button class="btn" type="button" id="sb-reset">Reset</button></div>
+    </div>
+    <div id="sb-lists"></div>
+  </div>
+  <div class="endnote">Checklist state key: <code>plotline-submit-checklist-v1</code>, stored only in this browser.</div>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+/* ---------- 1. Requirement -> evidence matrix ---------- */
+(() => {
+  const { $, $$, instrument, seg } = Pack;
+  const ST = { done: ['done', '✓ Done'], partial: ['partial', '◐ Partial'], missing: ['missing', '✗ Missing'], unknown: ['unknown', '? Unknown'] };
+  // [requirement, firmness, [evidence code paths], why, status]
+  const R = [
+    ['A specific use case', 'Required', ['docs/writeups/01-the-brief-and-the-data.md', 'SystemEarth-track.md'], 'EUDR-style deforestation screen of 17 supplier plots in Surat Thani, Thailand. The rule is the documented project rule; company-approved rules remain an external decision.', 'done'],
+    ['Layer analysis: essential, simplified or dropped', 'Required', ['docs/lab/decision-scale-notes.md', 'artifacts/decision/layer-analysis-v1.json'], 'Per-attribute byte costs and a keep, reduce or drop verdict. treecover2000 is 72% of the Hansen bytes and no question reads it.', 'done'],
+    ['Grounded in regulatory definitions and the cut-off', 'Required', ['docs/lab/decision-scale-notes.md'], 'Cut-off 31 December 2020 via JRC 2020 forest. Not captured: 0.5 ha minimum area, degradation, protected areas. The notes say to check wording against Regulation (EU) 2023/1115 before quoting.', 'partial'],
+    ['Time periods chosen', 'Required', ['engine/decision.py'], 'Loss years 2021 to 2025 after the cut-off, plus the supplier\'s own 2021 to 2023 interval. Years before the cut-off are dropped on purpose.', 'done'],
+    ['Encoding strategy combining layers and time steps', 'Required', ['engine/decision_store.py', 'artifacts/decision/stores.json'], 'One 20-value code per map cell, stored as bit-planes plus sparse loss events: 6,146 B for the region.', 'done'],
+    ['Working prototype: encode a sample region and query it', 'Required (slides)', ['engine/', 'app/', 'scripts/verify-local.sh'], 'Engine, app and live-query service. All four checks passed on 16 Oct, 12:23 to 12:24 SGT.', 'done'],
+    ['Storage versus the original layers', 'Required', ['artifacts/decision/stores.json', 'artifacts/decision/scale-v1.json'], '623,237 B to 6,146 B (99.0% smaller). A whole tile: 421.9 MB to 8.2 MB (98.0%).', 'done'],
+    ['Query speed versus the original layers', 'Required', ['artifacts/decision/benchmark-v1.json'], 'Hot, 17 plots: registered plots 1.44 to 0.032 ms (44×); new boundaries 5.2×. One laptop; fresh-process end-to-end is mostly Python start-up.', 'done'],
+    ['Resource use', 'Required', ['artifacts/decision/benchmark-v1.json'], 'Peak memory 75 MB to 37 MB (23 MB numpy-free). Bytes read 585,293 to 6,146.', 'done'],
+    ['Decision fidelity (all outputs match)', 'Required', ['artifacts/decision/proof-v1.json', 'validation/decision/report.md'], '17 of 17 plots; 744,732 of 744,732 cells; 9,829 of 9,829 fuzzed polygons; an independent validator agrees.', 'done'],
+    ['Pixel fidelity, where relevant', 'Required', ['docs/lab/decision-layer-report.md'], '100% on every attribute the decision reads. Dropped attributes are listed, not called lossless.', 'done'],
+    ['Accuracy and information-loss trade-offs', 'Required (spoken)', ['docs/lab/decision-layer-report.md', 'docs/writeups/04-pitch.md'], 'Agreement with the original layers is not real-world accuracy and not legal compliance; the terminology table in the pitch writeup gives the wording.', 'done'],
+    ['Explain pipeline, engineering and product choices', 'Required (spoken)', ['docs/writeups/02-what-we-tried-and-found.md', 'docs/writeups/05-redesign-decisions.md'], 'Choices, failures (the lost ML selector) and the redesign are written up in plain English.', 'done'],
+    ['Explain any AI output used', 'Required (spoken)', ['docs/lab/engine-selector-report.md', 'docs/writeups/04-pitch.md'], 'Documented: the shipped pipeline is rule-based; the learned codec selector lost and was rejected. No spoken statement is recorded yet.', 'partial'],
+    ['Bonus: infrastructure and processing cost estimate', 'Bonus', ['artifacts/decision/cost-v1.json', 'docs/lab/decision-scale-notes.md'], 'About $0.0031 to re-check 10 million new plots and $0.0008 for registered ones. Prices are list-price assumptions dated 15 Oct and marked "verify before quoting".', 'done'],
+    ['Pitch and three-minute demo script', 'Needed', ['docs/writeups/04-pitch.md', 'docs/lab/demo-script.md'], 'Script, one-liner, questions and answers, and a terminology table exist. The pitch length is unknown and the script has not been timed against it.', 'partial'],
+    ['A safe fallback if the live demo fails', 'Needed', ['docs/lab/redesign-demo.webm'], 'A 55-second walkthrough exists, but it shows plot outlines, so it may not be shareable.', 'partial'],
+    ['Slides or other presentation material', 'Unknown', [], 'No slide deck is in the repository. Whether one is expected is unknown.', 'missing'],
+    ['The latest work is on the default branch', 'Needed', ['Main', 'guru/perf-squeeze'], 'Main is 31 commits behind guru/perf-squeeze (see Known gaps and risks).', 'missing'],
+    ['A teammate can reproduce it from a fresh clone', 'Needed', ['README.md', 'scripts/setup-local.sh', 'scripts/verify-local.sh'], 'Commands are documented and pass here, but a clean-clone run was not repeated on 16 Oct and the private bundle location is unconfirmed.', 'partial'],
+    ['Submission format, place and deadline', 'Unknown', ['docs/event_rules_and_open_questions.txt'], 'Not stated by anyone. The challenge page ends at 17 Oct 00:00 SGT and its meaning is unconfirmed.', 'unknown'],
+    ['Pitch length, scoring weights, passing thresholds', 'Unknown', ['docs/transcript_rules_and_constraints.txt'], 'None given. "All outputs match on every test plot" is the project target, not a company threshold.', 'unknown'],
+    ['Permission to show the supplied plots publicly', 'Unknown', ['SystemEarth-track.md', 'README.md'], 'Open question to SystemEarth. No external publication was authorised.', 'unknown'],
+  ];
+  const tb = $('tbody', $('#sb-mt'));
+  tb.innerHTML = R.map(r => `<tr class="pend" data-s="${r[4]}"><td class="rq">${r[0]}<small>${r[1]}</small></td><td class="ev">${r[2].map(p => `<code>${p}</code>`).join(' ')}<span class="why">${r[3]}</span></td><td class="st"><span class="sb-chip wait">… checking</span></td></tr>`).join('');
+  const rows = $$('tr', tb), n = R.length;
+  const cnt = { all: 0, done: 0, partial: 0, missing: 0, unknown: 0 }, say = $('#sb-mx-say');
+  const paint = k => { for (const key in cnt) $('#sb-n-' + key).textContent = cnt[key]; };
+  let filter = 'all';
+  const apply = () => rows.forEach(r => r.classList.toggle('hid', filter !== 'all' && r.dataset.s !== filter));
+  instrument($('#sb-mx'), { ms: 5200, render(t) {
+    const k = Math.floor(t * (n + 1.5) * 1); // rows revealed
+    for (const key in cnt) cnt[key] = 0;
+    rows.forEach((r, i) => {
+      const on = i < k, s = r.dataset.s;
+      r.classList.toggle('pend', !on);
+      const c = $('.sb-chip', r);
+      c.className = 'sb-chip ' + (on ? ST[s][0] : 'wait');
+      c.textContent = on ? ST[s][1] : '… checking';
+      if (on) { cnt.all++; cnt[s]++; }
+    });
+    paint();
+    say.textContent = t < 1 ? `Checked ${Math.min(k, n)} of ${n}…` : `${cnt.done} done, ${cnt.partial} partial, ${cnt.missing} missing, ${cnt.unknown} unknown. The counts filter the rows.`;
+  } });
+  $$('button', $('#sb-sum')).forEach(b => b.addEventListener('click', () => {
+    filter = b.dataset.f;
+    $$('button', $('#sb-sum')).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    apply();
+  }));
+})();
+
+/* ---------- 2. Terminal ---------- */
+(() => {
+  const { $, instrument } = Pack;
+  const pre = $('#sb-pre'), say = $('#sb-term-say');
+  // [kind, text]: c = command, o = output, m = comment
+  const L = [
+    ['m', '# 1. On a fresh clone: restore the private sample (a teammate sends the bundle). Message from the script source, not run on 16 Oct.'],
+    ['c', 'scripts/private-data.sh unpack ~/Downloads/plotline-private.tar.gz'],
+    ['o', 'Restored 31 private files.'],
+    ['m', '# 2. Install Python 3.14 dependencies and run npm ci. Final message from the script source, not run on 16 Oct.'],
+    ['c', 'scripts/setup-local.sh'],
+    ['o', 'Local Python and app dependencies are ready. Run scripts/verify-local.sh from the repository root.\nPrivate sample data present.'],
+    ['m', '# 3. Re-check the proofs and build the app. Output captured 16 Oct 2026, 12:24 SGT (trimmed), took 12 s.'],
+    ['c', 'scripts/verify-local.sh'],
+    ['o', 'Private sample data present.\n{ "valid": true, "plot_count": 17, "compact_plot_count": 17, ..., "failures": [] }\n{ "valid": true, "failures": [], "plot_count": 17, "independent_plot_checks": 17, ... }\nP-0003 Hansen full query: source and compact results match.\nP-0003 Hansen indexed query: source and compact results match.\nDecision layers: every cell, 17 plots and the polygon fuzz match the original layers.\nvite v7.3.7 building client environment for production...\n✓ 91 modules transformed.\n✓ built in 431ms'],
+    ['m', '# 4. Run the two test suites used for the checks above.'],
+    ['c', '.venv-data/bin/python -B -m unittest discover -s engine/tests'],
+    ['o', 'Ran 361 tests in 43.408s\n\nOK'],
+    ['c', 'npm test --prefix app'],
+    ['o', 'ℹ tests 311\nℹ pass 311\nℹ fail 0'],
+    ['m', '# 5. Start the app and the live API. Message from the script source, not run on 16 Oct.'],
+    ['c', 'npm run dev:local --prefix app'],
+    ['o', 'Plotline local lab: http://127.0.0.1:5173 — Ctrl-C stops both owned processes.'],
+    ['m', '# Then open http://127.0.0.1:5173/#/map/P-0001/2022 (offline views) or #/live (needs the API on port 8765).'],
+  ];
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const W = L.map(([k, s]) => k === 'c' ? s.length * 1.6 : k === 'm' ? 6 : 14 + 2 * s.split('\n').length);
+  const tot = W.reduce((a, b) => a + b, 0);
+  const html = (p, done) => {
+    let out = '', acc = 0, last = '';
+    for (let i = 0; i < L.length; i++) {
+      const [k, s] = L[i], w = W[i], f = Math.max(0, Math.min(1, (p - acc) / w));
+      if (f <= 0) break;
+      if (k === 'm') out += `<span class="cm">${esc(s)}</span>\n`;
+      else if (k === 'c') { const n = Math.floor(f * s.length); out += `<span class="pr">$ </span>${esc(s.slice(0, n))}` + (f < 1 ? '' : '\n'); last = f < 1 ? 'typing the command' : last; }
+      else out += (f < 1 ? '' : esc(s) + '\n').replace(/^(.*)$/s, m => m);
+      acc += w;
+      if (f < 1) break;
+    }
+    return out;
+  };
+  instrument($('#sb-term'), { ms: 15000, render(t) {
+    const p = t * tot;
+    pre.innerHTML = html(p) + (t < 1 ? '<span class="cur"></span>' : '<span class="pr">$ </span><span class="cur"></span>');
+    const idx = (() => { let a = 0; for (let i = 0; i < L.length; i++) { a += W[i]; if (p < a) return i; } return L.length - 1; })();
+    const cmd = [...L.slice(0, idx + 1)].reverse().find(x => x[0] === 'c');
+    say.textContent = t >= 1 ? 'Path: unpack, setup, verify, run. The verify output is captured; the rest is the scripts\' own messages.' : (cmd ? 'Running: ' + cmd[1] : 'Typing the commands…');
+  } });
+})();
+
+/* ---------- 3. Branch drift ---------- */
+(() => {
+  const { $, instrument, seg, ease } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = $('#sb-drift'), svg = $('svg', el), say = $('#sb-dr-say'), sm = $('#sb-dr-sm');
+  const mk = (n, a, p = svg) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
+  // [time, subject, phase]
+  const C = [
+    ['15 Oct 20:03', 'cut summarize_counts dict-building overhead', 1], ['15 Oct 20:04', 'key forest counts from FOREST_STATES', 1], ['15 Oct 20:12', 'decode split stores on packed planes', 1], ['15 Oct 20:12', 'merge worktree', 1],
+    ['15 Oct 20:17', 'speed up fast_select_cells', 1], ['15 Oct 20:18', 'merge worktree', 1], ['15 Oct 20:24', 're-measure after the perf pass', 1], ['15 Oct 20:28', 'report the perf pass', 1],
+    ['15 Oct 22:42', 're-check registered plots without numpy', 2], ['15 Oct 22:42', 'evaluate many new polygons in one pass', 2], ['15 Oct 22:46', 'share the numpy-free store format layer', 2], ['15 Oct 22:46', 'reduce batch histograms', 2],
+    ['15 Oct 22:48', 'measure the numpy-free re-check', 2], ['15 Oct 22:48', 'merge worktree', 2], ['15 Oct 22:48', 'merge worktree', 2], ['15 Oct 22:51', 'measure the batch evaluator', 2],
+    ['15 Oct 23:09', 'scan small polygons in pure Python', 2], ['15 Oct 23:11', 'merge worktree', 2], ['15 Oct 23:17', 'show batch paths in the app summary', 2], ['15 Oct 23:17', 're-measure after the second pass', 2], ['15 Oct 23:20', 'report the second pass', 2],
+    ['15 Oct 23:49', 'dedupe batch cells without np.unique', 3], ['15 Oct 23:49', 'unpack the histogram by name', 3], ['15 Oct 23:54', 're-measure after the third pass', 3], ['15 Oct 23:56', 'add the third pass to the speed tables', 3], ['16 Oct 00:05', 'frame the work as phases 1 to 3', 3],
+    ['16 Oct 00:34', 'trusted-integer reducer entry', 4], ['16 Oct 00:34', 'drop an unused binding', 4], ['16 Oct 00:49', 'pure-Python scan for mid-size polygons', 4], ['16 Oct 01:14', 're-measure after the fourth pass', 4], ['16 Oct 01:26', 'add phase 4 and the research pass to the docs', 4],
+  ];
+  const col = { 1: 'var(--pen)', 2: 'var(--declared)', 3: 'var(--review)', 4: 'var(--proof)' };
+  const nm = { 1: 'Phase 1', 2: 'Phase 2', 3: 'Phase 3', 4: 'Phase 4' };
+  // main lane
+  mk('line', { x1: 40, x2: 920, y1: 56, y2: 56, stroke: 'var(--rule-2)', 'stroke-width': 3 });
+  mk('circle', { cx: 120, cy: 56, r: 9, fill: 'var(--ink)' });
+  let t = mk('text', { x: 40, y: 28, class: 'big' }); t.textContent = 'Main · 20de2d0 · 15 Oct 17:17';
+  t = mk('text', { x: 150, y: 88 }); t.textContent = 'Decision layers merged (PR #3). Stops here.';
+  // perf lane
+  mk('line', { x1: 120, x2: 120, y1: 56, y2: 120, stroke: 'var(--rule-2)', 'stroke-width': 3 });
+  mk('line', { x1: 120, x2: 920, y1: 120, y2: 120, stroke: 'var(--rule)', 'stroke-width': 3 });
+  t = mk('text', { x: 40, y: 168, class: 'big' }); t.textContent = 'guru/perf-squeeze · 97c7108 · 16 Oct 01:26 · 31 commits ahead';
+  const dots = C.map((c, i) => { const x = 150 + i * (740 / 30); return mk('circle', { cx: x, cy: 120, r: 8, fill: col[c[2]], opacity: .12 }); });
+  const lab = [1, 2, 3, 4].map(p => { const first = C.findIndex(c => c[2] === p), x = 150 + first * (740 / 30); const tx = mk('text', { x: x - 6, y: 104 }); tx.textContent = 'P' + p; tx.style.fill = col[p]; tx.style.fontWeight = 700; tx.style.opacity = 0; return tx; });
+  const cnt = mk('text', { x: 920, y: 168, 'text-anchor': 'end', class: 'big' }); cnt.style.fill = 'var(--bad)';
+  instrument(el, { ms: 5000, render(tt) {
+    const k = Math.floor(ease(tt) * C.length + (tt >= 1 ? 1 : 0)), n = Math.min(k, C.length);
+    dots.forEach((d, i) => d.setAttribute('opacity', i < n ? 1 : .12));
+    lab.forEach((l, p) => l.style.opacity = n > C.findIndex(c => c[2] === p + 1) ? 1 : 0);
+    cnt.textContent = n + ' behind';
+    if (n === 0) { sm.textContent = 'guru/perf-squeeze, oldest first'; say.textContent = 'Each dot is one commit.'; }
+    else { const c = C[n - 1]; sm.textContent = nm[c[2]] + ' · ' + c[0] + ' SGT'; say.textContent = c[1]; }
+  } });
+})();
+
+/* ---------- 4. Copy the questions ---------- */
+(() => {
+  const { $, $$ } = Pack;
+  $('#sb-copy').addEventListener('click', async () => {
+    const txt = 'Hello, a few logistics questions for the SystemEarth track before finals:\n' + $$('.sb-q li').map((li, i) => (i + 1) + '. ' + li.firstChild.nextSibling.textContent.trim()).join('\n');
+    try { await navigator.clipboard.writeText(txt); $('#sb-copied').textContent = 'Copied.'; }
+    catch { $('#sb-copied').textContent = 'Could not copy; select the list by hand.'; }
+  });
+})();
+
+/* ---------- 5. Checklist ---------- */
+(() => {
+  const { $, $$ } = Pack;
+  const KEY = 'plotline-submit-checklist-v1';
+  const G = [
+    ['Checklist', [
+      ['merge', 'Branch state: a pull request from <code>guru/perf-squeeze</code> into <code>Main</code> is open, or the current branch is named.', 'Main is 31 commits behind and still shows the old 24× and 2.2× figures.'],
+      ['commit', 'The branch <code>guru/explainer-pack</code> is pushed if teammates are to read the pack online.', ''],
+      ['ask', 'The eight logistics questions are sent to the organisers and SystemEarth.', 'Submission format, place, deadline, pitch length, online or on-site, judging, data-use permission.'],
+      ['bundle', 'A second teammate holds the private bundle and has tested <code>scripts/private-data.sh unpack</code>.', 'A fresh clone cannot run without it. It is never committed or uploaded.'],
+      ['verify', '<code>scripts/verify-local.sh</code> exits 0 on the presenting laptop.', 'It took 12 seconds on 16 Oct.'],
+      ['rehearse', 'The three-minute demo from <code>docs/writeups/04-pitch.md</code> is rehearsed with a timer.', 'Registered plots and new boundaries are separate numbers and are never blended.'],
+      ['words', 'The terminology in <code>docs/writeups/04-pitch.md</code> is applied: "mapped loss on mapped 2020 forest" and "a question for the reviewer".', ''],
+      ['outlines', 'Handling of plot outlines in the demo, slides and recordings is decided.', 'Unknown until SystemEarth answers. Outlines are not published and <code>app/dist</code> is never hosted.'],
+      ['fallback', 'The fallback is prepared: the 55-second recording and static screenshots, saved on the laptop and not only online.', ''],
+      ['roles', 'Speaker, demo driver and technical-question answerer are assigned.', ''],
+      ['power', 'The laptop and backup are charged, the adapter is packed and sleep is disabled.', ''],
+      ['msgs', 'The organisers\' and company groups are checked for changes to time, venue or pitch length.', ''],
+      ['pull', 'The final branch is pulled and <code>scripts/verify-local.sh</code> is run once more.', ''],
+      ['start', 'The app starts with <code>npm run dev:local --prefix app</code> and <code>#/map/P-0001/2022</code> opens.', 'Map, Cohort and Proof work offline. Live query needs the local API.'],
+      ['links', 'Backup tabs are open: <code>#/proof</code>, <code>#/cohort</code>, the recording, and the Presentation guide page of this pack.', ''],
+      ['net', 'The screen, the HDMI or screen-share route and any need for internet are checked.', 'The app needs none. The explainer pack loads fonts online.'],
+      ['oneliner', 'The one-line summary is agreed (see the Presentation guide).', ''],
+      ['honest', 'The stated limits are agreed: encoding and query evidence, not legal compliance; declarations are not violations.', ''],
+      ['arrive', 'The demo is tested on the venue\'s screen.', ''],
+    ]],
+  ];
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+  const box = $('#sb-lists');
+  box.innerHTML = G.map((g, gi) => `<div class="sb-grp"><h3>${g[0]}<span id="sb-g${gi}"></span></h3><ul class="sb-items">` +
+    g[1].map(([id, t, s]) => `<li><label><input type="checkbox" data-id="${id}"${saved[id] ? ' checked' : ''}><span>${t}${s ? `<small>${s}</small>` : ''}</span></label></li>`).join('') + '</ul></div>').join('');
+  const boxes = $$('input', box);
+  const C = 2 * Math.PI * 50, fg = $('.fg', $('#sb-ringsvg'));
+  const update = () => {
+    const done = boxes.filter(b => b.checked).length, n = boxes.length;
+    fg.style.strokeDashoffset = C * (1 - done / n);
+    $('#sb-pc').textContent = Math.round(100 * done / n) + '%';
+    $('#sb-ct').textContent = done + ' of ' + n;
+    G.forEach((g, gi) => { const ids = g[1].map(x => x[0]); $('#sb-g' + gi).textContent = boxes.filter(b => ids.includes(b.dataset.id) && b.checked).length + ' / ' + ids.length; });
+    $('#sb-ringsvg').setAttribute('aria-label', `Checklist progress: ${done} of ${n} done`);
+    const s = {}; boxes.forEach(b => { if (b.checked) s[b.dataset.id] = 1; });
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
+  };
+  boxes.forEach(b => b.addEventListener('change', update));
+  $('#sb-reset').addEventListener('click', () => { if (confirm('Clear every tick?')) { boxes.forEach(b => b.checked = false); update(); } });
+  $('#sb-print').addEventListener('click', () => { document.body.classList.add('sb-printing'); window.print(); });
+  addEventListener('afterprint', () => document.body.classList.remove('sb-printing'));
+  update();
+})();
+</script>
+</body>
+</html>

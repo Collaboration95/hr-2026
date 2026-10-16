@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Overview · Plotline explainers</title>
+<meta name="description" content="Overview of the Plotline project: the event, SystemEarth and the EU rule, the data, the design, the proof, the numbers, the findings, and the other pages in the pack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../assets/pack.css">
+<style>
+/* Page-only styles. Every new class is prefixed st- (this page's slug is "start"). */
+.st-go { margin-top: 18px; font: 600 14px var(--f-mono); }
+.st-go a { text-decoration: none; border-bottom: 2px solid var(--pen-wash-2); }
+.st-go a:hover { border-bottom-color: var(--pen); }
+
+/* timeline card */
+.st-day { margin-top: 16px; padding: 16px 18px; min-height: 126px; }
+.st-day .d { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--pen); }
+.st-day h3 { margin-top: 6px; font-size: 24px; }
+.st-day p { margin-top: 6px; font-size: 17px; color: var(--ink-2); }
+.st-tbtns { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 14px; }
+
+/* cut-off strip */
+.st-years rect { transition: none; }
+.st-years text { font: 500 11px var(--f-mono); fill: var(--muted); }
+.st-years .cut { font: 600 12px var(--f-mono); fill: var(--ink); }
+
+/* nesting */
+.st-nest { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 24px; align-items: center; margin-top: 14px; }
+.st-nest rect { transition: fill .35s var(--ease); }
+@media (max-width: 640px) { .st-nest { grid-template-columns: 1fr; } }
+
+/* collapse bars */
+.st-col { margin-top: 18px; display: grid; gap: 16px; }
+.st-row .lab { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font: 500 13px var(--f-mono); color: var(--muted); margin-bottom: 6px; }
+.st-row .lab b { color: var(--ink); font-weight: 600; }
+.st-row .lab .n { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.st-bar { position: relative; height: 34px; border-radius: 8px; background: var(--mist); overflow: hidden; display: flex; }
+.st-bar > i { display: block; height: 100%; flex: none; }
+.st-segs { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font: 500 12px var(--f-mono); color: var(--muted); }
+.st-segs i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* code table */
+.st-codes { margin-top: 18px; padding: 16px 18px; }
+.st-codes table { border-collapse: separate; border-spacing: 5px; width: 100%; font: 500 13px var(--f-mono); }
+.st-codes th { font: 600 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-align: center; padding: 0 2px 4px; }
+.st-codes th.rl { text-align: left; }
+.st-codes td { text-align: center; padding: 8px 4px; border-radius: 6px; background: var(--forest-wash); color: var(--forest); font-weight: 600; }
+.st-codes tr.nf td { background: var(--mist); color: var(--muted); }
+.st-codes tr.fu td { background: var(--unknown-wash); color: var(--unknown); }
+.st-codes td.l { box-shadow: inset 0 0 0 2px var(--loss); }
+.st-codes .sp { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.st-codes .sp span { padding: 8px 14px; border-radius: 6px; font: 600 13px var(--f-mono); }
+.st-codes .sp .w { background: var(--water-wash); color: var(--water); }
+.st-codes .sp .u { background: var(--unknown-wash); color: var(--muted); border: 1px dashed var(--rule-2); }
+.st-codes .cap { margin-top: 10px; font-size: 14.5px; color: var(--muted); }
+
+/* plot stepper */
+.st-plot svg text { font: 600 11px var(--f-mono); }
+.st-plot .legend { margin-top: 8px; }
+.st-tally { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; min-height: 36px; font: 600 13px var(--f-mono); }
+.st-tally span { padding: 6px 10px; border-radius: 8px; background: var(--mist); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.st-tally .f { background: var(--forest-wash); color: var(--forest); }
+.st-tally .x { background: var(--review-wash); color: var(--review); }
+.st-tally .l { background: var(--loss-wash); color: var(--loss); }
+.st-ctrl { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; margin-top: 14px; }
+
+/* proof grid */
+.st-proof canvas { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--rule); background: var(--mist); }
+.st-pstat { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 24px; margin-top: 14px; }
+.st-pstat .big .num { font-size: clamp(30px, 4vw, 44px); }
+.st-pstat .big .cap { font-size: 11.5px; }
+.st-pstat .big.bad .num { color: var(--bad); }
+
+/* scoreboard */
+.st-sb { display: grid; gap: 22px; margin-top: 16px; }
+.st-sbr { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 12px 28px; align-items: start; padding-top: 18px; border-top: 1px solid var(--rule); }
+.st-sbr:first-child { border-top: 0; padding-top: 0; }
+.st-sbr .head .w { font: 600 12px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.st-sbr .head .num { display: block; font: 800 clamp(36px, 5vw, 56px)/1 var(--f-display); letter-spacing: -.03em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.st-sbr.same .num { color: var(--proof); } .st-sbr.small .num { color: var(--pen); } .st-sbr.fast .num { color: var(--ink); }
+.st-sbr .head small { display: block; margin-top: 6px; font: 500 12px/1.4 var(--f-mono); color: var(--muted); }
+.st-b { display: grid; grid-template-columns: minmax(110px, 250px) minmax(0, 1fr) 150px; gap: 10px; align-items: center; font: 500 13.5px var(--f-mono); margin-top: 8px; }
+.st-b:first-child { margin-top: 0; }
+.st-b .t { position: relative; height: 20px; border-radius: 5px; background: var(--mist); overflow: hidden; }
+.st-b .t i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 5px; }
+.st-b .v { overflow-wrap: anywhere; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.st-b.grp { display: block; margin-top: 14px; font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.st-axis { margin-top: 4px; font: 500 11.5px var(--f-mono); color: var(--faint); text-align: right; }
+@media (max-width: 760px) { .st-sbr { grid-template-columns: 1fr; } .st-b { grid-template-columns: 84px minmax(0, 1fr) 86px; gap: 8px; font-size: 11.5px; } }
+
+/* funnel */
+.st-fun svg text { font: 500 12px var(--f-mono); fill: var(--muted); }
+.st-fun svg .big { font: 700 14px var(--f-display); fill: var(--ink); }
+.st-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 22px; }
+
+/* reading map */
+.st-map .card { text-decoration: none; color: inherit; display: block; transition: transform .3s var(--ease), border-color .3s; }
+.st-map .card:hover, .st-map .card:focus-visible { transform: translateY(-3px); border-color: color-mix(in srgb, var(--c) 45%, var(--rule)); outline: none; }
+.st-map .card .m { font: 500 12px var(--f-mono); color: var(--muted); margin-top: 8px; }
+.st-map .card .rd { font-size: 15.5px; color: var(--muted); margin-top: 6px; }
+</style>
+</head>
+<body data-page="start">
+<div class="wrap"><main>
+
+<header class="hero" id="top">
+  <div class="kick">Overview · 15 min</div>
+  <h1>Plotline <span class="hl">overview</span></h1>
+  <p class="lede">Plotline is a compact store for EUDR forest-loss screening. It keeps <strong>only the facts the decision reads</strong> and gives the same answers as the original map layers.</p>
+  <div class="meta"><span>15 min read</span><span>Level: basics</span><span>Sources: README.md, docs/writeups/, docs/lab/decision-layer-report.md</span></div>
+  <div class="tldr"><b class="lab">In brief</b><ul>
+    <li><b>The problem:</b> EUDR screening intersects farm plots with years of forest maps, and repeats the check whenever a map updates. The challenge brief asks for compact storage, fast queries and the <em>same</em> plot-level answer as the original layers.</li>
+    <li><b>The result:</b> a <span class="hl">6.1 KB decision layer</span> replaces 623 KB of original layers, with identical answers for all 744,732 map cells.</li>
+    <li><b>The speed:</b> registered plots re-check 44× faster and new boundaries about 5× faster. Every answer carries a receipt.</li>
+  </ul></div>
+</header>
+
+<!-- 1 · EVENT -->
+<section id="event" data-toc="The event">
+  <div class="prose">
+    <div class="kick">1 · The event</div>
+    <h2>Hack &amp; Hire Sustainability Edition 2026</h2>
+    <p>The event is run by Projet with NUS CAT. Participants pick one of six real company challenges, build over a week (<strong>10 to 17 October 2026</strong>), and pitch to the company's team at the <strong>finals on 17 October</strong>. Teams have one to three people.</p>
+    <p>Track: <strong>SystemEarth</strong>.</p>
+    <p class="st-go"><a href="../event/">Deep dive: the event and the brief →</a></p>
+  </div>
+
+  <div class="panel" id="st-time">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Build sequence</span></div>
+      <div class="st-day well" aria-live="polite"><div class="d" id="st-td"></div><h3 id="st-th"></h3><p id="st-tp"></p></div>
+      <div class="st-tbtns"><div class="steps" aria-label="Build stages"></div><div class="btns"><button class="btn prev" type="button">← Previous</button><button class="btn next" type="button">Next →</button></div></div>
+    </div>
+    <p class="foot"><b>Source:</b> docs/writeups/02-what-we-tried-and-found.md (how the work developed), README.md (current status). Track acceptance is reported by the project owner; team composition is not recorded.</p>
+  </div>
+
+  <div class="note unknown"><b>Unknown</b><span>Pitch length, the submission format and the judging weights were not specified. The challenge page shows an end time of 17 October 00:00 SGT; whether that closes applications or submissions is unconfirmed.</span></div>
+</section>
+
+<!-- 2 · COMPANY AND PROBLEM -->
+<section id="problem" data-toc="The company and the rule">
+  <div class="prose">
+    <div class="kick">2 · The company and the problem</div>
+    <h2>EUDR plot-level screening</h2>
+    <p>Companies that sell rubber, palm oil, cocoa or coffee into the EU must show that every supplying farm plot is <strong>deforestation-free</strong> under the EU Deforestation Regulation, <strong>EUDR</strong>. SystemEarth works with this kind of plot-level evidence.</p>
+    <p>A plot's boundary is checked against satellite maps for two things: whether the land was <strong>forest on 31 December 2020</strong>, the rule's cut-off date, and whether tree cover has been <strong>lost since</strong>. The maps come from different sources at different sharpness and update every year. The check is therefore re-run for millions of plots whenever a layer updates, and the data accumulates.</p>
+    <p>The brief's slide title frames the task: <span class="hl">"Keep the decision, not the data."</span> The layers are to be stored compactly and queried fast while reproducing exactly the same plot-level decisions as the original layers.</p>
+    <p class="st-go"><a href="../company/">Deep dive: SystemEarth and the EUDR →</a></p>
+  </div>
+
+  <div class="panel" id="st-cut">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Schematic</span>The 31 December 2020 cut-off</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg class="st-years" viewBox="0 0 1000 150" role="img" aria-label="A strip of the years 2001 to 2025 with a cut-off line after 2020. Years up to 2020 are marked as not read by the decision; 2021 to 2025 are the loss years that matter."></svg>
+      <p class="say"><small>Cut-off</small><span id="st-cut-say">Hansen records one loss year per map cell, 2001 to 2025.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("The questions and what each needs"). A schematic of years, not data: no heights are measured values.</p>
+  </div>
+
+  <h3>Brief requirements</h3>
+  <div class="tbl"><table class="dt">
+    <thead><tr><th>Ask</th><th>Firmness</th></tr></thead>
+    <tbody>
+      <tr><td>Pick a use case; choose layers and time periods; say what can be simplified or dropped</td><td><span class="st ok">required</span></td></tr>
+      <tr><td>Encode and query a sample region (the printed slides ask for a working prototype; speech was less firm)</td><td><span class="st ok">required / prototype built</span></td></tr>
+      <tr><td>Compare with the originals on storage, query speed, resource use, plot-decision fidelity and pixel fidelity; explain pipeline choices and any AI output</td><td><span class="st ok">required</span></td></tr>
+      <tr><td>Estimate infrastructure cost</td><td><span class="st review">bonus</span></td></tr>
+      <tr><td>Invent a new compression algorithm</td><td><span class="st">not required</span></td></tr>
+    </tbody></table></div>
+  <p class="muted small" style="max-width:700px">No dataset, region, resolution, time span, passing threshold or scoring rubric was specified. Source: docs/writeups/01-the-brief-and-the-data.md.</p>
+</section>
+
+<!-- 3 · DATA -->
+<section id="data" data-toc="The data">
+  <div class="prose">
+    <div class="kick">3 · The data</div>
+    <h2>17 supplier plots and two public maps</h2>
+    <p>A <strong>raster</strong> is a map stored as a grid of squares, one number per square, like graph paper. Satellite forest maps are rasters. A farm plot is a <strong>vector</strong>: an outline traced with coordinates. The task is laying outlines over grids.</p>
+  </div>
+  <div class="cols">
+    <div class="card" style="--c: var(--declared)"><div class="who">From SystemEarth</div><h3>17 supplier plots</h3><p>One shipment lot, one supplier. A CSV of 17 declarations (35 columns) and a GeoJSON of 17 matching outlines, in Chai Buri, Surat Thani, Thailand. Smallholdings of 0.53 to 20.07 ha. The two files join one to one.</p></div>
+    <div class="card" style="--c: var(--loss)"><div class="who">Public · Hansen GFC 2025 v1.13</div><h3>Tree-cover loss</h3><p>Three bands at about 28 m: canopy in 2000, the <em>year</em> of loss (2001 to 2025), and a land/water mask. The chip is 1,233 × 604 = <strong>744,732 cells</strong>.</p></div>
+    <div class="card" style="--c: var(--forest)"><div class="who">Public · JRC GFC2020 v4</div><h3>Forest in 2020</h3><p>Forest or not, at the cut-off year, at about 9 m on a different grid (3,695 × 1,809). Each Hansen cell holds an exact 3 × 3 block of JRC cells.</p></div>
+  </div>
+  <div class="note warn"><b>Private</b><span>SystemEarth's sample is private. The pack shows no real plot outline and no row from the supplier file. Every plot drawn is a labelled synthetic shape; only plot IDs and aggregate counts already in the project writeups are quoted.</span></div>
+
+  <div class="panel" id="st-nest">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>One Hansen cell holds nine JRC cells</span></div>
+      <div class="st-nest">
+        <svg viewBox="0 0 300 300" role="img" aria-label="One big square split into a three by three block of small squares. The middle small square is outlined as the one the rule reads." id="st-nsvg"></svg>
+        <div>
+          <p class="small" style="margin:0 0 10px">Select a pattern for the nine small (JRC) cells to show what the written rule reads.</p>
+          <div class="btns" id="st-nbtns">
+            <button class="btn on" type="button" data-p="centre">Centre is forest</button>
+            <button class="btn" type="button" data-p="corner">Only a corner is forest</button>
+            <button class="btn" type="button" data-p="ring">Edges forest, centre not</button>
+          </div>
+          <p class="say" style="min-height:76px"><small>The rule reads</small><span id="st-nsay"></span></p>
+        </div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-plan.md (the shipped rule reads the middle JRC cell of each exactly nested 3 × 3 block; "any forest in the block" and "at least 5 of 9" were also tried) and decision-layer-report.md (none of the three changes a plot decision here; only P-0001 has forest, so it is a weak test).</p>
+  </div>
+  <p class="st-go"><a href="../data/">Deep dive: the data, in full →</a></p>
+</section>
+
+<!-- 4 · BUILD -->
+<section id="build" data-toc="Design">
+  <div class="prose">
+    <div class="kick">4 · Design</div>
+    <h2>Plotline design: three questions, one decision layer</h2>
+    <p>Plotline starts from the <strong>three questions</strong> an EUDR-style screen asks of a plot, and what each needs from the maps.</p>
+  </div>
+  <div class="cols">
+    <div class="card" style="--c: var(--forest)"><div class="who">Q1</div><h3>Was it forest on 31 Dec 2020?</h3><p>Needs JRC's 2020 forest class, and land / water / unknown.</p></div>
+    <div class="card" style="--c: var(--loss)"><div class="who">Q2</div><h3>Has that forest been lost since?</h3><p>Needs Q1 plus the Hansen loss year, 2021 to 2025.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">Q3</div><h3>What did the supplier's own check say?</h3><p>The supplier named "Hansen Tree Cover Loss 2021-2023": any Hansen loss in 2021 to 2023, on any land.</p></div>
+  </div>
+  <div class="prose">
+    <p>No question reads the canopy percentages, which are <span class="hl">72% of Hansen's bytes</span>, or loss years before 2021. Both are dropped. Each map cell is reduced to <strong>one of 20 codes</strong>.</p>
+  </div>
+
+  <div class="panel" id="st-collapse">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Original layers reduced to a decision layer</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="st-col">
+        <div class="st-row"><div class="lab"><b>Original layers</b><span class="n" id="st-c1n">623,237 B</span></div>
+          <div class="st-bar" id="st-b1" role="img" aria-label="Original layers, 623,237 bytes, made of canopy percent 414,142, loss year 159,863, land mask 2,994 and the JRC 2020 forest chip 46,238 bytes">
+            <i style="background:var(--canopy-100)"></i><i style="background:var(--loss-past)"></i><i style="background:var(--water)"></i><i style="background:var(--forest)"></i></div>
+          <div class="st-segs"><span><i style="background:var(--canopy-100)"></i>canopy % 414,142 B</span><span><i style="background:var(--loss-past)"></i>loss year 159,863 B</span><span><i style="background:var(--water)"></i>land/water mask 2,994 B</span><span><i style="background:var(--forest)"></i>JRC 2020 forest 46,238 B</span></div></div>
+        <div class="st-row"><div class="lab"><b>Screening layer</b><span class="n" id="st-c2n">38,513 B · 93.8% smaller</span></div>
+          <div class="st-bar"><i id="st-b2" style="background:var(--pen)"></i></div></div>
+        <div class="st-row"><div class="lab"><b>Decision layer</b><span class="n" id="st-c3n">6,146 B · 99.0% smaller</span></div>
+          <div class="st-bar"><i id="st-b3" style="background:var(--ink)"></i></div></div>
+      </div>
+      <p class="say"><small>Size</small><span id="st-colsay">Four original files, 623,237 bytes.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("How much smaller"), file sizes from docs/lab/decision-scale-notes.md. Bars are drawn to true scale on one sample region (34 × 17 km). Bytes, not hectares or plots.</p>
+  </div>
+
+  <div class="prose">
+    <p>The <strong>screening layer</strong> answers all three questions. The <strong>decision layer</strong> answers Q1 and Q2 only, so it also forgets the loss year on land that was <em>not</em> forest in 2020: loss on land the EU's 2020 forest map does not class as forest, which a Hansen-only check counts as loss. The 20 codes are below.</p>
+  </div>
+  <div class="well st-codes">
+    <table aria-label="The twenty cell codes: rows are the 2020 forest state, columns are the loss state since 2020">
+      <thead><tr><th class="rl">On land that was…</th><th>no loss since</th><th>lost 2021</th><th>lost 2022</th><th>lost 2023</th><th>lost 2024</th><th>lost 2025</th></tr></thead>
+      <tbody>
+        <tr><th class="rl" scope="row">forest in 2020</th><td>F</td><td class="l">F·21</td><td class="l">F·22</td><td class="l">F·23</td><td class="l">F·24</td><td class="l">F·25</td></tr>
+        <tr class="nf"><th class="rl" scope="row">not forest in 2020</th><td>N</td><td class="l">N·21</td><td class="l">N·22</td><td class="l">N·23</td><td class="l">N·24</td><td class="l">N·25</td></tr>
+        <tr class="fu"><th class="rl" scope="row">forest state unknown</th><td>?</td><td class="l">?·21</td><td class="l">?·22</td><td class="l">?·23</td><td class="l">?·24</td><td class="l">?·25</td></tr>
+      </tbody></table>
+    <div class="sp"><span class="w">water</span><span class="u">unknown cell</span></div>
+    <p class="cap">3 forest states × 6 loss states + water + unknown = <strong>20 codes</strong>. The decision layer merges every N·year into plain N. Orange outline = loss after the cut-off. Unknown is its own value: a missing observation is never recorded as "no loss".</p>
+  </div>
+
+  <details class="deeper"><summary>Where the last bytes come from <span class="lvl">technical</span></summary><div class="body">
+    <p>A plain GeoTIFF of the decision codes is already 8,532 B, 98.6% smaller than the originals, so most of the saving comes from <em>deciding what to keep</em> rather than from a codec. Plotline's encoding (separate bit-planes for land, water and forest, plus a sparse list of the few loss events) removes a further 28%, down to 6,146 B. The lossless "v1" store is retained as the audit tier in case the rule changes.</p>
+    <p>A learned codec selector lost to a fixed setting on a sealed holdout region and was rejected.</p>
+  </div></details>
+  <p class="st-go"><a href="../solution/">Deep dive: how Plotline works →</a></p>
+</section>
+
+<!-- 5 · ONE PLOT -->
+<section id="plot" data-toc="One plot, step by step">
+  <div class="prose">
+    <div class="kick">5 · How a plot gets its answer</div>
+    <h2>From outline to answer</h2>
+    <p>A cell belongs to a plot if the <strong>cell's centre</strong> falls inside the outline. This written rule is part of the decision: changing it changes answers.</p>
+  </div>
+
+  <div class="panel st-plot" id="st-plot">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic</span>A made-up plot on a made-up grid</span>
+        <div class="steps" aria-label="Steps"></div></div>
+      <svg viewBox="0 0 560 360" id="st-psvg" role="img" aria-label="A grid of square map cells with a synthetic plot outline drawn on top; later steps mark the cells whose centres are inside and show their codes."></svg>
+      <div class="legend"><span style="--c:var(--forest-wash)"><i style="border:1px solid var(--forest)"></i>F forest in 2020</span><span style="--c:var(--mist)"><i style="border:1px solid var(--rule-2)"></i>N not forest</span><span style="--c:var(--water-wash)"><i style="border:1px solid var(--water)"></i>W water</span><span style="--c:var(--loss)"><i></i>·22 lost in 2022</span></div>
+      <div class="st-tally" id="st-tally"></div>
+      <p class="say"><small id="st-psmall"></small><span id="st-psay"></span></p>
+      <div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div>
+    </div>
+    <p class="foot"><b>Source:</b> synthetic illustration of the rule in docs/lab/interface-v1.md and engine/decision.py; no real plot, cell or count. The orange year marks stand in for Hansen loss years; F and N for the JRC 2020 class.</p>
+  </div>
+</section>
+
+<!-- 6 · PROOF -->
+<section id="proof" data-toc="The proof">
+  <div class="prose">
+    <div class="kick">6 · The proof</div>
+    <h2>Identical answers, checked for every cell</h2>
+    <p>Dropping data is acceptable only if nothing the decision reads is lost. An <strong>independent path</strong> rebuilds the code for every map cell straight from the original GeoTIFFs and compares it with the decision layer. The comparison covers all <strong>744,732 cells</strong>, not a sample.</p>
+    <p>This covers every plot, not only the 17 supplied: each answer depends only on the codes of the selected cells, so if every cell's code matches, <em>any</em> boundary drawn in the region gets identical outputs under the same centre rule.</p>
+  </div>
+
+  <div class="panel st-proof" id="st-proof">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Synthetic colours</span>A 1,233 × 604 grid checks cell by cell</span><div class="btns"><button class="btn" type="button" id="st-break">Break one cell</button><button class="replay" type="button">↻ Replay</button></div></div>
+      <canvas id="st-cv" width="1233" height="604" role="img" aria-label="A grid with the same shape as the real chip, 1,233 by 604 cells, turning green row by row as each cell is confirmed identical"></canvas>
+      <div class="st-pstat">
+        <div class="big proof"><span class="num" id="st-p1">0</span><span class="cap">of 744,732 cells identical</span></div>
+        <div class="big proof"><span class="num" id="st-p2">0</span><span class="cap">of 17 supplied plots, every output</span></div>
+        <div class="big proof"><span class="num" id="st-p3">0</span><span class="cap">of 9,829 fuzzed polygons</span></div>
+        <div class="big" id="st-pm"><span class="num" id="st-p4">0</span><span class="cap">mismatches</span></div>
+      </div>
+      <p class="say"><small>Check</small><span id="st-psay2">Every cell is rebuilt from the originals and compared.</span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("Same answers, proven for every cell"). The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which the report says all detected.</p>
+  </div>
+
+  <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and tried 216,360 more adversarial polygons: 0 mismatches. It also found seven hardening issues, which were fixed. This proves encoding and query agreement, not real-world accuracy or legal compliance.</span></div>
+</section>
+
+<!-- 7 · APP -->
+<section id="app" data-toc="The app">
+  <div class="prose">
+    <div class="kick">7 · The app</div>
+    <h2>The Plotline app: five views</h2>
+    <p>The <strong>Plotline app</strong> presents the evidence to a reviewer. It is map-first and draws the real Hansen and JRC grids in the browser.</p>
+  </div>
+  <div class="cols">
+    <div class="card" style="--c: var(--loss)"><div class="who">Map</div><p>A year scrubber for 2001 to 2025, Hansen stacked with the JRC 2020 forest, and a plot view showing its cells and centres.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">Cohort</div><p>All 17 plots by 25 years as a loss "barcode", with supplier declarations beside what the maps show.</p></div>
+    <div class="card" style="--c: var(--proof)"><div class="who">Proof</div><p>The fidelity, storage and timing numbers, and the ladder of what was dropped and why.</p></div>
+    <div class="card" style="--c: var(--water)"><div class="who">Live query</div><p>A newly drawn boundary is answered by both the original and compact paths.</p></div>
+    <div class="card" style="--c: var(--review)"><div class="who">Receipts</div><p>Every answer carries layer versions, grid, rule and hashes so anyone can re-check it.</p></div>
+  </div>
+  <details class="deeper"><summary>Running the app <span class="lvl">practical</span></summary><div class="body">
+    <p>From a checkout with the private sample bundle restored: <code>scripts/setup-local.sh</code>, then <code>npm run dev:local --prefix app</code>, and open <code>http://127.0.0.1:5173/</code>. Deep links include <code>#/map/P-0001/2022</code>, <code>#/cohort</code>, <code>#/proof</code> and <code>#/live</code>. A fresh clone cannot run the app until the private bundle is unpacked with <code>scripts/private-data.sh unpack</code>.</p>
+  </div></details>
+</section>
+
+<!-- 8 · NUMBERS -->
+<section id="numbers" data-toc="The numbers">
+  <div class="prose">
+    <div class="kick">8 · The numbers</div>
+    <h2>Results: identical answers, smaller storage, faster queries</h2>
+    <p>Three claims are measured separately, each with its conditions stated beside the number.</p>
+    <p class="st-go"><a href="../speed/">Deep dive: the speed story →</a></p>
+  </div>
+
+  <div class="panel" id="st-score">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Same · smaller · faster</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="st-sb">
+        <div class="st-sbr same">
+          <div class="head"><span class="w">Same answers</span><span class="num">744,732</span><small>of 744,732 cells give an identical answer</small></div>
+          <div>
+            <div class="st-b"><span>Every cell</span><span class="t"><i data-w="100" style="background:var(--proof)"></i></span><span class="v">744,732 / 744,732</span></div>
+            <div class="st-b"><span>Supplied plots</span><span class="t"><i data-w="100" style="background:var(--proof)"></i></span><span class="v">17 / 17</span></div>
+            <div class="st-b"><span>Fuzzed polygons</span><span class="t"><i data-w="100" style="background:var(--proof)"></i></span><span class="v">9,829 / 9,829</span></div>
+          </div></div>
+        <div class="st-sbr small">
+          <div class="head"><span class="w">Smaller</span><span class="num">99% smaller</span><small>623 KB → 6.1 KB on the sample; 422 MB → 8.2 MB on a whole tile</small></div>
+          <div>
+            <div class="st-b grp">Sample region (34 × 17 km)</div>
+            <div class="st-b"><span>Original layers</span><span class="t"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="v">623,237 B</span></div>
+            <div class="st-b"><span>Decision layer</span><span class="t"><i data-w="0.99" style="background:var(--ink)"></i></span><span class="v">6,146 B</span></div>
+            <div class="st-b grp">Whole 10° × 10° tile (1.6 billion cells)</div>
+            <div class="st-b"><span>Original files</span><span class="t"><i data-w="100" style="background:var(--loss-past)"></i></span><span class="v">421.9 MB</span></div>
+            <div class="st-b"><span>Decision layer</span><span class="t"><i data-w="1.94" style="background:var(--ink)"></i></span><span class="v">8.2 MB</span></div>
+          </div></div>
+        <div class="st-sbr fast">
+          <div class="head"><span class="w">Faster</span><span class="num">44×</span><small>registered plots, hot query. New boundaries: about 5×. The two are separate measures.</small></div>
+          <div>
+            <div class="st-b grp">Registered plots (checked again and again)</div>
+            <div class="st-b"><span>Retained v1 path</span><span class="t"><i data-l="1" style="background:var(--rule-2)"></i></span><span class="v">1× (baseline)</span></div>
+            <div class="st-b"><span>Plot index</span><span class="t"><i data-l="44" style="background:var(--pen)"></i></span><span class="v">44×</span></div>
+            <div class="st-b"><span>Index, numpy-free</span><span class="t"><i data-l="83" style="background:var(--pen)"></i></span><span class="v">83×</span></div>
+            <div class="st-b"><span>Answer table</span><span class="t"><i data-l="410" style="background:var(--pen)"></i></span><span class="v">about 410×</span></div>
+            <div class="st-b grp">New, never-seen boundaries</div>
+            <div class="st-b"><span>Fast exact selection</span><span class="t"><i data-l="5.2" style="background:var(--ink-2)"></i></span><span class="v">5.2×</span></div>
+            <div class="st-b"><span>Batch of hundreds</span><span class="t"><i data-l="15.8" style="background:var(--ink-2)"></i></span><span class="v">about 16×*</span></div>
+            <div class="st-axis">log scale: each gridline is ten times the one before · *needs a batch in hand</div>
+          </div></div>
+      </div>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md, Phase 4 figures (the latest; it overrides earlier docs). Sample-region and whole-tile bars are linear; speed bars are log. Hot query time is for 17 registered plots on one region, one laptop and a warm cache. Multiples are against the retained v1 original-layers query. Batch figure is 500 synthetic polygons.</p>
+  </div>
+
+  <div class="prose">
+    <h3>Conditions and limits</h3>
+    <ul>
+      <li><strong>Hot is not end-to-end.</strong> Hot time is the query once data is loaded. A fresh Python process spends most of its time starting up and importing NumPy, so end-to-end barely moves. The one exception is the numpy-free re-check of registered plots: 50.0 ms down to 24.9 ms, because it never imports NumPy.</li>
+      <li><strong>Registered and new are separate.</strong> The index and answer table only answer plots registered in advance; the 410× table is a stored answer keyed by plot ID, geometry hash and layer hash. New boundaries use the decision layer.</li>
+      <li><strong>The batch needs a batch.</strong> One new plot gains nothing; on the 17-plot batch it is only 1.2× ahead of the one-at-a-time path.</li>
+      <li><strong>Everything is relative to the retained v1 path.</strong> Other EUDR tools publish no per-plot latency, so no "faster than" claim is made about them.</li>
+    </ul>
+  </div>
+  <details class="deeper"><summary>Speed phases: 24× to 44× <span class="lvl">history</span></summary><div class="body">
+    <p>The decision layers were benchmarked first: registered plots 24×, new boundaries 2.2×. Four phases followed with no change to any output, store byte or file format. Phase 1 sped up decoding, histogram reduction and polygon selection (31× and 3.0×). Phase 2 added a scalar scan, a batch evaluator and the numpy-free re-check (33× and 5.0×). Phase 3 sped up the shared reducer (44×). Phase 4 trimmed it again (numpy-free 65× to 83×; new boundaries read 5.2×) and ended with a research pass that found nothing that beats this approach for small exact plots on a CPU.</p>
+  </div></details>
+</section>
+
+<!-- 9 · FINDINGS -->
+<section id="found" data-toc="Findings">
+  <div class="prose">
+    <div class="kick">9 · What it found</div>
+    <h2>Findings on the 17 supplied plots</h2>
+    <p>With Hansen alone, <strong>7 of the 17 plots</strong> show tree-cover loss after 2020. Hansen records any tree-cover loss on any land, and the region is rubber and oil-palm country. With the JRC 2020 forest map added, only <strong>P-0001</strong> has <span class="hl">mapped loss on mapped 2020 forest</span>: 2 cells, in 2022, out of its 38 Hansen loss cells that year.</p>
+    <p class="st-go"><a href="../findings/">Deep dive: what the plots show →</a></p>
+  </div>
+
+  <div class="panel st-fun" id="st-fun">
+    <div class="panel-in">
+      <div class="ph"><span class="tag"><span class="chip syn">Schematic</span>17 plots, three filters</span><button class="replay" type="button">↻ Replay</button></div>
+      <svg viewBox="0 0 1000 250" id="st-fsvg" role="img" aria-label="Seventeen dots for the seventeen plots. Seven turn orange when Hansen alone is read. Six of those fade back when the JRC 2020 forest map is added, leaving only the dot for P-0001."></svg>
+      <p class="say"><small>Filter</small><span id="st-fsay"></span></p>
+    </div>
+    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("What the decision layer says about the 17 plots"). One dot per plot; positions are decorative. The six other plots with Hansen loss after 2020 (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) had that loss only on land JRC did not map as forest in 2020. Counts are cells, not hectares.</p>
+  </div>
+
+  <div class="st-two">
+    <div class="card" style="--c: var(--declared)"><div class="who">What the supplier declared</div><h3>Declared indication, no mapped loss</h3><p>All 17 declare "Deforestation-free", checked against "Hansen Tree Cover Loss 2021-2023". Five (P-0003, P-0005, P-0008, P-0010, P-0013) record an "indication of deforestation", resolved by on-site verification. On that layer and the project's rule, none of those five shows loss in 2021 to 2023.</p></div>
+    <div class="card" style="--c: var(--review)"><div class="who">The reverse case</div><h3>Declared none, map shows some</h3><p>Three plots declared no indication but show 2021 to 2023 loss on the layer they cite: P-0001 (38 cells in 2022), P-0016 (1 in 2023), P-0018 (1 in 2021). Neither the older Hansen release nor a different boundary rule explains the gap.</p></div>
+  </div>
+  <div class="note ok"><b>Scope</b><span>These are questions for the reviewer, not accusations. The supplier's evidence files were not supplied, and the supplier may have used manual review, another layer or a buffer; each answer therefore carries a receipt.</span></div>
+  <div class="note warn"><b>Scope</b><span>These are mapped observations under a written rule, not a legal compliance verdict. The wording is "mapped loss on mapped 2020 forest", not "deforestation found". The screen excludes EUDR's 0.5 ha minimum area, the "able to reach 5 m" test and protected areas.</span></div>
+</section>
+
+<!-- 10 · TOMORROW -->
+<section id="tomorrow" data-toc="The pitch">
+  <div class="prose">
+    <div class="kick">10 · The pitch</div>
+    <h2>The pitch in brief</h2>
+    <div class="note say-it" style="max-width:none"><b>Summary line</b><span><strong>Plotline keeps the decision, not the data: a 6 KB decision layer gives the same EUDR screening answers as 623 KB of original map layers, proven for every cell in the region.</strong></span></div>
+    <p>The pitch structure: the rule is re-run, so most of the data is unnecessary; what the decision reads; proof for every cell; the measured numbers; what the layers show. The judges are engineers, so claims stay tied to the numbers and wording used on this page.</p>
+    <p>Three wording rules apply: registered plots and new boundaries are kept separate (never one blended "N× faster"), "hot" is stated as hot, and supplier declarations are called declarations.</p>
+    <p class="st-go"><a href="../pitch/">Presentation guide →</a> &nbsp; <a href="../submit/">Submission readiness →</a></p>
+  </div>
+</section>
+
+<!-- READING MAP -->
+<section id="map" data-toc="Other pages">
+  <div class="prose">
+    <div class="kick">Reading map</div>
+    <h2>Other pages</h2>
+  </div>
+  <div class="cols st-map">
+    <a class="card" href="../event/" style="--c: var(--ink-2)"><div class="who">Context · 15 min</div><h3>The event and the brief</h3><p class="rd">The six challenges and the SystemEarth brief, word by word.</p></a>
+    <a class="card" href="../company/" style="--c: var(--forest)"><div class="who">Context · 20 min</div><h3>SystemEarth and the EUDR</h3><p class="rd">The EUDR rule, the cut-off date and the company.</p></a>
+    <a class="card" href="../data/" style="--c: var(--water)"><div class="who">Deep dive · 25 min</div><h3>The data</h3><p class="rd">Rasters, GeoTIFFs and the two public maps.</p></a>
+    <a class="card" href="../solution/" style="--c: var(--proof)"><div class="who">Deep dive · 25 min</div><h3>How Plotline works</h3><p class="rd">The 20 codes, the proof and the app.</p></a>
+    <a class="card" href="../speed/" style="--c: var(--loss)"><div class="who">Deep dive · 20 min</div><h3>Performance</h3><p class="rd">The baseline and conditions behind each speed multiple.</p></a>
+    <a class="card" href="../findings/" style="--c: var(--declared)"><div class="who">Deep dive · 15 min</div><h3>What the plots show</h3><p class="rd">The declaration gap and what the results do not claim.</p></a>
+    <a class="card" href="../pitch/" style="--c: var(--pen)"><div class="who">Presenting · 20 min</div><h3>Presentation guide</h3><p class="rd">The summary line, demo run-through, and questions and answers.</p></a>
+    <a class="card" href="../submit/" style="--c: var(--review)"><div class="who">Presenting · 10 min</div><h3>Submission readiness</h3><p class="rd">Requirements, current status and unconfirmed items.</p></a>
+    <a class="card" href="../glossary/" style="--c: var(--muted)"><div class="who">Reference</div><h3>Glossary</h3><p class="rd">Definitions from "affine" to "zstd".</p></a>
+  </div>
+  <p class="endnote">Results are encoding and query evidence on a sample region, not legal compliance findings. Supplier plot boundaries and declaration rows are private; every plot drawn here is synthetic.</p>
+</section>
+
+</main></div>
+<script src="../assets/pack.js"></script>
+<script>
+(() => {
+  const { $, $$, instrument, stepper, seg, ease, fmt } = Pack;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v)); if (parent) parent.append(e); return e; };
+
+  /* 1 · build sequence */
+  (() => {
+    const stages = [
+      ['Brief', 'The SystemEarth challenge asks for a use case, a choice of layers and time periods, and an encoded sample region compared with the originals.'],
+      ['Data', 'The company sample: 17 plots and their declarations, audited as a clean one-to-one join. The public Hansen and JRC layers are fetched.'],
+      ['Prototype', 'A written query rule, the original and compact paths, a proof that all 17 plot answers match, and receipts. The build is reproduced from a clean checkout, independently reviewed in a browser and recorded in a walkthrough.'],
+      ['Decision layers', 'Layer analysis of what each question reads, and the 6.1 KB decision layer.'],
+      ['Proof', 'An independent path compares the decision layer with the original layers for every one of the 744,732 cells.'],
+      ['Speed', 'Phases 1 to 4 of speed work, then a research pass of papers and options that found nothing better for small exact plots on a CPU.'],
+      ['App', 'A map-first app with map, cohort, proof, live query and receipt views.']
+    ];
+    const el = $('#st-time');
+    const st = stepper(el, stages.length, k => {
+      const d = stages[k]; $('#st-td').textContent = 'Stage ' + (k + 1) + ' of ' + stages.length; $('#st-th').textContent = d[0]; $('#st-tp').textContent = d[1];
+    });
+    $$('.steps button', el).forEach((b, i) => { b.textContent = i + 1; b.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + stages[i][0]); });
+  })();
+
+  /* 2 · cut-off strip */
+  (() => {
+    const el = $('#st-cut'), svg = $('svg', el), say = $('#st-cut-say');
+    const cells = [], labs = [];
+    for (let i = 0; i < 25; i++) {
+      const x = 20 + i * 38.4;
+      cells.push(mk('rect', { x, y: 40, width: 34, height: 54, rx: 5, fill: 'var(--mist)' }, svg));
+      if (i % 5 === 0 || i === 24) { const t = mk('text', { x: x + 17, y: 112, 'text-anchor': 'middle' }, svg); t.textContent = 2001 + i; labs.push(t); }
+    }
+    const lx = 20 + 20 * 38.4 - 2.2;
+    const line = mk('line', { x1: lx, x2: lx, y1: 22, y2: 104, stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
+    const cut = mk('text', { x: lx - 8, y: 16, 'text-anchor': 'end', class: 'cut' }, svg); cut.textContent = '31 Dec 2020 · cut-off';
+    const rd = mk('text', { x: lx + 10, y: 16, class: 'cut' }, svg); rd.textContent = 'read by Q2';
+    const nr = mk('text', { x: 20, y: 140, fill: 'var(--muted)' }, svg); nr.textContent = '2001–2020: before the cut-off, not read by any of the three questions';
+    const ra = mk('text', { x: lx + 10, y: 140 }, svg); ra.textContent = '2021–2025 · loss that counts';
+    ra.style.fill = 'var(--loss)'; ra.style.fontWeight = 600; nr.style.fill = 'var(--muted)';
+    instrument(el, { ms: 5200, render(t) {
+      cells.forEach((c, i) => {
+        const shown = seg(t, i / 25 * 0.45, i / 25 * 0.45 + 0.05) > 0.5;
+        let fill = shown ? 'var(--loss-past)' : 'var(--mist)';
+        if (t > 0.6) fill = i < 20 ? 'var(--loss-past)' : 'var(--loss)';
+        c.setAttribute('fill', fill); c.setAttribute('opacity', t > 0.6 && i < 20 ? .45 : 1);
+      });
+      const a = seg(t, 0.5, 0.65);
+      line.setAttribute('opacity', a); cut.setAttribute('opacity', a); rd.setAttribute('opacity', seg(t, .62, .72));
+      nr.setAttribute('opacity', seg(t, .68, .8)); ra.setAttribute('opacity', seg(t, .72, .85));
+      say.textContent = t < 0.5 ? 'Hansen records one loss year per map cell, 2001 to 2025.'
+        : t < 0.68 ? 'The rule has one cut-off: 31 December 2020. JRC maps what was forest then.'
+        : 'Only loss after the cut-off, on land that was forest at the cut-off, answers Q2.';
+    } });
+  })();
+
+  /* 3 · nesting */
+  (() => {
+    const svg = $('#st-nsvg'), say = $('#st-nsay'), btns = $$('#st-nbtns .btn');
+    const rects = [];
+    mk('rect', { x: 4, y: 4, width: 292, height: 292, rx: 10, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) rects.push(mk('rect', { x: 12 + c * 93, y: 12 + r * 93, width: 87, height: 87, rx: 6, fill: 'var(--mist)' }, svg));
+    const ring = mk('rect', { x: 102, y: 102, width: 93, height: 93, rx: 8, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 4, 'stroke-dasharray': '2 0' }, svg);
+    const tx = mk('text', { x: 148.5, y: 150, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: 'var(--pen-deep)' }, svg); tx.setAttribute('style', 'font: 700 13px var(--f-mono)'); tx.textContent = 'read';
+    const pats = {
+      centre: { f: [0, 0, 0, 0, 1, 0, 0, 0, 0], s: 'Centre cell is forest, so this whole 28 m Hansen cell counts as 2020 forest.' },
+      corner: { f: [1, 0, 0, 0, 0, 0, 0, 0, 0], s: 'Centre cell is not forest, so the cell counts as not forest, although one corner is.' },
+      ring: { f: [1, 1, 1, 1, 0, 1, 1, 1, 1], s: 'Centre cell is not forest, so the cell counts as not forest, even with eight forest neighbours.' }
+    };
+    const set = k => { rects.forEach((r, i) => r.setAttribute('fill', pats[k].f[i] ? 'var(--forest)' : 'var(--mist)')); say.textContent = pats[k].s; btns.forEach(b => { b.classList.toggle('on', b.dataset.p === k); b.setAttribute('aria-pressed', b.dataset.p === k); }); };
+    btns.forEach(b => b.addEventListener('click', () => set(b.dataset.p)));
+    set('centre');
+  })();
+
+  /* 4 · layers collapse */
+  (() => {
+    const el = $('#st-collapse'), b1 = $$('#st-b1 > i'), b2 = $('#st-b2'), b3 = $('#st-b3'), say = $('#st-colsay');
+    const sizes = [414142, 159863, 2994, 46238], TOT = 623237;
+    const n1 = $('#st-c1n'), n2 = $('#st-c2n'), n3 = $('#st-c3n');
+    instrument(el, { ms: 7000, render(t) {
+      const a = seg(t, 0, 0.2);
+      b1.forEach((s, i) => { s.style.width = (sizes[i] / TOT * 100 * ease(a)) + '%'; s.style.opacity = t > 0.3 && i < 2 ? Math.max(0.18, 1 - seg(t, .3, .45) * .82) : 1; });
+      n1.textContent = fmt(Math.round(TOT * ease(a)), 0) + ' B';
+      const s2 = seg(t, 0.4, 0.62);
+      b2.style.width = (s2 > 0 ? (100 - (100 - 38513 / TOT * 100) * ease(s2)) * (s2 > 0 ? 1 : 0) : 0) + '%';
+      n2.textContent = s2 === 0 ? 'pending' : fmt(Math.round(TOT - (TOT - 38513) * ease(s2)), 0) + ' B' + (s2 === 1 ? ' · 93.8% smaller' : '');
+      const s3 = seg(t, 0.68, 0.9);
+      b3.style.width = (s3 > 0 ? (38513 / TOT * 100 - (38513 - 6146) / TOT * 100 * ease(s3)) : 0) + '%';
+      n3.textContent = s3 === 0 ? 'pending' : fmt(Math.round(38513 - (38513 - 6146) * ease(s3)), 0) + ' B' + (s3 === 1 ? ' · 99.0% smaller' : '');
+      say.textContent = t < 0.28 ? 'Four original files, 623,237 bytes.'
+        : t < 0.62 ? 'Canopy percentages are 72% of the Hansen bytes and no question reads them. Loss years before 2021 are not read either.'
+        : t < 0.9 ? 'One code per cell is kept. The decision layer also forgets loss on land that was not forest in 2020.'
+        : '6,146 bytes. About 1% of the original, with the same answers.';
+    } });
+  })();
+
+  /* 5 · one plot, step by step (synthetic) */
+  (() => {
+    const el = $('#st-plot'), svg = $('#st-psvg'), tally = $('#st-tally'), small = $('#st-psmall'), say = $('#st-psay');
+    const COLS = 14, ROWS = 9, S = 40, OX = 0, OY = 0;
+    const poly = [[3.2, 2.6], [7.6, 2.2], [10.4, 3.4], [10.2, 6.4], [7.0, 7.2], [4.0, 6.2], [2.8, 4.4]];
+    const loss = { '4,4': 22, '5,5': 22, '8,3': 22, '9,4': 21, '8,5': 23, '7,2': 22, '11,7': 24 };
+    const inside = (x, y) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+    const cells = [];
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const water = c === 13 && r <= 2;
+      const forest = !water && c <= 5 && r >= 2 && r <= 7 && !(c === 2 && r === 7) && !(c === 5 && r === 2);
+      const y = loss[c + ',' + r] || 0;
+      const sel = inside(c + .5, r + .5);
+      const t = water ? 'W' : forest ? 'F' : 'N';
+      cells.push({ c, r, water, forest, y, sel, t, code: t + (y && !water ? '·' + y : '') });
+    }
+    const g = mk('g', {}, svg);
+    cells.forEach(k => {
+      k.rect = mk('rect', { x: OX + k.c * S + 1.5, y: OY + k.r * S + 1.5, width: S - 3, height: S - 3, rx: 4, fill: k.water ? 'var(--water-wash)' : k.forest ? 'var(--forest-wash)' : 'var(--mist)', stroke: 'var(--rule)', 'stroke-width': 1 }, g);
+      k.dot = mk('circle', { cx: OX + (k.c + .5) * S, cy: OY + (k.r + .5) * S, r: 3.5, fill: 'var(--pen)', opacity: 0 }, g);
+      k.txt = mk('text', { x: OX + (k.c + .5) * S, y: OY + (k.r + .5) * S + 4, 'text-anchor': 'middle', opacity: 0, fill: k.water ? 'var(--water)' : k.forest ? 'var(--forest)' : 'var(--ink-2)' }, g);
+      k.txt.textContent = k.code;
+    });
+    const pg = mk('polygon', { points: poly.map(p => (OX + p[0] * S) + ',' + (OY + p[1] * S)).join(' '), fill: 'rgba(47,69,255,.08)', stroke: 'var(--pen)', 'stroke-width': 3, 'stroke-linejoin': 'round', opacity: 0 }, svg);
+    const selc = cells.filter(k => k.sel);
+    const nF = selc.filter(k => k.t === 'F').length, nFL = selc.filter(k => k.t === 'F' && k.y).length;
+    const nN = selc.filter(k => k.t === 'N').length, nW = selc.filter(k => k.t === 'W').length;
+    const hansenLoss = selc.filter(k => k.y && k.y <= 23 && k.t !== 'W').length;
+    const nNL = selc.filter(k => k.t === 'N' && k.y).length;
+    const chips = (arr) => { tally.innerHTML = arr.map(a => `<span class="${a[1] || ''}">${a[0]}</span>`).join(''); };
+    stepper(el, 5, k => {
+      pg.setAttribute('opacity', 1);
+      cells.forEach(c => {
+        const on = k >= 1 && c.sel;
+        c.rect.setAttribute('stroke', on ? 'var(--pen)' : 'var(--rule)'); c.rect.setAttribute('stroke-width', on ? 2 : 1);
+        c.dot.setAttribute('opacity', k >= 1 ? 1 : 0); c.dot.setAttribute('fill', c.sel ? 'var(--pen)' : 'var(--faint)'); c.dot.setAttribute('r', c.sel ? 4 : 2.5);
+        c.txt.setAttribute('opacity', k >= 2 && c.sel ? 1 : 0);
+        c.rect.setAttribute('opacity', k >= 1 && !c.sel ? .45 : 1);
+        if (k >= 4 && c.sel && c.t === 'F' && c.y) { c.rect.setAttribute('stroke', 'var(--review)'); c.rect.setAttribute('stroke-width', 4); }
+        else if (k >= 2 && c.sel && c.y) { c.rect.setAttribute('stroke', 'var(--loss)'); c.rect.setAttribute('stroke-width', 3); }
+        c.dot.setAttribute('opacity', k >= 2 && c.sel ? 0 : (k >= 1 ? 1 : 0));
+      });
+      const texts = [
+        ['Step 1 · the outline', 'A plot is an outline on the map. Behind it, the satellite layers are a grid of square cells.', []],
+        ['Step 2 · the written rule', `A cell counts if its centre dot is inside the outline. The rule selects ${selc.length} cells here. A different rule (for example "any overlap") can change the answer.`, [[selc.length + ' cells selected']]],
+        ['Step 3 · one code per cell', 'Each selected cell carries a code: F or N for forest at the cut-off, W for water, and a "·" with the loss year when there is one.', [[selc.length + ' codes read']]],
+        ['Step 4 · count the codes', 'The answer needs only a tally of the codes: a 20-bin histogram in the engine.', [[nF - nFL + ' × F', 'f'], [nFL + ' × F with loss', 'x'], [nN - nNL + ' × N'], [nNL + ' × N with loss', 'l'], [nW + ' × W']]],
+        ['Step 5 · the answer', `Q1: ${nF} cells were forest at the cut-off. Q2: ${nFL} of them were lost since, a question for the reviewer. Q3 (the supplier's Hansen-only check): ${hansenLoss} cells show loss in 2021 to 2023. The decision layer stores plain N for the ${nNL} non-forest loss cells, and Q1 and Q2 do not change.`, [[nFL + ' cells: mapped loss on mapped 2020 forest', 'x'], [hansenLoss + ' cells: Hansen-only loss 2021–23', 'l']]]
+      ];
+      small.textContent = texts[k][0]; say.textContent = texts[k][1]; chips(texts[k][2]);
+    });
+  })();
+
+  /* 6 · proof grid */
+  (() => {
+    const el = $('#st-proof'), cv = $('#st-cv'), ctx = cv.getContext('2d');
+    const W = 1233, H = 604, N = W * H;
+    const img = ctx.createImageData(W, H), d = img.data;
+    const p1 = $('#st-p1'), p2 = $('#st-p2'), p3 = $('#st-p3'), p4 = $('#st-p4'), pm = $('#st-pm'), say = $('#st-psay2'), brk = $('#st-break');
+    let done = 0, broken = false, finished = false;
+    const base = () => { for (let i = 0; i < N; i++) { d[4 * i] = 238; d[4 * i + 1] = 240; d[4 * i + 2] = 245; d[4 * i + 3] = 255; } ctx.putImageData(img, 0, 0); done = 0; };
+    const tone = (x, y) => { const dx = (x - W * .46) / (W * .2), dy = (y - H * .5) / (H * .3); const f = dx * dx + dy * dy < 1; const n = ((x * 73856093) ^ (y * 19349663)) & 7; return f ? [58 + n, 110 + n, 22] : [120 + 2 * n, 168 + n, 70]; };
+    const draw = k => {
+      if (k < done) base();
+      if (k === done) return;
+      for (let i = done; i < k; i++) { const x = i % W, y = (i / W) | 0, c = tone(x, y); d[4 * i] = c[0]; d[4 * i + 1] = c[1]; d[4 * i + 2] = c[2]; d[4 * i + 3] = 255; }
+      const y0 = (done / W) | 0, y1 = Math.min(H - 1, ((k - 1) / W) | 0);
+      ctx.putImageData(img, 0, 0, 0, y0, W, y1 - y0 + 1);
+      done = k;
+    };
+    const setStats = (a, b, c, m) => {
+      p1.textContent = fmt(a, 0); p2.textContent = b; p3.textContent = fmt(c, 0); p4.textContent = m;
+      pm.className = 'big ' + (m ? 'bad' : 'proof');
+    };
+    base();
+    instrument(el, { ms: 7000, render(t) {
+      if (t < 0.02 && broken) broken = false;
+      const a = seg(t, 0, 0.8), k = Math.floor(N * a);
+      if (broken && t >= 1) return;
+      draw(k);
+      setStats(k, Math.round(17 * seg(t, .8, .9)), Math.round(9829 * seg(t, .9, 1)), 0);
+      finished = t >= 1;
+      brk.disabled = !finished;
+      say.textContent = t < 0.8 ? 'Every cell is rebuilt from the originals and compared.' : t < 1 ? 'Then every output field for the 17 plots and thousands of awkward generated polygons.'
+        : 'All identical. Because every plot answer is a function of its cells\' codes, every possible boundary in the region matches too.';
+    } });
+    brk.disabled = true;
+    brk.addEventListener('click', () => {
+      if (!finished || broken) return;
+      broken = true;
+      const x = 200 + Math.floor(Math.random() * (W - 400)), y = 120 + Math.floor(Math.random() * (H - 240));
+      ctx.fillStyle = '#C8312B'; ctx.fillRect(x - 3, y - 3, 7, 7);
+      ctx.strokeStyle = '#C8312B'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, 18, 0, 6.2832); ctx.stroke();
+      setStats(N - 1, 17, 9829, 1);
+      say.textContent = 'One flipped cell out of 744,732 is caught. A check that compares every cell cannot miss it.';
+    });
+  })();
+
+  /* 8 · scoreboard */
+  (() => {
+    const el = $('#st-score'), bars = $$('.st-b .t i', el);
+    const LOG_MAX = Math.log10(500) + 0.12;
+    const wOf = b => b.dataset.l ? (Math.log10(+b.dataset.l) + 0.12) / LOG_MAX * 100 : +b.dataset.w;
+    instrument(el, { ms: 2600, render(t) {
+      bars.forEach((b, i) => { const a = ease(seg(t, (i % 7) * 0.06, (i % 7) * 0.06 + 0.45)); const w = wOf(b); b.style.width = Math.max(w * a, w > 0 && a > 0 ? 0.6 : 0) + '%'; });
+    } });
+  })();
+
+  /* 9 · funnel */
+  (() => {
+    const el = $('#st-fun'), svg = $('#st-fsvg'), say = $('#st-fsay');
+    const dots = [];
+    const lossIdx = new Set([0, 1, 2, 3, 4, 5, 6]);
+    for (let i = 0; i < 17; i++) {
+      const x = 50 + i * 57, y = 110;
+      dots.push({ x, y, g: mk('circle', { cx: x, cy: y, r: 18, fill: 'var(--mist)', stroke: 'var(--rule-2)', 'stroke-width': 2 }, svg) });
+    }
+    const lab = (x, y, txt, cls) => { const t = mk('text', { x, y, class: cls || '' }, svg); t.textContent = txt; return t; };
+    const l1 = lab(32, 40, '17 supplied plots', 'big');
+    const l2 = lab(32, 40, '7 show Hansen loss after 2020 (any land)', 'big');
+    const l3 = lab(32, 40, '1 shows mapped loss on mapped 2020 forest', 'big');
+    const sub = lab(32, 232, '', '');
+    const tagp = mk('text', { x: 32, y: 162, fill: 'var(--review)' }, svg); tagp.setAttribute('style', 'font: 600 12px var(--f-mono)'); tagp.textContent = '';
+    instrument(el, { ms: 7500, render(t) {
+      const s2 = seg(t, 0.28, 0.48), s3 = seg(t, 0.6, 0.8);
+      l1.setAttribute('opacity', t < 0.28 ? 1 : 0); l2.setAttribute('opacity', t >= 0.28 && t < 0.6 ? 1 : 0); l3.setAttribute('opacity', t >= 0.6 ? 1 : 0);
+      dots.forEach((d, i) => {
+        const hasLoss = lossIdx.has(i);
+        let fill = 'var(--mist)', stroke = 'var(--rule-2)', op = 1, sw = 2;
+        if (s2 > 0 && hasLoss) { fill = 'var(--loss-wash)'; stroke = 'var(--loss)'; sw = 3; }
+        if (s3 > 0 && hasLoss) {
+          if (i === 0) { fill = 'var(--review-wash)'; stroke = 'var(--review)'; sw = 5; }
+          else { fill = 'var(--sheet)'; stroke = 'var(--loss)'; op = 1 - s3 * .6; sw = 2; }
+        }
+        if (s3 > 0 && !hasLoss) op = 1 - s3 * .55;
+        d.g.setAttribute('fill', fill); d.g.setAttribute('stroke', stroke); d.g.setAttribute('stroke-width', sw); d.g.setAttribute('opacity', op);
+        d.g.setAttribute('r', i === 0 && s3 > 0 ? 18 + 4 * s3 : 18);
+      });
+            tagp.textContent = s3 > 0.5 ? 'P-0001 · 2 cells, 2022' : '';
+      sub.textContent = t < 0.28 ? 'Dots are plots. Positions are decorative.' : t < 0.6 ? 'Hansen alone counts any tree-cover loss, on any land.' : 'Under the JRC 2020 forest map, six of those seven had loss only on land not mapped as forest then.';
+      say.textContent = t < 0.28 ? 'The 17 supplier plots.' : t < 0.6 ? 'Read on its own, Hansen shows loss after 2020 on 7 of 17 plots.' : 'With the 2020 forest map added, one plot remains: a question for the reviewer, with 2 cells.';
+    } });
+  })();
+})();
+</script>
+</body>
+</html>
