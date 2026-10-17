@@ -1,0 +1,9 @@
+/* Swarm: fixed point-cloud canvas behind the page, plus the cursor-trail overlay. */
+#swarm { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; pointer-events: none; opacity: 0; transition: opacity .5s ease; }
+#swarm.on { opacity: 1; }
+.wrap { position: relative; z-index: 1; }
+#swarm-labels { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+@media (max-width: 819px) { #swarm-labels { display: none; } }
+#swarm-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 80; pointer-events: none; }
+@media (max-width: 819px) { #swarm.on { opacity: .35; } #swarm-trail { display: none; } }
+@media (prefers-reduced-motion: reduce) { #swarm { transition: none; } #swarm-trail { display: none; } }
