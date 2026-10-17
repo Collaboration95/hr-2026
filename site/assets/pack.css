@@ -1,6 +1,6 @@
 /* Plotline explainer pack: shared styles.
    Look follows the ResearchAgent explainers (theFastandtheFungible gh-pages): light paper, Bricolage + Geist,
-   white "instrument" panels that animate a real result, a yellow marker highlight.
+   white "instrument" panels that animate a real result, bold for emphasis (no marker highlight).
    Data hues follow Plotline's design/DESIGN.md meanings, darkened for a light page. One meaning per hue. */
 :root {
   color-scheme: light;
@@ -66,7 +66,6 @@ h4 { font-size: 18px; font-weight: 700; margin-top: 20px; }
 p { margin: 14px 0 0; }
 ul, ol { margin: 14px 0 0; padding-left: 1.3em; }
 li { margin-top: 6px; }
-.hl { background: linear-gradient(transparent 58%, var(--hi) 58%); padding: 0 2px; }
 .muted { color: var(--muted); }
 .small { font-size: 15.5px; }
 

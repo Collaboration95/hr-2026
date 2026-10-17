@@ -68,7 +68,7 @@
   <div class="prose">
     <div class="kick">2 · Layer stack</div>
     <h2>Four source rasters, one decision plane</h2>
-    <p>Layer analysis drops <span class="hl"><strong>72% of the Hansen GeoTIFF bytes</strong> before any codec runs</span>: no EUDR question reads <code>treecover2000</code> or loss years before 2021. JRC supplies forest at the cut-off, and 1 of every 9 JRC cells is read.</p>
+    <p>Layer analysis drops <strong>72% of the Hansen GeoTIFF bytes</strong> before any codec runs: no EUDR question reads <code>treecover2000</code> or loss years before 2021. JRC supplies forest at the cut-off, and 1 of every 9 JRC cells is read.</p>
   </div>
 
   <div class="br-seq" id="br-seq">
@@ -135,7 +135,7 @@
   <div class="prose">
     <div class="kick">4 · Store file</div>
     <h2><code>.plds</code> byte layout</h2>
-    <p>One file holds a 20-byte prefix, a canonical-JSON header and the payload: four bit-planes plus <strong>sparse loss events coded as rank gaps</strong>. The split encoding is <span class="hl"><strong>28% smaller than the best GeoTIFF</strong> of the same codes</span>. Every check runs before a decoded cell is used.</p>
+    <p>One file holds a 20-byte prefix, a canonical-JSON header and the payload: four bit-planes plus <strong>sparse loss events coded as rank gaps</strong>. The split encoding is <strong>28% smaller than the best GeoTIFF</strong> of the same codes. Every check runs before a decoded cell is used.</p>
   </div>
   <div class="panel" id="br-store">
     <div class="panel-in">
@@ -218,7 +218,7 @@
   <div class="prose">
     <div class="kick">6 · Query paths</div>
     <h2>Paths P0–P6, three clocks</h2>
-    <p>Registered-plot paths run on a <span class="hl"><strong>content-bound registry and answer table</strong></span>: a lookup hits only on plot ID, geometry hash, store hash and level. Registered plots and new boundaries are separate jobs, each measured against P0, the v1 query on the original layers.</p>
+    <p>Registered-plot paths run on a <strong>content-bound registry and answer table</strong>: a lookup hits only on plot ID, geometry hash, store hash and level. Registered plots and new boundaries are separate jobs, each measured against P0, the v1 query on the original layers.</p>
   </div>
   <div class="panel" id="br-paths">
     <div class="panel-in">
@@ -266,7 +266,7 @@
   <div class="prose">
     <div class="kick">8 · Benchmarks</div>
     <h2>Speed, storage, memory and fidelity</h2>
-    <p>Exhaustive per-cell proof: <span class="hl"><strong>744,732 of 744,732 cells identical, so every plot boundary in the region</strong> gets the same answer</span>. Storage is also measured on a whole 10° tile.</p>
+    <p>Exhaustive per-cell proof: <strong>744,732 of 744,732 cells identical, so every plot boundary in the region</strong> gets the same answer. Storage is also measured on a whole 10° tile.</p>
   </div>
   <div class="br-bgrid">
     <div class="panel" id="br-store-chart">
@@ -392,7 +392,7 @@
       </div>
     </div>
   </div></div>
-  <div class="endnote">Plotline · Hack &amp; Hire Sustainability Edition 2026. Numbers are from <code>artifacts/decision/*.json</code> and <code>validation/decision/out/</code>. Supplier plots and their outlines are private and not shown.</div>
+  <div class="endnote">Plotline. Numbers are from <code>artifacts/decision/*.json</code> and <code>validation/decision/out/</code>. Supplier plots and their outlines are private and not shown.</div>
 </section>
 
 </main>

@@ -110,11 +110,11 @@
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
   <div class="kick">Overview</div>
-  <h1>Plotline <span class="hl">overview</span></h1>
+  <h1>Plotline overview</h1>
   <p class="lede">Plotline is a compact store for EUDR forest-loss screening. It keeps <strong>only the facts the decision reads</strong> and gives the same answers as the original map layers.</p>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li><b>The problem:</b> EUDR screening intersects farm plots with years of forest maps, and repeats the check whenever a map updates. The challenge brief asks for compact storage, fast queries and the <em>same</em> plot-level answer as the original layers.</li>
-    <li><b>The result:</b> a <span class="hl">6.1 KB decision layer</span> replaces 623 KB of original layers, with identical answers for all 744,732 map cells.</li>
+    <li><b>The result:</b> a <strong>6.1 KB decision layer</strong> replaces 623 KB of original layers, with identical answers for all 744,732 map cells.</li>
     <li><b>The speed:</b> registered plots re-check 44× faster and new boundaries about 5× faster. Every answer carries a receipt.</li>
   </ul></div>
 </header>
@@ -126,7 +126,7 @@
     <h2>EUDR plot-level screening</h2>
     <p>Companies that sell rubber, palm oil, cocoa or coffee into the EU must show that every supplying farm plot is <strong>deforestation-free</strong> under the EU Deforestation Regulation, <strong>EUDR</strong>.</p>
     <p>A plot's boundary is checked against satellite maps for two things: whether the land was <strong>forest on 31 December 2020</strong>, the rule's cut-off date, and whether tree cover has been <strong>lost since</strong>. The maps come from different sources at different sharpness and update every year. The check is therefore re-run for millions of plots whenever a layer updates, and the data accumulates.</p>
-    <p>The brief's slide title frames the task: <span class="hl">"Keep the decision, not the data."</span> The layers are to be stored compactly and queried fast while reproducing exactly the same plot-level decisions as the original layers.</p>
+    <p>The brief's slide title frames the task: <strong>"Keep the decision, not the data."</strong> The layers are to be stored compactly and queried fast while reproducing exactly the same plot-level decisions as the original layers.</p>
   </div>
 
   <div class="panel" id="st-cut">
@@ -187,7 +187,7 @@
     <div class="card" style="--c: var(--declared)"><div class="who">Q3</div><h3>What did the supplier's own check say?</h3><p>The supplier named "Hansen Tree Cover Loss 2021-2023": any Hansen loss in 2021 to 2023, on any land.</p></div>
   </div>
   <div class="prose">
-    <p>No question reads the canopy percentages, which are <span class="hl">72% of Hansen's bytes</span>, or loss years before 2021. Both are dropped. Each map cell is reduced to <strong>one of 20 codes</strong>.</p>
+    <p>No question reads the canopy percentages, which are <strong>72% of Hansen's bytes</strong>, or loss years before 2021. Both are dropped. Each map cell is reduced to <strong>one of 20 codes</strong>.</p>
   </div>
 
   <div class="panel" id="st-collapse">
@@ -364,7 +364,7 @@
   <div class="prose">
     <div class="kick">8 · What it found</div>
     <h2>Findings on the 17 supplied plots</h2>
-    <p>With Hansen alone, <strong>7 of the 17 plots</strong> show tree-cover loss after 2020. Hansen records any tree-cover loss on any land, and the region is rubber and oil-palm country. With the JRC 2020 forest map added, only <strong>P-0001</strong> has <span class="hl">mapped loss on mapped 2020 forest</span>: 2 cells, in 2022, out of its 38 Hansen loss cells that year.</p>
+    <p>With Hansen alone, <strong>7 of the 17 plots</strong> show tree-cover loss after 2020. Hansen records any tree-cover loss on any land, and the region is rubber and oil-palm country. With the JRC 2020 forest map added, only <strong>P-0001</strong> has <strong>mapped loss on mapped 2020 forest</strong>: 2 cells, in 2022, out of its 38 Hansen loss cells that year.</p>
     <p class="st-go"><a href="../findings/">Deep dive: what the plots show →</a></p>
   </div>
 

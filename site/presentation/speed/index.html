@@ -142,7 +142,7 @@
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="zippy" data-size="96" data-pose="sprint" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive</div>
-  <h1>Five changes account for <span class="hl">most of the speed-up.</span></h1>
+  <h1>Five changes account for most of the speed-up.</h1>
   <p class="lede">Plotline's decision layer re-checks a registered plot <strong>44× faster</strong> than the first version, and a new boundary <strong>5.2× faster</strong>. A few changes produced those numbers; they are described here in the order they were made.</p>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li><b>Five changes:</b> keep only what the decision reads; find a registered plot's cells once; decode on the packed bit-planes; scan small polygons in plain Python; drop NumPy for re-checks. A leaner shared reducer helped all of them.</li>
