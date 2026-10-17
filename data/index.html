@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The data · Plotline explainers</title>
-<meta name="description" content="Rasters, polygons and GeoTIFFs, followed by the real inputs: SystemEarth's 17-plot sample, Hansen's tree-cover loss maps and the JRC 2020 forest map.">
+<title>The data · Plotline</title>
+<meta name="description" content="Rasters, polygons and GeoTIFFs, followed by the real inputs: the 17-plot supplier sample, Hansen's tree-cover loss maps and the JRC 2020 forest map.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -55,11 +55,11 @@
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="hansen" data-size="96" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="kick">Deep dive</div>
   <h1>The data: <span class="hl">raster layers and one polygon per plot.</span></h1>
-  <p class="lede">Plotline reads three kinds of input: the 17 supplier plots in the SystemEarth sample, a tree-cover loss map from the University of Maryland (Hansen) and a 2020 forest map from the EU's Joint Research Centre (JRC).</p>
+  <p class="lede">Plotline reads three kinds of input: the 17 plots of the supplied sample, a tree-cover loss map from the University of Maryland (Hansen) and a 2020 forest map from the EU's Joint Research Centre (JRC).</p>
   <div class="tldr"><b class="lab">In brief</b><ul>
     <li>A satellite map here is a <strong>grid of whole numbers</strong>. The Hansen chip is <strong>1,233 × 604 = 744,732 cells</strong>, three numbers per cell, about 28 m wide.</li>
     <li>Of the Hansen chip's 576,999 bytes, the canopy percentage band is <strong>72%</strong>, and no EUDR question reads it.</li>
-    <li>SystemEarth's sample is <strong>17 spreadsheet rows and 17 outlines</strong> that join one-to-one. A plot owns a map cell when the cell's <strong>centre</strong> is inside its outline.</li>
+    <li>The supplied sample is <strong>17 spreadsheet rows and 17 outlines</strong> that join one-to-one. A plot owns a map cell when the cell's <strong>centre</strong> is inside its outline.</li>
   </ul></div>
 </header>
 
@@ -86,7 +86,7 @@
       <div class="legend" id="dat-leg"></div>
       <p class="say"><small>Current view</small><span id="dat-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> synthetic illustration. Band meanings follow Hansen Global Forest Change (<code>docs/research/layer-acquisition.md</code>). The outline is not resized into pixels: Plotline keeps the exact vector and asks which cell centres it covers (section 6).</p>
+    <p class="foot"><b>Source:</b> synthetic illustration. Band meanings follow Hansen Global Forest Change. The outline is not resized into pixels: Plotline keeps the exact vector and asks which cell centres it covers (section 6).</p>
   </div>
 
   <div class="prose">
@@ -99,7 +99,7 @@
       <div class="dat-bits" id="dat-bitrow" role="group" aria-label="Eight bits of a byte"></div>
       <p class="say"><small id="dat-bit-s">Each bit adds its weight.</small><span id="dat-bit-say">0</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/explainer/01-maps-as-numbers.html</code> and the Hansen band codes in <code>docs/research/layer-acquisition.md</code>. One uncompressed band of the chip would be 744,732 bytes (one per cell); the real files are smaller because they are compressed.</p>
+    <p class="foot"><b>Source:</b> Hansen Global Forest Change band codes. One uncompressed band of the chip would be 744,732 bytes (one per cell); the real files are smaller because they are compressed.</p>
   </div>
 
   <div class="prose">
@@ -123,7 +123,7 @@
       <div class="dat-coords" id="dat-coords" aria-live="polite"></div>
       <p class="muted small" style="margin-top:8px">origin x₀ = 12°, y₀ = 6° (upper-left outer corner) · step Δx = +0.00025°, Δy = −0.00025° (rows run south) · the 0.5 moves to the cell centre</p>
     </div>
-    <p class="foot"><b>Source:</b> the transform formulas in <code>docs/explainer/01-maps-as-numbers.html</code>. Invented origin; no company coordinates.</p>
+    <p class="foot"><b>Source:</b> the affine transform stored in the GeoTIFF header (<code>grid.transform</code> in <code>artifacts/decision/stores.json</code>). Invented origin; no supplier coordinates.</p>
   </div>
 
   <div class="prose">
@@ -137,22 +137,22 @@
       <div style="max-width:520px;margin:10px auto 0"><svg id="dat-zoomsvg" viewBox="0 0 400 400" role="img" aria-label="A square representing the 10 by 10 degree Hansen tile. A tiny rectangle near its top-right marks where the chip sits. The view then zooms into that rectangle."></svg></div>
       <p class="say"><small id="dat-zoom-s">Hansen tile 10N_090E</small><span id="dat-zoom-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> the chip sits at Hansen row 5,672, column 35,089 of the tile (<code>docs/lab/decision-scale-notes.md</code>). Tile and chip are drawn to scale; the marker ring is an enlarged pointer, not part of the data.</p>
+    <p class="foot"><b>Source:</b> the chip sits at Hansen row 5,672, column 35,089 of the tile (<code>artifacts/decision/scale-v1.json</code>, <code>tile</code>). Tile and chip are drawn to scale; the marker ring is an enlarged pointer, not part of the data.</p>
   </div>
   <div class="stats">
     <div class="big pen"><span class="num" data-count="744732"></span><span class="cap">cells in the chip (1,233 × 604)</span></div>
     <div class="big forest"><span class="num" data-count="576999"></span><span class="cap">bytes: the three Hansen chip files</span></div>
     <div class="big loss"><span class="num" data-count="224170336"></span><span class="cap">bytes: the three full Hansen tiles it was cut from</span></div>
   </div>
-  <p class="muted small">Source: <code>docs/research/layer-acquisition.md</code>. The chip is 0.26% of the downloaded tile bytes; tile files offer no subset download, so whole tiles were fetched and cut. Cropping is not a compression saving and is not counted as one.</p>
+  <p class="muted small">Source: <code>artifacts/decision/scale-v1.json</code> and <code>artifacts/decision/proof-v1.json</code> (<code>inputs.hansen_chips</code>). The chip is 0.26% of the downloaded tile bytes; tile files offer no subset download, so whole tiles were fetched and cut. Cropping is not a compression saving and is not counted as one.</p>
 </section>
 
 <!-- SAMPLE -->
 <section id="sample">
   <div class="prose">
-    <div class="kick">3 · The company sample</div>
+    <div class="kick">3 · The supplied sample</div>
     <h2>17 spreadsheet rows, 17 outlines, joined by plot ID.</h2>
-    <p>SystemEarth supplied two small files for <strong>one shipment lot from one supplier</strong>.</p>
+    <p>The sample is two small files for <strong>one shipment lot from one supplier</strong>.</p>
     <ul>
       <li>A <strong>CSV</strong> with 17 data rows and 35 columns: one supplier due-diligence declaration per plot.</li>
       <li>A <strong>GeoJSON</strong> file with 17 matching plot polygons.</li>
@@ -168,7 +168,7 @@
       <div class="legend"><span style="--c: var(--declared)"><i></i>Declaration-backed review lead</span><span style="--c: var(--unknown)"><i></i>Other plot</span></div>
       <p class="say"><small id="dat-join-s">Matched: 0 of 17</small><span id="dat-join-say">Each line is a join on the plot ID. The right-hand side is not in map order.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/research/company-sample-audit.md</code>. Only plot IDs are shown. The outlines are anonymous placeholder icons: no coordinates, no real boundaries and no CSV values are drawn here.</p>
+    <p class="foot"><b>Source:</b> Only plot IDs are shown. The outlines are anonymous placeholder icons: no coordinates, no real boundaries and no CSV values are drawn here.</p>
   </div>
 
   <div class="prose">
@@ -179,7 +179,7 @@
     <thead><tr><th>Group</th><th>What the columns hold</th></tr></thead>
     <tbody>
       <tr><td>Identity</td><td>Plot ID, plot size in hectares (matches the GeoJSON <code>Area</code> for all 17), supply-chain type, factory, lot number and supplier code.</td></tr>
-      <tr><td>Dates</td><td>A processing period and a harvest date, both in 2024. Their meaning is a question for the company; their order is not classified as normal or unusual.</td></tr>
+      <tr><td>Dates</td><td>A processing period and a harvest date, both in 2024.</td></tr>
       <tr><td>The deforestation check</td><td>The layer used (all 17 name <q>Hansen Tree Cover Loss 2021-2023</q>), what it showed (2 values) and the mitigation (2 values).</td></tr>
       <tr><td>Evidence</td><td>A reference key for each plot's evidence file. These are opaque keys, not working links.</td></tr>
       <tr><td>Final statuses</td><td>Deforestation, protected areas, land tenure, labour and EUDR overall. All 17 declare deforestation-free and EUDR compliant.</td></tr>
@@ -187,8 +187,7 @@
     </tbody>
   </table></div>
   <div class="note"><b>Five leads</b><span><strong>P-0003, P-0005, P-0008, P-0010 and P-0013</strong> say the Hansen check found an "indication of deforestation", then record "on-site verification with evidence" and a final deforestation-free, compliant status. These are <strong>declaration-backed review leads</strong>: questions for the evidence, not violations and not proof of compliance.</span></div>
-  <div class="note unknown"><b>Missing</b><span>The referenced mitigation evidence files were <strong>not supplied</strong>: no rows, no coordinates, nothing to inspect behind those keys. One key for P-0003 names P-0002, which is not in the sample; whether it is a valid outside key or a placeholder is for the company to say.</span></div>
-  <div class="note warn"><b>Private</b><span>The sample belongs to SystemEarth. Whether it may appear in public slides or a public repository is unconfirmed, so this pack shows no plot outlines, coordinates or CSV rows. Only the bounding box, IDs and aggregate counts are quoted.</span></div>
+  <div class="note warn"><b>Private</b><span>These pages show no plot outlines, coordinates or CSV rows. Only the bounding box, IDs and aggregate counts are quoted.</span></div>
 </section>
 
 <!-- HANSEN -->
@@ -207,7 +206,7 @@
       <tr><td><code>datamask</code></td><td>0 no data, 1 mapped land, 2 permanent water.</td><td class="r">2,994 B</td><td class="r">0.5%</td></tr>
     </tbody>
   </table></div>
-  <p class="muted small">Source: <code>docs/research/layer-acquisition.md</code> and <code>docs/lab/decision-scale-notes.md</code>. The three file sizes add to 576,999 bytes. Of the 744,732 cells, 743,418 are land and 1,314 are water.</p>
+  <p class="muted small">Source: <code>artifacts/decision/proof-v1.json</code> (<code>inputs.hansen_chips</code>) and <code>artifacts/decision/layer-analysis-v1.json</code> (<code>region_facts</code>). The three file sizes add to 576,999 bytes. Of the 744,732 cells, 743,418 are land and 1,314 are water.</p>
   <div class="prose">
     <p>Two cautions. <strong>Hansen loss is not legal deforestation:</strong> it records tree-cover loss from any cause, including harvest, fire or storms, and does not say what the land became. Also, <code>treecover2000</code> is the canopy in the year 2000; subtracting the loss from it does not give "forest in 2020".</p>
   </div>
@@ -219,7 +218,7 @@
       <svg id="dat-stacksvg" viewBox="0 0 680 330" role="img" aria-label="Four map layers: three Hansen bands and the JRC chip. They start stacked, then slide apart with bars showing their file size, then collapse into the six-kilobyte decision layer."></svg>
       <p class="say"><small id="dat-stack-s">Step 1 of 3</small><span id="dat-stack-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-layer-report.md</code> (623,237 B of original layers; decision store 6,146 B) and the file sizes above plus the JRC chip's 46,238 B (<code>docs/lab/engine-data-W4.md</code>). Bars are to scale of the 623,237 B total.</p>
+    <p class="foot"><b>Source:</b> <code>artifacts/decision/stores.json</code> (623,237 B of original layers; decision store 6,146 B) and the file sizes above plus the JRC chip's 46,238 B (<code>artifacts/decision/proof-v1.json</code>, <code>inputs.jrc_chip</code>). Bars are to scale of the 623,237 B total.</p>
   </div>
   <div class="tbl"><table class="dt">
     <thead><tr><th>Layer</th><th>Which question reads it</th><th>Treatment</th></tr></thead>
@@ -231,9 +230,9 @@
       <tr><td>JRC 2020 forest</td><td>Forest at the cut-off</td><td>Keep one of every nine cells</td></tr>
     </tbody>
   </table></div>
-  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>. The packing of the kept facts into a 20-value code per cell is described in <a href="../presentation/solution/">How Plotline works</a>.</p>
+  <p class="muted small">Source: <code>artifacts/decision/layer-analysis-v1.json</code> (<code>attribution</code>). The packing of the kept facts into a 20-value code per cell is described in <a href="../presentation/solution/">How Plotline works</a>.</p>
   <details class="deeper"><summary>Go deeper: 72% and 75% <span class="lvl">technical</span></summary><div class="body">
-    <p>72% is <code>treecover2000</code>'s share of the three GeoTIFF files (414,142 of 576,999 bytes). 75% is its share when each band is compressed with the same yardstick (zstd level 19 of the raw plane: 397,973 B). The yardstick compares attributes fairly; file sizes are what is on disk. This page uses file sizes, and 75% appears elsewhere in the pack.</p>
+    <p>72% is <code>treecover2000</code>'s share of the three GeoTIFF files (414,142 of 576,999 bytes). 75% is its share when each band is compressed with the same yardstick (zstd level 19 of the raw plane: 397,973 B). The yardstick compares attributes fairly; file sizes are what is on disk. This page uses file sizes; 75% appears on other pages.</p>
   </div></details>
 
   <div class="prose">
@@ -258,7 +257,7 @@
       <div class="legend"><span style="--c: var(--loss-past)"><i></i>Loss up to 2020 (code 1 to 20)</span><span style="--c: var(--loss)"><i></i>Loss after 2020 (code 21 to 25)</span><span style="--c: var(--water)"><i></i>Permanent water (mask 2)</span><span style="--c: var(--mist)"><i></i>No mapped loss (code 0)</span></div>
       <p class="say"><small>Current view</small><span id="dat-year-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> synthetic. The codes follow Hansen <code>lossyear</code>: 0 no mapped loss, 1 to 25 for 2001 to 2025. In the real chip, 319,011 of 743,418 land cells (43%) show loss at some point, and 80,429 (10.8%) after 2020 (<code>docs/lab/decision-scale-notes.md</code>). Mapped loss on a plantation is not the same as deforestation; section 5 explains why a second layer is needed.</p>
+    <p class="foot"><b>Source:</b> synthetic. The codes follow Hansen <code>lossyear</code>: 0 no mapped loss, 1 to 25 for 2001 to 2025. In the real chip, 319,011 of 743,418 land cells (43%) show loss at some point, and 80,429 (10.8%) after 2020 (<code>artifacts/decision/layer-analysis-v1.json</code>, <code>region_facts</code>). Mapped loss on a plantation is not the same as deforestation; section 5 explains why a second layer is needed.</p>
   </div>
 </section>
 
@@ -288,7 +287,7 @@
       </div>
       <p class="say"><small>Current view</small><span id="dat-nest-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> nesting contract and rules in <code>docs/lab/decision-scale-notes.md</code> and <code>docs/explainer/01-maps-as-numbers.html</code> (Hansen cell (r, c) maps to JRC (3r + 1, 3c + 1) on these grids). Cell pattern is synthetic. The nesting is a property checked for these grids, not a promise about any two maps.</p>
+    <p class="foot"><b>Source:</b> nesting rule in <code>engine/decision.py</code> (<code>nested_offsets</code>, <code>GRID_RULE</code>) and <code>artifacts/decision/layer-analysis-v1.json</code> (<code>inputs.nesting</code>) (Hansen cell (r, c) maps to JRC (3r + 1, 3c + 1) on these grids). Cell pattern is synthetic. The nesting is a property checked for these grids, not a promise about any two maps.</p>
   </div>
 
   <div class="prose">
@@ -302,14 +301,14 @@
       <tr><td>Any forest</td><td class="r">16.575%</td><td class="r">506</td></tr>
     </tbody>
   </table></div>
-  <p class="muted small">Source: <code>docs/lab/decision-scale-notes.md</code>; totals over the 741,062 cells whose whole block lies inside the JRC chip. "Deforested cells" means post-2020 loss on mapped 2020 forest.</p>
+  <p class="muted small">Source: <code>artifacts/decision/layer-analysis-v1.json</code> (<code>aggregation_sensitivity</code>); totals over the 741,062 cells whose whole block lies inside the JRC chip. "Deforested cells" means post-2020 loss on mapped 2020 forest.</p>
   <div class="note"><b>Limited test</b><span>No plot decision changes under either alternative, but only one plot (P-0001) has any mapped forest, so the test is weak. The other 16 have no forest cell under any rule.</span></div>
 
   <div class="prose">
     <h3>Why both maps are needed</h3>
     <p>Hansen alone would count a plantation cut and replanted since 2020 as "loss", but the EUDR forest definition excludes plantations. Across the whole chip, Hansen shows 80,429 land cells with loss after 2020; only <strong>341 (0.42%)</strong> sit on JRC-mapped 2020 forest. The gap shows why a second layer matters; it does not establish the cause of any loss.</p>
     <h3>How the JRC layer was acquired</h3>
-    <p>The official <strong>v3</strong> tile request returned HTTP 500 on retry, so v3 was never acquired and nothing is claimed from it. The official per-tile file of <strong>v4</strong> worked: a 197,739,699-byte tile (120,000 × 120,000 cells), from which a 46,238-byte chip was cut that matches the source window exactly. v3 and v4 are not interchangeable, so the data is labelled v4. The JRC v4 technical report is not yet published (expected by December 2026).</p>
+    <p>Plotline uses the official per-tile file of <strong>v4</strong>: a 197,739,699-byte tile (120,000 × 120,000 cells), from which a 46,238-byte chip was cut that matches the source window exactly. v3 and v4 are not interchangeable, so the data is labelled v4.</p>
   </div>
   <details class="deeper"><summary>Go deeper: the fringe and the 3 × 3 arithmetic <span class="lvl">technical</span></summary><div class="body">
     <p>The JRC chip stops a little short of the Hansen chip: 3 × 1,233 is 3,699 columns but the chip is 3,695 wide. A one-row, two-column fringe (2,439 cells) has no JRC value. There the forest state is marked unknown rather than guessed, and every plot in the sample lies inside the covered area.</p>
@@ -338,7 +337,7 @@
       <div class="legend"><span><i style="background:var(--pen)"></i>centre inside: cell kept</span><span><i style="background:var(--pen);outline:2px solid var(--pen);outline-offset:1px"></i>centre exactly on the edge: kept (ringed)</span><span><i style="background:var(--mist);outline:1px solid var(--faint)"></i>centre outside: cell not kept</span></div>
       <p class="say"><small id="dat-rule-s">Selected centres: 0</small><span id="dat-rule-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> rule <code>hansen-centers.v1</code> (<code>docs/HANDOVER.md</code>) and <code>docs/explainer/02-answering-a-plot.html</code>. This widget uses browser JavaScript to illustrate it; the engine uses Shapely's <code>covers</code>, which is boundary-inclusive. Cell counts are cells, not hectares.</p>
+    <p class="foot"><b>Source:</b> selection rule in <code>engine/query.py</code> (<code>select_cells</code>). This widget uses browser JavaScript to illustrate it; the engine uses Shapely's <code>covers</code>, which is boundary-inclusive. Cell counts are cells, not hectares.</p>
   </div>
   <div class="prose">
     <ul>
@@ -355,13 +354,12 @@
     <div class="kick">7 · Layers not used</div>
     <h2>Protected areas and other unused sources</h2>
     <ul>
-      <li><strong>WDPA (Protected Planet).</strong> The protected-areas layer would be a natural third input for legality, but its terms prohibit commercial use without permission and restrict redistribution, including in derivative works. It was not downloaded or embedded. A national protected-area source could be used once the jurisdiction and licence are confirmed.</li>
-      <li><strong>JRC v3.</strong> The tile request failed; v4 replaced it.</li>
-      <li><strong>Alerts.</strong> Near-real-time deforestation alerts are named in the challenge brief. None was acquired; they are review signals with false positives, and a different problem.</li>
+      <li><strong>WDPA (Protected Planet).</strong> Its terms prohibit commercial use without permission and restrict redistribution, including in derivative works, so it is not used.</li>
+      <li><strong>Alerts.</strong> Near-real-time deforestation alerts are review signals with false positives and a different problem; none is used.</li>
       <li><strong>A derived 2020 forest map.</strong> Forest in 2020 was not derived by subtracting Hansen loss from 2000 canopy, because the product definition does not support that equivalence.</li>
-      <li><strong>Older Hansen releases.</strong> The supplier cites "Hansen 2021-2023" in its own records. The chips are the latest release (v1.13, to 2025), so the two are not the same vintage and are never treated as one.</li>
+      <li><strong>Older Hansen releases.</strong> The chips are the latest release (v1.13, to 2025). The supplier record cites "Hansen 2021-2023"; the two are not treated as the same vintage.</li>
     </ul>
-    <p>Sources: <code>docs/research/layer-acquisition.md</code>, <code>docs/lab/engine-data-W4.md</code>, <code>docs/lab/engine-jrc-report.md</code>, <code>SystemEarth-track.md</code>. Related: <a href="../presentation/solution/">How Plotline works</a> and <a href="../company/">SystemEarth and the EUDR</a>.</p>
+    <p>Sources: <code>artifacts/decision/proof-v1.json</code> (<code>inputs</code>), <code>artifacts/decision/scale-v1.json</code>, <code>artifacts/decision/layer-analysis-v1.json</code>. Related: <a href="../presentation/solution/">How Plotline works</a>.</p>
   </div>
 </section>
 

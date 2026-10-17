@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Overview · Plotline explainers</title>
-<meta name="description" content="Overview of the Plotline project: the event, SystemEarth and the EU rule, the data, the design, the proof, the numbers, the findings, and the other pages in the pack.">
+<title>Overview · Plotline</title>
+<meta name="description" content="Overview of the Plotline project: the EU rule, the data, the design, the proof, the numbers and the findings.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -119,15 +119,14 @@
   </ul></div>
 </header>
 
-<!-- 2 · COMPANY AND PROBLEM -->
-<section id="problem" data-toc="The company and the rule">
+<!-- 2 · PROBLEM -->
+<section id="problem" data-toc="The problem and the rule">
   <div class="prose">
-    <div class="kick">1 · The company and the problem</div>
+    <div class="kick">1 · The problem</div>
     <h2>EUDR plot-level screening</h2>
-    <p>Companies that sell rubber, palm oil, cocoa or coffee into the EU must show that every supplying farm plot is <strong>deforestation-free</strong> under the EU Deforestation Regulation, <strong>EUDR</strong>. SystemEarth works with this kind of plot-level evidence.</p>
+    <p>Companies that sell rubber, palm oil, cocoa or coffee into the EU must show that every supplying farm plot is <strong>deforestation-free</strong> under the EU Deforestation Regulation, <strong>EUDR</strong>.</p>
     <p>A plot's boundary is checked against satellite maps for two things: whether the land was <strong>forest on 31 December 2020</strong>, the rule's cut-off date, and whether tree cover has been <strong>lost since</strong>. The maps come from different sources at different sharpness and update every year. The check is therefore re-run for millions of plots whenever a layer updates, and the data accumulates.</p>
     <p>The brief's slide title frames the task: <span class="hl">"Keep the decision, not the data."</span> The layers are to be stored compactly and queried fast while reproducing exactly the same plot-level decisions as the original layers.</p>
-    <p class="st-go">Deep dive: SystemEarth and the EUDR →</p>
   </div>
 
   <div class="panel" id="st-cut">
@@ -139,17 +138,6 @@
     <p class="foot"> A schematic of years, not data: no heights are measured values.</p>
   </div>
 
-  <h3>Brief requirements</h3>
-  <div class="tbl"><table class="dt">
-    <thead><tr><th>Ask</th><th>Firmness</th></tr></thead>
-    <tbody>
-      <tr><td>Pick a use case; choose layers and time periods; say what can be simplified or dropped</td><td><span class="st ok">required</span></td></tr>
-      <tr><td>Encode and query a sample region (the printed slides ask for a working prototype; speech was less firm)</td><td><span class="st ok">required / prototype built</span></td></tr>
-      <tr><td>Compare with the originals on storage, query speed, resource use, plot-decision fidelity and pixel fidelity; explain pipeline choices and any AI output</td><td><span class="st ok">required</span></td></tr>
-      <tr><td>Estimate infrastructure cost</td><td><span class="st review">bonus</span></td></tr>
-      <tr><td>Invent a new compression algorithm</td><td><span class="st">not required</span></td></tr>
-    </tbody></table></div>
-  <p class="muted small" style="max-width:700px">No dataset, region, resolution, time span, passing threshold or scoring rubric was specified. </p>
 </section>
 
 <!-- 3 · DATA -->
@@ -160,11 +148,11 @@
     <p>A <strong>raster</strong> is a map stored as a grid of squares, one number per square, like graph paper. Satellite forest maps are rasters. A farm plot is a <strong>vector</strong>: an outline traced with coordinates. The task is laying outlines over grids.</p>
   </div>
   <div class="cols">
-    <div class="card" style="--c: var(--declared)"><div class="who">From SystemEarth</div><h3>17 supplier plots</h3><p>One shipment lot, one supplier. A CSV of 17 declarations (35 columns) and a GeoJSON of 17 matching outlines, in Chai Buri, Surat Thani, Thailand. Smallholdings of 0.53 to 20.07 ha. The two files join one to one.</p></div>
+    <div class="card" style="--c: var(--declared)"><div class="who">Supplied sample</div><h3>17 supplier plots</h3><p>One shipment lot, one supplier. A CSV of 17 declarations (35 columns) and a GeoJSON of 17 matching outlines, in Chai Buri, Surat Thani, Thailand. Smallholdings of 0.53 to 20.07 ha. The two files join one to one.</p></div>
     <div class="card" style="--c: var(--loss)"><div class="who">Public · Hansen GFC 2025 v1.13</div><h3>Tree-cover loss</h3><p>Three bands at about 28 m: canopy in 2000, the <em>year</em> of loss (2001 to 2025), and a land/water mask. The chip is 1,233 × 604 = <strong>744,732 cells</strong>.</p></div>
     <div class="card" style="--c: var(--forest)"><div class="who">Public · JRC GFC2020 v4</div><h3>Forest in 2020</h3><p>Forest or not, at the cut-off year, at about 9 m on a different grid (3,695 × 1,809). Each Hansen cell holds an exact 3 × 3 block of JRC cells.</p></div>
   </div>
-  <div class="note warn"><b>Private</b><span>SystemEarth's sample is private. The pack shows no real plot outline and no row from the supplier file. Every plot drawn is a labelled synthetic shape; only plot IDs and aggregate counts already in the project writeups are quoted.</span></div>
+  <div class="note warn"><b>Private</b><span>The pages show no real plot outline and no row from the supplier file. Every plot drawn is a labelled synthetic shape; only plot IDs and aggregate counts are quoted.</span></div>
 
   <div class="panel" id="st-nest">
     <div class="panel-in">
@@ -184,7 +172,6 @@
     </div>
     
   </div>
-  <p class="st-go">Deep dive: the data, in full →</p>
 </section>
 
 <!-- 4 · BUILD -->
@@ -218,7 +205,7 @@
       </div>
       <p class="say"><small>Size</small><span id="st-colsay">Four original files, 623,237 bytes.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md ("How much smaller"), file sizes from docs/lab/decision-scale-notes.md. Bars are drawn to true scale on one sample region (34 × 17 km). Bytes, not hectares or plots.</p>
+    <p class="foot"><b>Source:</b> <code>artifacts/decision/stores.json</code> (<code>baselines</code>, <code>levels</code>). Bars are drawn to true scale on one sample region (34 × 17 km). Bytes, not hectares or plots.</p>
   </div>
 
   <div class="prose">
@@ -261,7 +248,7 @@
       <p class="say"><small id="st-psmall"></small><span id="st-psay"></span></p>
       <div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div>
     </div>
-    <p class="foot"><b>Source:</b> synthetic illustration of the rule in docs/lab/interface-v1.md and engine/decision.py; no real plot, cell or count. The orange year marks stand in for Hansen loss years; F and N for the JRC 2020 class.</p>
+    <p class="foot"><b>Source:</b> synthetic illustration of the rule in <code>engine/decision.py</code> and <code>engine/query.py</code>; no real plot, cell or count. The orange year marks stand in for Hansen loss years; F and N for the JRC 2020 class.</p>
   </div>
 </section>
 
@@ -287,10 +274,10 @@
       </div>
       <p class="say"><small>Check</small><span id="st-psay2">Every cell is rebuilt from the originals and compared.</span></p>
     </div>
-    <p class="foot"> The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which the report says all detected.</p>
+    <p class="foot"> The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which all detected the change.</p>
   </div>
 
-  <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and tried 216,360 more adversarial polygons: 0 mismatches. It also found seven hardening issues, which were fixed. This proves encoding and query agreement, not real-world accuracy or legal compliance.</span></div>
+  <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and found 0 mismatches between fast and reference selection on 4,920 validator-generated geometries (<code>validation/decision/out/v07.json</code>). It also found hardening defects (an unprotected header, an overflow path, level mix-ups, allocation amplification, missing content binding), each fixed behind a test that failed on the old code.</span></div>
 </section>
 
 <!-- 7 · APP -->
@@ -307,9 +294,6 @@
     <div class="card" style="--c: var(--water)"><div class="who">Live query</div><p>A newly drawn boundary is answered by both the original and compact paths.</p></div>
     <div class="card" style="--c: var(--review)"><div class="who">Receipts</div><p>Every answer carries layer versions, grid, rule and hashes so anyone can re-check it.</p></div>
   </div>
-  <details class="deeper"><summary>Running the app <span class="lvl">practical</span></summary><div class="body">
-    <p>From a checkout with the private sample bundle restored: <code>scripts/setup-local.sh</code>, then <code>npm run dev:local --prefix app</code>, and open <code>http://127.0.0.1:5173/</code>. Deep links include <code>#/map/P-0001/2022</code>, <code>#/cohort</code>, <code>#/proof</code> and <code>#/live</code>. A fresh clone cannot run the app until the private bundle is unpacked with <code>scripts/private-data.sh unpack</code>.</p>
-  </div></details>
 </section>
 
 <!-- 8 · NUMBERS -->
@@ -353,20 +337,21 @@
             <div class="st-b grp">New, never-seen boundaries</div>
             <div class="st-b"><span>Fast exact selection</span><span class="t"><i data-l="5.2" style="background:var(--ink-2)"></i></span><span class="v">5.2×</span></div>
             <div class="st-b"><span>Batch of hundreds</span><span class="t"><i data-l="15.8" style="background:var(--ink-2)"></i></span><span class="v">about 16×*</span></div>
-            <div class="st-axis">log scale: each gridline is ten times the one before · *needs a batch in hand</div>
+            <div class="st-axis">log scale: each gridline is ten times the one before · *one call for the whole batch</div>
           </div></div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> docs/lab/decision-layer-report.md, Phase 4 figures (the latest; it overrides earlier docs). Sample-region and whole-tile bars are linear; speed bars are log. Hot query time is for 17 registered plots on one region, one laptop and a warm cache. Multiples are against the retained v1 original-layers query. Batch figure is 500 synthetic polygons.</p>
+    <p class="foot"><b>Source:</b> <code>artifacts/decision/benchmark-v1.json</code> and <code>artifacts/decision/scale-v1.json</code>. Sample-region and whole-tile bars are linear; speed bars are log. Hot query time is for 17 registered plots on one region, one laptop and a warm cache. Multiples are against the retained v1 original-layers query. Batch figure is 500 synthetic polygons.</p>
   </div>
 
   <div class="prose">
-    <h3>Conditions and limits</h3>
+    <h3>Design limits</h3>
     <ul>
-      <li><strong>Hot is not end-to-end.</strong> Hot time is the query once data is loaded. A fresh Python process spends most of its time starting up and importing NumPy, so end-to-end barely moves. The one exception is the numpy-free re-check of registered plots: 50.0 ms down to 24.9 ms, because it never imports NumPy.</li>
-      <li><strong>Registered and new are separate.</strong> The index and answer table only answer plots registered in advance; the 410× table is a stored answer keyed by plot ID, geometry hash and layer hash. New boundaries use the decision layer.</li>
-      <li><strong>The batch needs a batch.</strong> One new plot gains nothing; on the 17-plot batch it is only 1.2× ahead of the one-at-a-time path.</li>
-      <li><strong>Everything is relative to the retained v1 path.</strong> Other EUDR tools publish no per-plot latency, so no "faster than" claim is made about them.</li>
+      <li><strong>Edge cells are all-or-nothing.</strong> Under the centre rule a cell counts for a plot when its centre lies inside the boundary; cells are about 0.076 ha. Partial edge coverage and the 0.5 ha minimum area are not modelled.</li>
+      <li><strong>JRC is sampled once per Hansen cell</strong>, at the centre of its 3 × 3 block. The alternatives (majority, any forest) give the same decision for all 17 plots, but only one plot has mapped forest.</li>
+      <li><strong>The layer is rule-specific.</strong> A changed rule or an added layer means re-deriving from the lossless audit tier: seconds per region, about 7 CPU-minutes per tile (estimated).</li>
+      <li><strong>The largest speed-ups need registered plots.</strong> The 44× to 410× figures apply to plots registered in advance; a new boundary gets 5.2×.</li>
+      <li><strong>Storage was measured on a whole tile and query timing on one region.</strong></li>
     </ul>
   </div>
   <details class="deeper"><summary>Speed phases: 24× to 44× <span class="lvl">history</span></summary><div class="body">
@@ -396,8 +381,7 @@
     <div class="card" style="--c: var(--declared)"><div class="who">What the supplier declared</div><h3>Declared indication, no mapped loss</h3><p>All 17 declare "Deforestation-free", checked against "Hansen Tree Cover Loss 2021-2023". Five (P-0003, P-0005, P-0008, P-0010, P-0013) record an "indication of deforestation", resolved by on-site verification. On that layer and the project's rule, none of those five shows loss in 2021 to 2023.</p></div>
     <div class="card" style="--c: var(--review)"><div class="who">The reverse case</div><h3>Declared none, map shows some</h3><p>Three plots declared no indication but show 2021 to 2023 loss on the layer they cite: P-0001 (38 cells in 2022), P-0016 (1 in 2023), P-0018 (1 in 2021). Neither the older Hansen release nor a different boundary rule explains the gap.</p></div>
   </div>
-  <div class="note ok"><b>Scope</b><span>These are questions for the reviewer, not accusations. The supplier's evidence files were not supplied, and the supplier may have used manual review, another layer or a buffer; each answer therefore carries a receipt.</span></div>
-  <div class="note warn"><b>Scope</b><span>These are mapped observations under a written rule, not a legal compliance verdict. The wording is "mapped loss on mapped 2020 forest", not "deforestation found". The screen excludes EUDR's 0.5 ha minimum area, the "able to reach 5 m" test and protected areas.</span></div>
+  <div class="note warn"><b>Scope</b><span>These are mapped observations under a written rule, not a legal compliance verdict. The wording is "mapped loss on mapped 2020 forest", not "deforestation found". The screen does not model EUDR's 0.5 ha minimum area, the "able to reach 5 m" test or protected areas.</span></div>
 </section>
 
 <!-- READING MAP -->
@@ -411,7 +395,7 @@
     <a class="card" href="../speed/" style="--c: var(--loss)"><div class="who">Results</div><h3>Performance</h3><p class="rd">The baseline and conditions behind each speed multiple.</p></a>
     <a class="card" href="../findings/" style="--c: var(--declared)"><div class="who">Results</div><h3>What the plots show</h3><p class="rd">The declaration gap and what the results do not claim.</p></a>
   </div>
-  <p class="endnote">Results are encoding and query evidence on a sample region, not legal compliance findings. Supplier plot boundaries and declaration rows are private; every plot drawn here is synthetic.</p>
+  <p class="endnote">Results are encoding and query evidence on a sample region, not legal compliance findings. Supplier plot boundaries and declaration rows are not shown; every plot drawn here is synthetic.</p>
 </section>
 
 </main></div>
@@ -541,7 +525,7 @@
         ['Step 2 · the written rule', `A cell counts if its centre dot is inside the outline. The rule selects ${selc.length} cells here. A different rule (for example "any overlap") can change the answer.`, [[selc.length + ' cells selected']]],
         ['Step 3 · one code per cell', 'Each selected cell carries a code: F or N for forest at the cut-off, W for water, and a "·" with the loss year when there is one.', [[selc.length + ' codes read']]],
         ['Step 4 · count the codes', 'The answer needs only a tally of the codes: a 20-bin histogram in the engine.', [[nF - nFL + ' × F', 'f'], [nFL + ' × F with loss', 'x'], [nN - nNL + ' × N'], [nNL + ' × N with loss', 'l'], [nW + ' × W']]],
-        ['Step 5 · the answer', `Q1: ${nF} cells were forest at the cut-off. Q2: ${nFL} of them were lost since, a question for the reviewer. Q3 (the supplier's Hansen-only check): ${hansenLoss} cells show loss in 2021 to 2023. The decision layer stores plain N for the ${nNL} non-forest loss cells, and Q1 and Q2 do not change.`, [[nFL + ' cells: mapped loss on mapped 2020 forest', 'x'], [hansenLoss + ' cells: Hansen-only loss 2021–23', 'l']]]
+        ['Step 5 · the answer', `Q1: ${nF} cells were forest at the cut-off. Q2: ${nFL} of them were lost since. Q3 (the supplier's Hansen-only check): ${hansenLoss} cells show loss in 2021 to 2023. The decision layer stores plain N for the ${nNL} non-forest loss cells, and Q1 and Q2 do not change.`, [[nFL + ' cells: mapped loss on mapped 2020 forest', 'x'], [hansenLoss + ' cells: Hansen-only loss 2021–23', 'l']]]
       ];
       small.textContent = texts[k][0]; say.textContent = texts[k][1]; chips(texts[k][2]);
     });
@@ -634,7 +618,7 @@
       });
             tagp.textContent = s3 > 0.5 ? 'P-0001 · 2 cells, 2022' : '';
       sub.textContent = t < 0.28 ? 'Dots are plots. Positions are decorative.' : t < 0.6 ? 'Hansen alone counts any tree-cover loss, on any land.' : 'Under the JRC 2020 forest map, six of those seven had loss only on land not mapped as forest then.';
-      say.textContent = t < 0.28 ? 'The 17 supplier plots.' : t < 0.6 ? 'Read on its own, Hansen shows loss after 2020 on 7 of 17 plots.' : 'With the 2020 forest map added, one plot remains: a question for the reviewer, with 2 cells.';
+      say.textContent = t < 0.28 ? 'The 17 supplier plots.' : t < 0.6 ? 'Read on its own, Hansen shows loss after 2020 on 7 of 17 plots.' : 'With the 2020 forest map added, one plot remains, with 2 cells.';
     } });
   })();
 })();

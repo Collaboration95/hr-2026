@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>What the plots show · Plotline explainers</title>
+<title>What the plots show · Plotline</title>
 <meta name="description" content="Supplier declarations on 17 plots compared with mapped observations from Hansen and JRC, the variants tested, and the limits of the comparison.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,9 +98,9 @@
   <h1>What the plots show: <span class="hl">declarations and mapped observations</span></h1>
   <p class="lede">Five of the 17 supplied plots carry a supplier declaration of an "indication of deforestation". Hansen and JRC map post-2020 loss on different plots. Two variants (an older Hansen release, a different cell-inclusion rule) do not reconcile the two, and the comparison does not establish the cause.</p>
   <div class="tldr"><b class="lab">In brief</b><ul>
-    <li>Five plots carry a declared indication, recorded mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. These are declarations; the evidence files were not supplied.</li>
+    <li>Five plots carry a declared indication, recorded mitigation with evidence, and a compliant final status: <b>P-0003, P-0005, P-0008, P-0010, P-0013</b>. These are declarations.</li>
     <li>Hansen alone maps loss after 2020 on <b>7 of 17</b> plots. With JRC's 2020 forest map, only <b>P-0001</b> has mapped loss on mapped 2020 forest: <b>2 cells in 2022</b>. Region-wide, 341 of 80,429 post-2020 loss cells (0.4%) are on mapped 2020 forest.</li>
-    <li>The declared plots and the mapped plots differ, and neither an older Hansen release nor a different boundary rule reconciles them. This is a <b>question for the reviewer</b>; the mapped observations are not compliance findings.</li>
+    <li>The declared plots and the mapped plots differ, and neither an older Hansen release nor a different boundary rule reconciles them. The mapped observations are not compliance findings.</li>
   </ul></div>
 </header>
 
@@ -110,13 +110,12 @@
     <div class="kick">1 · What suppliers declared</div>
     <h2>Five plots declare an indication, then a compliant status.</h2>
     <p>The supplier's record covers 17 plots (plot IDs only are used here). For <b>five</b>, the record states that an "indication of deforestation" was found using <i>Hansen Tree Cover Loss 2021–2023</i>, that on-site verification with evidence was recorded, and that the final status is <b>"Deforestation-free"</b> and <b>"Compliant"</b> for EUDR.</p>
-    <p>This pattern is a review lead. It does not establish a violation, an error in the record or a legal status. The evidence references in the record are opaque keys, not links, so the mitigation itself is not visible.</p>
+    <p>This pattern is a review lead. It does not establish a violation, an error in the record or a legal status.</p>
   </div>
   <div class="fnd-chain" id="fnd-chain">
     <div class="fnd-link rv"><b>1 · Indication</b>"Indication of deforestation", using Hansen Tree Cover Loss 2021–2023</div>
     <div class="fnd-link rv" style="transition-delay:.12s"><b>2 · Mitigation</b>On-site verification, with evidence recorded</div>
     <div class="fnd-link rv" style="transition-delay:.24s"><b>3 · Final status</b>"Deforestation-free" and "Compliant"</div>
-    <div class="fnd-link gap rv" style="transition-delay:.36s"><b>Not supplied</b>The evidence behind step 2, the exact layer release and the inclusion rule used</div>
   </div>
   <div class="fnd-ids rv" aria-label="The 17 supplied plot IDs; five declared an indication">
     <span class="d">◆ P-0003</span><span>P-0001</span><span>P-0004</span><span class="d">◆ P-0005</span><span>P-0006</span><span class="d">◆ P-0008</span><span>P-0009</span><span class="d">◆ P-0010</span><span>P-0011</span><span class="d">◆ P-0013</span><span>P-0014</span><span>P-0015</span><span>P-0016</span><span>P-0017</span><span>P-0018</span><span>P-0019</span><span>P-0020</span>
@@ -140,7 +139,7 @@
       <div class="legend"><span style="--c:var(--loss)"><i></i>cells with loss (darker = more)</span><span>· = known zero (complete support)</span><span>◆ declared an indication</span></div>
       <div class="fnd-read" id="fnd-bar-read" aria-live="polite">Select a cell for its count.</div>
     </div>
-    <p class="foot"><b>Source:</b> per-plot counts from <code>docs/lab/engine-vintage-report.md</code> and <code>docs/lab/engine-spatial-sensitivity-report.md</code> (centre rule, Hansen 2025 v1.13); P-0001 forest figures from <code>docs/lab/decision-layer-report.md</code>. Aggregate counts only, no geometry. Counts are <b>cells, not hectares</b>. Barcode years before 2021 are left out because the decision does not read them.</p>
+    <p class="foot"><b>Source:</b> per-plot counts from <code>artifacts/decision/proof-v1.json</code> and <code>artifacts/decision/layer-analysis-v1.json</code> (centre rule, Hansen 2025 v1.13). Aggregate counts only, no geometry. Counts are <b>cells, not hectares</b>. Barcode years before 2021 are left out because the decision does not read them.</p>
   </div>
 
   <div class="stats rv">
@@ -170,7 +169,7 @@
       <div class="fnd-leg" id="fnd-fun-leg" style="opacity:0"><span><i style="background:rgba(232,89,12,.35)"></i>79,871 on land JRC did not map as forest</span><span><i style="background:#8A90A3"></i>217 edge cells with no JRC value</span><span><i style="background:var(--forest)"></i>341 on mapped 2020 forest</span></div>
       <p class="say"><small id="fnd-fun-n">Step 1 of 4</small><span id="fnd-fun-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>docs/lab/decision-scale-notes.md</code> ("Region facts for the chip") and <code>docs/lab/decision-layer-report.md</code>. 80,429 land cells (10.8% of land) show Hansen loss after 2020; 341 (0.42%) sit on JRC 2020 forest; 79,871 are on non-forest land; 217 are edge cells where JRC has no value. The dot positions are random; only the counts are real. Cells, not hectares.</p>
+    <p class="foot"><b>Source:</b> <code>artifacts/decision/layer-analysis-v1.json</code> (<code>region_facts</code>). 80,429 land cells (10.8% of land) show Hansen loss after 2020; 341 (0.42%) sit on JRC 2020 forest; 79,871 are on non-forest land; 217 are edge cells where JRC has no value. The dot positions are random; only the counts are real. Cells, not hectares.</p>
   </div>
 
   <div class="stats rv">
@@ -184,7 +183,7 @@
       <li><b>P-0001:</b> 60 of its 121 cells are JRC 2020 forest. Of its 38 loss cells in 2022, <b>2</b> are on mapped 2020 forest (mapped loss on mapped 2020 forest). The other 36 are on land JRC did not map as forest.</li>
       <li><b>The other 16 plots:</b> no mapped 2020 forest, so no mapped loss on mapped 2020 forest, with complete support. Six of them (P-0005, P-0006, P-0013, P-0014, P-0016, P-0018) do have Hansen loss after 2020. All of it falls outside JRC's mapped 2020 forest class.</li>
     </ul>
-    <p>Why those cells are not forest in the JRC map is not established; a plantation harvest cycle is one possibility. The wording used is "falls outside JRC's mapped 2020 forest class", nothing stronger.</p>
+    <p>Why those cells are not forest in the JRC map is not established; a plantation harvest cycle is one possibility.</p>
   </div>
   <div class="note warn rv"><b>Scope</b><span>These are mapped observations from public layers under a written rule. They are not compliance findings.</span></div>
   <details class="deeper"><summary>Detail: why one layer alone overstates post-2020 loss <span class="lvl">technical</span></summary><div class="body">
@@ -209,16 +208,12 @@
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:6px"><span class="fnd-ovl" id="fnd-set-ovl"></span><span class="small muted" id="fnd-set-small"></span></div>
       <p class="say"><small id="fnd-set-n">Step 1 of 5</small><span id="fnd-set-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> declared set from <code>docs/research/company-sample-audit.md</code>; Hansen sets from <code>docs/lab/engine-vintage-report.md</code> and <code>docs/lab/decision-layer-report.md</code> (centre rule, Hansen 2025 v1.13). Dots are labelled by the last two digits of the plot ID (P-0003 is "03"). Purple = declared; orange ring = mapped loss.</p>
+    <p class="foot"><b>Source:</b> declared set from the supplied record; Hansen sets from <code>artifacts/decision/proof-v1.json</code> (centre rule, Hansen 2025 v1.13). Dots are labelled by the last two digits of the plot ID (P-0003 is "03"). Purple = declared; orange ring = mapped loss.</p>
   </div>
 
   <div class="prose rv">
-    <p><b>No declared plot has mapped loss in the window the supplier named</b>, and the one plot with mapped loss on mapped 2020 forest is not a declared plot. Two declared plots (P-0005 and P-0013) show later Hansen loss, in 2024 and 2025, after the 2021–23 window the supplier cites. The supplier's method is not known, so these are open questions rather than conclusions.</p>
+    <p><b>No declared plot has mapped loss in the window the supplier named</b>, and the one plot with mapped loss on mapped 2020 forest is not a declared plot. Two declared plots (P-0005 and P-0013) show later Hansen loss, in 2024 and 2025, after the 2021–23 window the supplier cites.</p>
   </div>
-  <ul class="fnd-q rv">
-    <li><b>Question for the reviewer</b>Which layer release, inclusion rule and forest definition produced each declared indication?</li>
-    <li><b>Question for the reviewer</b>What did the recorded on-site verification find, and does it relate to loss the maps show for that plot at all?</li>
-  </ul>
 </section>
 
 <!-- ============ 5 · ruled out ============ -->
@@ -239,13 +234,13 @@
       <div class="fnd-chips" id="fnd-test-chips"></div>
       <p class="say"><small id="fnd-test-small"></small><span id="fnd-test-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> older release: <code>docs/lab/engine-vintage-report.md</code> (preregistered 2023 v1.11 vs 2025 v1.13, 17 plots, same rule: 2021–23 counts identical). Overlap rule: <code>docs/lab/engine-spatial-sensitivity-report.md</code> (centre selects 1,048 plot/cell memberships; overlap selects 1,385). The supplier's own release is <b>unknown</b>; 2023 v1.11 is a hypothetical comparison chosen before looking at results.</p>
+    <p class="foot"><b>Source:</b> older-release comparison, preregistered (Hansen 2023 v1.11 vs 2025 v1.13, 17 plots, same rule: 2021–23 counts identical). Overlap-rule sensitivity run (centre selects 1,048 plot/cell memberships; overlap selects 1,385). The 2023 v1.11 comparison was chosen before looking at results.</p>
   </div>
 
   <div class="prose rv">
     <p>Switching from "centre inside" to "any overlap" changes five plot-period answers on <i>other</i> plots, so the inclusion rule is part of the decision, yet it creates no 2021–23 signal on the five declared plots. These tests cannot establish what the supplier did: manual review, a threshold, another layer or a buffer are all possible. A plot-level decision can be checked only if the layers, versions and rules behind it can be replayed; Plotline's receipts record these.</p>
   </div>
-  <div class="note say-it rv"><b>Summary line</b><span>The declarations were compared against a documented rule, an older Hansen release and an alternative inclusion rule. The declared indications are not reproduced; the open question concerns the evidence files.</span></div>
+  <div class="note say-it rv"><b>Summary line</b><span>The declarations were compared against a documented rule, an older Hansen release and an alternative inclusion rule. The declared indications are not reproduced.</span></div>
 </section>
 
 <!-- ============ 6 · known vs unknown ============ -->
@@ -289,36 +284,17 @@
 <!-- ============ 7 · limits ============ -->
 <section id="limits">
   <div class="prose rv">
-    <div class="kick">7 · Limits</div>
-    <h2>Limits of the comparison</h2>
+    <div class="kick">7 · Design limits</div>
+    <h2>Design limits</h2>
     <ul>
-      <li><b>Cells, not hectares.</b> Every count is a number of ~28 m map cells.</li>
-      <li><b>The 0.5 ha minimum area and the "able to reach 5 m" test</b> from the EUDR forest definition are not applied by any layer here. "Deforestation" here means mapped tree-cover loss on mapped 2020 forest.</li>
-      <li><b>Hansen loss includes fire and logging</b> and does not say what the land became. The cut-off is checked at year resolution.</li>
-      <li><b>Protected areas</b> are not included, because their licence is unclear.</li>
-      <li><b>One region, one laptop.</b> The 34 × 17 km sample region is the only area measured. JRC is read at the Hansen cell centre, a documented simplification.</li>
-      <li><b>The supplier's release, rule and method are unknown.</b> A current Hansen release may differ from the one they used.</li>
-      <li><b>Source and compact agreeing</b> shows the representation keeps the answer under the written rule. It does not show the maps are right, nor that anyone complied.</li>
+      <li><strong>Edge cells are all-or-nothing.</strong> Under the centre rule a cell counts for a plot when its centre lies inside the boundary; cells are about 0.076 ha. Partial edge coverage and the 0.5 ha minimum area are not modelled.</li>
+      <li><strong>JRC is sampled once per Hansen cell</strong>, at the centre of its 3 × 3 block. The alternatives (majority, any forest) give the same decision for all 17 plots, but only one plot has mapped forest.</li>
+      <li><strong>The layer is rule-specific.</strong> A changed rule or an added layer means re-deriving from the lossless audit tier: seconds per region, about 7 CPU-minutes per tile (estimated).</li>
     </ul>
     
   </div>
 </section>
 
-<!-- ============ 8 · next ============ -->
-<section id="next">
-  <div class="prose rv">
-    <div class="kick">8 · Open questions</div>
-    <h2>Open questions for review</h2>
-    <p>A small next step is <b>one plot and one receipt</b>: marking which fields answer the real review question, where the decision rules differ, and how an unresolved evidence reference is handled. A corrected query contract would add more than another dataset.</p>
-  </div>
-  <ul class="fnd-q rv">
-    <li><b>Question 1 · The reference query</b>What exact historical layer release, spatial inclusion rule, canopy and forest definitions and missing-data rules produced the supplied results?</li>
-    <li><b>Question 2 · The evidence</b>What do the opaque reference keys resolve to? Can one representative mitigation or evidence item and the expected review steps be shared?</li>
-    <li><b>Question 3 · The workload</b>Is the common operation one interactive plot, a batch of thousands, repeated fixed-cohort checks, or arbitrary regions after layer updates? The workload should pick the representation.</li>
-    <li><b>Also to confirm</b>Whether the supplied sample may appear in published material, and the commodity and region of interest beyond this sample.</li>
-  </ul>
-  <div class="prose rv"><p class="small muted"> Company-reviewed cases are best kept separate from the 17-record test set, and supplier final declarations are not independent ground truth for training a classifier.</p></div>
-</section>
 
 </main></div>
 <script src="../../assets/pack.js"></script>
@@ -328,7 +304,7 @@
   const NS = 'http://www.w3.org/2000/svg';
   const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.append(e); return e; };
 
-  /* ---------- aggregate per-plot data (docs: engine-vintage-report.md, engine-spatial-sensitivity-report.md) ---------- */
+  /* ---------- aggregate per-plot data (artifacts/decision/proof-v1.json; older-release and overlap-rule runs) ---------- */
   const PLOTS = ['P-0001', 'P-0003', 'P-0004', 'P-0005', 'P-0006', 'P-0008', 'P-0009', 'P-0010', 'P-0011', 'P-0013', 'P-0014', 'P-0015', 'P-0016', 'P-0017', 'P-0018', 'P-0019', 'P-0020'];
   const CELLS = { 'P-0001': 121, 'P-0003': 87, 'P-0004': 47, 'P-0005': 262, 'P-0006': 256, 'P-0008': 27, 'P-0009': 28, 'P-0010': 27, 'P-0011': 42, 'P-0013': 25, 'P-0014': 7, 'P-0015': 39, 'P-0016': 14, 'P-0017': 9, 'P-0018': 34, 'P-0019': 15, 'P-0020': 8 };
   const DECL = new Set(['P-0003', 'P-0005', 'P-0008', 'P-0010', 'P-0013']);
