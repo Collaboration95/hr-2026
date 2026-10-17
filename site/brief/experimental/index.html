@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../assets/pack.css">
 <link rel="stylesheet" href="../../assets/sprites.css">
 <link rel="stylesheet" href="brief.css">
-<link rel="stylesheet" href="swarm.css">
+<link rel="stylesheet" href="../swarm.css">
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }</script>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js">
 </head>
@@ -131,9 +131,6 @@
       <p class="br-selfcheck" id="br-selfcheck"></p>
     </div>
   </div>
-  <figure class="x-fig" style="--h:740px;--hm:660px">
-    <div class="x-fig-frame"><iframe src="fig/code-sorter.html" title="Code sorter: cells drop into one of 20 decision-code bins" loading="lazy" scrolling="no"></iframe></div>
-  </figure>
 </section>
 
 <!-- =============================================================== store -->
@@ -240,9 +237,6 @@
     </div>
     <p class="foot">Two full runs, a fresh process per path, medians. Hot is one 17-plot batch divided by 17.</p>
   </div>
-  <figure class="x-fig" style="--h:620px;--hm:360px">
-    <div class="x-fig-frame"><iframe src="fig/answer-lock.html" title="Answer lock: a cached answer opens only when every key matches" loading="lazy" scrolling="no"></iframe></div>
-  </figure>
 </section>
 
 <!-- =============================================================== phases -->
@@ -310,9 +304,6 @@
       </div>
     </div>
   </div>
-  <figure class="x-fig" style="--h:700px;--hm:620px">
-    <div class="x-fig-frame"><iframe src="fig/proof-reader.html" title="Proof reader: two tapes compared cell by cell over 744,732 cells" loading="lazy" scrolling="no"></iframe></div>
-  </figure>
 </section>
 
 <!-- =============================================================== decisions -->
@@ -345,9 +336,6 @@
     <div class="br-limc"><span class="n">4</span><b>The largest speed-ups need registration</b><p>44×–410× apply to plots registered in advance. An unseen boundary gets 5.2×.</p></div>
     <div class="br-limc"><span class="n">5</span><b>Scale evidence is split</b><p>Storage was measured on a whole 10° tile; query timing on one region.</p></div>
   </div>
-  <figure class="x-fig" style="--h:730px;--hm:570px">
-    <div class="x-fig-frame"><iframe src="fig/centre-rule.html" title="Centre rule: a pin rises when its cell centre is inside the plot opening" loading="lazy" scrolling="no"></iframe></div>
-  </figure>
 </section>
 
 <!-- =============================================================== reproduce -->
@@ -415,7 +403,7 @@
 <script src="charts.js"></script>
 <script src="decisions.js"></script>
 <script type="module" src="layers.js"></script>
-<script type="module" src="swarm.js"></script>
+<script type="module" src="../swarm.js"></script>
 <script src="../../assets/sprites.js"></script>
 <script>(function(){
   Sprites.companion('hansen');
@@ -426,5 +414,6 @@
     a.href='https://github.com/Collaboration95/hr-2026/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body); }
   s.addEventListener('change',ask); ask();
 })();</script>
+<script src="../anchor.js"></script>
 </body>
 </html>

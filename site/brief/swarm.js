@@ -8,10 +8,18 @@ const MW = 100;                                  /* world width of the region ma
 
 /* ---------- small helpers ---------- */
 const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
-const C = {
+const DARK = document.body.classList.contains('x-dark');      /* dark edition: additive glow; light edition: normal blending, solid cores */
+const OP = 1.25;                                                /* base opacity lift applied to every point */
+const C = DARK ? {
   forest: hex('#2BD47D'), loss: hex('#FF7A2E'), lossHot: hex('#FFA45C'), past: hex('#B98A73'), water: hex('#4C9BE8'),
   unk: hex('#6B7280'), pen: hex('#6E7BFF'), bytes: hex('#C9CED8'), land: hex('#8A93A3'), purple: hex('#8E86B0'),
-  amber: hex('#F2B34A'), dust: hex('#8EA0C8'), ver: hex('#D8F6E4'),
+  amber: hex('#F2B34A'), dust: hex('#8EA0C8'), ver: hex('#D8F6E4'), mk: [1, 1, 1], fLo: [0.1, 0.5, 0.3], fHi: [0.4, 1, 0.66], oLo: [0.2, 0.22, 0.14], oHi: [0.62, 0.6, 0.4],
+  cLo: [0.05, 0.17, 0.12], cHi: [0.24, 0.93, 0.54], label: '#8B93A5', trail: null,
+} : {
+  forest: hex('#15803D'), loss: hex('#E8590C'), lossHot: hex('#D9480F'), past: hex('#C9A08A'), water: hex('#2B6CB0'),
+  unk: hex('#8A90A3'), pen: hex('#2F45FF'), bytes: hex('#6B7389'), land: hex('#8A90A3'), purple: hex('#7A5AF8'),
+  amber: hex('#B7791F'), dust: hex('#8A90A3'), ver: hex('#12B76A'), mk: [0.06, 0.07, 0.13], fLo: hex('#A9C9A8'), fHi: hex('#15803D'), oLo: hex('#CFCBA6'), oHi: hex('#7A7440'),
+  cLo: hex('#C3D4BE'), cHi: hex('#2F6B47'), label: '#555B70', trail: hex('#2F45FF'),
 };
 const mix3 = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
@@ -19,7 +27,7 @@ const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t 
 const rn = (i, k) => { const s = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return s - Math.floor(s); };
 const gauss = (i, k) => (rn(i, k) + rn(i, k + 1) + rn(i, k + 2) - 1.5) * 1.15;
 function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
-const canopy = t => mix3([0.05, 0.17, 0.12], [0.24, 0.93, 0.54], Math.pow(clamp(t, 0, 1), 0.85));
+const canopy = t => mix3(C.cLo, C.cHi, Math.pow(clamp(t, 0, 1), 0.85));
 function inside(poly, x, y) {                     /* even-odd, same rule as Brief.inside */
   let c = false;
   for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
@@ -101,9 +109,9 @@ const newForm = (N, rot, accent) => ({ pos: new Float32Array(3 * N), col: new Fl
 function put(F, i, x, y, z, c, a, s = 1, flow = 0, spin = 0) {
   let j = 3 * i; F.pos[j] = x; F.pos[j + 1] = y; F.pos[j + 2] = z;
   F.fx[j] = flow; F.fx[j + 1] = s; F.fx[j + 2] = spin;
-  j = 4 * i; F.col[j] = c[0]; F.col[j + 1] = c[1]; F.col[j + 2] = c[2]; F.col[j + 3] = a;
+  j = 4 * i; F.col[j] = c[0]; F.col[j + 1] = c[1]; F.col[j + 2] = c[2]; F.col[j + 3] = Math.min(1, a * OP);
 }
-const dust = (F, i) => put(F, i, (rn(i, 1) - 0.5) * 170, (rn(i, 2) - 0.5) * 90, (rn(i, 3) - 0.5) * 70, C.dust, 0.09, 0.7);
+const dust = (F, i) => put(F, i, (rn(i, 1) - 0.5) * 170, (rn(i, 2) - 0.5) * 90, (rn(i, 3) - 0.5) * 70, C.dust, 0.05, 0.7);
 /* colour of a decision code (screen level) */
 function codeStyle(code) {
   if (code === 0) return [C.unk, 0.4];
@@ -131,8 +139,8 @@ const FORMS = {
       const w = P.bw[i];
       if (P.mask[i] === 2) put(F, i, x, y, 0, C.water, w, 1.4);
       else if (P.loss[i] > 20) put(F, i, x, y, z, C.loss, 0.95 * w, 1.2);
-      else if (P.forest[i] === 1) put(F, i, x, y, z, mix3([0.1, 0.5, 0.3], [0.4, 1, 0.66], lum), (0.4 + 0.6 * lum) * w);
-      else put(F, i, x, y, z, mix3([0.2, 0.22, 0.14], [0.62, 0.6, 0.4], lum), (0.22 + 0.45 * lum) * w);
+      else if (P.forest[i] === 1) put(F, i, x, y, z, mix3(C.fLo, C.fHi, lum), (0.4 + 0.6 * lum) * w);
+      else put(F, i, x, y, z, mix3(C.oLo, C.oHi, lum), (0.22 + 0.45 * lum) * w);
     }
     F.bbox = [ox - 50 * S, ox + 50 * S, -P.MH / 2 * S, P.MH / 2 * S, 0, 5];
     F.labels.push({ p: [ox, -P.MH / 2 * S - 4, 0], text: '1,233 \u00d7 604 cells \u00b7 34 \u00d7 17 km', align: 'c' });
@@ -252,7 +260,7 @@ const FORMS = {
         put(F, i, X[k] + (X[k + 1] - X[k]) * f, ys(v[k] + (v[k + 1] - v[k]) * f) + (rn(i, 44) - 0.5) * 0.5, 0, c, 0.85, 1.05);
       } else if (r < nGrid + 2 * nLine + 10 * nMark) {
         const m = r - nGrid - 2 * nLine, s = m % 2, k = ((m / 2) | 0) % 5, [v, c] = series[s];
-        put(F, i, X[k] + gauss(i, 45) * 0.8, ys(v[k]) + gauss(i, 48) * 0.8, 0.5, mix3(c, [1, 1, 1], 0.35), 1, 1.35);
+        put(F, i, X[k] + gauss(i, 45) * 0.8, ys(v[k]) + gauss(i, 48) * 0.8, 0.5, mix3(c, C.mk, 0.35), 1, 1.35);
       } else dust(F, i);
     }
     F.labels.push({ p: [X[4] + 2.5, ys(reg[4]), 0], text: reg[4] + '\u00d7', align: 'l' }, { p: [X[4] + 2.5, ys(nb[4]), 0], text: nb[4] + '\u00d7', align: 'l' },
@@ -318,7 +326,7 @@ const FORMS = {
       const land = Math.sin(lon * 2.1 + 0.4) * Math.cos(lat * 2.4) + 0.6 * Math.sin(lat * 5 + lon) > 0.35;
       put(F, i, x, y, z, land ? mix3(C.water, C.forest, 0.55) : C.water, land ? 0.55 : 0.32, 0.95, 0, 0.17);
     }
-    F.labels.push({ p: [0, R0 * Math.sin(8.5 * Math.PI / 180), R0 * Math.cos(8.5 * Math.PI / 180)], text: 'Surat Thani \u00b7 8.5\u00b0N 99\u00b0E', align: 'l', dx: 26, spin: 0.17, back: R0 });
+    F.labels.push({ p: [0, R0 * Math.sin(8.5 * Math.PI / 180), R0 * Math.cos(8.5 * Math.PI / 180)], text: 'Surat Thani \u00b7 8.5\u00b0N 99\u00b0E', align: 'l', dx: 34, spin: 0.17, back: R0 });
     return F;
   },
 };
@@ -336,7 +344,7 @@ function makePolygon(P) {
 /* ---------- shaders ---------- */
 const VERT = `
 attribute vec3 posB; attribute vec4 colA; attribute vec4 colB; attribute vec4 aRand; attribute vec3 aFA; attribute vec3 aFB;
-uniform float uT, uTime, uPx, uDist, uBase, uFlowL, uScanY, uScanK, uBreath; uniform vec2 uScan;
+uniform float uT, uTime, uPx, uDist, uBase, uFlowL, uScanY, uScanK, uBreath, uShiftA, uShiftB, uLight; uniform vec2 uScan; uniform vec4 uVer;
 varying vec4 vCol;
 vec3 rotY(vec3 p, float a) { float c = cos(a), s = sin(a); return vec3(c * p.x + s * p.z, p.y, -s * p.x + c * p.z); }
 vec3 place(vec3 p, vec3 f) {
@@ -350,8 +358,8 @@ vec4 shade(vec4 c, vec3 f, vec3 p, float on) {
     float d = p.y - uScanY;
     float v = smoothstep(-0.3, 0.9, d) * uScanK;
     float band = exp(-d * d / 0.5) * uScanK;
-    c.rgb = mix(c.rgb, vec3(0.62, 0.95, 0.74), v);
-    c.a = mix(c.a, 0.5, v) + band * 0.6;
+    c.rgb = mix(c.rgb, uVer.rgb, v);
+    c.a = mix(c.a, uVer.a, v) + band * 0.6;
   }
   return c;
 }
@@ -370,18 +378,21 @@ void main() {
   p += vec3(sin(uTime * 0.8 + s * 31.0), cos(uTime * 0.7 + s * 47.0), sin(uTime * 0.9 + s * 19.0)) * 0.28 * uBreath;
   vec4 ca = shade(colA, aFA, a, uScan.x), cb = shade(colB, aFB, b, uScan.y);
   vCol = mix(ca, cb, te);
-  vCol.rgb *= 1.0 + 0.35 * arc;
+  vCol.rgb *= mix(1.0 + 0.35 * arc, 1.0 - 0.18 * arc, uLight);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   float sz = mix(aFA.y, aFB.y, te) * (1.0 + 0.18 * arc);
   gl_PointSize = clamp(uBase * sz * uPx * uDist / -mv.z, 1.0, 18.0);
-  gl_Position = projectionMatrix * mv;
+  vec4 clip = projectionMatrix * mv;
+  clip.y += mix(uShiftA, uShiftB, te) * clip.w;
+  gl_Position = clip;
 }`;
 const FRAG = `
-varying vec4 vCol;
+varying vec4 vCol; uniform float uLight;
 void main() {
   float r = length(gl_PointCoord - 0.5) * 2.0;
   if (r > 1.0) discard;
-  float f = 1.0 - r; f = f * f * (3.0 - 2.0 * f);
+  if (uLight > 0.5) { gl_FragColor = vec4(vCol.rgb, vCol.a * (1.0 - smoothstep(0.7, 1.0, r))); return; }
+  float f = 1.0 - smoothstep(0.3, 1.0, r);
   float a = vCol.a * f;
   gl_FragColor = vec4(vCol.rgb * a * 1.15, a);
 }`;
@@ -420,9 +431,10 @@ async function boot() {
   const rnd = new Float32Array(4 * N); for (let i = 0; i < N; i++) { rnd[4 * i] = rn(i, 91); rnd[4 * i + 1] = rn(i, 92); rnd[4 * i + 2] = rn(i, 93); rnd[4 * i + 3] = rn(i, 94); }
   geo.setAttribute('aRand', new THREE.BufferAttribute(rnd, 4));
   const U = { uT: { value: 0 }, uTime: { value: 0 }, uPx: { value: 1 }, uDist: { value: 200 }, uBase: { value: 2.2 }, uFlowL: { value: 84 },
-    uScanY: { value: 0 }, uScanK: { value: 0 }, uBreath: { value: REDUCE ? 0 : 1 }, uScan: { value: new THREE.Vector2() } };
+    uScanY: { value: 0 }, uScanK: { value: 0 }, uBreath: { value: REDUCE ? 0 : 1 }, uScan: { value: new THREE.Vector2() },
+    uShiftA: { value: 0 }, uShiftB: { value: 0 }, uLight: { value: DARK ? 0 : 1 }, uVer: { value: new THREE.Vector4(...(DARK ? [0.62, 0.95, 0.74, 0.5] : [...C.ver, 0.9])) } };
   const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms: U, transparent: true, depthTest: false, depthWrite: false,
-    blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneFactor });
+    blending: DARK ? THREE.CustomBlending : THREE.NormalBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneFactor });
   const pts = new THREE.Points(geo, mat); pts.frustumCulled = false; cloud.add(pts);
 
   let pa = -1, pb = -1;
@@ -444,7 +456,7 @@ async function boot() {
     camera.position.set(0, 0, dist); camera.far = dist * 4;
     if (desktop) camera.setViewOffset(vw, vh, -0.225 * vw, 0, vw, vh); else camera.clearViewOffset();
     camera.updateProjectionMatrix();
-    U.uPx.value = dpr; U.uDist.value = dist; U.uBase.value = desktop ? 2.7 : 2.2;
+    U.uPx.value = dpr; U.uDist.value = dist; U.uBase.value = desktop ? 3.4 : 2.8;
     camera.updateMatrixWorld(); fitHero(); trail.resize(dpr); lbl.resize(dpr); dirty = true;
   }
 
@@ -471,10 +483,10 @@ async function boot() {
     let dpr = 1;
     return {
       resize(d) { dpr = d; cv.width = vw * d; cv.height = vh * d; },
-      draw(a, b, f, time) {
+      draw(a, b, f, time, shifts) {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, vw, vh);
         if (!desktop) return;
-        ctx.font = '500 10.5px "Geist Mono", ui-monospace, Menlo, monospace'; ctx.fillStyle = '#8B93A5'; ctx.textBaseline = 'middle';
+        ctx.font = '500 10.5px "Geist Mono", ui-monospace, Menlo, monospace'; ctx.fillStyle = C.label; ctx.textBaseline = 'middle';
         if ('letterSpacing' in ctx) ctx.letterSpacing = '0.63px';
         cloud.updateMatrixWorld(true); camera.updateMatrixWorld();
         const sets = a === b ? [[a, 1]] : [[a, clamp(1 - f / 0.25, 0, 1)], [b, clamp((f - 0.7) / 0.3, 0, 1)]];
@@ -486,7 +498,7 @@ async function boot() {
             v.set(x, y, z).applyMatrix4(cloud.matrixWorld);
             if (l.back) { q.copy(v).applyMatrix4(camera.matrixWorldInverse); o.set(0, 0, 0).applyMatrix4(cloud.matrixWorld).applyMatrix4(camera.matrixWorldInverse); al *= clamp((q.z - o.z) / (l.back * 0.35), 0, 1); }
             if (al <= 0.01) return;
-            v.project(camera);
+            v.project(camera); v.y += shifts[k];
             const px = (v.x * 0.5 + 0.5) * vw + (l.dx || 0), py = (-v.y * 0.5 + 0.5) * vh + (l.dy || 0);
             ctx.globalAlpha = al; ctx.textAlign = l.align === 'r' ? 'right' : l.align === 'l' ? 'left' : 'center';
             ctx.fillText(l.raw ? l.text : l.text.toUpperCase(), px, py);
@@ -497,14 +509,25 @@ async function boot() {
     };
   })();
 
-  /* ---------- scroll -> position along the chain of formations ---------- */
-  function target() {
-    let k = -1;
-    for (let i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= vh * 0.55) k = i; else break; }
-    if (k < 0) return 1;
-    if (k >= secs.length - 1) return 1 + k;
-    const r = secs[k].getBoundingClientRect(), len = clamp(0.35 * r.height, 200, 0.5 * vh);
-    return 1 + k + clamp(1 - (r.bottom - vh * 0.55) / len, 0, 1);
+  /* ---------- anchors: each formation rides with its section's .prose block (hero: header#top) and scrolls like page content ---------- */
+  const anchorEls = chain.map((_, j) => { const sec = secs[Math.max(0, j - 1)]; return (sec.id === 'top' ? sec : sec.querySelector('.prose')) || sec; });
+  const rects = new Array(chain.length), cys = new Array(chain.length), shifts = new Array(chain.length).fill(0);
+  function readAnchors() {
+    for (let j = 0; j < anchorEls.length; j++) {
+      const r = rects[j] = anchorEls[j].getBoundingClientRect();
+      cys[j] = r.top + r.height / 2;
+      if (j <= 1) cys[j] = Math.min(cys[j], vh * 0.5);        /* the hero is clamped so it never sits low on first load */
+    }
+    /* morph into formation j starts when its .prose top enters the viewport bottom and ends when its centre reaches 50% of the viewport */
+    let t = 1;
+    for (let j = 2; j < anchorEls.length; j++) t += clamp((vh - rects[j].top) / (0.5 * vh + rects[j].height / 2), 0, 1);
+    return t;
+  }
+  const _o = new THREE.Vector3();
+  function computeShifts() {
+    cloud.updateMatrixWorld(true);
+    const oy = _o.set(0, 0, 0).applyMatrix4(cloud.matrixWorld).project(camera).y;
+    for (let j = 0; j < cys.length; j++) shifts[j] = (1 - 2 * cys[j] / vh) - oy;
   }
 
   /* ---------- cursor trail (2D overlay, pointer: fine only) ---------- */
@@ -521,7 +544,7 @@ async function boot() {
         const idle = (performance.now() - last) / 1000, al = clamp(1 - (idle - 1.6) / 0.4, 0, 1) * 0.6;
         if (al <= 0) { if (!cleared) { ctx.clearRect(0, 0, cv.width, cv.height); cleared = true; } return; }
         cleared = false; tick++;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, innerWidth, innerHeight); ctx.globalCompositeOperation = 'lighter';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, innerWidth, innerHeight); ctx.globalCompositeOperation = DARK ? 'lighter' : 'source-over';
         const col = rgb.map(v => Math.round(v * 255)).join(',');
         F.forEach(f => {
           const k = 1 - Math.pow(1 - f.k, dt * 60); f.x += (px - f.x) * k; f.y += (py - f.y) * k;
@@ -544,7 +567,7 @@ async function boot() {
   function frame(now) {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    const tg = target();
+    const tg = readAnchors();
     if (REDUCE) s = Math.round(tg);
     else {
       if (intro && tg > 1.05) intro = false;
@@ -567,18 +590,19 @@ async function boot() {
     const hw = (chain[a] === 'hero' ? 1 - e : 0) + (chain[b] === 'hero' && a !== b ? e : 0), sc = 1 - (1 - hero.k) * hw;
     cloud.scale.setScalar(sc);
     cloud.position.set((focusS[0] - 0.5) * 24 + hero.dx * hw, -(focusS[1] - 0.5) * 14, 0);
+    computeShifts(); U.uShiftA.value = shifts[a]; U.uShiftB.value = shifts[b];
     /* accent */
-    const ac = mix3(accentRgb(forms[a].accent), accentRgb(forms[b].accent), e);
+    const ac = C.trail || mix3(accentRgb(forms[a].accent), accentRgb(forms[b].accent), e);
     const key = (f > 0.5 ? forms[b] : forms[a]).accent;
     if (key !== accentKey) { accentKey = key; document.documentElement.style.setProperty('--swarm-accent', key); }
-    trail.draw(ac, dt); lbl.draw(a, b, f, U.uTime.value);
+    trail.draw(ac, dt); lbl.draw(a, b, f, U.uTime.value, shifts);
     const k = REDUCE ? `${s}|${vw}|${vh}` : '';
     if (!REDUCE || dirty || k !== lastKey) { renderer.render(scene, camera); lastKey = k; dirty = false; }
   }
 
   const trailRef = trail;
   resize();
-  if (!intro) s = Math.round(target() * 100) / 100;
+  if (!intro) s = Math.round(readAnchors() * 100) / 100;
   setPair(...(() => { const a0 = clamp(Math.floor(s), 0, forms.length - 1); return [a0, Math.min(a0 + 1, forms.length - 1)]; })());
   raf = requestAnimationFrame(frame);
   canvas.classList.add('on');
@@ -587,7 +611,7 @@ async function boot() {
   window.Swarm = {
     N, formations: chain, ready: Promise.resolve(),
     setFocus(x01, y01) { focus = [clamp(x01, 0, 1), clamp(y01, 0, 1)]; },
-    state: () => ({ hero: { ...hero }, s, a: pa, b: pb, name: chain[clamp(Math.round(s), 0, chain.length - 1)], N, fake: !!R.fake }),
+    state: () => ({ hero: { ...hero }, dark: DARK, shifts: shifts.slice(), s, a: pa, b: pb, name: chain[clamp(Math.round(s), 0, chain.length - 1)], N, fake: !!R.fake }),
   };
 }
 window.Swarm = { setFocus() {}, N: 0, ready: boot().catch(e => console.warn('Swarm failed', e)) };

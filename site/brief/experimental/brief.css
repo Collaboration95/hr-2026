@@ -484,9 +484,4 @@ body.x-dark {
 .x-dark .sprite-spot:not(.sprite-spot-hero) { right: auto; left: -4px; top: 104px; transform: translateX(-100%); }
 @media (max-width: 1279px) { .x-dark .sprite-spot:not(.sprite-spot-hero) { display: none; } }
 .x-dark .sprite-spot-hero { right: auto; left: -8px; top: 12vh; transform: translateX(-100%); }
-.x-fig { margin-top: 28px; }
-.x-fig .x-fig-cap { display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1.4 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin: 0 0 10px; }
-.x-fig { max-width: 860px; margin-inline: auto; }
-.x-fig .x-fig-frame { height: var(--h); overflow: hidden; background: #07090D; }
-.x-fig iframe { width: 100%; height: 100%; border: 0; display: block; background: #07090D; color-scheme: dark; }
-@media (max-width: 640px) { .x-fig .x-fig-frame { height: var(--hm); } }
+@media (max-width: 640px) { 

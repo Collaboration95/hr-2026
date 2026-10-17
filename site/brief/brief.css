@@ -297,3 +297,95 @@ pre.br-json { font-size: 11.5px; line-height: 1.5; margin-top: 8px; max-height: 
 .br-repro td code { font-size: 11.5px; overflow-wrap: anywhere; }
 .br-repro td.r, .br-repro th.r { white-space: nowrap; text-align: right; }
 .br-repro { overflow-x: auto; }
+
+/* =====================================================================================================
+   Swarm edition (light). Point swarm behind the page; prose is a left column, panels stay in flow and frosted.
+   Spacing follows a 4/8 px scale. Mirrors the dark edition in experimental/ with the pack.css paper palette.
+   ===================================================================================================== */
+body { font-variant-numeric: tabular-nums; position: relative; min-height: 100vh; }
+::selection { background: rgba(47, 69, 255, .2); color: var(--ink); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, canvas:focus-visible, [tabindex]:focus-visible {
+  outline: 1.5px solid var(--pen); outline-offset: 3px; border-radius: 6px; box-shadow: 0 0 0 4px rgba(47, 69, 255, .14);
+}
+
+/* canvas at 0, content at 1 */
+#swarm { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; pointer-events: none; }
+.wrap { position: relative; z-index: 1; padding-inline: 24px; }
+main { max-width: var(--col); margin-inline: auto; }
+
+/* type */
+h1, h2, h3, h4 { letter-spacing: -.034em; }
+h1 { font-size: clamp(38px, 4.8vw, 68px); line-height: 1; font-weight: 750; letter-spacing: -.04em; }
+h2 { font-size: clamp(30px, 3.6vw, 48px); font-weight: 700; }
+.kick { font: 500 11px/1.2 var(--f-mono); letter-spacing: .16em; color: var(--muted); }
+.prose, .hero > .kick, .hero > h1, .hero > .lede { text-shadow: 0 0 14px var(--paper), 0 0 3px rgba(237, 240, 227, .9); }
+
+/* links: dim 1px underline at rest, a 1px line draws in from the left on hover */
+main a:not(.btn), .x-foot a, .x-meta a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor), linear-gradient(rgba(47, 69, 255, .3), rgba(47, 69, 255, .3));
+  background-repeat: no-repeat; background-position: 0 100%, 0 100%; background-size: 0 1px, 100% 1px;
+  transition: background-size .35s var(--ease), color .2s;
+}
+main a:not(.btn):hover, .x-foot a:hover, .x-meta a:hover { background-size: 100% 1px, 100% 1px; color: var(--pen-deep); }
+.br-ask { text-decoration: none; }
+
+/* header */
+.hero { padding: 12vh 0 0; min-height: calc(100svh - 80px); display: flex; flex-direction: column; }
+.hero > .kick, .hero > h1, .hero > .lede, .hero > .x-meta { max-width: 640px; }
+.x-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 24px; font: 500 12px/1 var(--f-mono); letter-spacing: .02em; }
+.x-meta a { padding-bottom: 2px; }
+.br-stats { padding: 24px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(249, 250, 243, .72); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); gap: 24px 32px; }
+.hero .br-stats { margin-top: 12vh; }
+.br-stats .big .num { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -.035em; font-weight: 700; }
+
+/* sections: hairline divider with a mono index; breathing room for the swarm */
+section { padding-top: 72px; border-top: 1px solid var(--rule); margin-top: 24px; --lead: calc(72px + 6vh); scroll-margin-top: calc(var(--mast) + var(--nav) + 24px - var(--lead)) !important; }
+section::before { content: attr(data-idx); position: absolute; top: 0; right: 0; transform: translateY(-50%); padding: 0 0 0 12px; background: var(--paper); font: 500 11px/1 var(--f-mono); letter-spacing: .12em; color: var(--faint); z-index: 1; }
+section > .prose { padding-top: 6vh; }
+section > .panel, section > .br-seq, section > .br-bgrid, section > .br-lim, section > .tbl { margin-top: 28px; }
+.panel { background: rgba(249, 250, 243, .72); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); border-color: var(--rule); }
+.panel .panel { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.br-need { background: rgba(249, 250, 243, .72); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); border: 1px solid var(--rule); border-radius: 12px; padding: 20px 20px 12px; }
+.br-limc { background: rgba(249, 250, 243, .78); }
+.endnote { position: relative; text-shadow: 0 0 14px var(--paper); }
+
+/* layers: the pinned run gets a solid full-bleed backing so the swarm never competes with the stage */
+.br-seq::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: rgba(237, 240, 227, .94); border-block: 1px solid var(--rule); z-index: -1; }
+
+/* footer */
+.x-foot { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; margin: 96px auto 0; max-width: var(--col); padding-top: 16px; border-top: 1px solid var(--rule); font: 500 11px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.x-foot a { text-transform: none; letter-spacing: .02em; font-size: 12px; }
+
+/* desktop: prose is a narrow left column, the right stays open for the swarm */
+@media (min-width: 820px) {
+  section > .prose { max-width: 560px; min-height: 52vh; padding-bottom: 8vh; }
+  section > .prose p { max-width: 52ch; }
+  #decisions > .prose, #limits > .prose, #contact > .prose { min-height: 40vh; }
+}
+@media (min-width: 1100px) {
+  .wrap { padding-inline: 32px; }
+  .br-nav { margin: 0 -32px; }
+  section > .prose { min-height: 62vh; padding-bottom: 10vh; }
+  #decisions > .prose, #limits > .prose, #contact > .prose { min-height: 46vh; }
+}
+/* pets sit beside the kicker, off the stage; hidden when the margin is too narrow */
+.sprite-spot:not(.sprite-spot-hero) { right: auto; left: -16px; top: calc(72px + 6vh); transform: translateX(-100%); }
+.sprite-spot-hero { right: auto; left: -24px; top: 12vh; transform: translateX(-100%); }
+.br-layers .sprite-spot { top: calc(72px + 6vh); }
+@media (max-width: 1279px) { .sprite-spot { display: none !important; } }
+
+/* mobile: single column, the swarm stays faint behind the text */
+@media (max-width: 819px) {
+  .wrap { padding-inline: 16px; }
+  .br-nav { margin: 0 -16px; padding-inline: 16px; }
+  .hero { padding-top: 8vh; min-height: 0; }
+  .hero .br-stats { margin-top: 48px; }
+  section { padding-top: 56px; --lead: calc(56px + 4vh); }
+  section > .prose { padding-block: 4vh 4vh; }
+  .br-need { padding: 12px 12px 4px; }
+}
+@media (prefers-reduced-motion: reduce) { main a, .x-foot a, .x-meta a { transition: none; } }
+.br-nav { margin: 0 -24px; padding-inline: max(24px, calc((100% - var(--col)) / 2)); }
+@media (min-width: 1100px) { .br-nav { margin: 0 -32px; padding-inline: max(32px, calc((100% - var(--col)) / 2)); } }
+@media (max-width: 819px) { .br-nav { margin: 0 -16px; padding-inline: 16px; } }
