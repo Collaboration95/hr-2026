@@ -53,7 +53,7 @@
           <dt>Layers</dt><dd>Hansen GFC 2025 v1.13 <code>treecover2000</code>, <code>lossyear</code>, <code>datamask</code> (about 28 m cells) and JRC Global Forest Cover 2020 v4 (about 9 m cells).</dd>
           <dt>Region</dt><dd>Surat Thani, Thailand: 98.772–99.081°E, 8.431–8.582°N. 1,233 × 604 = 744,732 cells, about 34 × 17 km. 17 supplied plots (not shown on this page).</dd>
           <dt>Stack</dt><dd>Python 3.14 engine (numpy, rasterio, shapely) and a React + TypeScript + Vite app. This page is static HTML, JavaScript and three.js, no build step.</dd>
-          <dt>AI use</dt><dd>No machine-learning model in the pipeline. <strong>Performance work ran as verification loops</strong>: AI agents proposed each speed-up, and a change was kept only if the benchmark improved and the every-cell proof still matched. A separate validator agent, tasked only with breaking results, re-derived them with its own code. A learned codec selector was tried and dropped because it lost to a plain GeoTIFF.</dd>
+          <dt>AI use</dt><dd>No machine-learning model in the pipeline. <strong>Performance work ran as verification loops.</strong> A learned codec selector was tried and dropped because it lost to a plain GeoTIFF.</dd>
         </dl>
         <div class="br-flow" id="br-flow" aria-label="Pipeline">
           <div class="br-flow-row" role="tablist"></div>
