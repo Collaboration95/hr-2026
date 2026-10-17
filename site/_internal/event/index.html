@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="../assets/pack.css">
-<link rel="stylesheet" href="../assets/sprites.css">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
 <style>
 /* Page-only styles. Prefix: ev- */
 .ev-scroll { overflow-x: auto; margin-top: 14px; }
@@ -382,7 +382,7 @@ table.ev-cmp { width: 100%; min-width: 760px; border-collapse: separate; border-
 </section>
 
 </main></div>
-<script src="../assets/pack.js"></script>
+<script src="../../assets/pack.js"></script>
 <script>
 /* ---------- 1. Timeline ---------- */
 (() => {
@@ -561,34 +561,34 @@ table.ev-cmp { width: 100%; min-width: 760px; border-collapse: separate; border-
   const S = [
     { t: 'req', tag: 'Required', title: 'A specific use case', n: [0],
       q: '"Present on a specific use case and demonstrate how SystemEarth can represent multiple geospatial layers…"', qs: 'Printed booklet, p. 9',
-      a: 'EUDR-style deforestation screening of <strong>17 real supplier plots</strong> in Surat Thani, Thailand: was each plot forest on 31 December 2020, and has tree cover been lost since?', links: [['../company/', 'The company and the rule'], ['../data/', 'The data']] },
+      a: 'EUDR-style deforestation screening of <strong>17 real supplier plots</strong> in Surat Thani, Thailand: was each plot forest on 31 December 2020, and has tree cover been lost since?', links: [['../company/', 'The company and the rule'], ['../../data/', 'The data']] },
     { t: 'req', tag: 'Required', title: 'Layer analysis', n: [1],
       q: '"Which layers and attributes are essential, and which can be simplified, summarised or dropped."', qs: 'Kickoff deck p. 24, item 1',
-      a: 'The three questions read only land or water, JRC 2020 forest, and the loss year since 2021. Hansen\'s canopy percentages are <span class="num">72%</span> of its bytes and no question reads them; they are dropped on purpose and listed.', links: [['../solution/', 'How Plotline works']] },
+      a: 'The three questions read only land or water, JRC 2020 forest, and the loss year since 2021. Hansen\'s canopy percentages are <span class="num">72%</span> of its bytes and no question reads them; they are dropped on purpose and listed.', links: [['../../presentation/solution/', 'How Plotline works']] },
     { t: 'req', tag: 'Required', title: 'Choices grounded in regulatory definitions', n: [0, 1],
       q: '"Ground it in regulatory definitions for your use case, e.g. forest thresholds and cut-off dates."', qs: 'Kickoff deck p. 24, item 1',
       a: 'The cut-off is 31 December 2020, read through JRC\'s 2020 forest class. <strong>Partly covered:</strong> the 0.5 ha minimum area, degradation and protected areas are not captured.', links: [['../company/', 'SystemEarth and the EUDR']] },
     { t: 'req', tag: 'Required', title: 'An encoding strategy', n: [2, 3],
       q: '"Combine multiple layers and time steps into a single dataset or architecture."', qs: 'Kickoff deck p. 24, item 2',
-      a: 'Each map cell becomes one of <strong>20 codes</strong>, stored as bit-planes plus sparse loss events: <span class="num">6,146 B</span> for the whole region. A plain GeoTIFF of the same codes is 8,532 B, so most of the win is the analysis, not the codec.', links: [['../solution/', 'The 20-value code']] },
+      a: 'Each map cell becomes one of <strong>20 codes</strong>, stored as bit-planes plus sparse loss events: <span class="num">6,146 B</span> for the whole region. A plain GeoTIFF of the same codes is 8,532 B, so most of the win is the analysis, not the codec.', links: [['../../presentation/solution/', 'The 20-value code']] },
     { t: 'req', tag: 'Required · slides', title: 'A working prototype', n: [3, 4],
       q: '"Encode a sample set of layers for one region and query the compressed data."', qs: 'Kickoff deck p. 24, item 2. The spoken brief is softer; the challenge page asks for one.',
-      a: 'A Python engine, a React app and a live-query service. It queries the original layers and the compact store side by side. <strong>All four readiness checks passed</strong> on 16 October: see <a href="../submit/">Submission readiness</a>.', links: [['../solution/', 'How Plotline works'], ['../submit/', 'Submission readiness']] },
+      a: 'A Python engine, a React app and a live-query service. It queries the original layers and the compact store side by side. <strong>All four readiness checks passed</strong> on 16 October: see <a href="../submit/">Submission readiness</a>.', links: [['../../presentation/solution/', 'How Plotline works'], ['../submit/', 'Submission readiness']] },
     { t: 'req', tag: 'Required', title: 'Storage versus the original layers', n: [3, 5],
       q: '"Reduction in storage requirements versus the original layers."', qs: 'Kickoff deck p. 25, evaluation',
-      a: '<span class="num">623,237 B → 6,146 B</span>, 99.0% smaller, on the sample region. On a whole 10° tile: 421.9 MB to 8.2 MB (98.0% smaller).', links: [['../solution/', 'The ladder of representations']] },
+      a: '<span class="num">623,237 B → 6,146 B</span>, 99.0% smaller, on the sample region. On a whole 10° tile: 421.9 MB to 8.2 MB (98.0% smaller).', links: [['../../presentation/solution/', 'The ladder of representations']] },
     { t: 'req', tag: 'Required', title: 'Query speed and resource use', n: [4, 5],
       q: '"Query speed (effort, processing time) and resource requirements (e.g. additional storage) for representative plot-level queries."', qs: 'Kickoff deck p. 25, evaluation',
-      a: 'Registered plots re-check <span class="num">44×</span> faster, new boundaries 5.2× faster (hot, 17 plots). Peak memory 75 MB to 37 MB. Not end-to-end from a fresh process: that is mostly Python start-up.', links: [['../speed/', 'Performance']] },
+      a: 'Registered plots re-check <span class="num">44×</span> faster, new boundaries 5.2× faster (hot, 17 plots). Peak memory 75 MB to 37 MB. Not end-to-end from a fresh process: that is mostly Python start-up.', links: [['../../presentation/speed/', 'Performance']] },
     { t: 'req', tag: 'Required', title: 'Decision and pixel fidelity', n: [5],
       q: '"Decision fidelity: % of plots where all compliance outputs match the original layers. Pixel fidelity: how well pixel-level detail is preserved, where relevant."', qs: 'Kickoff deck p. 25, evaluation',
-      a: '<span class="num">17 / 17</span> plots with every output identical, and <strong>744,732 / 744,732</strong> cells, which covers any plot boundary in the region. 9,829 fuzzed polygons agree. Pixel fidelity is 100% on every attribute the decision reads.', links: [['../solution/', 'The proof']] },
+      a: '<span class="num">17 / 17</span> plots with every output identical, and <strong>744,732 / 744,732</strong> cells, which covers any plot boundary in the region. 9,829 fuzzed polygons agree. Pixel fidelity is 100% on every attribute the decision reads.', links: [['../../presentation/solution/', 'The proof']] },
     { t: 'req', tag: 'Required · spoken', title: 'Explain choices, loss and any AI output', n: [1, 2],
       q: 'Spoken: evaluate accuracy and information loss; explain pipeline choices and any AI output.', qs: 'Transcript, SystemEarth section',
       a: 'The shipped pipeline is rule-based. The one place ML was tried, a learned codec selector, <strong>lost on a sealed holdout and was rejected</strong>. Results are encoding and query evidence, not legal compliance findings.', links: [['../pitch/', 'Presentation guide']] },
     { t: 'bon', tag: 'Bonus', title: 'Estimate infrastructure and processing costs', n: [3, 4],
       q: '"Bonus: estimate infrastructure and processing costs to store, update and query."', qs: 'Kickoff deck p. 25, evaluation',
-      a: 'At list-price assumptions to verify before quoting: the decision layer for the tropical belt is about <span class="num">$0.018</span> a month; re-checking 10 million registered plots costs about $0.0008 and 10 million new plots about $0.0031.', links: [['../speed/', 'Performance and cost']] },
+      a: 'At list-price assumptions to verify before quoting: the decision layer for the tropical belt is about <span class="num">$0.018</span> a month; re-checking 10 million registered plots costs about $0.0008 and 10 million new plots about $0.0031.', links: [['../../presentation/speed/', 'Performance and cost']] },
   ];
   const tagCls = { req: 'req', bon: 'bon', sug: 'sug', unk: 'unk' };
   const show = k => {
@@ -655,6 +655,6 @@ table.ev-cmp { width: 100%; min-width: 760px; border-collapse: separate; border-
   });
 })();
 </script>
-<script src="../assets/sprites.js"></script>
+<script src="../../assets/sprites.js"></script>
 </body>
 </html>

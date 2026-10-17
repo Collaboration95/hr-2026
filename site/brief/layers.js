@@ -53,7 +53,8 @@ function setStep(k) {
 let onStep = null;
 
 /* state at progress p in [0,1]: the four transitions and their eased fractions */
-const T0 = 0.08, SEG = 0.21, TR = 0.6;
+const T0 = 0, SEG = 0.25, TR = 0.7;        /* four transitions fill the whole pinned run; the first one starts at the first pixel of scroll */
+const RUN = 1.35;                           /* pinned run in viewport heights */
 function phaseState(p) {
   const t = [0, 0, 0, 0];
   for (let k = 0; k < 4; k++) { const a = T0 + SEG * k; t[k] = Math.max(0, Math.min(1, (p - a) / (SEG * TR))); }
@@ -62,7 +63,7 @@ function phaseState(p) {
   let step = 0; for (let k = 0; k < 4; k++) if (t[k] > 0.5) step = k + 1;
   return { t: eased, step };
 }
-const stepToP = k => k === 0 ? 0.0 : Math.min(0.99, T0 + SEG * (k - 1) + SEG * TR + 0.025);
+const stepToP = k => k === 0 ? 0.0 : Math.min(0.99, T0 + SEG * (k - 1) + SEG * TR + 0.02);
 
 /* ---------------------------------------------------------------- shared canvases */
 function planeCanvases(R) {
@@ -173,6 +174,7 @@ async function main() {
   const legend = h('div', { class: 'br-legend3d' }, h('span', {}, h('i', { style: 'background:#2F8F57' }), 'forest 2020'), h('span', {}, h('i', { style: 'background:#E9EDDF;border:1px solid #C0C8AD' }), 'non-forest'), h('span', {}, h('i', { style: 'background:#2B6CB0' }), 'water'), h('span', {}, h('i', { style: 'background:#C4B482' }), 'forest state unknown'), h('span', {}, h('i', { style: 'background:#E8590C' }), 'loss on forest (drawn 4× wide)'));
   labels.append(legend);
 
+  const motion = { az: 0, phase: 0 };   /* idle drift and the turn-in on enter */
   let size = { w: 0, h: 0, ppu: 1 }, dirty = true, p = 0, cur = { t: [0, 0, 0, 0] };
   const lerp = (a, b, t) => a + (b - a) * t;
   const EL0 = Math.asin(1 / Math.sqrt(3)), AZ0 = Math.PI / 4, EL1 = 86 * Math.PI / 180;
@@ -186,7 +188,7 @@ async function main() {
   /* isometric view that turns top-down as the planes collapse; the frustum is refitted to the visible envelope each frame */
   function updateCamera(e3) {
     const { w, h2 } = size; if (!w) return;
-    const el = lerp(EL0, EL1, e3), az = lerp(AZ0, 0, e3), R = 20;
+    const el = lerp(EL0, EL1, e3) + (1 - e3) * 0.02 * Math.sin(motion.phase * 0.7), az = lerp(AZ0, 0, e3) + (1 - e3) * motion.az, R = 20;
     camera.position.set(Math.sin(az) * Math.cos(el) * R, C0 + Math.sin(el) * R, Math.cos(az) * Math.cos(el) * R);
     camera.lookAt(0, C0, 0); camera.updateMatrixWorld();
     const labelRoom = lerp(w < 560 ? 84 : 196, w < 560 ? 12 : 16, e3);
@@ -222,6 +224,7 @@ async function main() {
       v.set(-Wd / 2, y, Dd / 2).project(camera);
       const x = (v.x * .5 + .5) * size.w, yy = (-v.y * .5 + .5) * size.h2;
       let op = l.id === 'dec' ? e3 : l.id === 'treecover' ? lerp(1, 0.3, e1) * (1 - e3) : (1 - e3);
+      if (l.id !== 'dec') op *= Math.max(0, Math.min(1, (e0 - 0.3) / 0.35));   /* labels wait until the planes have separated */
       const e = labEls[l.id], above = l.id === 'dec' && e3 > .35;
       if (above) v.set(-Wd / 2, C0, -Dd / 2).project(camera);
       const lx = above ? (v.x * .5 + .5) * size.w : x, ly = above ? (-v.y * .5 + .5) * size.h2 : yy;
@@ -237,22 +240,41 @@ async function main() {
     updateCamera(st.t[3]);
     layout(); placeLabels(); renderer.render(scene, camera); dirty = false;
   }
-  let ticking = false;
-  const request = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); };
-
   function progress() {
     const r = seq.getBoundingClientRect(), travel = seq.offsetHeight - stage.offsetHeight;
     return travel > 0 ? Math.max(0, Math.min(1, -r.top / travel)) : 0;
   }
   onStep = null;
   if (staticMode) {
+    const request = () => requestAnimationFrame(frame);
     jump = k => { p = stepToP(k); if (k === 4) p = 1; request(); };
     jump(REDUCE ? 4 : 0);
-  } else {
-    addEventListener('scroll', () => { const np = progress(); if (np !== p) { p = np; request(); } }, { passive: true });
-    p = progress();
+    new ResizeObserver(() => { if (sizeRenderer()) request(); }).observe(cvWrap);
+    sizeRenderer(); frame();
+    return;
   }
-  new ResizeObserver(() => { if (sizeRenderer()) request(); }).observe(cvWrap);
-  sizeRenderer(); frame();
+  /* animated mode: the pinned run is about 1.35 viewport heights; displayed progress eases toward the scroll target */
+  const sizeSeq = () => { seq.style.height = Math.round(stage.offsetHeight + RUN * innerHeight) + 'px'; };
+  sizeSeq(); addEventListener('resize', sizeSeq);
+  let target = progress(), shown = target, last = performance.now(), visible = false, running = false, enterAt = 0;
+  p = shown;
+  const loop = now => {
+    const dt = Math.min(64, now - last); last = now;
+    target = progress();
+    shown += (target - shown) * (1 - Math.pow(1 - 0.18, dt / 16.7));
+    if (Math.abs(target - shown) < 0.0004) shown = target;
+    p = shown;
+    motion.phase = now / 1000;
+    const k = enterAt ? Math.min(1, (now - enterAt) / 1400) : 1, e = 1 - Math.pow(1 - k, 3);
+    motion.az = -0.34 * (1 - e) + 0.05 * Math.sin(now / 1700);
+    frame();
+    running = visible || shown !== target || k < 1;
+    if (running) requestAnimationFrame(loop);
+  };
+  const kick = () => { if (!running) { running = true; last = performance.now(); requestAnimationFrame(loop); } };
+  new IntersectionObserver(es => es.forEach(en => { visible = en.isIntersecting; if (visible && !enterAt) enterAt = performance.now(); if (visible) kick(); }), { threshold: 0.15 }).observe(stage);
+  addEventListener('scroll', kick, { passive: true });
+  new ResizeObserver(() => { if (sizeRenderer()) kick(); }).observe(cvWrap);
+  sizeRenderer(); frame(); kick();
 }
 main();

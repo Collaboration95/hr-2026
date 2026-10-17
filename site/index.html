@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Plotline project pages</title>
-<meta name="description" content="Project pages for Plotline.">
+<title>Plotline · Hack &amp; Hire 2026, SystemEarth track</title>
+<meta name="description" content="Plotline reduces three forest-map layers to one decision layer per map cell and answers plot-level EUDR screening queries from it. Technical brief, presentation pages, data and glossary.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
@@ -37,6 +37,7 @@
   box-shadow: 0 1px 0 var(--rule), 0 18px 40px -30px rgba(15, 18, 34, .3);
   transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
   animation: rise .7s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+.hcard.lead { padding: 30px 30px 24px; border-color: color-mix(in srgb, var(--c) 40%, var(--rule)); } .hcard.lead h2 { font-size: clamp(30px, 4vw, 42px); } .hcard.lead p { font-size: 18px; max-width: 62ch; }
 .hcard.wide { grid-column: span 3; } .hcard.full { grid-column: 1 / -1; }
 .hcard:hover, .hcard:focus-visible { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c) 45%, var(--rule)); box-shadow: 0 1px 0 var(--rule), 0 26px 50px -28px color-mix(in srgb, var(--c) 55%, transparent); outline: none; }
 .hcard .tg { font: 600 11.5px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -63,51 +64,32 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
   <header class="hub-hero" style="grid-template-columns:1fr">
     <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="wave" data-click="happy" data-idle-fidget></span>
     <div>
-      <div class="kick">SystemEarth track · Hack &amp; Hire 2026</div>
-      <h1>Plotline <span class="hl">project pages</span></h1>
+      <div class="kick">SystemEarth track · Hack &amp; Hire Sustainability Edition 2026</div>
+      <h1>Plotline: a <span class="hl">decision layer</span> for EUDR plot checks</h1>
+      <p class="lede">Plotline reduces four forest-map layers (Hansen canopy, loss year and land mask, plus JRC 2020 forest) to one 20-code decision layer per map cell, and answers plot-level screening queries from it. The sample region's 623,237 B of original layers become a 6,146 B store with identical answers for all 744,732 cells.</p>
     </div>
   </header>
 
   <section class="group" style="padding-top:0">
     <div class="grid">
-      <a class="hcard wide" href="event/" style="--c: var(--ink-2); --i: 0">
-        <div class="tg"><span>The hackathon</span></div>
-        <div><h2>The event and the brief</h2><p>The six company challenges, the SystemEarth brief requirement by requirement, and its evaluation measures.</p></div>
+      <a class="hcard full lead" href="brief/" style="--c: var(--loss); --i: 0">
+        <div class="tg"><span>Technical brief</span></div>
+        <div><h2>Decision layer: algorithm, schema and benchmarks</h2><p>Layer stack, the 20-code schema, the store file layout, a live plot query, the query paths, speed-up phases, benchmarks and design limits.</p></div>
         <div class="go">Open <span>→</span></div>
       </a>
-      <a class="hcard wide" href="company/" style="--c: var(--forest); --i: 1">
-        <div class="tg"><span>The company</span></div>
-        <div><h2>SystemEarth and the EUDR</h2><p>The company, the regulation, the 31 December 2020 cut-off, and why plot checks are re-run.</p></div>
+      <a class="hcard full" href="presentation/" style="--c: var(--proof); --i: 1">
+        <div class="tg"><span>Presentation pages</span></div>
+        <div><h2>Overview, method, performance and findings</h2><p>The slide-level view: what the decision layer keeps and drops, how a plot is answered, where the speed-up comes from, and what the 17 sample plots show.</p></div>
         <div class="go">Open <span>→</span></div>
       </a>
       <a class="hcard wide" href="data/" style="--c: var(--water); --i: 2">
-        <div class="tg"><span>The data</span></div>
-        <div><h2>The data</h2><p>The 17 supplier plots, Hansen tree-cover loss, the JRC 2020 forest map, and the raster basics.</p></div>
+        <div class="tg"><span>Reference</span></div>
+        <div><h2>The data</h2><p>Rasters and polygons, the 17 sample plots, Hansen tree-cover loss, the JRC 2020 forest map, and how the two grids nest.</p></div>
         <div class="go">Open <span>→</span></div>
       </a>
       <a class="hcard wide" href="glossary/" style="--c: var(--muted); --i: 3">
         <div class="tg"><span>Reference</span></div>
         <div><h2>Glossary</h2><p>Terms used across the pages, from "affine" to "zstd".</p></div>
-        <div class="go">Open <span>→</span></div>
-      </a>
-      <a class="hcard wide" href="pitch/" style="--c: var(--pen); --i: 4">
-        <div class="tg"><span>Presentation</span></div>
-        <div><h2>Presentation guide</h2><p>Storyline, demo run-through, slide outline, questions and answers, and terminology.</p></div>
-        <div class="go">Open <span>→</span></div>
-      </a>
-      <a class="hcard wide" href="submit/" style="--c: var(--review); --i: 5">
-        <div class="tg"><span>Readiness</span></div>
-        <div><h2>Submission readiness</h2><p>Each brief requirement against its evidence, how to run the code, and open logistics.</p></div>
-        <div class="go">Open <span>→</span></div>
-      </a>
-      <a class="hcard full" href="brief/" style="--c: var(--loss); --i: 6">
-        <div class="tg"><span>Technical detail</span></div>
-        <div><h2>Technical brief</h2><p>Layer stack, the 20-code schema, the store file layout, a live plot query, query paths, speed-up phases, benchmarks and limits.</p></div>
-        <div class="go">Open <span>→</span></div>
-      </a>
-      <a class="hcard full" href="presentation/" style="--c: var(--proof); --i: 7">
-        <div class="tg"><span>Demo and slides</span></div>
-        <div><h2>Presentation pages</h2><p>Only what the demo and slides use: overview, how Plotline works, performance and findings. Linked from the QR code.</p></div>
         <div class="go">Open <span>→</span></div>
       </a>
     </div>

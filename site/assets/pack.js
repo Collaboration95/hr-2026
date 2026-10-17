@@ -4,19 +4,16 @@
    scroll reveals, count-ups, bar fills, and a tiny "instrument" helper for animations that play on view. */
 (() => {
   /* Two zones. "ext" pages live in presentation/ and hold only what the demo and slides use; they never link to "int" pages.
-     "int" pages are the normal project pages at the site root and may link to the presentation pages. */
+     "int" pages are the reference pages at the site root and may link to the presentation pages.
+     Team-only pages live in site/_internal/, are not listed here and are not published. */
   const SITE = new URL('../', document.currentScript.src).href;
   const PAGES = [
     { slug: 'start',    zone: 'ext', path: 'presentation/start/',    title: 'Overview' },
     { slug: 'solution', zone: 'ext', path: 'presentation/solution/', title: 'How Plotline works' },
     { slug: 'speed',    zone: 'ext', path: 'presentation/speed/',    title: 'Performance' },
     { slug: 'findings', zone: 'ext', path: 'presentation/findings/', title: 'What the plots show' },
-    { slug: 'event',    zone: 'int', path: 'event/',                 title: 'The event and the brief' },
-    { slug: 'company',  zone: 'int', path: 'company/',               title: 'SystemEarth and the EUDR' },
     { slug: 'data',     zone: 'int', path: 'data/',                  title: 'The data' },
     { slug: 'glossary', zone: 'int', path: 'glossary/',              title: 'Glossary' },
-    { slug: 'pitch',    zone: 'int', path: 'pitch/',                 title: 'Presentation guide' },
-    { slug: 'submit',   zone: 'int', path: 'submit/',                title: 'Submission readiness' },
   ];
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);

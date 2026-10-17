@@ -226,7 +226,7 @@
     barChart(thr, () => [
       { label: 'P0 v1 query', v: 9300, text: '≈ 9,300 / s', color: C.base },
       { label: 'P4 fast selection', v: 46000, text: '≈ 46,000 / s', sub: '5.0× P0', color: C.pen },
-      { label: 'P4B batch evaluator', v: 146000, text: '≈ 146,000 / s', sub: '15.8× · needs a batch', color: C.penDeep, bold: true },
+      { label: 'P4B batch evaluator', v: 146000, text: '≈ 146,000 / s', sub: '15.8× · one pass over 500', color: C.penDeep, bold: true },
     ], { label: 'New polygons per second', labW: 150, max: 150000 });
   })();
 

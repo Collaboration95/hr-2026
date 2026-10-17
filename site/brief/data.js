@@ -29,7 +29,7 @@ window.BR = (() => {
     tableContentSha256: '0b94ed4eee0c58e035dd66798a1cda64b588fa5e029da7b8420b0490f5908701',    /* artifacts/decision/table.json content_sha256 */
   };
 
-  /* docs/lab/decision-scale-notes.md : one real tile (storage only) */
+  /* artifacts/decision/scale-v1.json : one real tile (storage only) */
   const tile = [
     { label: 'Original files (LZW GeoTIFF)', b: 421910035, kind: 'orig' },
     { label: 'Lossless zstd-19 yardstick', b: 148892092, kind: 'ctrl' },
@@ -37,20 +37,20 @@ window.BR = (() => {
     { label: 'L2 decision', b: 8242423, kind: 'l2' },
   ];
 
-  /* docs/lab/decision-benchmark-notes.md : headline table (Phase 4). hot = 17-plot batch, ms; cold = process-cold, ms;
+  /* artifacts/decision/benchmark-v1.json : headline_table (Phase 4). hot = 17-plot batch, ms; cold = process-cold, ms;
      e2e = fresh process end to end, ms; rss = peak MB. perPlot = hot / 17 in microseconds, as the notes quote it. */
   const paths = [
     { id: 'P0', short: 'v1 query',   name: 'Original layers, retained v1 query', grp: 'base', hot: 1.437,  cold: 11.11, e2e: 114.5, rss: 74.8, perPlot: 84.5,  x: '1×' },
     { id: 'P1', short: 'original, EUDR Q',   name: 'Original layers, same EUDR question', grp: 'base', hot: 1.880,  cold: 18.95, e2e: 124.9, rss: 97.1, perPlot: 110.6, x: '' },
     { id: 'P3', short: 'decision store',   name: 'Decision store, general selection', grp: 'new',  hot: 1.175,  cold: 2.68,  e2e: 57.2,  rss: 40.2, perPlot: 69.1,  x: '' },
     { id: 'P4', short: 'fast selection',   name: 'Decision store, exact fast selection', grp: 'new',  hot: 0.275,  cold: 1.55,  e2e: 56.9,  rss: 39.9, perPlot: 16.15, x: '5.2×' },
-    { id: 'P4B', short: 'batch evaluator',  name: 'Decision store, batch evaluator', grp: 'new',  hot: 0.222,  cold: 1.53,  e2e: 56.9,  rss: 40.3, perPlot: 13.04, x: '6.5×', note: 'needs a batch in hand' },
+    { id: 'P4B', short: 'batch evaluator',  name: 'Decision store, batch evaluator', grp: 'new',  hot: 0.222,  cold: 1.53,  e2e: 56.9,  rss: 40.3, perPlot: 13.04, x: '6.5×', note: 'one pass over a batch' },
     { id: 'P5', short: 'registered index',   xc: '8.7×', name: 'Registered-plot index', grp: 'reg',  hot: 0.0323, cold: 1.28,  e2e: 50.0,  rss: 36.7, perPlot: 1.90,  x: '44×' },
     { id: 'P5L', short: 'index, numpy-free',  xc: '10.9×', xe: '4.6×', name: 'Registered-plot index, numpy-free', grp: 'reg',  hot: 0.0173, cold: 1.02,  e2e: 24.9,  rss: 22.9, perPlot: 1.02,  x: '83×' },
     { id: 'P6', short: 'answer table',   xc: '46×', xe: '5.3×', name: 'Registered-plot answer table', grp: 'reg',  hot: 0.0035, cold: 0.244, e2e: 21.6,  rss: 20.7, perPlot: 0.206, x: '410×' },
   ];
 
-  /* docs/lab/decision-layer-report.md : "Speed-up phases" table. null = path did not exist yet. */
+  /* artifacts/decision/benchmark-v1.json speedups at commits e7f5264, 3afeb02, 8808f55, 4ca3628, 35fd625. null = path did not exist yet. */
   const phases = ['Decision layers', 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
   const phaseSeries = {
     newb: [

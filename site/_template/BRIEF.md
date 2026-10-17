@@ -8,6 +8,8 @@ The project owner has been hands-off while AI agents built Plotline for the Syst
 
 ## Pages and owners
 
+The `event`, `company`, `pitch`, `submit` and `sprites-lab` pages now live in `site/_internal/` and are not published. The published pages are the hub, `brief/`, `data/`, `glossary/` and `presentation/`. See `STYLE.md` for the reader and the limits and citation rules; where this brief says the repo is private or links to docs, `STYLE.md` takes precedence.
+
 | Slug | Title | Minutes | Writer |
 | --- | --- | --- | --- |
 | `start` | The whole story | 15 | A |

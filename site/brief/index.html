@@ -16,15 +16,15 @@
 <body data-page="brief">
 <div class="wrap">
 <nav class="br-nav" id="br-nav" aria-label="Sections">
-  <a href="#framing">Framing</a><a href="#layers">Layers</a><a href="#schema">Schema</a><a href="#store">Store</a><a href="#query">Query</a><a href="#paths">Paths</a><a href="#phases">Phases</a><a href="#benchmarks">Benchmarks</a><a href="#decisions">Decisions</a><a href="#limits">Limits</a><a href="#contact">Contact</a>
+  <a href="#framing">Framing</a><a href="#layers">Layers</a><a href="#schema">Schema</a><a href="#store">Store</a><a href="#query">Query</a><a href="#paths">Paths</a><a href="#phases">Phases</a><a href="#benchmarks">Benchmarks</a><a href="#decisions">Decisions</a><a href="#limits">Limits</a><a href="#reproduce">Reproduce</a><a href="#contact">Contact</a>
 </nav>
 <main>
 
 <header class="hero" id="top">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
   <div class="kick">Technical brief · SystemEarth track</div>
-  <h1>Decision layer: <span class="hl">algorithm, schema and benchmarks</span></h1>
-  <p class="lede">Each map cell of the sample region is reduced to one of 20 codes. A 6,146 B store returns the same plot-query outputs as the original layers for all 744,732 cells, under the stated centre rule.</p>
+  <h1>Decision layer: algorithm, schema and benchmarks</h1>
+  <p class="lede">Each map cell of the sample region is reduced to <strong>one of 20 codes</strong>. A <strong>6,146 B</strong> store returns the same plot-query outputs as the original layers for <strong>all 744,732 cells</strong>, under the stated centre rule.</p>
   <div class="stats br-stats">
     <div class="big pen"><span class="num"><span data-count="623237">623,237</span></span><span class="cap">bytes, original layers</span></div>
     <div class="big proof"><span class="num"><span data-count="6146">6,146</span></span><span class="cap">bytes, decision store (99.0% smaller)</span></div>
@@ -40,13 +40,13 @@
   <div class="prose">
     <div class="kick">1 · Framing</div>
     <h2>What went in</h2>
-    <p>EUDR screening intersects farm plots with years of forest maps and repeats the check when a map updates. The decision layer keeps only the facts that check reads.</p>
+    <p>EUDR screening intersects farm plots with years of forest maps and repeats the check when a map updates. The decision layer keeps <strong>only the facts that check reads</strong>.</p>
   </div>
   <div class="panel br-frame">
     <div class="panel-in">
       <div class="br-frame-grid">
         <dl class="br-spec">
-          <dt>Problem</dt><dd>Compact multi-layer, multi-year storage and efficient queries that preserve the information needed to reproduce plot-level decisions (printed SystemEarth brief, challenge 06).</dd>
+          <dt>Problem</dt><dd>Compact multi-layer, multi-year storage and fast queries that keep what is needed to reproduce plot-level compliance decisions.</dd>
           <dt>Layers</dt><dd>Hansen GFC 2025 v1.13 <code>treecover2000</code>, <code>lossyear</code>, <code>datamask</code> (about 28 m cells) and JRC Global Forest Cover 2020 v4 (about 9 m cells).</dd>
           <dt>Region</dt><dd>Surat Thani, Thailand: 98.772–99.081°E, 8.431–8.582°N. 1,233 × 604 = 744,732 cells, about 34 × 17 km. 17 supplied plots (not shown on this page).</dd>
           <dt>Stack</dt><dd>Python 3.14 engine (numpy, rasterio, shapely) and a React + TypeScript + Vite app. This page is static HTML, JavaScript and three.js, no build step.</dd>
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/SUBMISSION_MEMO.md">docs/SUBMISSION_MEMO.md</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/problem_statement_reference.txt">docs/problem_statement_reference.txt</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/app/public/region/manifest.json">app/public/region/manifest.json</a></p>
+    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/app/public/region/manifest.json">app/public/region/manifest.json</a> (grids, bounds) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>grid</code>, <code>sources</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/source.py">engine/source.py</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/jrc.py">engine/jrc.py</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/requirements.txt">engine/requirements.txt</a></p>
   </div>
 </section>
 
@@ -68,7 +68,7 @@
   <div class="prose">
     <div class="kick">2 · Layer stack</div>
     <h2>Four source rasters, one decision plane</h2>
-    <p>No EUDR question reads <code>treecover2000</code>, which is 72% of the Hansen bytes, or loss years before 2021. JRC supplies forest at the cut-off, and 1 of every 9 JRC cells is read.</p>
+    <p>Layer analysis drops <span class="hl"><strong>72% of the Hansen GeoTIFF bytes</strong> before any codec runs</span>: no EUDR question reads <code>treecover2000</code> or loss years before 2021. JRC supplies forest at the cut-off, and 1 of every 9 JRC cells is read.</p>
   </div>
 
   <div class="br-seq" id="br-seq">
@@ -101,7 +101,7 @@
       </tbody>
     </table>
   </div>
-  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md">decision-layer-report.md</a> (bytes, questions) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-scale-notes.md">decision-scale-notes.md</a> (zstd-19 yardstick) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a>. Textures decoded from <a href="https://github.com/Collaboration95/hr-2026/tree/Main/app/public/region">app/public/region</a>; display only.</p>
+  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">artifacts/decision/layer-analysis-v1.json</a> (<code>attribution</code>, <code>totals</code>, <code>contract_questions</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>baselines</code>, <code>levels</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a>. Textures decoded from <a href="https://github.com/Collaboration95/hr-2026/tree/Main/app/public/region">app/public/region</a>; display only.</p>
 </section>
 
 <!-- =============================================================== schema -->
@@ -135,7 +135,7 @@
   <div class="prose">
     <div class="kick">4 · Store file</div>
     <h2><code>.plds</code> byte layout</h2>
-    <p>One file holds a 20-byte prefix, a canonical-JSON header and the payload: four bit-planes and a sparse set of loss events. The checks run before any decoded cell is used.</p>
+    <p>One file holds a 20-byte prefix, a canonical-JSON header and the payload: four bit-planes plus <strong>sparse loss events coded as rank gaps</strong>. The split encoding is <span class="hl"><strong>28% smaller than the best GeoTIFF</strong> of the same codes</span>. Every check runs before a decoded cell is used.</p>
   </div>
   <div class="panel" id="br-store">
     <div class="panel-in">
@@ -168,7 +168,7 @@
   <div class="prose">
     <div class="kick">5 · Live query</div>
     <h2>Polygon to histogram to answer</h2>
-    <p>A polygon selects the cells whose centres it covers. The 20-bin histogram of their codes is the entire input to the answer.</p>
+    <p>A polygon selects the cells whose centres it covers. The <strong>20-bin histogram</strong> of their codes is the entire input to the answer.</p>
   </div>
   <div class="panel" id="br-q">
     <div class="panel-in">
@@ -206,7 +206,7 @@
         <span><i class="box" style="--c:#E8590C"></i>mapped loss on mapped 2020 forest</span>
       </div>
       <div class="br-read" id="q-read"></div>
-      <p class="br-note-line"><b>Scope.</b> The polygon is synthetic; real plot outlines are private. Codes are re-derived in the browser from the display rasters with the rule in <code>engine/decision.py</code>, and the region's 20-bin histograms equal <code>stores.json</code>. Cell selection here is an even-odd centre test; the engine uses exact GEOS <code>covers</code>. The evidence is the Python engine's proof, not this demonstration.</p>
+      <p class="br-note-line"><b>Scope.</b> The polygon is synthetic; real plot outlines are private. Codes are re-derived in the browser from the display rasters with the rule in <code>engine/decision.py</code>, and the region's 20-bin histograms equal <code>stores.json</code>. Selection here is an even-odd centre test; the engine uses exact GEOS <code>covers</code>. The evidence is the Python engine's proof.</p>
     </div>
     <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a> (<code>derive_screen_codes</code>, <code>nested_offsets</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_summary.py">engine/decision_summary.py</a> (<code>summarize_ints</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/app/src/map/region-raster.ts">app/src/map/region-raster.ts</a> (decoding) · rasters from <a href="https://github.com/Collaboration95/hr-2026/tree/Main/app/public/region">app/public/region</a>.</p>
   </div>
@@ -218,7 +218,7 @@
   <div class="prose">
     <div class="kick">6 · Query paths</div>
     <h2>Paths P0–P6, three clocks</h2>
-    <p>Registered plots and new boundaries are separate jobs and are never combined into one multiple. Every multiple is against P0, the retained v1 query on the original layers.</p>
+    <p>Registered-plot paths run on a <span class="hl"><strong>content-bound registry and answer table</strong></span>: a lookup hits only on plot ID, geometry hash, store hash and level. Registered plots and new boundaries are separate jobs, each measured against P0, the v1 query on the original layers.</p>
   </div>
   <div class="panel" id="br-paths">
     <div class="panel-in">
@@ -234,7 +234,7 @@
       <div class="br-chart" id="br-ladder"></div>
       <details class="deeper br-table"><summary>Data table <span class="lvl">all three clocks</span></summary><div class="body" id="br-ladder-table"></div></details>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-benchmark-notes.md">docs/lab/decision-benchmark-notes.md</a> headline table (Phase 4, two full runs, fresh child per path) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a>. Hot is per plot, one 17-plot batch divided by 17. Batch figure needs a batch in hand; at 500 synthetic polygons it is 15.8× against P0.</p>
+    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>headline_table</code>, <code>speedups</code>, <code>method</code>); two full runs, a fresh child per path, 17 supplied plots, medians. Hot is one 17-plot batch divided by 17. P4B answers a batch in one pass: 15.8× P0 on 500 synthetic polygons.</p>
   </div>
 </section>
 
@@ -256,7 +256,7 @@
       <div class="br-phase-notes" id="br-phase-notes"></div>
       <details class="deeper br-table"><summary>Data table <span class="lvl">multiples by phase</span></summary><div class="body" id="br-ph-table"></div></details>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md#speed-up-phases">decision-layer-report.md, "Speed-up phases"</a>. The answer table stays at 410× to 430× across phases (within noise) and is omitted from the lines. The 5.3× to 5.2× step on new boundaries is a P0 re-measure 0.5% lower, not a slowdown.</p>
+    <p class="foot"><b>Sources.</b> The <code>speedups</code> block of <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> at each commit: <a href="https://github.com/Collaboration95/hr-2026/commit/e7f5264">e7f5264</a> (decision layers), <a href="https://github.com/Collaboration95/hr-2026/commit/3afeb02">3afeb02</a> (Phase 1), <a href="https://github.com/Collaboration95/hr-2026/commit/8808f55">8808f55</a> (Phase 2), <a href="https://github.com/Collaboration95/hr-2026/commit/4ca3628">4ca3628</a> (Phase 3), <a href="https://github.com/Collaboration95/hr-2026/commit/35fd625">35fd625</a> (Phase 4). The answer table stays near 410×–430× across phases and is omitted from the lines. Each run re-measures P0, so a multiple can move about 0.5% with no code change.</p>
   </div>
 </section>
 
@@ -266,7 +266,7 @@
   <div class="prose">
     <div class="kick">8 · Benchmarks</div>
     <h2>Speed, storage, memory and fidelity</h2>
-    <p>One 34 × 17 km region and one laptop with a warm file cache. The whole-tile figures are storage only; no queries were run at tile scale.</p>
+    <p>Exhaustive per-cell proof: <span class="hl"><strong>744,732 of 744,732 cells identical, so every plot boundary in the region</strong> gets the same answer</span>. Storage is also measured on a whole 10° tile.</p>
   </div>
   <div class="br-bgrid">
     <div class="panel" id="br-store-chart">
@@ -278,7 +278,7 @@
         <div class="ph br-sub2"><span class="tag">Original layers · 623,237 B by file</span></div>
         <div class="br-stack" id="br-orig"></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-scale-notes.md#one-real-tile">decision-scale-notes.md</a>. The best standard GeoTIFF of the decision codes is 8,532 B (98.6% smaller): most of the gain is the layer analysis, not the codec.</p>
+      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>levels.*.store</code>, <code>best_control</code>, <code>controls</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">artifacts/decision/scale-v1.json</a> (<code>sizes_bytes</code>, <code>ratios</code>). A plain GeoTIFF of the decision codes is already 98.6% smaller, so the layer analysis does most of the work; the split encoding adds the last 28%.</p>
     </div>
     <div class="panel" id="br-mem-chart">
       <div class="panel-in">
@@ -287,7 +287,7 @@
         <div class="ph br-sub2"><span class="tag">New polygons per second · 500 synthetic</span></div>
         <div class="br-chart" id="br-thr"></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-benchmark-notes.md">decision-benchmark-notes.md</a> (peak RSS from process-cold children) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md">decision-layer-report.md</a> (throughput). The batch figure needs a batch in hand.</p>
+      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>headline_table</code> peak RSS from process-cold children; <code>workloads</code> for the 500-polygon set). The batch evaluator answers all 500 polygons in one pass.</p>
     </div>
     <div class="panel br-wide" id="br-fid">
       <div class="panel-in">
@@ -303,7 +303,7 @@
             <tr><td>JRC native 9 m detail</td><td><span class="st review">Reduced</span></td><td>The contract reads 1 of every 9 JRC cells</td></tr>
           </tbody></table></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md#same-answers-proven-for-every-cell">decision-layer-report.md, "Same answers, proven for every cell"</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a> (independent validator). 17/17 shows encoding fidelity, not supplier compliance or satellite accuracy.</p>
+      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">artifacts/decision/proof-v1.json</a> (<code>exhaustive_cell_proof</code>, <code>plot_proof</code>, <code>fuzz</code>, <code>negative_controls</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a> and <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/out/v07.json">out/v07.json</a> (independent validator).</p>
     </div>
   </div>
 </section>
@@ -314,7 +314,7 @@
   <div class="prose">
     <div class="kick">9 · Decisions</div>
     <h2>Decisions, rejected approaches and negative results</h2>
-    <p>Each entry names the repository file that records it. Negative results stay in the record.</p>
+    <p>Each entry names the code, artifact or validation output that records it.</p>
   </div>
   <div class="panel" id="br-dec">
     <div class="panel-in">
@@ -322,73 +322,77 @@
         <div class="br-seg" role="group" aria-label="Kind"><button type="button" data-kind="all" aria-pressed="true">All</button><button type="button" data-kind="decision" aria-pressed="false">Decisions</button><button type="button" data-kind="rejected" aria-pressed="false">Rejected</button><button type="button" data-kind="negative" aria-pressed="false">Negative results</button></div></div>
       <ul class="br-list" id="br-dec-list"></ul>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md">decision-layer-report.md</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-scale-notes.md">decision-scale-notes.md</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/SUBMISSION_MEMO.md">docs/SUBMISSION_MEMO.md</a>. Each row names its file.</p>
+    <p class="foot"><b>Sources.</b> Each row names the code, artifact or validation output that records it.</p>
   </div>
 </section>
 
 <!-- =============================================================== limits -->
-<section id="limits" data-toc="Limits" data-sprite-say="Mapped loss, not verdicts.">
+<section id="limits" data-toc="Limits" data-sprite-say="Five design limits.">
   <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">10 · Limits</div>
-    <h2>What is and is not proven</h2>
-    <p>The results are encoding and query evidence on public layers under a written rule. They are mapped observations, not compliance findings.</p>
+    <h2>Design limitations</h2>
   </div>
-  <div class="br-limits">
-    <div class="panel"><div class="panel-in">
-      <div class="tag"><span class="st ok">Shown</span></div>
-      <ul class="br-ul">
-        <li>Identical plot-query outputs for all 744,732 cells at both levels, and so for every polygon in the region under the centre rule.</li>
-        <li>17 of 17 supplied plots, 9,829 of 9,829 fuzzed polygons, and 0 mismatches between fast and reference selection on 4,920 validator-generated geometries.</li>
-        <li>One flipped cell, a moved vertex and a flipped JRC bit are each detected.</li>
-        <li>Storage on one region (99.0% smaller) and on a whole tile (98.0% smaller, storage only).</li>
-        <li>Per-plot cost once the layer is local, on one laptop with a warm cache.</li>
-      </ul></div></div>
-    <div class="panel"><div class="panel-in">
-      <div class="tag"><span class="st review">Not shown</span></div>
-      <ul class="br-ul">
-        <li>That the rule matches SystemEarth's own reading of the EUDR definitions; it has not been approved.</li>
-        <li>The 0.5 ha minimum area, the "able to reach 5 m in situ" test, protected areas (WDPA licence unclear) and legality layers.</li>
-        <li>Queries at tile scale, a multi-region workload, or any "faster than other tools" claim: no other EUDR tool publishes per-plot latency.</li>
-        <li>That JRC sampling at the Hansen centre is neutral in general. No plot decision changes under majority or any-forest rules, but only 1 of 17 plots has forest.</li>
-        <li>Anything about supplier intent. Counts are cells, not hectares.</li>
-        <li>Speed for a single new plot from the batch evaluator, or for plots not registered in advance on the index and table paths.</li>
-      </ul></div></div>
+  <div class="br-lim">
+    <div class="br-limc"><span class="n">1</span><b>All-or-nothing edge cells</b><p>A cell counts fully when its centre is covered. Answers are counts of about 0.076 ha cells; partial edge coverage and the EUDR 0.5 ha minimum area are not modelled.</p></div>
+    <div class="br-limc"><span class="n">2</span><b>JRC sampled once per Hansen cell</b><p>The centre of its 3×3 block. Centre, 3×3 majority and any-forest give the same decision for all 17 plots, but only one plot has mapped forest.</p></div>
+    <div class="br-limc"><span class="n">3</span><b>The layer is rule-specific</b><p>A changed rule or an added layer, such as protected areas, means re-deriving from the lossless audit tier: seconds per region, and about 7 CPU-minutes per tile (estimated from 6 of 160 strips).</p></div>
+    <div class="br-limc"><span class="n">4</span><b>The largest speed-ups need registration</b><p>44×–410× apply to plots registered in advance. An unseen boundary gets 5.2×.</p></div>
+    <div class="br-limc"><span class="n">5</span><b>Scale evidence is split</b><p>Storage was measured on a whole 10° tile; query timing on one region.</p></div>
   </div>
-  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md#honest-limits">decision-layer-report.md, "Honest limits"</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/SUBMISSION_MEMO.md">SUBMISSION_MEMO.md</a> §4 · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a>.</p>
+  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a> (centre rule) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">artifacts/decision/layer-analysis-v1.json</a> (<code>aggregation_sensitivity</code>, <code>cell_area_hectares_at_chip_centre</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">artifacts/decision/scale-v1.json</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>speedups</code>).</p>
+</section>
+
+<!-- =============================================================== reproduce -->
+<section id="reproduce" data-toc="Reproduce" data-sprite-say="Every number has a command.">
+  <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">11 · Evidence and reproduction</div>
+    <h2>Evidence and reproduction</h2>
+    <p>Each headline figure lives in a committed artifact and has a command that regenerates it.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-in">
+      <div class="br-lab" style="margin-top:0">Setup · Python 3.14 venv in .venv-data, engine requirements, app dependencies</div>
+      <pre class="code">scripts/setup-local.sh</pre>
+      <div class="tbl br-repro"><table class="dt">
+        <thead><tr><th>Figure</th><th>Artifact · key</th><th>Command (from the repository root)</th><th class="r">Time</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Figure">623,237 → 6,146 B; best GeoTIFF 8,532 B; 99.0% smaller</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a> · <code>baselines</code>, <code>levels.*.store</code>, <code>best_control</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_store</code></td><td class="r" data-label="Time">≈ 20 s</td></tr>
+          <tr><td data-label="Figure">744,732 / 744,732 cells; 17 / 17 plots; 9,829 / 9,829 fuzz; negative controls</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">proof-v1.json</a> · <code>exhaustive_cell_proof</code>, <code>plot_proof</code>, <code>fuzz</code>, <code>negative_controls</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_proof</code></td><td class="r" data-label="Time">≈ 15 s</td></tr>
+          <tr><td data-label="Figure">Registry and answer table</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/table.json">table.json</a> · <code>content_sha256</code>, <code>stores</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_index</code></td><td class="r" data-label="Time">—</td></tr>
+          <tr><td data-label="Figure">Hot, fresh-process and end-to-end times; peak memory; 5.2× / 44× / 83× / 410×</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">benchmark-v1.json</a> · <code>headline_table</code>, <code>speedups</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_benchmark</code></td><td class="r" data-label="Time">≈ 2.5 min</td></tr>
+          <tr><td data-label="Figure">72% of Hansen bytes dropped; whole-tile 421.9 MB → 8.2 MB; cost model</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">layer-analysis-v1.json</a> · <code>attribution</code>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">scale-v1.json</a> · <code>sizes_bytes</code>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/cost-v1.json">cost-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_scale</code> (<code>--analysis</code>, <code>--scale</code>, <code>--cost</code>)</td><td class="r" data-label="Time">≈ 3 min for <code>--scale</code></td></tr>
+          <tr><td data-label="Figure">361 engine tests</td><td data-label="Artifact · key">—</td><td data-label="Command"><code>.venv-data/bin/python -B -m unittest discover -s engine/tests</code></td><td class="r" data-label="Time">decision subset ≈ 30 s</td></tr>
+          <tr><td data-label="Figure">Independent validator: 17 scripts, 4,920 geometries on 10 grids, 0 mismatches</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">report.md</a> · <code>validation/decision/out/*.json</code></td><td data-label="Command"><code>.venv-data/bin/python -B validation/decision/run_all.py</code></td><td class="r" data-label="Time">≈ 80 s</td></tr>
+        </tbody></table></div>
+      <p class="br-note-line"><b>Inputs.</b> <code>engine.decision_store</code> and the per-cell comparison read only the public layers committed under <code>data/public</code> and <code>data/experimental/jrc</code>. The 17 supplier plots are not in the public repository: <code>engine.decision_proof</code> loads them next to the layers, and so do the registry, benchmark and validator runs. <code>engine.decision_scale --scale</code> reads the full Hansen and JRC tiles, which are not committed.</p>
+    </div>
+  </div>
 </section>
 
 <!-- =============================================================== contact -->
 <section id="contact" data-toc="Contact" data-sprite-say="Questions welcome.">
   <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="prose">
-    <div class="kick">11 · Contact</div>
-    <h2>Repository, report and questions</h2>
+    <div class="kick">12 · Contact</div>
+    <h2>Repository and questions</h2>
   </div>
   <div class="panel"><div class="panel-in">
     <div class="br-contact">
-      <div>
-        <ul class="br-links">
-          <li><a href="https://github.com/Collaboration95/hr-2026">Repository · Collaboration95/hr-2026</a></li>
-          <li><a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-layer-report.md">Decision-layer report</a></li>
-          <li><a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/lab/decision-benchmark-notes.md">Benchmark notes</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">Independent validation</a></li>
-          <li><a href="https://github.com/Collaboration95/hr-2026/blob/Main/docs/SUBMISSION_MEMO.md">Submission memo</a></li>
-        </ul>
-        <div class="br-q-form">
-          <label class="br-lab" for="br-topic">Question about</label>
-          <select id="br-topic"><option>Framing</option><option>Layer stack</option><option>Schema</option><option>Store layout</option><option>Live query</option><option>Query paths</option><option>Speed-up phases</option><option>Benchmarks</option><option>Decisions</option><option>Limits</option><option>Something else</option></select>
-          <a class="btn on br-ask" id="br-ask" href="https://github.com/Collaboration95/hr-2026/issues/new" target="_blank" rel="noopener">Questions · open a GitHub issue</a>
-        </div>
-      </div>
-      <div>
-        <div class="br-lab">Reproduce</div>
-<pre class="code">.venv-data/bin/python -B -m engine.decision_store  .venv-data/bin/python -B -m engine.decision_proof      # exhaustive + 17 plots + fuzz
-.venv-data/bin/python -B -m engine.decision_benchmark  # paths P0–P6
-.venv-data/bin/python -B validation/decision/run_all.py # independent checks</pre>
+      <ul class="br-links">
+        <li><a href="https://github.com/Collaboration95/hr-2026">Repository · Collaboration95/hr-2026</a></li>
+        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/artifacts/decision">Evidence artifacts</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">Independent validation</a></li>
+        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/engine">Engine source</a></li>
+      </ul>
+      <div class="br-q-form">
+        <label class="br-lab" for="br-topic">Question about</label>
+        <select id="br-topic"><option>Framing</option><option>Layer stack</option><option>Schema</option><option>Store layout</option><option>Live query</option><option>Query paths</option><option>Speed-up phases</option><option>Benchmarks</option><option>Decisions</option><option>Limits</option><option>Reproduction</option><option>Something else</option></select>
+        <a class="btn on br-ask" id="br-ask" href="https://github.com/Collaboration95/hr-2026/issues/new" target="_blank" rel="noopener">Questions · open a GitHub issue</a>
       </div>
     </div>
   </div></div>
-  <div class="endnote">Plotline · Hack &amp; Hire Sustainability Edition 2026 · SystemEarth track. Numbers are from <code>docs/lab/decision-layer-report.md</code> (Phase 4 is the latest) and <code>artifacts/decision/</code>. Sample plots and their outlines are private and not shown.</div>
+  <div class="endnote">Plotline · Hack &amp; Hire Sustainability Edition 2026. Numbers are from <code>artifacts/decision/*.json</code> and <code>validation/decision/out/</code>. Supplier plots and their outlines are private and not shown.</div>
 </section>
 
 </main>

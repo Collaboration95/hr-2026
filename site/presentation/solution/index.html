@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>How Plotline works · Plotline explainers</title>
+<title>How Plotline works · Plotline</title>
 <meta name="description" content="Three screening questions, a 20-value code per map cell, a 6 KB decision layer, and an exhaustive check that every cell, and so every plot boundary, gives the same answer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -242,7 +242,7 @@
       <div class="sol-ev" id="sol-enc-ev" hidden></div>
       <p class="say"><small id="sol-enc-n"></small><span id="sol-enc-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_sections</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event") and the research pass in <code>docs/lab/decision-layer-report.md</code> (each stream tries 10 compressor settings and keeps the smallest, mostly LZMA). The grid is invented; the real region has 744,732 cells.</p>
+    <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_parts</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event"); each stream tries 10 compressor settings and keeps the smallest, mostly LZMA (<code>artifacts/decision/stores.json</code>, <code>candidates</code>). The grid is invented; the real region has 744,732 cells.</p>
   </div>
 
   <details class="deeper"><summary>Detail: integrity checks when the file is read <span class="lvl">technical</span></summary><div class="body">
@@ -334,7 +334,7 @@
         <tr><td>Fuzzed polygons: holes, multipolygons, edges through cell centres, chip edges, water</td><td><span class="st ok">9,829 / 9,829</span> (171 invalid shapes rejected identically by both paths)</td></tr>
         <tr><td>Negative controls: one flipped cell, a moved vertex, a flipped JRC bit</td><td><span class="st ok">All detected</span></td></tr>
         <tr><td>Dropped detail: inverted canopy %, reversed 2001–2020 loss years, inverted non-centre JRC cells</td><td><span class="st ok">0 codes change</span> (ignored as designed)</td></tr>
-        <tr><td>Independent validator with exact rational arithmetic and its own reducer</td><td><span class="st ok">Confirmed</span>; 216,360 extra adversarial polygons for the fast selector, 0 mismatches</td></tr>
+        <tr><td>Independent validator with exact rational arithmetic and its own reducer</td><td><span class="st ok">Confirmed</span>; 0 mismatches between fast and reference selection on 4,920 validator-generated geometries (<code>validation/decision/out/v07.json</code>)</td></tr>
       </tbody>
     </table>
   </div>
@@ -355,11 +355,11 @@
     <p>A plot can be answered in three ways, reported separately; no blended "N× faster" figure is quoted. The <a href="../speed/">Performance page</a> covers how the speed was reached.</p>
   </div>
   <div class="sol-3">
-    <div class="card rv" style="--c: var(--pen)"><div class="who">Path 1</div><h3>A new boundary</h3><p>A polygon not seen before. The decision layer and exact scanline selection find its cells and count the codes. Hot time on the 17 plots: <b>5.2×</b> the retained v1 path. A batch evaluator reaches about 16× on 500 synthetic polygons, but needs the whole batch in hand.</p></div>
+    <div class="card rv" style="--c: var(--pen)"><div class="who">Path 1</div><h3>A new boundary</h3><p>A polygon not seen before. The decision layer and exact scanline selection find its cells and count the codes. Hot time on the 17 plots: <b>5.2×</b> the retained v1 path. A batch evaluator reaches about 16× on 500 synthetic polygons, when the polygons are evaluated in one call.</p></div>
     <div class="card rv" style="--c: var(--proof)"><div class="who">Path 2</div><h3>A registered plot</h3><p>EUDR plots are registered once and re-checked whenever a layer updates, so a plot's cells are found once and kept in an index. Hot time: <b>44×</b>, or 83× with a standard-library-only re-check.</p></div>
     <div class="card rv" style="--c: var(--declared)"><div class="who">Path 3</div><h3>A saved answer</h3><p>For registered plots, the answer itself can be stored in a table keyed by plot ID, geometry hash and store hash. A change to any key makes the lookup miss. Hot time about <b>410×</b>. It is a materialised view and answers only plots it already holds.</p></div>
   </div>
-  <div class="note warn rv"><b>Scope</b><span>These are <b>hot</b> times on the 17 plots, on one region and one laptop with a warm cache. They are not end-to-end times: from a fresh process most of the time is starting Python and importing NumPy. The new-boundary and registered-plot figures answer different jobs and are not averaged.</span></div>
+  <div class="note warn rv"><b>Scope</b><span>These are <b>hot</b> times on the 17 plots: same process, layer already loaded. End-to-end time from a fresh process also includes starting Python and importing NumPy. The new-boundary and registered-plot figures answer different jobs and are not averaged.</span></div>
   <div class="prose rv">
     <p class="small muted"> The registered-plot table is 20,650 B and its cell index 4,096 B, reported as sidecars next to the 6,146 B layer.</p>
   </div>
@@ -370,7 +370,7 @@
   <div class="prose rv">
     <div class="kick">8 · The app</div>
     <h2>The app presents the layers, answers and receipts.</h2>
-    <p>The app is one local program (React and TypeScript on the Python engine). It runs offline: no cloud, no keys, no map-tile service. The map <i>is</i> the Hansen raster, recoloured in the browser, so the display shows the encoded data. Screenshots are not shown on this page because they draw supplier plot outlines, which are private.</p>
+    <p>The app is one local program (React and TypeScript on the Python engine). It runs offline: no cloud, no keys, no map-tile service. The map <i>is</i> the Hansen raster, recoloured in the browser, so the display shows the encoded data. No screenshots are shown, because they draw supplier plot outlines.</p>
   </div>
   <div class="cols">
     <div class="card rv" style="--c: var(--forest)"><div class="who">View 1</div><h4>Map</h4><p>Plays the years 2001 to 2025 with loss accumulating, and can overlay the JRC 2020 forest. Selecting a plot shows its ~28 m cells with the centre rule drawn as dots. A side panel sets <b>Declared by supplier</b> beside <b>Mapped by Plotline</b> and ends with a question for a human reviewer.</p></div>
@@ -387,17 +387,17 @@
 <section id="lost">
   <span class="sprite sprite-spot" data-sprite="lossy" data-size="72" data-pose="crossed-out" data-click="happy" data-idle-fidget></span>
   <div class="prose rv">
-    <div class="kick">9 · Negative results and scope</div>
+    <div class="kick">9 · Negative results and design limits</div>
     <h2>A learned codec selector did not beat a fixed codec.</h2>
     <p>Before the decision layers, a small learned selector picked a codec per map patch. On a sealed held-out region it saved 10,417 B (1.17%) among the candidates it could choose from, but <b>a fixed, tuned GeoTIFF at the same level was 10,217 B smaller than the selector</b>, and when it could pick between levels 3, 9 and 19 it lost 400 B to a fixed level 19. It was not integrated. The saving comes from the layer analysis, not from a model.</p>
     <p>Two other results: a tuned standard GeoTIFF beat the lossless v1 store by 0.48%, and the early bit-packing candidates were sometimes bigger than the compressed originals.</p>
-    <h3>Region and scope</h3>
+    <h3>Design limits</h3>
     <ul>
-      <li><b>One region, 34 × 17 km.</b> It is 1,233 × 604 = 744,732 Hansen cells in Thailand's rubber and oil-palm country. The speed numbers come from one laptop with a warm file cache.</li>
-      <li><b>Cells, not hectares.</b> EUDR's 0.5 ha minimum area and the "able to reach 5 m in situ" test are not applied anywhere. "Deforestation" means mapped loss on mapped 2020 forest.</li>
-      <li><b>JRC is read at the Hansen cell centre.</b> Swapping that for a 3×3 majority or "any forest in the block" changes no plot decision, but only P-0001 has any forest, so this is a weak test.</li>
-      <li><b>Protected areas</b> are not included because their licence is unclear.</li>
-      <li><b>Registered-plot paths answer only registered plots.</b> New boundaries go through the decision layer.</li>
+      <li><strong>Edge cells are all-or-nothing.</strong> Under the centre rule a cell counts for a plot when its centre lies inside the boundary; cells are about 0.076 ha. Partial edge coverage and the 0.5 ha minimum area are not modelled.</li>
+      <li><strong>JRC is sampled once per Hansen cell</strong>, at the centre of its 3 × 3 block. The alternatives (majority, any forest) give the same decision for all 17 plots, but only one plot has mapped forest.</li>
+      <li><strong>The layer is rule-specific.</strong> A changed rule or an added layer means re-deriving from the lossless audit tier: seconds per region, about 7 CPU-minutes per tile (estimated).</li>
+      <li><strong>The largest speed-ups need registered plots.</strong> The 44× to 410× figures apply to plots registered in advance; a new boundary gets 5.2×.</li>
+      <li><strong>Storage was measured on a whole tile and query timing on one region.</strong></li>
     </ul>
     
   </div>

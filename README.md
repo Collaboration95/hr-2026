@@ -22,9 +22,9 @@ This repository holds the project context and working local implementation for t
 
 <p align="center"><a href="https://collaboration95.github.io/hr-2026/presentation/">https://collaboration95.github.io/hr-2026/presentation/</a></p>
 
-`site/presentation/` holds only what the demo and slides use: overview, how Plotline works, performance and findings. Everything else (event brief, company, data, glossary, presentation guide, readiness) is at the site root, <https://collaboration95.github.io/hr-2026/>, and may link to the presentation pages. The presentation pages never link back. Every page carries the same QR in its margin.
+`site/presentation/` holds only what the demo and slides use: overview, how Plotline works, performance and findings. The other published pages are at the site root, <https://collaboration95.github.io/hr-2026/>: the hub, the technical brief (`site/brief/`), the data page and the glossary. They may link to the presentation pages; the presentation pages never link back. Every page carries the same QR in its margin. Team-only pages (presentation guide, submission readiness, sprite lab, event and company explainers) are in `site/_internal/`, which `scripts/publish-site.sh` does not publish.
 
-**New here? Start with the [project pages](site/index.html)** (16 Oct; static HTML; demo and slide pages are in `site/presentation/`): light, animated pages covering the event, SystemEarth and the EUDR, the data, how Plotline works, the speed story, the findings, the pitch and a submission checklist. It is static HTML for GitHub Pages; locally, run `python3 -m http.server` in `site/`. Writer brief: [site/_template/BRIEF.md](site/_template/BRIEF.md).
+**New here? Start with the [project pages](site/index.html)** (static HTML; demo and slide pages are in `site/presentation/`): a technical brief (layer stack, 20-code schema, store layout, live plot query, query paths, benchmarks and design limits), the presentation pages (overview, how Plotline works, performance, findings), the data page and the glossary. It is static HTML for GitHub Pages; locally, run `python3 -m http.server` in `site/`. Writer brief: [site/_template/BRIEF.md](site/_template/BRIEF.md).
 
 More: [visual explainer](docs/explainer/index.html) (GeoTIFFs, plot queries and every optimisation; open the file in a browser) · [plain-English writeups](docs/writeups/README.md) · [pitch and demo script](docs/writeups/04-pitch.md) · [design system](design/DESIGN.md) · [detailed handover](docs/HANDOVER.md)
 
@@ -104,7 +104,7 @@ The two original PDFs in [docs/sources](docs/sources/) are available for checkin
 
 ## Repository publication and private data
 
-The repository was public until 15 October 2026 and is now private. SystemEarth shared its sample for local work, and no external publication was authorized. On 15 October, at the user's request:
+The repository was private from 15 October 2026 and is public now (`gh repo view` reports PUBLIC on 17 October 2026). The private-data rules below still apply. SystemEarth shared its sample for local work, and no external publication was authorized. On 15 October, at the user's request:
 
 - The raw sample and every file that copied its plot boundaries, cell footprints or declaration rows were removed from git and from the whole history of every branch. They are listed in [`data/PRIVATE_FILES.txt`](data/PRIVATE_FILES.txt) and ignored.
 - Docs keep prose analysis, the region's bounding box and aggregate per-plot results.

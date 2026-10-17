@@ -1,5 +1,5 @@
 #!/bin/sh
-# Publish the explainer pack (site/, minus the writer notes in site/_template/) to the gh-pages branch.
+# Publish the project pages (site/, minus the writer notes in site/_template/ and the team-only pages in site/_internal/) to the gh-pages branch.
 # GitHub Pages serves that branch at https://collaboration95.github.io/hr-2026/.
 # Usage: scripts/publish-site.sh [--push]   (without --push it only commits the branch locally)
 set -eu
@@ -10,7 +10,7 @@ TMP=$(mktemp -d)
 trap 'git worktree remove --force "$TMP" >/dev/null 2>&1 || true' EXIT
 
 # The pack must never carry the private sample: refuse if a listed private path or raw coordinates slipped in.
-if grep -rnoE '9[89]\.[0-9]{5,}|hyperlink-RG' site --include='*.html' --exclude-dir=_template; then
+if grep -rnoE '9[89]\.[0-9]{5,}|hyperlink-RG' site --include='*.html' --exclude-dir=_template --exclude-dir=_internal; then
   echo "Possible sample coordinates or reference keys above; not publishing." >&2
   exit 1
 fi
@@ -23,7 +23,7 @@ else
 fi
 git -C "$TMP" read-tree --empty
 find "$TMP" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-rsync -a --exclude '_template' site/ "$TMP"/
+rsync -a --exclude '_template' --exclude '_internal' --exclude 'CONTRACT.md' site/ "$TMP"/
 git -C "$TMP" add -A
 if git -C "$TMP" diff --cached --quiet; then
   echo "gh-pages already matches site/ at $SRC."
