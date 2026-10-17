@@ -11,17 +11,21 @@
 <link rel="stylesheet" href="../assets/pack.css">
 <link rel="stylesheet" href="../assets/sprites.css">
 <link rel="stylesheet" href="brief.css">
+<link rel="stylesheet" href="swarm.css">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js">
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }</script>
 </head>
 <body data-page="brief">
+<canvas id="swarm" aria-hidden="true"></canvas>
 <div class="wrap">
 <nav class="br-nav" id="br-nav" aria-label="Sections">
   <a href="#framing">Framing</a><a href="#layers">Layers</a><a href="#schema">Schema</a><a href="#store">Store</a><a href="#query">Query</a><a href="#paths">Paths</a><a href="#phases">Phases</a><a href="#benchmarks">Benchmarks</a><a href="#decisions">Decisions</a><a href="#limits">Limits</a><a href="#reproduce">Reproduce</a><a href="#contact">Contact</a>
 </nav>
 <main>
 
-<header class="hero" id="top">
+<header class="hero" id="top" data-swarm="hero">
   <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
+  <div class="x-meta"><a href="experimental/">dark edition →</a></div>
   <div class="kick">Technical brief · SystemEarth track</div>
   <h1>Decision layer: algorithm, schema and benchmarks</h1>
   <p class="lede">Each map cell of the sample region is reduced to <strong>one of 20 codes</strong>. A <strong>6,146 B</strong> store returns the same plot-query outputs as the original layers for <strong>all 744,732 cells</strong>, under the stated centre rule.</p>
@@ -35,7 +39,7 @@
 </header>
 
 <!-- =============================================================== framing -->
-<section id="framing" data-toc="Framing" data-sprite-say="Two layers in, one code out.">
+<section id="framing" data-swarm="framing" data-idx="01 / 12" data-toc="Framing" data-sprite-say="Two layers in, one code out.">
   <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">1 · Framing</div>
@@ -62,7 +66,7 @@
 </section>
 
 <!-- =============================================================== layers -->
-<section id="layers" data-toc="Layers" class="br-layers">
+<section id="layers" data-swarm="layers" data-idx="02 / 12" data-toc="Layers" class="br-layers">
   <span class="sprite sprite-spot" data-sprite="hansen" data-size="72" data-pose="look" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">2 · Layer stack</div>
@@ -103,7 +107,7 @@
 </section>
 
 <!-- =============================================================== schema -->
-<section id="schema" data-toc="Schema" data-sprite-say="20 codes. 0 to 19.">
+<section id="schema" data-swarm="schema" data-idx="03 / 12" data-toc="Schema" data-sprite-say="20 codes. 0 to 19.">
   <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">3 · Schema</div>
@@ -127,7 +131,7 @@
 </section>
 
 <!-- =============================================================== store -->
-<section id="store" data-toc="Store" data-sprite-say="Every byte has a check.">
+<section id="store" data-swarm="store" data-idx="04 / 12" data-toc="Store" data-sprite-say="Every byte has a check.">
   <span class="sprite sprite-spot" data-sprite="squish" data-size="72" data-pose="squish" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">4 · Store file</div>
@@ -158,7 +162,7 @@
 </section>
 
 <!-- =============================================================== query -->
-<section id="query" data-toc="Query" data-sprite-say="Drag the polygon.">
+<section id="query" data-swarm="query" data-idx="05 / 12" data-toc="Query" data-sprite-say="Drag the polygon.">
   <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">5 · Live query</div>
@@ -207,7 +211,7 @@
 </section>
 
 <!-- =============================================================== paths -->
-<section id="paths" data-toc="Paths" data-sprite-say="Hot is not end-to-end.">
+<section id="paths" data-swarm="paths" data-idx="06 / 12" data-toc="Paths" data-sprite-say="Hot is not end-to-end.">
   <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="sprint" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">6 · Query paths</div>
@@ -233,7 +237,7 @@
 </section>
 
 <!-- =============================================================== phases -->
-<section id="phases" data-toc="Phases" data-sprite-say="Same bytes, same answers.">
+<section id="phases" data-swarm="phases" data-idx="07 / 12" data-toc="Phases" data-sprite-say="Same bytes, same answers.">
   <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="happy" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">7 · Speed-up phases</div>
@@ -254,7 +258,7 @@
 </section>
 
 <!-- =============================================================== benchmarks -->
-<section id="benchmarks" data-toc="Benchmarks" data-sprite-say="Region, tile, memory, proof.">
+<section id="benchmarks" data-swarm="benchmarks" data-idx="08 / 12" data-toc="Benchmarks" data-sprite-say="Region, tile, memory, proof.">
   <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">8 · Benchmarks</div>
@@ -300,7 +304,7 @@
 </section>
 
 <!-- =============================================================== decisions -->
-<section id="decisions" data-toc="Decisions" data-sprite-say="Most ideas lost.">
+<section id="decisions" data-swarm="decisions" data-idx="09 / 12" data-toc="Decisions" data-sprite-say="Most ideas lost.">
   <span class="sprite sprite-spot" data-sprite="lossy" data-size="72" data-pose="shrug" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">9 · Decisions</div>
@@ -316,7 +320,7 @@
 </section>
 
 <!-- =============================================================== limits -->
-<section id="limits" data-toc="Limits" data-sprite-say="Five design limits.">
+<section id="limits" data-swarm="limits" data-idx="10 / 12" data-toc="Limits" data-sprite-say="Five design limits.">
   <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">10 · Limits</div>
@@ -332,7 +336,7 @@
 </section>
 
 <!-- =============================================================== reproduce -->
-<section id="reproduce" data-toc="Reproduce" data-sprite-say="Every number has a command.">
+<section id="reproduce" data-swarm="reproduce" data-idx="11 / 12" data-toc="Reproduce" data-sprite-say="Every number has a command.">
   <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">11 · Evidence and reproduction</div>
@@ -360,7 +364,7 @@
 </section>
 
 <!-- =============================================================== contact -->
-<section id="contact" data-toc="Contact" data-sprite-say="Questions welcome.">
+<section id="contact" data-swarm="contact" data-idx="12 / 12" data-toc="Contact" data-sprite-say="Questions welcome.">
   <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
   <div class="prose">
     <div class="kick">12 · Contact</div>
@@ -383,6 +387,7 @@
 </section>
 
 </main>
+<footer class="x-foot"><span>Plotline · decision layer brief</span><a href="experimental/">dark edition</a></footer>
 </div>
 <div class="br-tip" id="br-tip" role="status" hidden></div>
 <script src="../assets/pack.js"></script>
@@ -395,6 +400,7 @@
 <script src="charts.js"></script>
 <script src="decisions.js"></script>
 <script type="module" src="layers.js"></script>
+<script type="module" src="swarm.js"></script>
 <script src="../assets/sprites.js"></script>
 <script>(function(){
   Sprites.companion('hansen');
@@ -405,5 +411,6 @@
     a.href='https://github.com/Collaboration95/hr-2026/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body); }
   s.addEventListener('change',ask); ask();
 })();</script>
+<script src="anchor.js"></script>
 </body>
 </html>
