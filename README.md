@@ -12,6 +12,8 @@ This repository holds the project context and working local implementation for t
 - **Smaller:** a 6.1 KB decision layer replaces 623 KB of original layers (99% smaller). On a whole 10° tile, 422 MB becomes 8.2 MB.
 - **Faster:** registered plots are re-checked 44× faster (83× with the numpy-free re-check, about 410× from a stored answer table), and new plot boundaries about 5× faster (about 16× if they arrive as a batch). Hot query time, one region, one laptop, warm cache. End-to-end from a fresh process is dominated by Python and NumPy start-up, except for the numpy-free re-check of registered plots, which halves it (50.0 to 24.9 ms).
 
+**Videos:** [technical walkthrough (2 min)](https://youtu.be/sOGut8gD_RM) · [preview (1 min)](https://youtube.com/shorts/qJbxvC9AxDo)
+
 **Watch** the 55-second walkthrough (`docs/lab/redesign-demo.webm`, kept local, not committed: it shows supplier plot outlines) → **Inspect** the evidence in the app (`npm run dev:local --prefix app`, then `#/proof`) or the [decision-layer report](docs/lab/decision-layer-report.md) → **Reproduce** with `scripts/setup-local.sh` and the commands in that report.
 
 **Submission:** the four-part [submission memo](docs/SUBMISSION_MEMO.md) (what we built, how it works, results, limitations).
