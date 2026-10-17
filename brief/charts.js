@@ -209,7 +209,7 @@
   /* where the original bytes sit */
   (() => {
     const host = $('#br-orig'); if (!host) return;
-    const col = { treecover: '#2F6B47', lossyear: '#C9A08A', datamask: '#8FA37E', jrc: '#12A362' };
+    const col = { treecover2000: '#2F6B47', lossyear: '#C9A08A', datamask: '#8FA37E', jrc: '#12A362' };
     const bar = h('div', { class: 'bar' }), leg = h('div', { class: 'leg' });
     BR.bytes.originals.forEach(o => {
       const pc = 100 * o.b / BR.bytes.total, seg = h('i', { style: `flex:${o.b} 1 0;background:${col[o.id]};min-width:3px` });

@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#07090D">
+<title>Technical brief · Plotline · experimental dark edition</title>
+<meta name="description" content="Plotline decision layer: the layer stack, the 20-code schema, the .plds store layout, a live plot query, query paths, speed-up phases, benchmarks and limits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="../../assets/pack.css">
+<link rel="stylesheet" href="../../assets/sprites.css">
+<link rel="stylesheet" href="brief.css">
+<link rel="stylesheet" href="swarm.css">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js">
+</head>
+<body data-page="brief" class="x-dark">
+<canvas id="swarm" aria-hidden="true"></canvas>
+<div class="wrap">
+<nav class="br-nav" id="br-nav" aria-label="Sections">
+  <a href="#framing">Framing</a><a href="#layers">Layers</a><a href="#schema">Schema</a><a href="#store">Store</a><a href="#query">Query</a><a href="#paths">Paths</a><a href="#phases">Phases</a><a href="#benchmarks">Benchmarks</a><a href="#decisions">Decisions</a><a href="#limits">Limits</a><a href="#reproduce">Reproduce</a><a href="#contact">Contact</a>
+</nav>
+<main>
+
+<header class="hero" id="top" data-swarm="hero">
+  <span class="sprite sprite-spot sprite-spot-hero" data-sprite="pip" data-size="96" data-pose="clipboard" data-click="happy" data-idle-fidget></span>
+  <div class="x-meta"><span class="x-tag">experimental · dark edition</span><a href="../">← standard edition</a></div>
+  <div class="kick">Technical brief · SystemEarth track</div>
+  <h1>Decision layer: algorithm, schema and benchmarks</h1>
+  <p class="lede">Each map cell of the sample region is reduced to <strong>one of 20 codes</strong>. A <strong>6,146 B</strong> store returns the same plot-query outputs as the original layers for <strong>all 744,732 cells</strong>, under the stated centre rule.</p>
+  <div class="stats br-stats">
+    <div class="big pen"><span class="num"><span data-count="623237">623,237</span></span><span class="cap">bytes, original layers</span></div>
+    <div class="big proof"><span class="num"><span data-count="6146">6,146</span></span><span class="cap">bytes, decision store (99.0% smaller)</span></div>
+    <div class="big proof"><span class="num"><span data-count="744732">744,732</span></span><span class="cap">of 744,732 cells identical</span></div>
+    <div class="big pen"><span class="num"><span data-count="44" data-suffix="×">44×</span></span><span class="cap">registered plots, hot, vs v1 path</span></div>
+    <div class="big pen"><span class="num"><span data-count="5.2" data-dec="1" data-suffix="×">5.2×</span></span><span class="cap">new boundaries, hot, vs v1 path</span></div>
+  </div>
+</header>
+
+<!-- =============================================================== framing -->
+<section id="framing" data-swarm="framing" data-idx="01 / 12" data-toc="Framing" data-sprite-say="Two layers in, one code out.">
+  <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">1 · Framing</div>
+    <h2>What went in</h2>
+    <p>EUDR screening intersects farm plots with years of forest maps and repeats the check when a map updates. The decision layer keeps <strong>only the facts that check reads</strong>.</p>
+  </div>
+  <div class="panel br-frame">
+    <div class="panel-in">
+      <div class="br-frame-grid">
+        <dl class="br-spec">
+          <dt>Problem</dt><dd>Compact multi-layer, multi-year storage and fast queries that keep what is needed to reproduce plot-level compliance decisions.</dd>
+          <dt>Layers</dt><dd>Hansen GFC 2025 v1.13 <code>treecover2000</code>, <code>lossyear</code>, <code>datamask</code> (about 28 m cells) and JRC Global Forest Cover 2020 v4 (about 9 m cells).</dd>
+          <dt>Region</dt><dd>Surat Thani, Thailand: 98.772–99.081°E, 8.431–8.582°N. 1,233 × 604 = 744,732 cells, about 34 × 17 km. 17 supplied plots (not shown on this page).</dd>
+          <dt>Stack</dt><dd>Python 3.14 engine (numpy, rasterio, shapely) and a React + TypeScript + Vite app. This page is static HTML, JavaScript and three.js, no build step.</dd>
+          <dt>AI use</dt><dd>No machine-learning model in the pipeline. AI coding assistants wrote and tested much of the code. A learned codec selector was tried and dropped because it lost to a plain GeoTIFF.</dd>
+        </dl>
+        <div class="br-flow" id="br-flow" aria-label="Pipeline">
+          <div class="br-flow-row" role="tablist"></div>
+          <p class="br-flow-note" id="br-flow-note" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== layers -->
+<section id="layers" data-swarm="layers" data-idx="02 / 12" data-toc="Layers" class="br-layers">
+  <span class="sprite sprite-spot" data-sprite="hansen" data-size="72" data-pose="look" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">2 · Layer stack</div>
+    <h2>Four source rasters, one decision plane</h2>
+    <p>Layer analysis drops <strong>72% of the Hansen GeoTIFF bytes</strong> before any codec runs: no EUDR question reads <code>treecover2000</code> or loss years before 2021. JRC supplies forest at the cut-off, and 1 of every 9 JRC cells is read.</p>
+  </div>
+
+  <div class="br-seq" id="br-seq">
+    <div class="br-stage" id="br-stage">
+      <div class="br-cv" id="br-cv">
+        <canvas id="br-gl" aria-label="Isometric stack of the region rasters: Hansen treecover2000, lossyear, datamask and JRC 2020 forest, collapsing into one 20-code decision plane" role="img"></canvas>
+        <div class="br-labels" id="br-labels" aria-hidden="true"></div>
+        <div class="br-fallback" id="br-fallback" hidden></div>
+        <span class="chip syn br-real">Real region rasters</span>
+      </div>
+      <aside class="br-side" id="br-side" aria-live="polite">
+        <div class="br-step-no" id="br-step-no">Step 1 of 5</div>
+        <h3 id="br-step-title">Source rasters</h3>
+        <p class="br-step-text" id="br-step-text"></p>
+        <div class="br-bytes"><span class="br-bytes-n" id="br-bytes-n">623,237</span><span class="br-bytes-u">B</span><span class="br-bytes-b" id="br-bytes-b">GeoTIFF files</span></div>
+        <div class="br-chain" id="br-chain"></div>
+        <div class="steps br-steps" id="br-steps" role="group" aria-label="Sequence step"></div>
+        <span class="sprite br-side-sprite" data-sprite="jrc" data-size="56" data-pose="idle" data-click="happy"></span>
+      </aside>
+    </div>
+  </div>
+
+  <div class="tbl br-need">
+    <table class="dt">
+      <thead><tr><th>Question</th><th>Reads</th><th>Does not read</th></tr></thead>
+      <tbody>
+        <tr><td>Q1 · Forest on 31 Dec 2020?</td><td>JRC 2020 class, land / water / unknown</td><td>treecover2000</td></tr>
+        <tr><td>Q2 · 2020 forest lost since?</td><td>Q1 and Hansen loss years 2021–2025</td><td>loss years 2001–2020</td></tr>
+        <tr><td>Q3 · Supplier's Hansen 2021–23 check</td><td>Hansen loss years 2021–2025 on all land</td><td>canopy %, older loss years</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =============================================================== schema -->
+<section id="schema" data-swarm="schema" data-idx="03 / 12" data-toc="Schema" data-sprite-say="20 codes. 0 to 19.">
+  <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">3 · Schema</div>
+    <h2>20 codes, two levels</h2>
+    <p>The screening level keeps every post-2020 loss year. The decision level forgets the loss year on land that was not forest in 2020, so codes 3–7 merge into code 2.</p>
+  </div>
+  <div class="panel" id="br-schema">
+    <div class="panel-in">
+      <div class="ph">
+        <span class="tag">Code space · region counts</span>
+        <div class="br-seg" role="group" aria-label="Level">
+          <button type="button" data-level="screen" aria-pressed="false">Screening <code>eudr-screen.v1</code></button>
+          <button type="button" data-level="decision" aria-pressed="true">Decision <code>eudr-decision.v1</code></button>
+        </div>
+      </div>
+      <div class="br-codes" id="br-codes"></div>
+      <div class="br-code-detail" id="br-code-detail" aria-live="polite"></div>
+      <p class="br-selfcheck" id="br-selfcheck"></p>
+    </div>
+  </div>
+  <figure class="x-fig" style="--h:740px;--hm:660px">
+    <div class="x-fig-frame"><iframe src="fig/code-sorter.html" title="Code sorter: cells drop into one of 20 decision-code bins" loading="lazy" scrolling="no"></iframe></div>
+  </figure>
+</section>
+
+<!-- =============================================================== store -->
+<section id="store" data-swarm="store" data-idx="04 / 12" data-toc="Store" data-sprite-say="Every byte has a check.">
+  <span class="sprite sprite-spot" data-sprite="squish" data-size="72" data-pose="squish" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">4 · Store file</div>
+    <h2><code>.plds</code> byte layout</h2>
+    <p>One file holds a 20-byte prefix, a canonical-JSON header and the payload: four bit-planes plus <strong>sparse loss events coded as rank gaps</strong>. The split encoding is <strong>28% smaller than the best GeoTIFF</strong> of the same codes. Every check runs before a decoded cell is used.</p>
+  </div>
+  <div class="panel" id="br-store">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">decision.plds · 6,146 B · segment widths proportional</span><button class="replay" type="button" id="br-verify">Verify in browser</button></div>
+      <div class="br-bar" id="br-bar" role="list"></div>
+      <div class="br-store-detail" id="br-store-detail" aria-live="polite"></div>
+      <div class="br-verify" id="br-verify-out" hidden></div>
+    </div>
+  </div>
+  <div class="panel" id="br-bind">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Registry and answer table · content binding</span></div>
+      <div class="br-bind-grid">
+        <div class="br-bind-chain" id="br-bind-chain"></div>
+        <div class="br-bind-ctl">
+          <div class="br-lab">Change one input</div>
+          <div class="br-seg col" role="group" aria-label="Tamper"></div>
+          <div class="br-bind-out" id="br-bind-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== query -->
+<section id="query" data-swarm="query" data-idx="05 / 12" data-toc="Query" data-sprite-say="Drag the polygon.">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="idle" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">5 · Live query</div>
+    <h2>Polygon to histogram to answer</h2>
+    <p>A polygon selects the cells whose centres it covers. The <strong>20-bin histogram</strong> of their codes is the entire input to the answer.</p>
+  </div>
+  <div class="panel" id="br-q">
+    <div class="panel-in">
+      <div class="ph">
+        <span class="tag"><span class="chip syn">Synthetic polygon</span>Browser re-derivation · illustration</span>
+        <div class="br-seg" role="group" aria-label="Level">
+          <button type="button" data-level="screen" aria-pressed="false">Screening</button>
+          <button type="button" data-level="decision" aria-pressed="true">Decision</button>
+        </div>
+      </div>
+      <div class="br-ctrl">
+        <label class="br-year"><span class="br-lab">Loss shown up to</span>
+          <input type="range" id="q-year" min="2001" max="2025" step="1" value="2025" aria-label="Loss year shown on the map"><output id="q-year-out">2025</output></label>
+        <button type="button" class="btn" id="q-play">Play years</button>
+        <button type="button" class="btn on" id="q-jrc" aria-pressed="true">JRC 2020 forest overlay</button>
+        <span class="br-seg" role="group" aria-label="Map zoom"><button type="button" data-zoom="0" aria-pressed="false">Region</button><button type="button" data-zoom="4" aria-pressed="true">×4</button><button type="button" data-zoom="10" aria-pressed="false">×10</button></span>
+        <span class="br-seg" role="group" aria-label="Polygon shape"><button type="button" data-shape="penta" aria-pressed="true">Pentagon</button><button type="button" data-shape="square" aria-pressed="false">Square</button><button type="button" data-shape="ell" aria-pressed="false">L-shape</button><button type="button" data-shape="strip" aria-pressed="false">Strip</button></span>
+      </div>
+      <div class="br-q-grid">
+        <div class="br-q-mapwrap">
+          <canvas id="q-map" tabindex="0" aria-label="Region map. Drag the synthetic polygon to move it; drag empty ground to pan; arrow keys nudge the polygon." role="application"></canvas>
+          <span class="br-q-tag">Region map · drag the polygon or the ground</span>
+        </div>
+        <div class="br-q-insetwrap">
+          <canvas id="q-inset" tabindex="0" aria-label="Zoomed inset of the cells under the synthetic polygon. Drag a vertex to reshape; double-click to add a vertex; shift-click a vertex to remove it." role="application"></canvas>
+          <span class="br-q-tag">Inset · drag vertices; double-click adds one</span>
+        </div>
+      </div>
+      <div class="legend br-q-legend" id="q-legend">
+        <span><i style="--c:#E6E9EF"></i>centre dot, cell selected</span>
+        <span><i class="ring" style="--c:#8B93A5"></i>centre dot, not selected</span>
+        <span><i style="--c:#2BD47D"></i>JRC 2020 forest (9 m cells)</span>
+        <span><i style="--c:#FF7A2E"></i>loss in selected year</span>
+        <span><i style="--c:#8A6452"></i>earlier loss</span>
+        <span><i class="box" style="--c:#FF7A2E"></i>mapped loss on mapped 2020 forest</span>
+      </div>
+      <div class="br-read" id="q-read"></div>
+      <p class="br-note-line"><b>Scope.</b> The polygon is synthetic; real plot outlines are private. Codes are re-derived in the browser with the engine's rule; the region's histograms match the stored layer. Selection here is an even-odd centre test; the engine uses exact GEOS <code>covers</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== paths -->
+<section id="paths" data-swarm="paths" data-idx="06 / 12" data-toc="Paths" data-sprite-say="Hot is not end-to-end.">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="sprint" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">6 · Query paths</div>
+    <h2>Paths P0–P6, three clocks</h2>
+    <p>Registered-plot paths run on a <strong>content-bound registry and answer table</strong>: a lookup hits only on plot ID, geometry hash, store hash and level. Registered plots and new boundaries are separate jobs, each measured against P0, the v1 query on the original layers.</p>
+  </div>
+  <div class="panel" id="br-paths">
+    <div class="panel-in">
+      <div class="ph">
+        <span class="tag">17 supplied plots · median · log scale</span>
+        <div class="br-seg" role="group" aria-label="Clock">
+          <button type="button" data-clock="hot" aria-pressed="true">Hot</button>
+          <button type="button" data-clock="cold" aria-pressed="false">Fresh process</button>
+          <button type="button" data-clock="e2e" aria-pressed="false">End-to-end</button>
+        </div>
+      </div>
+      <p class="br-clock-def" id="br-clock-def" aria-live="polite"></p>
+      <div class="br-chart" id="br-ladder"></div>
+      <details class="deeper br-table"><summary>Data table <span class="lvl">all three clocks</span></summary><div class="body" id="br-ladder-table"></div></details>
+    </div>
+    <p class="foot">Two full runs, a fresh process per path, medians. Hot is one 17-plot batch divided by 17.</p>
+  </div>
+  <figure class="x-fig" style="--h:620px;--hm:360px">
+    <div class="x-fig-frame"><iframe src="fig/answer-lock.html" title="Answer lock: a cached answer opens only when every key matches" loading="lazy" scrolling="no"></iframe></div>
+  </figure>
+</section>
+
+<!-- =============================================================== phases -->
+<section id="phases" data-swarm="phases" data-idx="07 / 12" data-toc="Phases" data-sprite-say="Same bytes, same answers.">
+  <span class="sprite sprite-spot" data-sprite="zippy" data-size="72" data-pose="happy" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">7 · Speed-up phases</div>
+    <h2>Four phases after the first benchmark</h2>
+    <p>No phase changed an output, a stored byte or the file format. Each point is a full benchmark re-run, hot, 17 plots, against P0 re-measured in that run.</p>
+  </div>
+  <div class="panel" id="br-phases">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Hot multiple against P0 · by phase</span><button class="replay" type="button">↻ Replay</button></div>
+      <div class="br-two">
+        <div><div class="br-sub">New boundaries (any plot)</div><div class="br-chart" id="br-ph-new"></div></div>
+        <div><div class="br-sub">Registered plots only</div><div class="br-chart" id="br-ph-reg"></div></div>
+      </div>
+      <div class="br-phase-notes" id="br-phase-notes"></div>
+      <details class="deeper br-table"><summary>Data table <span class="lvl">multiples by phase</span></summary><div class="body" id="br-ph-table"></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== benchmarks -->
+<section id="benchmarks" data-swarm="benchmarks" data-idx="08 / 12" data-toc="Benchmarks" data-sprite-say="Region, tile, memory, proof.">
+  <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">8 · Benchmarks</div>
+    <h2>Speed, storage, memory and fidelity</h2>
+    <p>Exhaustive per-cell proof: <strong>744,732 of 744,732 cells identical, so every plot boundary in the region</strong> gets the same answer. Storage is also measured on a whole 10° tile.</p>
+  </div>
+  <div class="br-bgrid">
+    <div class="panel" id="br-store-chart">
+      <div class="panel-in">
+        <div class="ph"><span class="tag">Storage</span>
+          <div class="br-seg" role="group" aria-label="Scope"><button type="button" data-scope="region" aria-pressed="true">Region</button><button type="button" data-scope="tile" aria-pressed="false">Whole tile</button></div></div>
+        <div class="br-chart" id="br-storage"></div>
+        <div class="br-ctrls" id="br-storage-ctl"></div>
+        <div class="ph br-sub2"><span class="tag">Original layers · 623,237 B by file</span></div>
+        <div class="br-stack" id="br-orig"></div>
+      </div>
+      <p class="foot">A plain GeoTIFF of the decision codes is already 98.6% smaller: the layer analysis does most of the work, the split encoding the last 28%.</p>
+    </div>
+    <div class="panel" id="br-mem-chart">
+      <div class="panel-in">
+        <div class="ph"><span class="tag">Peak memory · fresh child</span></div>
+        <div class="br-chart" id="br-mem"></div>
+        <div class="ph br-sub2"><span class="tag">New polygons per second · 500 synthetic</span></div>
+        <div class="br-chart" id="br-thr"></div>
+      </div>
+    </div>
+    <div class="panel br-wide" id="br-fid">
+      <div class="panel-in">
+        <div class="ph"><span class="tag">Fidelity against the original layers</span><button class="replay" type="button">↻ Replay</button></div>
+        <div class="br-fid-grid" id="br-fid-grid"></div>
+        <div class="tbl br-keep"><table class="dt">
+          <thead><tr><th>Attribute</th><th>Status</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><code>datamask</code>, JRC 2020 class at Hansen centres, loss years 2021–2025</td><td><span class="st ok">Preserved, 100%</span></td><td>Every attribute the decision reads</td></tr>
+            <tr><td><code>treecover2000</code> exact %</td><td><span class="st bad">Dropped</span></td><td>No contract question reads it</td></tr>
+            <tr><td>Loss years 2001–2020</td><td><span class="st bad">Dropped</span></td><td>Before the cut-off; JRC supplies forest at the cut-off</td></tr>
+            <tr><td>Loss year on 2020 non-forest land</td><td><span class="st review">Screening only</span></td><td>The decision level forgets it; the supplier's Hansen check reads it</td></tr>
+            <tr><td>JRC native 9 m detail</td><td><span class="st review">Reduced</span></td><td>The contract reads 1 of every 9 JRC cells</td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </div>
+  <figure class="x-fig" style="--h:700px;--hm:620px">
+    <div class="x-fig-frame"><iframe src="fig/proof-reader.html" title="Proof reader: two tapes compared cell by cell over 744,732 cells" loading="lazy" scrolling="no"></iframe></div>
+  </figure>
+</section>
+
+<!-- =============================================================== decisions -->
+<section id="decisions" data-swarm="decisions" data-idx="09 / 12" data-toc="Decisions" data-sprite-say="Most ideas lost.">
+  <span class="sprite sprite-spot" data-sprite="lossy" data-size="72" data-pose="shrug" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">9 · Decisions</div>
+    <h2>Decisions, rejected approaches and negative results</h2>
+  </div>
+  <div class="panel" id="br-dec">
+    <div class="panel-in">
+      <div class="ph"><span class="tag">Filter</span>
+        <div class="br-seg" role="group" aria-label="Kind"><button type="button" data-kind="all" aria-pressed="true">All</button><button type="button" data-kind="decision" aria-pressed="false">Decisions</button><button type="button" data-kind="rejected" aria-pressed="false">Rejected</button><button type="button" data-kind="negative" aria-pressed="false">Negative results</button></div></div>
+      <ul class="br-list" id="br-dec-list"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== limits -->
+<section id="limits" data-swarm="limits" data-idx="10 / 12" data-toc="Limits" data-sprite-say="Five design limits.">
+  <span class="sprite sprite-spot" data-sprite="stump" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">10 · Limits</div>
+    <h2>Design limitations</h2>
+  </div>
+  <div class="br-lim">
+    <div class="br-limc"><span class="n">1</span><b>All-or-nothing edge cells</b><p>A cell counts fully when its centre is covered. Answers are counts of about 0.076 ha cells; partial edge coverage and the EUDR 0.5 ha minimum area are not modelled.</p></div>
+    <div class="br-limc"><span class="n">2</span><b>JRC sampled once per Hansen cell</b><p>The centre of its 3×3 block. Centre, 3×3 majority and any-forest give the same decision for all 17 plots, but only one plot has mapped forest.</p></div>
+    <div class="br-limc"><span class="n">3</span><b>The layer is rule-specific</b><p>A changed rule or an added layer, such as protected areas, means re-deriving from the lossless audit tier: seconds per region, and about 7 CPU-minutes per tile (estimated from 6 of 160 strips).</p></div>
+    <div class="br-limc"><span class="n">4</span><b>The largest speed-ups need registration</b><p>44×–410× apply to plots registered in advance. An unseen boundary gets 5.2×.</p></div>
+    <div class="br-limc"><span class="n">5</span><b>Scale evidence is split</b><p>Storage was measured on a whole 10° tile; query timing on one region.</p></div>
+  </div>
+  <figure class="x-fig" style="--h:730px;--hm:570px">
+    <div class="x-fig-frame"><iframe src="fig/centre-rule.html" title="Centre rule: a pin rises when its cell centre is inside the plot opening" loading="lazy" scrolling="no"></iframe></div>
+  </figure>
+</section>
+
+<!-- =============================================================== reproduce -->
+<section id="reproduce" data-swarm="reproduce" data-idx="11 / 12" data-toc="Reproduce" data-sprite-say="Every number has a command.">
+  <span class="sprite sprite-spot" data-sprite="chippy" data-size="72" data-pose="nod" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">11 · Evidence and reproduction</div>
+    <h2>Evidence and reproduction</h2>
+    <p>Each headline figure, its result file and the command that regenerates it.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-in">
+      <div class="br-lab" style="margin-top:0">Setup · Python 3.14 venv in .venv-data, engine requirements, app dependencies</div>
+      <pre class="code">scripts/setup-local.sh</pre>
+      <div class="tbl br-repro"><table class="dt">
+        <thead><tr><th>Figure</th><th>Result file</th><th>Command (from the repository root)</th><th class="r">Time</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Figure">623,237 → 6,146 B; best GeoTIFF 8,532 B; 99.0% smaller</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_store</code></td><td class="r" data-label="Time">≈ 20 s</td></tr>
+          <tr><td data-label="Figure">744,732 / 744,732 cells; 17 / 17 plots; 9,829 / 9,829 fuzz; negative controls</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">proof-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_proof</code></td><td class="r" data-label="Time">≈ 15 s</td></tr>
+          <tr><td data-label="Figure">Registry and answer table</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/table.json">table.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_index</code></td><td class="r" data-label="Time">—</td></tr>
+          <tr><td data-label="Figure">Hot, fresh-process and end-to-end times; peak memory; 5.2× / 44× / 83× / 410×</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">benchmark-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_benchmark</code></td><td class="r" data-label="Time">≈ 2.5 min</td></tr>
+          <tr><td data-label="Figure">72% of Hansen bytes dropped; whole-tile 421.9 MB → 8.2 MB; cost model</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">layer-analysis-v1.json</a>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">scale-v1.json</a>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/cost-v1.json">cost-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_scale</code> (<code>--analysis</code>, <code>--scale</code>, <code>--cost</code>)</td><td class="r" data-label="Time">≈ 3 min for <code>--scale</code></td></tr>
+          <tr><td data-label="Figure">361 engine tests</td><td data-label="Result file">—</td><td data-label="Command"><code>.venv-data/bin/python -B -m unittest discover -s engine/tests</code></td><td class="r" data-label="Time">decision subset ≈ 30 s</td></tr>
+          <tr><td data-label="Figure">Independent validator: 17 scripts, 4,920 geometries on 10 grids, 0 mismatches</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/tree/Main/validation/decision/out">validation/decision/out/</a></td><td data-label="Command"><code>.venv-data/bin/python -B validation/decision/run_all.py</code></td><td class="r" data-label="Time">≈ 80 s</td></tr>
+        </tbody></table></div>
+      <p class="br-note-line"><b>Inputs.</b> The 17 supplier plots are not in the public repository; the proof, registry, benchmark and validator runs need them. <code>--scale</code> reads the full Hansen and JRC tiles, which are not committed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== contact -->
+<section id="contact" data-swarm="contact" data-idx="12 / 12" data-toc="Contact" data-sprite-say="Questions welcome.">
+  <span class="sprite sprite-spot" data-sprite="pip" data-size="72" data-pose="wave" data-click="happy" data-idle-fidget></span>
+  <div class="prose">
+    <div class="kick">12 · Contact</div>
+    <h2>Repository and questions</h2>
+  </div>
+  <div class="panel"><div class="panel-in">
+    <div class="br-contact">
+      <ul class="br-links">
+        <li><a href="https://github.com/Collaboration95/hr-2026">Repository · Collaboration95/hr-2026</a></li>
+        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/artifacts/decision">Result files</a> · <a href="https://github.com/Collaboration95/hr-2026/tree/Main/validation/decision/out">Validator results</a></li>
+      </ul>
+      <div class="br-q-form">
+        <label class="br-lab" for="br-topic">Question about</label>
+        <select id="br-topic"><option>Framing</option><option>Layer stack</option><option>Schema</option><option>Store layout</option><option>Live query</option><option>Query paths</option><option>Speed-up phases</option><option>Benchmarks</option><option>Decisions</option><option>Limits</option><option>Reproduction</option><option>Something else</option></select>
+        <a class="btn on br-ask" id="br-ask" href="https://github.com/Collaboration95/hr-2026/issues/new" target="_blank" rel="noopener">Questions · open a GitHub issue</a>
+      </div>
+    </div>
+  </div></div>
+  <div class="endnote">Supplier plots and their outlines are private and not shown.</div>
+</section>
+
+</main>
+<footer class="x-foot"><span>Plotline · decision layer brief</span><span>experimental · dark edition</span><a href="../">standard edition</a></footer>
+</div>
+<div class="br-tip" id="br-tip" role="status" hidden></div>
+<script src="../../assets/pack.js"></script>
+<script src="data.js"></script>
+<script src="core.js"></script>
+<script src="ui.js"></script>
+<script src="schema.js"></script>
+<script src="store.js"></script>
+<script src="query.js"></script>
+<script src="charts.js"></script>
+<script src="decisions.js"></script>
+<script type="module" src="layers.js"></script>
+<script type="module" src="swarm.js"></script>
+<script src="../../assets/sprites.js"></script>
+<script>(function(){
+  Sprites.companion('hansen');
+  /* nav, contact link */
+  var s=document.getElementById('br-topic'), a=document.getElementById('br-ask');
+  function ask(){ var t=s.value, title='Question on the Plotline technical brief: '+t,
+    body='Section: '+t+'\n\nQuestion:\n\n\n---\nPage: https://collaboration95.github.io/hr-2026/brief/';
+    a.href='https://github.com/Collaboration95/hr-2026/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body); }
+  s.addEventListener('change',ask); ask();
+})();</script>
+</body>
+</html>
