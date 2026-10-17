@@ -205,7 +205,7 @@
       </div>
       <p class="say"><small>Size</small><span id="st-colsay">Four original files, 623,237 bytes.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>artifacts/decision/stores.json</code> (<code>baselines</code>, <code>levels</code>). Bars are drawn to true scale on one sample region (34 × 17 km). Bytes, not hectares or plots.</p>
+    <p class="foot">Bars are to true scale on one sample region (34 × 17 km): bytes, not hectares or plots.</p>
   </div>
 
   <div class="prose">
@@ -248,7 +248,7 @@
       <p class="say"><small id="st-psmall"></small><span id="st-psay"></span></p>
       <div class="btns"><button class="btn prev" type="button">← Back</button><button class="btn next" type="button">Next →</button></div>
     </div>
-    <p class="foot"><b>Source:</b> synthetic illustration of the rule in <code>engine/decision.py</code> and <code>engine/query.py</code>; no real plot, cell or count. The orange year marks stand in for Hansen loss years; F and N for the JRC 2020 class.</p>
+    <p class="foot">Synthetic illustration; no real plot, cell or count.</p>
   </div>
 </section>
 
@@ -277,7 +277,7 @@
     <p class="foot"> The grid has the real chip's dimensions but not its data; colours are decorative. The 9,829 fuzzed polygons (holes, multipolygons, edges through cell centres, chip edges, water) exclude 171 invalid shapes that both paths rejected identically. "Break one cell" illustrates the negative controls, which all detected the change.</p>
   </div>
 
-  <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and found 0 mismatches between fast and reference selection on 4,920 validator-generated geometries (<code>validation/decision/out/v07.json</code>). It also found hardening defects (an unprotected header, an overflow path, level mix-ups, allocation amplification, missing content binding), each fixed behind a test that failed on the old code.</span></div>
+  <div class="note"><b>Also checked</b><span>An independent validator re-derived the result with exact arithmetic and found 0 mismatches between fast and reference selection on 4,920 validator-generated geometries. It also found hardening defects (an unprotected header, an overflow path, level mix-ups, allocation amplification, missing content binding), each fixed behind a test that failed on the old code.</span></div>
 </section>
 
 <!-- 7 · APP -->
@@ -341,7 +341,7 @@
           </div></div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> <code>artifacts/decision/benchmark-v1.json</code> and <code>artifacts/decision/scale-v1.json</code>. Sample-region and whole-tile bars are linear; speed bars are log. Hot query time is for 17 registered plots on one region, one laptop and a warm cache. Multiples are against the retained v1 original-layers query. Batch figure is 500 synthetic polygons.</p>
+    <p class="foot">Sample-region and whole-tile bars are linear; speed bars are log.</p>
   </div>
 
   <div class="prose">

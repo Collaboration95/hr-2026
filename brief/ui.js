@@ -76,17 +76,17 @@ window.UI = (() => {
     const row = $('#br-flow .br-flow-row'), note = $('#br-flow-note');
     if (!row) return;
     const nodes = [
-      ['Inputs', 'Hansen 3 bands + JRC 2020', 'Three Hansen rasters on a 1,233 × 604 grid and one JRC raster on a 3,695 × 1,809 grid. The JRC lattice nests the Hansen lattice 3 × 3 with no resampling.', 'engine/source.py · engine/jrc.py'],
-      ['Derive', 'one code per cell', 'JRC 2020 class is read at each Hansen cell centre (the middle of its 3 × 3 block); Hansen loss year becomes none or 2021–2025. Treecover and pre-2021 loss are dropped.', 'engine/decision.py'],
-      ['Encode', '.plds store', 'Four bit-planes (unknown, water, forest, forest-unknown) plus sparse post-2020 loss events with one year symbol each. Lossless: it decodes to the identical raster.', 'engine/decision_store.py'],
-      ['Query', 'polygon to histogram', 'A polygon selects cells whose centres it covers (exact GEOS covers). The selected codes become a 20-bin histogram. Registered plots skip selection through a cell index.', 'engine/query.py · engine/decision_index.py'],
-      ['Answer', 'contract outputs', 'The histogram reduces to forest-2020 cell counts, mapped loss on mapped 2020 forest by year, unknown cells and a support flag. Unknown stays unknown.', 'engine/decision_summary.py'],
+      ['Inputs', 'Hansen 3 bands + JRC 2020', 'Three Hansen rasters on a 1,233 × 604 grid and one JRC raster on a 3,695 × 1,809 grid. The JRC lattice nests the Hansen lattice 3 × 3 with no resampling.'],
+      ['Derive', 'one code per cell', 'JRC 2020 class is read at each Hansen cell centre (the middle of its 3 × 3 block); Hansen loss year becomes none or 2021–2025. Treecover and pre-2021 loss are dropped.'],
+      ['Encode', '.plds store', 'Four bit-planes (unknown, water, forest, forest-unknown) plus sparse post-2020 loss events with one year symbol each. Lossless: it decodes to the identical raster.'],
+      ['Query', 'polygon to histogram', 'A polygon selects cells whose centres it covers (exact GEOS covers). The selected codes become a 20-bin histogram. Registered plots skip selection through a cell index.'],
+      ['Answer', 'contract outputs', 'The histogram reduces to forest-2020 cell counts, mapped loss on mapped 2020 forest by year, unknown cells and a support flag. Unknown stays unknown.'],
     ];
     const btns = nodes.map((n, i) => {
       const b = h('button', { type: 'button', role: 'tab', 'aria-pressed': 'false', class: 'br-flow-node' }, h('span', { class: 'n' }, String(i + 1)), h('b', {}, n[0]), h('small', {}, n[1]));
       b.addEventListener('click', () => show(i)); row.append(b); return b;
     });
-    function show(i) { btns.forEach((b, k) => { b.setAttribute('aria-pressed', String(k === i)); b.classList.toggle('done', k < i); }); note.innerHTML = `${esc(nodes[i][2])} <code>${esc(nodes[i][3])}</code>`; }
+    function show(i) { btns.forEach((b, k) => { b.setAttribute('aria-pressed', String(k === i)); b.classList.toggle('done', k < i); }); note.textContent = nodes[i][2]; }
     show(0);
   })();
 

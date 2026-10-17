@@ -242,7 +242,7 @@
       <div class="sol-ev" id="sol-enc-ev" hidden></div>
       <p class="say"><small id="sol-enc-n"></small><span id="sol-enc-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>engine/decision_store.py</code> (<code>_split_parts</code>, "Four bit planes carry unknown, water, forest and unknown-forest; post-2020 loss is a sparse event set in strip order with one year symbol per event"); each stream tries 10 compressor settings and keeps the smallest, mostly LZMA (<code>artifacts/decision/stores.json</code>, <code>candidates</code>). The grid is invented; the real region has 744,732 cells.</p>
+    <p class="foot">The grid is invented; the real region has 744,732 cells.</p>
   </div>
 
   <details class="deeper"><summary>Detail: integrity checks when the file is read <span class="lvl">technical</span></summary><div class="body">
@@ -334,7 +334,7 @@
         <tr><td>Fuzzed polygons: holes, multipolygons, edges through cell centres, chip edges, water</td><td><span class="st ok">9,829 / 9,829</span> (171 invalid shapes rejected identically by both paths)</td></tr>
         <tr><td>Negative controls: one flipped cell, a moved vertex, a flipped JRC bit</td><td><span class="st ok">All detected</span></td></tr>
         <tr><td>Dropped detail: inverted canopy %, reversed 2001–2020 loss years, inverted non-centre JRC cells</td><td><span class="st ok">0 codes change</span> (ignored as designed)</td></tr>
-        <tr><td>Independent validator with exact rational arithmetic and its own reducer</td><td><span class="st ok">Confirmed</span>; 0 mismatches between fast and reference selection on 4,920 validator-generated geometries (<code>validation/decision/out/v07.json</code>)</td></tr>
+        <tr><td>Independent validator with exact rational arithmetic and its own reducer</td><td><span class="st ok">Confirmed</span>; 0 mismatches between fast and reference selection on 4,920 validator-generated geometries</td></tr>
       </tbody>
     </table>
   </div>
