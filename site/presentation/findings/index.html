@@ -139,7 +139,7 @@
       <div class="legend"><span style="--c:var(--loss)"><i></i>cells with loss (darker = more)</span><span>· = known zero (complete support)</span><span>◆ declared an indication</span></div>
       <div class="fnd-read" id="fnd-bar-read" aria-live="polite">Select a cell for its count.</div>
     </div>
-    <p class="foot"><b>Source:</b> per-plot counts from <code>artifacts/decision/proof-v1.json</code> and <code>artifacts/decision/layer-analysis-v1.json</code> (centre rule, Hansen 2025 v1.13). Aggregate counts only, no geometry. Counts are <b>cells, not hectares</b>. Barcode years before 2021 are left out because the decision does not read them.</p>
+    <p class="foot">Aggregate counts only, no geometry; counts are <b>cells, not hectares</b>. Barcode years before 2021 are left out because the decision does not read them.</p>
   </div>
 
   <div class="stats rv">
@@ -169,7 +169,7 @@
       <div class="fnd-leg" id="fnd-fun-leg" style="opacity:0"><span><i style="background:rgba(232,89,12,.35)"></i>79,871 on land JRC did not map as forest</span><span><i style="background:#8A90A3"></i>217 edge cells with no JRC value</span><span><i style="background:var(--forest)"></i>341 on mapped 2020 forest</span></div>
       <p class="say"><small id="fnd-fun-n">Step 1 of 4</small><span id="fnd-fun-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>artifacts/decision/layer-analysis-v1.json</code> (<code>region_facts</code>). 80,429 land cells (10.8% of land) show Hansen loss after 2020; 341 (0.42%) sit on JRC 2020 forest; 79,871 are on non-forest land; 217 are edge cells where JRC has no value. The dot positions are random; only the counts are real. Cells, not hectares.</p>
+    <p class="foot">The dot positions are random; only the counts are real.</p>
   </div>
 
   <div class="stats rv">
@@ -208,7 +208,7 @@
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:6px"><span class="fnd-ovl" id="fnd-set-ovl"></span><span class="small muted" id="fnd-set-small"></span></div>
       <p class="say"><small id="fnd-set-n">Step 1 of 5</small><span id="fnd-set-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> declared set from the supplied record; Hansen sets from <code>artifacts/decision/proof-v1.json</code> (centre rule, Hansen 2025 v1.13). Dots are labelled by the last two digits of the plot ID (P-0003 is "03"). Purple = declared; orange ring = mapped loss.</p>
+    <p class="foot">Dots show the last two digits of the plot ID; purple = declared, orange ring = mapped loss.</p>
   </div>
 
   <div class="prose rv">
@@ -234,7 +234,6 @@
       <div class="fnd-chips" id="fnd-test-chips"></div>
       <p class="say"><small id="fnd-test-small"></small><span id="fnd-test-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> older-release comparison, preregistered (Hansen 2023 v1.11 vs 2025 v1.13, 17 plots, same rule: 2021–23 counts identical). Overlap-rule sensitivity run (centre selects 1,048 plot/cell memberships; overlap selects 1,385). The 2023 v1.11 comparison was chosen before looking at results.</p>
   </div>
 
   <div class="prose rv">

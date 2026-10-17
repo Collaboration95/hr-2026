@@ -238,7 +238,7 @@
       { n: 744732, of: 744732, cap: 'cells decode identically to the original GeoTIFFs, at both levels (independent float-affine path)' },
       { n: 17, of: 17, cap: 'supplied plots match on every output field, across the store, registry and table paths' },
       { n: 9829, of: 9829, cap: 'fuzzed polygons match: holes, multipolygons, edges through centres, chip edges, water. 171 invalid shapes rejected identically' },
-      { n: 0, of: 4920, cap: 'mismatches between fast and reference selection on 4,920 validator-generated geometries (validation/decision/out/v07.json)', zero: true },
+      { n: 0, of: 4920, cap: 'mismatches between fast and reference selection on 4,920 validator-generated geometries', zero: true },
       { n: 3, of: 3, cap: 'negative controls detected: one flipped cell, a moved vertex, a flipped JRC bit' },
     ];
     const els = items.map(it => {

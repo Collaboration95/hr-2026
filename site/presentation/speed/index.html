@@ -195,9 +195,6 @@
     <div style="--k:4"><b>Phase 3</b><small>leaner reducer</small><p>Two small wins: a reducer twice as lean, and no hidden import in the batch path.</p></div>
     <div style="--k:5"><b>Phase 4</b><small>trusted-integer entry</small><p>A trusted-integer reducer entry, a smarter rule for when to scan in Python, and a research pass.</p></div>
   </div>
-  <details class="deeper"><summary>Go deeper: the commits behind each round <span class="lvl">technical</span></summary><div class="body">
-    <p>Phase 1: <code>3286654</code> decode split stores on packed planes, <code>52868a5</code> speed up <code>fast_select_cells</code>, <code>9552776</code> cut <code>summarize_counts</code> overhead. Phase 2: <code>1c3b6e8</code> scalar scan, <code>531cdac</code> batch evaluator, <code>c580acf</code> NumPy-free re-check. Phase 3: <code>a8a296d</code> unpack the histogram by name, <code>0275811</code> dedupe batch cells without <code>np.unique</code>. Phase 4: <code>d208289</code> trusted-integer reducer entry, <code>30d9780</code> new scan-selection rule, <code>fcf2833</code> drop an unused variable. Evidence re-measured after each round in <code>artifacts/decision/</code>.</p>
-  </div></details>
 </section>
 
 <!-- ============================================================ 2 -->
@@ -220,7 +217,7 @@
       </div>
       <p class="say"><small id="sp-race-ph">Decision layers · starting point</small><span id="sp-race-say">A small decision layer and a registered-plot index.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> benchmark re-run after each phase (commits listed under "Go deeper" above; Phase 4 in <code>artifacts/decision/benchmark-v1.json</code>, <code>headline_table</code>). Each column is that phase's own full benchmark re-run (2 runs, every timed answer bound to the same digests). The answer table (P6d), about 420× at the start and 410× now, is left off this chart because it is a cache (see breakthrough 2). The NumPy-free re-check did not exist before Phase 2.</p>
+    <p class="foot">The answer table, about 420× at the start and 410× now, is left off this chart because it is a cache (see breakthrough 2).</p>
   </div>
 
   <div class="prose" style="margin-top:36px">
@@ -281,12 +278,12 @@
       </div>
       <p class="say"><small>Figure</small><span id="sp-b1-say">Four layers, plus a canopy histogram that no question reads.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> <code>artifacts/decision/benchmark-v1.json</code> (<code>decomposition.decision_level</code>, P1d to P3: same EUDR question, original layers against decision store); sizes in <code>artifacts/decision/stores.json</code>. The shapes drawn are illustrative, not the real rasters.</p>
+    <p class="foot">The shapes drawn are illustrative, not the real rasters.</p>
   </div>
   <div class="note say-it rv"><b>Summary</b><span>The decision layer keeps only what the EUDR decision reads: 6,146 B instead of 623,237 B, about seven times faster to load in a fresh process, with identical answers for every cell.</span></div>
   <div class="note warn rv"><b>Caveat</b><span>Hot, this step is worth only 1.6×, because both paths still pay to find the cells inside a polygon. A plain GeoTIFF of the same decision codes is already 98.6% smaller, so the gain comes from the layer analysis, not from a codec. The structure-aware encoding adds the last 28%.</span></div>
   <details class="deeper"><summary>Go deeper: what the 20 codes are <span class="lvl">technical</span></summary><div class="body">
-    <p>Each Hansen cell becomes one of 20 codes: unknown, water, or land crossed with three forest states (not forest, forest, forest unknown in 2020) and six loss states (none, 2021 to 2025). The decision level additionally forgets the loss year on land that was not forest in 2020. The code space and the one reducer that turns a 20-bin histogram into the contract answer live in <code>engine/decision_summary.py</code>.</p>
+    <p>Each Hansen cell becomes one of 20 codes: unknown, water, or land crossed with three forest states (not forest, forest, forest unknown in 2020) and six loss states (none, 2021 to 2025). The decision level additionally forgets the loss year on land that was not forest in 2020. One shared reducer turns a 20-bin histogram into the contract answer.</p>
   </div></details>
 </section>
 
@@ -315,12 +312,12 @@
       </div>
       <p class="say"><small>Figure</small><span id="sp-b2-say">Scan the polygon once.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> per-plot hot times from <code>artifacts/decision/benchmark-v1.json</code> (<code>metrics_median</code>): P0 84.51 µs, P4 16.15 µs, P5 decision 1.90 µs, P6 decision 0.206 µs. Registering a plot costs one selection, once; that was not timed separately, so it is not in the bars. The grid and polygon are invented.</p>
+    <p class="foot">Registering a plot costs one selection, once; that is not timed separately, so it is not in the bars. The grid and polygon are invented.</p>
   </div>
   <div class="note say-it rv"><b>Summary</b><span>Each registered plot's cells are found once, which makes re-checks 44× faster; the answer table, around 410×, is a cache.</span></div>
   <div class="note warn rv"><b>Why the 410× is a cache</b><span>The answer table is a materialised view: each registered plot's full answer, stored under a key of plot ID, geometry hash and layer (store) hash. A changed boundary or layer misses the key, so a stale answer is never returned. It only answers plots registered in advance. New boundaries do not get it; they get the P4 path at about 5×.</span></div>
   <details class="deeper"><summary>Go deeper: how the index and table work, and what hashing costs <span class="lvl">technical</span></summary><div class="body">
-    <p><code>build_registry</code> in <code>engine/decision_index.py</code> stores each plot's in-chip flat cell indices (row × width + column, int32, sorted). <code>registry_evaluate</code> is a bincount of the codes at those indices, passed to the shared reducer. <code>table_lookup</code> returns the stored output only on an exact plot, geometry, layer and level match, otherwise nothing.</p>
+    <p>The registry stores each plot's in-chip flat cell indices (row × width + column, int32, sorted). Evaluating a plot is a bincount of the codes at those indices, passed to the shared reducer. The answer table returns the stored output only on an exact plot, geometry, layer and level match, otherwise nothing.</p>
     <p>The realistic workflow stores each plot's geometry hash at registration. If a service instead re-hashes the polygon on every call, cost rises: P5d 1.90 to 5.97 µs, P6d 0.21 to 3.65 µs per plot. The 44× and 410× figures use the precomputed key.</p>
   </div></details>
 </section>
@@ -345,12 +342,12 @@
       </div>
       <p class="say"><small>Figure</small><span id="sp-b3-say">Before: expand every plane to one cell per byte.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> benchmark re-run at Phase 1 (commits above). Store read 2.5 to 0.67 ms; registered index fresh-process load + query 3.5 to 1.3 ms; peak memory 43 to 37 MB. The picture is schematic: the real chip is 1,233 × 604 cells.</p>
+    <p class="foot">The picture is schematic: the real chip is 1,233 × 604 cells.</p>
   </div>
   <div class="note say-it rv"><b>Summary</b><span>The store keeps the map as packed yes-or-no flags and no longer unpacks them into 744,732 cells before reading a few hundred; reading the store is 3.8× faster (2.5 to 0.67 ms).</span></div>
   <div class="note unknown rv"><b>Caveat</b><span>This is a load-time gain. Hot times are measured after loading, so the decode change does not move them; Phase 1's hot gains (24× to 31×, 2.2× to 3.0×) came from the other two Phase 1 changes, the reducer and the selection. The three shipped together, and the memory drop was not separated by change. Phase 1 is not an end-to-end gain: that barely moved (index path 52.4 to 50.0 ms).</span></div>
   <details class="deeper"><summary>Go deeper: the three Phase 1 changes <span class="lvl">technical</span></summary><div class="body">
-    <p><code>_decode_split</code> and <code>read_store</code> in <code>engine/decision_store.py</code>: the plane checks run on strip-order packed bytes and only the dense forest plane is expanded. A side effect: the validator's crafted-blob memory case now peaks near 6 MB instead of about 50 MB. The other two changes: the histogram reduction in <code>summarize_counts</code> (1.6 to 2.2× on its own) and polygon selection in <code>fast_select_cells</code>, which now builds the polygon straight from one coordinate array and paints ambiguous-cell rectangles without <code>np.add.at</code>. It calls a few <code>shapely.lib</code> functions directly, so it depends on the pinned shapely 2.1.2.</p>
+    <p>The store decoder runs its plane checks on strip-order packed bytes, and only the dense forest plane is expanded. A side effect: the validator's crafted-blob memory case now peaks near 6 MB instead of about 50 MB. The other two changes: the histogram reduction (1.6 to 2.2× on its own) and polygon selection, which now builds the polygon straight from one coordinate array and paints ambiguous-cell rectangles without <code>np.add.at</code>. It calls a few low-level Shapely functions directly, so it depends on the pinned shapely 2.1.2.</p>
   </div></details>
 </section>
 
@@ -376,12 +373,12 @@
       </div>
       <p class="say"><small>Figure</small><span id="sp-b4-say">Sweep one row at a time.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> workload W3 in <code>artifacts/decision/benchmark-v1.json</code>: seeded random concave shapes of 0.5 to 20 ha, 15% with a hole, 5 to 267 cells each (median 36). They are synthetic. P4B's figure is the batch time divided by 500.</p>
+    <p class="foot">Synthetic shapes of 0.5 to 20 ha; the batch figure is the batch time divided by 500.</p>
   </div>
   <div class="note say-it rv"><b>Summary</b><span>A new boundary is about 5× faster than on the original path with the same exact answer; a batch of hundreds evaluated in one call reaches about 16×.</span></div>
   <div class="note warn rv"><b>Batch evaluator</b><span>The batch evaluator (P4B, 146,000 polygons a second, 15.8×) answers many polygons in one vectorised pass; the gain grows with batch size, from 1.2× over one-at-a-time on 17 plots to 15.8× on 500. From a cold start it was slower until Phase 3, because NumPy's <code>np.unique</code> imports a module on first use (about 2 ms); a small sort-and-dedupe helper fixed that.</span></div>
   <details class="deeper"><summary>Go deeper: when the Python scan is used, and the Phase 4 tuning <span class="lvl">technical</span></summary><div class="body">
-    <p>In <code>engine/decision_index.py</code>: windows up to 500 rows × edges (and 4,096 cells) always use the Python scan. Phase 4 also lets it take 500 to 2,000, unless the boundary changes rows more than 150 times in total (a "sawtooth"), where the NumPy scan is faster. The reason: a 224-shape sweep found the Python scan costs about 0.17 µs per row an edge crosses, and rows × edges predicts its time poorly (R² of 0.66, against 0.99 for a fit on edges and row crossings). The two scans were already proven identical. On the 17 plots every polygon was already under the first threshold, so the Phase 4 rule change did not touch them.</p>
+    <p>Windows up to 500 rows × edges (and 4,096 cells) always use the Python scan. Phase 4 also lets it take 500 to 2,000, unless the boundary changes rows more than 150 times in total (a "sawtooth"), where the NumPy scan is faster. The reason: a 224-shape sweep found the Python scan costs about 0.17 µs per row an edge crosses, and rows × edges predicts its time poorly (R² of 0.66, against 0.99 for a fit on edges and row crossings). The two scans were already proven identical. On the 17 plots every polygon was already under the first threshold, so the Phase 4 rule change did not touch them.</p>
   </div></details>
 </section>
 
@@ -391,7 +388,7 @@
     <div class="kick">Breakthrough 5 · Phases 2 to 4</div>
     <h2>Drop NumPy for re-checks, and make the shared reducer lean.</h2>
     <p>This is the only change that moves the <em>whole-process</em> time. A fresh Python process spends about 25 ms just importing NumPy. A registered re-check only needs the codes at a few hundred cells, so it never needed NumPy.</p>
-    <p>The NumPy-free re-check (<code>engine/decision_lite.py</code>) reads and validates the store using only the standard library, then decodes codes only at the registered cells, straight from the packed planes. It never builds the 744,732-cell raster. End-to-end time for a registered re-check halves, <strong>50.0 to 24.9 ms</strong>, and peak memory drops from 37 to 23 MB.</p>
+    <p>The NumPy-free re-check reads and validates the store using only the standard library, then decodes codes only at the registered cells, straight from the packed planes. It never builds the 744,732-cell raster. End-to-end time for a registered re-check halves, <strong>50.0 to 24.9 ms</strong>, and peak memory drops from 37 to 23 MB.</p>
   </div>
   <div class="panel" id="sp-b5">
     <div class="panel-in">
@@ -404,7 +401,7 @@
       <div class="legend" style="margin-top:14px"><span><i style="--c:#CDD2DE"></i>harness floor (20.1 ms)</span><span><i style="--c:var(--ink-2)"></i>imports</span><span><i style="--c:var(--pen)"></i>load, query and the rest</span></div>
       <p class="say"><small>Figure</small><span id="sp-b5-say">Registered index: half the bar is the harness floor, a third is imports.</span></p>
     </div>
-    <p class="foot"><b>Source:</b> end-to-end medians and import times from <code>artifacts/decision/benchmark-v1.json</code> (<code>metrics_median</code>, <code>side_measurements</code>) (P0 114.5, P5 50.0, P5L 24.9, P6 21.6 ms; imports about 73, 24, 3.4 and 1.15 ms; a do-nothing harness child 20.1 ms). The third segment is computed by subtraction, not measured separately. P0 and P5 import times are approximate.</p>
+    <p class="foot">The third segment is computed by subtraction, not measured separately.</p>
   </div>
 
   <div class="prose">
@@ -426,7 +423,7 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Source:</b> benchmark re-runs at Phases 3 and 4 (commits above) and <code>artifacts/decision/benchmark-v1.json</code> (<code>cost_inputs</code>); per-plot starting and Phase 1 values are 3.55 and 2.80 µs. The NumPy-free re-check begins in Phase 2.</p>
+    <p class="foot">The NumPy-free re-check begins in Phase 2.</p>
   </div>
   <div class="note say-it rv"><b>Summary</b><span>Re-checking registered plots does not need NumPy: dropping it halves the whole start-to-answer time (50.0 to 24.9 ms) and takes the hot re-check to 83× the original path; end-to-end it is 4.6×.</span></div>
   <div class="note unknown rv"><b>What it does not check</b><span>The NumPy-free path validates the store (header CRC, payload sha256, every split-decode check over the whole payload) and the registry. It does not check the decoded raster's own hash, because that needs every cell decoded. The benchmark pins the store file's sha256 instead, which closes the gap. Without that pin, the NumPy index path is the one that checks the decoded raster.</span></div>
@@ -468,7 +465,7 @@
       <div class="bars sp-live" id="sp-views-bars" style="margin-top:16px"></div>
       <p class="say"><small id="sp-views-h">Hot</small><span id="sp-views-say"></span></p>
     </div>
-    <p class="foot"><b>Source:</b> medians from <code>artifacts/decision/benchmark-v1.json</code> (<code>headline_table</code>, pooled over 2 full runs). Multiples listed under <code>speedups</code> are used as stored; the others (for example P3 and P4B on the fresh-process and end-to-end clocks, and P5d end-to-end) are computed from the medians shown. Nothing here is disk-cold: the OS file cache was warm.</p>
+    <p class="foot">Nothing here is disk-cold: the OS file cache was warm.</p>
   </div>
 </section>
 
@@ -500,7 +497,7 @@
       <div class="sp-build" id="sp-build-bar" role="img" aria-label="Read 2 percent, derive codes 6 percent, compression 92 percent"></div>
       <p class="say"><small>Figure</small><span>Compression is 92% of building a layer. A GPU would speed up the 8% that is not compression, so the build would be about 1.06× faster.</span></p>
     </div>
-    <p class="foot"> A scratch measurement on 6 of the 160 strips of one coastal tile, in a single process; not a committed artifact. The estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is a rough one, since inland tiles encode more slowly.</p>
+    <p class="foot">A scratch measurement on 6 of the 160 strips of one coastal tile; the estimate of about 7 CPU-minutes per tile and roughly 30 to 60 CPU-hours for about 280 land tiles is rough, since inland tiles encode more slowly.</p>
   </div>
 </section>
 
@@ -524,7 +521,7 @@
         </tbody>
       </table></div>
     </div>
-    <p class="foot"><b>Source:</b> validation and test runs after each phase (<code>validation/decision/</code>, <code>engine/tests/</code>). "Identical" means every output field under the documented centre rule, not accuracy against the real world.</p>
+    <p class="foot">"Identical" means every output field under the documented centre rule, not accuracy against the real world.</p>
   </div>
 </section>
 
@@ -533,7 +530,7 @@
   <div class="prose">
     <div class="kick">8 · Cost estimate</div>
     <h2>Re-checking 10 million new plots costs about three-tenths of a cent.</h2>
-    <p>The figures are Lambda compute for re-checking 10 million plots over the tropical belt, at <strong>assumed list prices</strong> and assumed tile counts (<code>artifacts/decision/cost-v1.json</code>).</p>
+    <p>The figures are Lambda compute for re-checking 10 million plots over the tropical belt, at <strong>assumed list prices</strong> and assumed tile counts.</p>
   </div>
   <div class="panel" id="sp-cost">
     <div class="panel-in">

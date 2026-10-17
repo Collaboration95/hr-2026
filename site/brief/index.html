@@ -58,7 +58,6 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/app/public/region/manifest.json">app/public/region/manifest.json</a> (grids, bounds) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>grid</code>, <code>sources</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/source.py">engine/source.py</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/jrc.py">engine/jrc.py</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/requirements.txt">engine/requirements.txt</a></p>
   </div>
 </section>
 
@@ -101,7 +100,6 @@
       </tbody>
     </table>
   </div>
-  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">artifacts/decision/layer-analysis-v1.json</a> (<code>attribution</code>, <code>totals</code>, <code>contract_questions</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>baselines</code>, <code>levels</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a>. Textures decoded from <a href="https://github.com/Collaboration95/hr-2026/tree/Main/app/public/region">app/public/region</a>; display only.</p>
 </section>
 
 <!-- =============================================================== schema -->
@@ -125,7 +123,6 @@
       <div class="br-code-detail" id="br-code-detail" aria-live="polite"></div>
       <p class="br-selfcheck" id="br-selfcheck"></p>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_summary.py">engine/decision_summary.py</a> (code space, reducer) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a> (<code>land_code</code>, <code>project_decision</code>) · counts from <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a> <code>code_histogram</code>.</p>
   </div>
 </section>
 
@@ -144,7 +141,6 @@
       <div class="br-store-detail" id="br-store-detail" aria-live="polite"></div>
       <div class="br-verify" id="br-verify-out" hidden></div>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_store.py">engine/decision_store.py</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_format.py">engine/decision_format.py</a> · section sizes from <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a>; the file is <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/decision.plds">artifacts/decision/decision.plds</a>, parsed here from a copy.</p>
   </div>
   <div class="panel" id="br-bind">
     <div class="panel-in">
@@ -158,7 +154,6 @@
         </div>
       </div>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_index.py">engine/decision_index.py</a> (<code>registry_lookup</code>, <code>table_lookup</code>, <code>table_digest</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a> findings 6a–6c. The registry file holds plot cell indices and stays private; the diagram shows its fields only.</p>
   </div>
 </section>
 
@@ -206,9 +201,8 @@
         <span><i class="box" style="--c:#E8590C"></i>mapped loss on mapped 2020 forest</span>
       </div>
       <div class="br-read" id="q-read"></div>
-      <p class="br-note-line"><b>Scope.</b> The polygon is synthetic; real plot outlines are private. Codes are re-derived in the browser from the display rasters with the rule in <code>engine/decision.py</code>, and the region's 20-bin histograms equal <code>stores.json</code>. Selection here is an even-odd centre test; the engine uses exact GEOS <code>covers</code>. The evidence is the Python engine's proof.</p>
+      <p class="br-note-line"><b>Scope.</b> The polygon is synthetic; real plot outlines are private. Codes are re-derived in the browser with the engine's rule; the region's histograms match the stored layer. Selection here is an even-odd centre test; the engine uses exact GEOS <code>covers</code>.</p>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a> (<code>derive_screen_codes</code>, <code>nested_offsets</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision_summary.py">engine/decision_summary.py</a> (<code>summarize_ints</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/app/src/map/region-raster.ts">app/src/map/region-raster.ts</a> (decoding) · rasters from <a href="https://github.com/Collaboration95/hr-2026/tree/Main/app/public/region">app/public/region</a>.</p>
   </div>
 </section>
 
@@ -234,7 +228,7 @@
       <div class="br-chart" id="br-ladder"></div>
       <details class="deeper br-table"><summary>Data table <span class="lvl">all three clocks</span></summary><div class="body" id="br-ladder-table"></div></details>
     </div>
-    <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>headline_table</code>, <code>speedups</code>, <code>method</code>); two full runs, a fresh child per path, 17 supplied plots, medians. Hot is one 17-plot batch divided by 17. P4B answers a batch in one pass: 15.8× P0 on 500 synthetic polygons.</p>
+    <p class="foot">Two full runs, a fresh process per path, medians. Hot is one 17-plot batch divided by 17.</p>
   </div>
 </section>
 
@@ -256,7 +250,6 @@
       <div class="br-phase-notes" id="br-phase-notes"></div>
       <details class="deeper br-table"><summary>Data table <span class="lvl">multiples by phase</span></summary><div class="body" id="br-ph-table"></div></details>
     </div>
-    <p class="foot"><b>Sources.</b> The <code>speedups</code> block of <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> at each commit: <a href="https://github.com/Collaboration95/hr-2026/commit/e7f5264">e7f5264</a> (decision layers), <a href="https://github.com/Collaboration95/hr-2026/commit/3afeb02">3afeb02</a> (Phase 1), <a href="https://github.com/Collaboration95/hr-2026/commit/8808f55">8808f55</a> (Phase 2), <a href="https://github.com/Collaboration95/hr-2026/commit/4ca3628">4ca3628</a> (Phase 3), <a href="https://github.com/Collaboration95/hr-2026/commit/35fd625">35fd625</a> (Phase 4). The answer table stays near 410×–430× across phases and is omitted from the lines. Each run re-measures P0, so a multiple can move about 0.5% with no code change.</p>
   </div>
 </section>
 
@@ -278,7 +271,7 @@
         <div class="ph br-sub2"><span class="tag">Original layers · 623,237 B by file</span></div>
         <div class="br-stack" id="br-orig"></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">artifacts/decision/stores.json</a> (<code>levels.*.store</code>, <code>best_control</code>, <code>controls</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">artifacts/decision/scale-v1.json</a> (<code>sizes_bytes</code>, <code>ratios</code>). A plain GeoTIFF of the decision codes is already 98.6% smaller, so the layer analysis does most of the work; the split encoding adds the last 28%.</p>
+      <p class="foot">A plain GeoTIFF of the decision codes is already 98.6% smaller: the layer analysis does most of the work, the split encoding the last 28%.</p>
     </div>
     <div class="panel" id="br-mem-chart">
       <div class="panel-in">
@@ -287,7 +280,6 @@
         <div class="ph br-sub2"><span class="tag">New polygons per second · 500 synthetic</span></div>
         <div class="br-chart" id="br-thr"></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>headline_table</code> peak RSS from process-cold children; <code>workloads</code> for the 500-polygon set). The batch evaluator answers all 500 polygons in one pass.</p>
     </div>
     <div class="panel br-wide" id="br-fid">
       <div class="panel-in">
@@ -303,7 +295,6 @@
             <tr><td>JRC native 9 m detail</td><td><span class="st review">Reduced</span></td><td>The contract reads 1 of every 9 JRC cells</td></tr>
           </tbody></table></div>
       </div>
-      <p class="foot"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">artifacts/decision/proof-v1.json</a> (<code>exhaustive_cell_proof</code>, <code>plot_proof</code>, <code>fuzz</code>, <code>negative_controls</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">validation/decision/report.md</a> and <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/out/v07.json">out/v07.json</a> (independent validator).</p>
     </div>
   </div>
 </section>
@@ -314,7 +305,6 @@
   <div class="prose">
     <div class="kick">9 · Decisions</div>
     <h2>Decisions, rejected approaches and negative results</h2>
-    <p>Each entry names the code, artifact or validation output that records it.</p>
   </div>
   <div class="panel" id="br-dec">
     <div class="panel-in">
@@ -322,7 +312,6 @@
         <div class="br-seg" role="group" aria-label="Kind"><button type="button" data-kind="all" aria-pressed="true">All</button><button type="button" data-kind="decision" aria-pressed="false">Decisions</button><button type="button" data-kind="rejected" aria-pressed="false">Rejected</button><button type="button" data-kind="negative" aria-pressed="false">Negative results</button></div></div>
       <ul class="br-list" id="br-dec-list"></ul>
     </div>
-    <p class="foot"><b>Sources.</b> Each row names the code, artifact or validation output that records it.</p>
   </div>
 </section>
 
@@ -340,7 +329,6 @@
     <div class="br-limc"><span class="n">4</span><b>The largest speed-ups need registration</b><p>44×–410× apply to plots registered in advance. An unseen boundary gets 5.2×.</p></div>
     <div class="br-limc"><span class="n">5</span><b>Scale evidence is split</b><p>Storage was measured on a whole 10° tile; query timing on one region.</p></div>
   </div>
-  <p class="br-src"><b>Sources.</b> <a href="https://github.com/Collaboration95/hr-2026/blob/Main/engine/decision.py">engine/decision.py</a> (centre rule) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">artifacts/decision/layer-analysis-v1.json</a> (<code>aggregation_sensitivity</code>, <code>cell_area_hectares_at_chip_centre</code>) · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">artifacts/decision/scale-v1.json</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">artifacts/decision/benchmark-v1.json</a> (<code>speedups</code>).</p>
 </section>
 
 <!-- =============================================================== reproduce -->
@@ -349,24 +337,24 @@
   <div class="prose">
     <div class="kick">11 · Evidence and reproduction</div>
     <h2>Evidence and reproduction</h2>
-    <p>Each headline figure lives in a committed artifact and has a command that regenerates it.</p>
+    <p>Each headline figure, its result file and the command that regenerates it.</p>
   </div>
   <div class="panel">
     <div class="panel-in">
       <div class="br-lab" style="margin-top:0">Setup · Python 3.14 venv in .venv-data, engine requirements, app dependencies</div>
       <pre class="code">scripts/setup-local.sh</pre>
       <div class="tbl br-repro"><table class="dt">
-        <thead><tr><th>Figure</th><th>Artifact · key</th><th>Command (from the repository root)</th><th class="r">Time</th></tr></thead>
+        <thead><tr><th>Figure</th><th>Result file</th><th>Command (from the repository root)</th><th class="r">Time</th></tr></thead>
         <tbody>
-          <tr><td data-label="Figure">623,237 → 6,146 B; best GeoTIFF 8,532 B; 99.0% smaller</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a> · <code>baselines</code>, <code>levels.*.store</code>, <code>best_control</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_store</code></td><td class="r" data-label="Time">≈ 20 s</td></tr>
-          <tr><td data-label="Figure">744,732 / 744,732 cells; 17 / 17 plots; 9,829 / 9,829 fuzz; negative controls</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">proof-v1.json</a> · <code>exhaustive_cell_proof</code>, <code>plot_proof</code>, <code>fuzz</code>, <code>negative_controls</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_proof</code></td><td class="r" data-label="Time">≈ 15 s</td></tr>
-          <tr><td data-label="Figure">Registry and answer table</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/table.json">table.json</a> · <code>content_sha256</code>, <code>stores</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_index</code></td><td class="r" data-label="Time">—</td></tr>
-          <tr><td data-label="Figure">Hot, fresh-process and end-to-end times; peak memory; 5.2× / 44× / 83× / 410×</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">benchmark-v1.json</a> · <code>headline_table</code>, <code>speedups</code></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_benchmark</code></td><td class="r" data-label="Time">≈ 2.5 min</td></tr>
-          <tr><td data-label="Figure">72% of Hansen bytes dropped; whole-tile 421.9 MB → 8.2 MB; cost model</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">layer-analysis-v1.json</a> · <code>attribution</code>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">scale-v1.json</a> · <code>sizes_bytes</code>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/cost-v1.json">cost-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_scale</code> (<code>--analysis</code>, <code>--scale</code>, <code>--cost</code>)</td><td class="r" data-label="Time">≈ 3 min for <code>--scale</code></td></tr>
-          <tr><td data-label="Figure">361 engine tests</td><td data-label="Artifact · key">—</td><td data-label="Command"><code>.venv-data/bin/python -B -m unittest discover -s engine/tests</code></td><td class="r" data-label="Time">decision subset ≈ 30 s</td></tr>
-          <tr><td data-label="Figure">Independent validator: 17 scripts, 4,920 geometries on 10 grids, 0 mismatches</td><td data-label="Artifact · key"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">report.md</a> · <code>validation/decision/out/*.json</code></td><td data-label="Command"><code>.venv-data/bin/python -B validation/decision/run_all.py</code></td><td class="r" data-label="Time">≈ 80 s</td></tr>
+          <tr><td data-label="Figure">623,237 → 6,146 B; best GeoTIFF 8,532 B; 99.0% smaller</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/stores.json">stores.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_store</code></td><td class="r" data-label="Time">≈ 20 s</td></tr>
+          <tr><td data-label="Figure">744,732 / 744,732 cells; 17 / 17 plots; 9,829 / 9,829 fuzz; negative controls</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/proof-v1.json">proof-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_proof</code></td><td class="r" data-label="Time">≈ 15 s</td></tr>
+          <tr><td data-label="Figure">Registry and answer table</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/table.json">table.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_index</code></td><td class="r" data-label="Time">—</td></tr>
+          <tr><td data-label="Figure">Hot, fresh-process and end-to-end times; peak memory; 5.2× / 44× / 83× / 410×</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/benchmark-v1.json">benchmark-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_benchmark</code></td><td class="r" data-label="Time">≈ 2.5 min</td></tr>
+          <tr><td data-label="Figure">72% of Hansen bytes dropped; whole-tile 421.9 MB → 8.2 MB; cost model</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/layer-analysis-v1.json">layer-analysis-v1.json</a>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/scale-v1.json">scale-v1.json</a>; <a href="https://github.com/Collaboration95/hr-2026/blob/Main/artifacts/decision/cost-v1.json">cost-v1.json</a></td><td data-label="Command"><code>.venv-data/bin/python -B -m engine.decision_scale</code> (<code>--analysis</code>, <code>--scale</code>, <code>--cost</code>)</td><td class="r" data-label="Time">≈ 3 min for <code>--scale</code></td></tr>
+          <tr><td data-label="Figure">361 engine tests</td><td data-label="Result file">—</td><td data-label="Command"><code>.venv-data/bin/python -B -m unittest discover -s engine/tests</code></td><td class="r" data-label="Time">decision subset ≈ 30 s</td></tr>
+          <tr><td data-label="Figure">Independent validator: 17 scripts, 4,920 geometries on 10 grids, 0 mismatches</td><td data-label="Result file"><a href="https://github.com/Collaboration95/hr-2026/tree/Main/validation/decision/out">validation/decision/out/</a></td><td data-label="Command"><code>.venv-data/bin/python -B validation/decision/run_all.py</code></td><td class="r" data-label="Time">≈ 80 s</td></tr>
         </tbody></table></div>
-      <p class="br-note-line"><b>Inputs.</b> <code>engine.decision_store</code> and the per-cell comparison read only the public layers committed under <code>data/public</code> and <code>data/experimental/jrc</code>. The 17 supplier plots are not in the public repository: <code>engine.decision_proof</code> loads them next to the layers, and so do the registry, benchmark and validator runs. <code>engine.decision_scale --scale</code> reads the full Hansen and JRC tiles, which are not committed.</p>
+      <p class="br-note-line"><b>Inputs.</b> The 17 supplier plots are not in the public repository; the proof, registry, benchmark and validator runs need them. <code>--scale</code> reads the full Hansen and JRC tiles, which are not committed.</p>
     </div>
   </div>
 </section>
@@ -382,8 +370,7 @@
     <div class="br-contact">
       <ul class="br-links">
         <li><a href="https://github.com/Collaboration95/hr-2026">Repository · Collaboration95/hr-2026</a></li>
-        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/artifacts/decision">Evidence artifacts</a> · <a href="https://github.com/Collaboration95/hr-2026/blob/Main/validation/decision/report.md">Independent validation</a></li>
-        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/engine">Engine source</a></li>
+        <li><a href="https://github.com/Collaboration95/hr-2026/tree/Main/artifacts/decision">Result files</a> · <a href="https://github.com/Collaboration95/hr-2026/tree/Main/validation/decision/out">Validator results</a></li>
       </ul>
       <div class="br-q-form">
         <label class="br-lab" for="br-topic">Question about</label>
@@ -392,7 +379,7 @@
       </div>
     </div>
   </div></div>
-  <div class="endnote">Plotline. Numbers are from <code>artifacts/decision/*.json</code> and <code>validation/decision/out/</code>. Supplier plots and their outlines are private and not shown.</div>
+  <div class="endnote">Supplier plots and their outlines are private and not shown.</div>
 </section>
 
 </main>

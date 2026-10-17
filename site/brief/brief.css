@@ -220,11 +220,10 @@ pre.br-json { font-size: 11.5px; line-height: 1.5; margin-top: 8px; max-height: 
 /* decisions, limits, contact */
 .br-list { list-style: none; margin: 12px 0 0; padding: 0; }
 .br-more { margin-top: 12px; }
-.br-item { display: grid; grid-template-columns: 92px 1fr auto; gap: 14px; align-items: baseline; padding: 10px 0; margin: 0; border-bottom: 1px solid var(--rule); font-size: 14.5px; line-height: 1.5; }
+.br-item { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; margin: 0; border-bottom: 1px solid var(--rule); font-size: 14.5px; line-height: 1.5; }
 .br-item[hidden] { display: none; }
 .br-item .kd { font: 700 10.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 6px; text-align: center; background: var(--pen-wash); color: var(--pen-deep); }
 .br-item.rejected .kd { background: var(--mist); color: var(--muted); } .br-item.negative .kd { background: var(--review-wash); color: var(--review); }
-.br-item .sr { font: 500 11.5px var(--f-mono); white-space: nowrap; }
 .br-limits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .br-limits .panel { margin-top: 18px; } .br-ul { margin: 12px 0 0; padding-left: 1.1em; font-size: 14.5px; line-height: 1.5; } .br-ul li { margin-top: 8px; }
 .br-contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 28px; }
@@ -289,7 +288,6 @@ pre.br-json { font-size: 11.5px; line-height: 1.5; margin-top: 8px; max-height: 
 .br-code-detail .feeds code { white-space: normal; overflow-wrap: anywhere; }
 @media (max-width: 760px) { .br-axis span:nth-child(2) { display: none; } }
 
-.br-item .sr.dim { color: var(--faint); }
 .br-lim { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 20px; }
 .br-limc { position: relative; background: var(--sheet); border: 1px solid var(--rule); border-top: 3px solid var(--pen); border-radius: 0 0 12px 12px; padding: 14px 15px 14px; }
 .br-limc .n { font: 700 11px var(--f-mono); color: var(--pen); display: block; }
