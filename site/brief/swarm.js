@@ -122,6 +122,24 @@ function codeStyle(code) {
 }
 const ISO = [-0.62, 0.6, 0];
 
+/* sample the glyph pixels of each word from an offscreen canvas; the same pixel-to-world scale is used for both words */
+function wordGlyphs(words, WW) {
+  const cv = document.createElement('canvas'); cv.width = 1400; cv.height = 460;
+  const ctx = cv.getContext('2d', { willReadFrequently: true }), fam = '"Bricolage Grotesque", "Geist", system-ui, sans-serif';
+  const setFont = px => { ctx.font = `800 ${px}px ${fam}`; if ('letterSpacing' in ctx) ctx.letterSpacing = `${-px * 0.02}px`; };
+  setFont(260); setFont(Math.floor(260 * 1200 / ctx.measureText(words[0]).width));
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const raw = words.map(t => {
+    ctx.clearRect(0, 0, cv.width, cv.height); ctx.fillText(t, 700, 330);
+    const d = ctx.getImageData(0, 0, cv.width, cv.height).data, px = []; let x0 = 1e9, x1 = -1, y0 = 1e9, y1 = -1;
+    for (let y = 0; y < cv.height; y += 2) for (let x = 0; x < cv.width; x += 2) if (d[(y * cv.width + x) * 4 + 3] > 128) { px.push([x, y]); x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    return { px, x0, x1, y0, y1 };
+  });
+  const sc = WW / (raw[0].x1 - raw[0].x0), cy = (raw[0].y0 + raw[0].y1) / 2;
+  const out = raw.map(r => { r.px.sort((a, b) => a[0] - b[0]); const n = r.px.length, x = new Float32Array(n), y = new Float32Array(n);
+    r.px.forEach(([px, py], k) => { x[k] = (px - 700) * sc; y[k] = -(py - cy) * sc; }); return { n, x, y }; });
+  return { words: out, sc, w: WW, h: (raw[0].y1 - raw[0].y0) * sc };
+}
 const FORMS = {
   nebula(P) {
     const F = newForm(P.N, [0.2, 0.3, 0], '#6E7BFF');
@@ -292,45 +310,28 @@ const FORMS = {
     }
     return F;
   },
-  limits(P) {
-    const F = newForm(P.N, [-0.25, 0, 0], '#FF7A2E'), m = Math.max(5, Math.floor(Math.sqrt(P.N * 0.7 / 81))), pitch = 8, side = 6.2;
-    const poly = [[-40, -28], [4, 6], [40, 12], [60, 12], [60, -60], [-40, -60]], nEdge = 240;
-    for (let i = 0; i < P.N; i++) {
-      const r = P.rank[i];
-      if (r < 81 * m * m) {
-        const cell = (r / (m * m)) | 0, q = r % (m * m), gx = cell % 9, gy = (cell / 9) | 0, cx = (gx - 4) * pitch, cy = (gy - 4) * pitch;
-        const lit = inside(poly, cx, cy), px = (q % m + 0.5) / m, py = (((q / m) | 0) + 0.5) / m;
-        put(F, i, cx + (px - 0.5) * side, cy + (py - 0.5) * side, 0, lit ? C.forest : C.unk, lit ? 0.9 : 0.07, lit ? 1.2 : 1);
-      } else if (r < 81 * m * m + nEdge) {
-        const u = (r - 81 * m * m) / nEdge * 2, k = Math.min(1, Math.floor(u)), f = u - k, A = poly[k], B = poly[k + 1];
-        put(F, i, A[0] + (B[0] - A[0]) * f, A[1] + (B[1] - A[1]) * f, 0.6, C.pen, 1, 1.4);
-      } else dust(F, i);
-    }
-    F.labels.push({ p: [0, -39, 0], text: 'centre in \u2192 counted', align: 'c' });
-    return F;
-  },
   reproduce(P) {
     const F = newForm(P.N, [-0.35, 0, 0], '#2BD47D');
     for (let i = 0; i < P.N; i++) { const [c, a] = codeStyle(P.code[i]); put(F, i, P.x[i], P.y[i], 0, c, a * 0.5 * P.bw[i]); }
     return F;
   },
   contact(P) {
-    const F = newForm(P.N, [0.25, 0, 0.35], '#4C9BE8'), R0 = MW / 2.5, ga = Math.PI * (3 - Math.sqrt(5)), nClu = Math.round(P.N * 0.016);
+    /* the wordmark "Plotline" from real glyph pixels; F.alt holds "The End" for the hover morph */
+    const F = newForm(P.N, [-0.04, 0, 0], '#2BD47D'), alt = newForm(P.N, [-0.04, 0, 0], '#2BD47D'), G = P.words, nW = Math.round(P.N * 0.62), [A, B] = G.words;
     for (let i = 0; i < P.N; i++) {
       const r = P.rank[i];
-      let lat, lon;
-      if (r < nClu) { lat = (8.5 + gauss(i, 71) * 2.6) * Math.PI / 180; lon = (gauss(i, 72) * 3.2) * Math.PI / 180; }
-      else { lat = Math.asin(1 - 2 * (r + 0.5) / P.N); lon = r * ga; }
-      const x = R0 * Math.cos(lat) * Math.sin(lon), y = R0 * Math.sin(lat), z = R0 * Math.cos(lat) * Math.cos(lon);
-      if (r < nClu) { put(F, i, x, y, z, C.forest, 1, 1.5, 0, 0.17); continue; }
-      const land = Math.sin(lon * 2.1 + 0.4) * Math.cos(lat * 2.4) + 0.6 * Math.sin(lat * 5 + lon) > 0.35;
-      put(F, i, x, y, z, land ? mix3(C.water, C.forest, 0.55) : C.water, land ? 0.55 : 0.32, 0.95, 0, 0.17);
+      if (r >= nW) { dust(F, i); dust(alt, i); continue; }
+      const q = (r + rn(i, 81)) / nW, ia = Math.min(A.n - 1, Math.floor(q * A.n)), ib = Math.min(B.n - 1, Math.floor(q * B.n)), u = rn(i, 82);
+      const c = u < 0.07 ? C.loss : u < 0.14 ? C.water : C.forest, j = G.sc * 1.6;
+      put(F, i, A.x[ia] + (rn(i, 83) - 0.5) * j, A.y[ia] + (rn(i, 84) - 0.5) * j, 0, c, 0.95, 1);
+      put(alt, i, B.x[ib] + (rn(i, 85) - 0.5) * j, B.y[ib] + (rn(i, 86) - 0.5) * j, 0, c, 0.95, 1);
     }
-    F.labels.push({ p: [0, R0 * Math.sin(8.5 * Math.PI / 180), R0 * Math.cos(8.5 * Math.PI / 180)], text: 'Surat Thani \u00b7 8.5\u00b0N 99\u00b0E', align: 'l', dx: 34, spin: 0.17, back: R0 });
+    F.alt = alt; F.mobDy = 78; F.hov = { w: G.w, h: G.h };
+    F.labels.push({ p: [0, -G.h / 2 - 5, 0], text: matchMedia('(hover: hover)').matches ? 'hover' : 'tap', align: 'c', hint: true, a: 0.7 });
     return F;
   },
 };
-const ID_FORM = { top: 'hero', framing: 'framing', layers: 'layers', schema: 'schema', store: 'store', query: 'query', paths: 'paths', phases: 'phases', benchmarks: 'benchmarks', decisions: 'decisions', limits: 'limits', reproduce: 'reproduce', contact: 'contact' };
+const ID_FORM = { top: 'hero', framing: 'framing', layers: 'layers', schema: 'schema', store: 'store', query: 'query', paths: 'paths', phases: 'phases', benchmarks: 'benchmarks', decisions: 'decisions', reproduce: 'reproduce', contact: 'contact' };
 
 /* synthetic query polygon: irregular 9-gon, ~8% of the map, centre-right */
 function makePolygon(P) {
@@ -343,14 +344,20 @@ function makePolygon(P) {
 
 /* ---------- shaders ---------- */
 const VERT = `
-attribute vec3 posB; attribute vec4 colA; attribute vec4 colB; attribute vec4 aRand; attribute vec3 aFA; attribute vec3 aFB;
-uniform float uT, uTime, uPx, uDist, uBase, uFlowL, uScanY, uScanK, uBreath, uShiftA, uShiftB, uLight; uniform vec2 uScan; uniform vec4 uVer;
+attribute vec3 posH; attribute vec4 colH; attribute vec3 posB; attribute vec4 colA; attribute vec4 colB; attribute vec4 aRand; attribute vec3 aFA; attribute vec3 aFB;
+uniform float uHov; uniform vec2 uHovFlag; uniform float uT, uTime, uPx, uDist, uBase, uFlowL, uScanY, uScanK, uBreath, uShiftA, uShiftB, uLight; uniform vec2 uScan; uniform vec4 uVer;
 varying vec4 vCol;
 vec3 rotY(vec3 p, float a) { float c = cos(a), s = sin(a); return vec3(c * p.x + s * p.z, p.y, -s * p.x + c * p.z); }
 vec3 place(vec3 p, vec3 f) {
   if (f.z != 0.0) p = rotY(p, f.z * uTime);
   if (f.x != 0.0) p.x = mod(p.x + uFlowL * 0.5 + f.x * uTime, uFlowL) - uFlowL * 0.5;
   return p;
+}
+float hovT(float s) { return smoothstep(s * 0.35, s * 0.35 + 0.65, uHov); }
+vec3 hovPos(vec3 base) {
+  float th = hovT(aRand.x), te = mix(th, 1.0 - pow(1.0 - th, 3.0), 0.6), arc = sin(3.14159 * th);
+  vec3 d = posH - base, perp = normalize(cross(d, vec3(0.0, 0.0, 1.0)) + vec3(0.0001));
+  return mix(base, posH, te) + perp * (aRand.z - 0.5) * 2.0 * (length(d) * 0.12 + 1.0) * arc + (aRand.yzw - 0.5) * 3.0 * arc;
 }
 vec4 shade(vec4 c, vec3 f, vec3 p, float on) {
   if (f.x != 0.0) c.a *= 1.0 - smoothstep(0.38, 0.5, abs(p.x) / uFlowL);
@@ -368,6 +375,10 @@ void main() {
   float t = smoothstep(s * 0.35, s * 0.35 + 0.65, uT);
   float te = mix(t, 1.0 - pow(1.0 - t, 3.0), 0.6);
   vec3 a = place(position, aFA), b = place(posB, aFB);
+  vec4 cA = colA, cB = colB;
+  float th = hovT(aRand.x), teH = mix(th, 1.0 - pow(1.0 - th, 3.0), 0.6);
+  if (uHovFlag.x > 0.5) { a = hovPos(a); cA = mix(colA, colH, teH); }
+  if (uHovFlag.y > 0.5) { b = hovPos(b); cB = mix(colB, colH, teH); }
   vec3 p = mix(a, b, te);
   float arc = sin(3.14159 * t);
   vec3 d = b - a;
@@ -376,7 +387,7 @@ void main() {
   p += (aRand.yzw - 0.5) * 5.0 * arc;
   p += vec3(sin(uTime * 1.7 + s * 40.0), cos(uTime * 1.3 + s * 55.0), sin(uTime * 1.1 + s * 30.0)) * 0.6 * arc;
   p += vec3(sin(uTime * 0.8 + s * 31.0), cos(uTime * 0.7 + s * 47.0), sin(uTime * 0.9 + s * 19.0)) * 0.28 * uBreath;
-  vec4 ca = shade(colA, aFA, a, uScan.x), cb = shade(colB, aFB, b, uScan.y);
+  vec4 ca = shade(cA, aFA, a, uScan.x), cb = shade(cB, aFB, b, uScan.y);
   vCol = mix(ca, cb, te);
   vCol.rgb *= mix(1.0 + 0.35 * arc, 1.0 - 0.18 * arc, uLight);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -401,17 +412,19 @@ void main() {
 async function boot() {
   let THREE;
   try { THREE = await import('three'); } catch (e) { console.warn('Swarm: three.js unavailable, page continues without it', e); return; }
-  const R = await getRegion();
+  const fontsReady = Promise.race([Promise.all([document.fonts.load('800 100px "Bricolage Grotesque"'), document.fonts.ready]), new Promise(r => setTimeout(r, 2500))]).catch(() => {});
+  const R = await getRegion(); await fontsReady;
 
   /* page contract: canvas, stylesheet, data-swarm attributes (added only when missing) */
   if (!document.querySelector('link[href$="swarm.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = new URL('swarm.css', import.meta.url).href; document.head.append(l); }
   let canvas = document.getElementById('swarm');
   if (!canvas) { canvas = document.createElement('canvas'); canvas.id = 'swarm'; canvas.setAttribute('aria-hidden', 'true'); document.body.prepend(canvas); }
   Object.entries(ID_FORM).forEach(([id, f]) => { const el = document.getElementById(id); if (el && !el.dataset.swarm) el.dataset.swarm = f; });
-  const secs = [...document.querySelectorAll('[data-swarm]')];
+  const secs = [...document.querySelectorAll('[data-swarm]')].filter(el => FORMS[el.dataset.swarm]);
 
   const P = buildPoints(R, MOBILE() ? 5000 : 14000);
   P.poly = makePolygon(P);
+  P.words = wordGlyphs(['Plotline', 'The End'], 84);
   const chain = ['nebula', ...secs.map(s => s.dataset.swarm)].filter(n => FORMS[n]);
   const built = {};
   chain.forEach(n => { if (!built[n]) built[n] = FORMS[n](P); });
@@ -430,9 +443,12 @@ async function boot() {
   const aFA = attr('aFA', 3, new Float32Array(3 * N)), aFB = attr('aFB', 3, new Float32Array(3 * N));
   const rnd = new Float32Array(4 * N); for (let i = 0; i < N; i++) { rnd[4 * i] = rn(i, 91); rnd[4 * i + 1] = rn(i, 92); rnd[4 * i + 2] = rn(i, 93); rnd[4 * i + 3] = rn(i, 94); }
   geo.setAttribute('aRand', new THREE.BufferAttribute(rnd, 4));
+  const cIdx = chain.indexOf('contact'), alt = cIdx >= 0 ? forms[cIdx].alt : null;
+  geo.setAttribute('posH', new THREE.BufferAttribute(alt ? alt.pos : new Float32Array(3 * N), 3));
+  geo.setAttribute('colH', new THREE.BufferAttribute(alt ? alt.col : new Float32Array(4 * N), 4));
   const U = { uT: { value: 0 }, uTime: { value: 0 }, uPx: { value: 1 }, uDist: { value: 200 }, uBase: { value: 2.2 }, uFlowL: { value: 84 },
     uScanY: { value: 0 }, uScanK: { value: 0 }, uBreath: { value: REDUCE ? 0 : 1 }, uScan: { value: new THREE.Vector2() },
-    uShiftA: { value: 0 }, uShiftB: { value: 0 }, uLight: { value: DARK ? 0 : 1 }, uVer: { value: new THREE.Vector4(...(DARK ? [0.62, 0.95, 0.74, 0.5] : [...C.ver, 0.9])) } };
+    uHov: { value: 0 }, uHovFlag: { value: new THREE.Vector2() }, uShiftA: { value: 0 }, uShiftB: { value: 0 }, uLight: { value: DARK ? 0 : 1 }, uVer: { value: new THREE.Vector4(...(DARK ? [0.62, 0.95, 0.74, 0.5] : [...C.ver, 0.9])) } };
   const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms: U, transparent: true, depthTest: false, depthWrite: false,
     blending: DARK ? THREE.CustomBlending : THREE.NormalBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneFactor });
   const pts = new THREE.Points(geo, mat); pts.frustumCulled = false; cloud.add(pts);
@@ -442,7 +458,7 @@ async function boot() {
     if (a === pa && b === pb) return;
     if (a !== pa) { const F = forms[a]; aPos.array.set(F.pos); aColA.array.set(F.col); aFA.array.set(F.fx); aPos.needsUpdate = aColA.needsUpdate = aFA.needsUpdate = true; }
     const G = forms[b]; aPosB.array.set(G.pos); aColB.array.set(G.col); aFB.array.set(G.fx); aPosB.needsUpdate = aColB.needsUpdate = aFB.needsUpdate = true;
-    pa = a; pb = b; U.uScan.value.set(hasScan[a] ? 1 : 0, hasScan[b] ? 1 : 0);
+    pa = a; pb = b; U.uScan.value.set(hasScan[a] ? 1 : 0, hasScan[b] ? 1 : 0); U.uHovFlag.value.set(chain[a] === 'contact' ? 1 : 0, chain[b] === 'contact' ? 1 : 0);
   }
 
   /* size and camera: formation centre sits in the right ~55% on desktop */
@@ -493,7 +509,7 @@ async function boot() {
         sets.forEach(([k, w]) => {
           if (w <= 0.01) return;
           forms[k].labels.forEach(l => {
-            let [x, y, z] = l.p, al = w;
+            let [x, y, z] = l.p, al = w * (l.a || 1) * (l.hint ? 1 - hov : 1);
             if (l.spin) { const c = Math.cos(l.spin * time), sn = Math.sin(l.spin * time); [x, z] = [c * x + sn * z, -sn * x + c * z]; }
             v.set(x, y, z).applyMatrix4(cloud.matrixWorld);
             if (l.back) { q.copy(v).applyMatrix4(camera.matrixWorldInverse); o.set(0, 0, 0).applyMatrix4(cloud.matrixWorld).applyMatrix4(camera.matrixWorldInverse); al *= clamp((q.z - o.z) / (l.back * 0.35), 0, 1); }
@@ -527,7 +543,7 @@ async function boot() {
   function computeShifts() {
     cloud.updateMatrixWorld(true);
     const oy = _o.set(0, 0, 0).applyMatrix4(cloud.matrixWorld).project(camera).y;
-    for (let j = 0; j < cys.length; j++) shifts[j] = (1 - 2 * cys[j] / vh) - oy;
+    for (let j = 0; j < cys.length; j++) shifts[j] = (1 - 2 * cys[j] / vh) - oy - (!desktop && forms[j].mobDy ? 2 * forms[j].mobDy / vh : 0);   /* mobDy: px below the heading on narrow screens */
   }
 
   /* ---------- cursor trail (2D overlay, pointer: fine only) ---------- */
@@ -557,8 +573,10 @@ async function boot() {
   })();
 
   /* ---------- loop ---------- */
+  let hov = 0, hovBox = null, tapOn = false, mouse = { x: -1, y: -1, type: 'mouse' };
   let s = 0, focus = [0.5, 0.5], focusS = [0.5, 0.5], ptr = [0, 0], ptrS = [0, 0], dirty = true, raf = 0, last = performance.now(), t0 = last, intro = !REDUCE && scrollY < 200, introT = 0, lastKey = '', accentKey = '';
-  addEventListener('pointermove', e => { ptr = [e.clientX / vw * 2 - 1, e.clientY / vh * 2 - 1]; trail.move(e.clientX, e.clientY); }, { passive: true });
+  addEventListener('pointerup', e => { if (e.pointerType !== 'mouse' && hovBox && e.clientX >= hovBox[0] && e.clientX <= hovBox[2] && e.clientY >= hovBox[1] && e.clientY <= hovBox[3]) tapOn = !tapOn; }, { passive: true });
+  addEventListener('pointermove', e => { mouse = { x: e.clientX, y: e.clientY, type: e.pointerType }; ptr = [e.clientX / vw * 2 - 1, e.clientY / vh * 2 - 1]; trail.move(e.clientX, e.clientY); }, { passive: true });
   addEventListener('resize', resize);
   document.fonts && document.fonts.ready.then(() => { fitHero(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } });
@@ -591,6 +609,21 @@ async function boot() {
     cloud.scale.setScalar(sc);
     cloud.position.set((focusS[0] - 0.5) * 24 + hero.dx * hw, -(focusS[1] - 0.5) * 14, 0);
     computeShifts(); U.uShiftA.value = shifts[a]; U.uShiftB.value = shifts[b];
+    /* wordmark hover: project its bbox, compare with the pointer, ease the Plotline <-> The End morph (~0.9 s) */
+    if (cIdx >= 0) {
+      const cw = (a === cIdx ? 1 - e : 0) + (b === cIdx && a !== b ? e : 0), W = forms[cIdx].hov;
+      let want = 0;
+      if (cw > 0.6) {
+        let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+        cloud.updateMatrixWorld(true);
+        [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sy]) => { _o.set(sx * W.w / 2, sy * W.h / 2, 0).applyMatrix4(cloud.matrixWorld).project(camera); const px = (_o.x * 0.5 + 0.5) * vw, py = (-(_o.y + shifts[cIdx]) * 0.5 + 0.5) * vh; x0 = Math.min(x0, px); x1 = Math.max(x1, px); y0 = Math.min(y0, py); y1 = Math.max(y1, py); });
+        hovBox = [x0 - 24, y0 - 24, x1 + 24, y1 + 24];
+        const m = mouse, inBox = m.x >= hovBox[0] && m.x <= hovBox[2] && m.y >= hovBox[1] && m.y <= hovBox[3];
+        want = (inBox && m.type === 'mouse') || tapOn ? 1 : 0;
+      } else { hovBox = null; tapOn = false; }
+      hov = REDUCE ? want : hov + clamp(want - hov, -dt / 0.9, dt / 0.9);
+      U.uHov.value = hov;
+    }
     /* accent */
     const ac = C.trail || mix3(accentRgb(forms[a].accent), accentRgb(forms[b].accent), e);
     const key = (f > 0.5 ? forms[b] : forms[a]).accent;
